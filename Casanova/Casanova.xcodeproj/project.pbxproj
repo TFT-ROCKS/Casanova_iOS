@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4085310E3228776BF9EBF3CA /* Pods_Casanova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */; };
+		800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */; };
+		800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 800122BD1F1DCB3B00F185AE /* test.mp3 */; };
+		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
+		80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313991F1B35B4001CFDC7 /* Comment.swift */; };
+		80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */; };
+		80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139B1F1B35B4001CFDC7 /* Like.swift */; };
+		80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139C1F1B35B4001CFDC7 /* Tag.swift */; };
+		80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139D1F1B35B4001CFDC7 /* Topic.swift */; };
+		80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */; };
+		80B313A71F1B35B4001CFDC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139F1F1B35B4001CFDC7 /* User.swift */; };
+		80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313A81F1B4DE8001CFDC7 /* UserManager.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -15,6 +27,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Casanova.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.release.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.release.xcconfig"; sourceTree = "<group>"; };
+		800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		800122BD1F1DCB3B00F185AE /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
+		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		80B313991F1B35B4001CFDC7 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		80B3139B1F1B35B4001CFDC7 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		80B3139C1F1B35B4001CFDC7 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		80B3139D1F1B35B4001CFDC7 /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTag.swift; sourceTree = "<group>"; };
+		80B3139F1F1B35B4001CFDC7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		80B313A81F1B4DE8001CFDC7 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +47,7 @@
 		80E339101F1AE4FE00F539E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		80E339131F1AE4FE00F539E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80E339151F1AE4FE00F539E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +55,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4085310E3228776BF9EBF3CA /* Pods_Casanova.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5140AE6171EA4614729A9816 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		80E338FD1F1AE4FD00F539E5 = {
 			isa = PBXGroup;
 			children = (
 				80E339081F1AE4FD00F539E5 /* Casanova */,
 				80E339071F1AE4FD00F539E5 /* Products */,
+				D1BE348DD42B1D9037561106 /* Pods */,
+				5140AE6171EA4614729A9816 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +91,34 @@
 		80E339081F1AE4FD00F539E5 /* Casanova */ = {
 			isa = PBXGroup;
 			children = (
+				80B313981F1B35B4001CFDC7 /* Answer.swift */,
+				80B313991F1B35B4001CFDC7 /* Comment.swift */,
+				800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */,
+				80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */,
+				80B3139B1F1B35B4001CFDC7 /* Like.swift */,
+				80B3139C1F1B35B4001CFDC7 /* Tag.swift */,
+				80B3139D1F1B35B4001CFDC7 /* Topic.swift */,
+				80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */,
+				80B3139F1F1B35B4001CFDC7 /* User.swift */,
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
+				80B313A81F1B4DE8001CFDC7 /* UserManager.swift */,
 				80E3390B1F1AE4FD00F539E5 /* ViewController.swift */,
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
 				80E339101F1AE4FE00F539E5 /* Assets.xcassets */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339151F1AE4FE00F539E5 /* Info.plist */,
+				800122BD1F1DCB3B00F185AE /* test.mp3 */,
 			);
 			path = Casanova;
+			sourceTree = "<group>";
+		};
+		D1BE348DD42B1D9037561106 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */,
+				74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +128,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80E339181F1AE4FE00F539E5 /* Build configuration list for PBXNativeTarget "Casanova" */;
 			buildPhases = (
+				1471A1716E65280F55394148 /* [CP] Check Pods Manifest.lock */,
 				80E339021F1AE4FD00F539E5 /* Sources */,
 				80E339031F1AE4FD00F539E5 /* Frameworks */,
 				80E339041F1AE4FD00F539E5 /* Resources */,
+				7E333845A8EE8C168B8624A1 /* [CP] Embed Pods Frameworks */,
+				CEC3B40782D2D009BB31FCBF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -126,19 +186,78 @@
 			files = (
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
 				80E339111F1AE4FE00F539E5 /* Assets.xcassets in Resources */,
+				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1471A1716E65280F55394148 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7E333845A8EE8C168B8624A1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Casanova/Pods-Casanova-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CEC3B40782D2D009BB31FCBF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Casanova/Pods-Casanova-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		80E339021F1AE4FD00F539E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
+				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,
+				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
+				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
+				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
+				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
+				800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */,
 				80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */,
+				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
+				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,
+				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +380,7 @@
 		};
 		80E339191F1AE4FE00F539E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6PA6N75D4X;
@@ -274,6 +394,7 @@
 		};
 		80E3391A1F1AE4FE00F539E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 6PA6N75D4X;
@@ -304,6 +425,7 @@
 				80E3391A1F1AE4FE00F539E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
