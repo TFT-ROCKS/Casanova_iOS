@@ -10,6 +10,10 @@
 		4085310E3228776BF9EBF3CA /* Pods_Casanova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */; };
 		800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */; };
 		800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 800122BD1F1DCB3B00F185AE /* test.mp3 */; };
+		800122C11F1E903200F185AE /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122BF1F1E903200F185AE /* HomeTableViewCell.swift */; };
+		800122C21F1E903200F185AE /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800122C01F1E903200F185AE /* HomeTableViewCell.xib */; };
+		800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122C31F1EDBC400F185AE /* HomeViewController.swift */; };
+		800122C61F1EDCCF00F185AE /* TopicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122C51F1EDCCF00F185AE /* TopicManager.swift */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
 		80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313991F1B35B4001CFDC7 /* Comment.swift */; };
 		80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */; };
@@ -31,6 +35,10 @@
 		74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.release.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.release.xcconfig"; sourceTree = "<group>"; };
 		800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		800122BD1F1DCB3B00F185AE /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
+		800122BF1F1E903200F185AE /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		800122C01F1E903200F185AE /* HomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
+		800122C31F1EDBC400F185AE /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		800122C51F1EDCCF00F185AE /* TopicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicManager.swift; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		80B313991F1B35B4001CFDC7 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -103,7 +111,11 @@
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
 				80B313A81F1B4DE8001CFDC7 /* UserManager.swift */,
 				80E3390B1F1AE4FD00F539E5 /* ViewController.swift */,
+				800122C31F1EDBC400F185AE /* HomeViewController.swift */,
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
+				800122BF1F1E903200F185AE /* HomeTableViewCell.swift */,
+				800122C01F1E903200F185AE /* HomeTableViewCell.xib */,
+				800122C51F1EDCCF00F185AE /* TopicManager.swift */,
 				80E339101F1AE4FE00F539E5 /* Assets.xcassets */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339151F1AE4FE00F539E5 /* Info.plist */,
@@ -187,6 +199,7 @@
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
 				80E339111F1AE4FE00F539E5 /* Assets.xcassets in Resources */,
 				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
+				800122C21F1E903200F185AE /* HomeTableViewCell.xib in Resources */,
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,11 +261,14 @@
 			files = (
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
+				800122C11F1E903200F185AE /* HomeTableViewCell.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
+				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,
 				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
+				800122C61F1EDCCF00F185AE /* TopicManager.swift in Sources */,
 				800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */,
 				80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,

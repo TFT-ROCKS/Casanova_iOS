@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="udt-Q1-eXt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,81 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="g4l-2Y-yGi">
+            <objects>
+                <viewController id="v18-nS-zEx" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NLh-bH-pnV"/>
+                        <viewControllerLayoutGuide type="bottom" id="dHB-8j-vtx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ETo-Cz-h5A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="search-tab-h" id="SgQ-7W-M4Q"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1CM-Kf-gyR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-839" y="225"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="gqL-h2-vpE">
+            <objects>
+                <viewController id="7cg-gb-rgD" customClass="HomeViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0GR-Q5-Qn9"/>
+                        <viewControllerLayoutGuide type="bottom" id="8bg-EL-Y9F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uJr-aZ-pxH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="top" secondItem="0GR-Q5-Qn9" secondAttribute="bottom" id="KH3-9a-jLb"/>
+                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="leading" secondItem="uJr-aZ-pxH" secondAttribute="leading" id="QbV-VG-2bj"/>
+                            <constraint firstAttribute="trailing" secondItem="A0f-Tg-Vfd" secondAttribute="trailing" id="UyV-3v-q7U"/>
+                            <constraint firstItem="8bg-EL-Y9F" firstAttribute="top" secondItem="A0f-Tg-Vfd" secondAttribute="bottom" id="cjc-Lk-abB"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="home-tab-h" selectedImage="home-tab-h" id="SWt-e4-YbV">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="homeTableView" destination="A0f-Tg-Vfd" id="JGR-jq-dG4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YSU-DI-NZa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-839" y="-443"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Qtn-5W-8N9">
+            <objects>
+                <tabBarController id="udt-Q1-eXt" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="hn8-cT-TQM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="7cg-gb-rgD" kind="relationship" relationship="viewControllers" id="n0R-Jp-F0W"/>
+                        <segue destination="v18-nS-zEx" kind="relationship" relationship="viewControllers" id="HCn-r9-kBU"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="w7N-Xl-y6A"/>
+                        <segue destination="Ubl-d1-WkL" kind="relationship" relationship="viewControllers" id="KRe-YN-dNa"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wUz-41-zdn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1791" y="466"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -29,7 +104,7 @@
                                 </connections>
                             </slider>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q1x-uU-usi">
-                                <rect key="frame" x="0.0" y="200" width="375" height="467"/>
+                                <rect key="frame" x="0.0" y="200" width="375" height="418"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableViewCell" textLabel="WSI-Fp-EgZ" detailTextLabel="s4N-fi-l72" style="IBUITableViewCellStyleValue1" id="G6c-TD-NN3" customClass="CommentTableViewCell" customModule="Casanova" customModuleProvider="target">
@@ -137,6 +212,7 @@
                             <constraint firstItem="2sc-5d-Ct6" firstAttribute="top" secondItem="imH-CN-zYf" secondAttribute="bottom" constant="8" id="xnm-L3-7hT"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="star-tab-h" id="sNt-ZN-iDG"/>
                     <connections>
                         <outlet property="commentTextField" destination="0cJ-Uq-eEO" id="FCD-Mv-GlD"/>
                         <outlet property="commentsTableView" destination="Q1x-uU-usi" id="LSP-yI-T7Z"/>
@@ -146,7 +222,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="-839" y="953"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="saW-v7-7R8">
+            <objects>
+                <viewController id="Ubl-d1-WkL" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ttT-eR-DOu"/>
+                        <viewControllerLayoutGuide type="bottom" id="hFQ-ta-1bj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Y8-zB-UNU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="profile-tab-h" id="vJc-Ml-WDJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i7V-uv-TIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-839" y="1693"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home-tab-h" width="22" height="22"/>
+        <image name="profile-tab-h" width="26" height="25"/>
+        <image name="search-tab-h" width="24" height="23"/>
+        <image name="star-tab-h" width="24" height="24"/>
+    </resources>
 </document>
