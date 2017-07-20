@@ -1,12 +1,15 @@
 PODS:
   - Alamofire (4.5.0)
+  - TagListView (1.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - TagListView (~> 1.0)
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
 
-PODFILE CHECKSUM: 9ff24d8b11cae4b8b59cbded8d2287e3e3ac4a8b
+PODFILE CHECKSUM: 2d9ac922a511b2e0db75a06ec5905242f0e941fb
 
 COCOAPODS: 1.2.1

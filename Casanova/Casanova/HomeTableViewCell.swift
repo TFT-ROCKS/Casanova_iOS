@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import TagListView
 
 class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var tagsView: UIView!
+    @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var difficultyImgView: UIImageView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
@@ -37,6 +38,11 @@ class HomeTableViewCell: UITableViewCell {
         titleLabel.text = topic.topicTitle
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount) answers"
+        
+        // tag list view config
+        tagListView.removeAllTags()
+        tagListView.addTags(topic.tags.components(separatedBy: ","))
+        tagListView.textFont = UIFont(name: "HelveticaNeue", size: 16)!
         
         // substring answer to 300 chars
         let answer = topic.answerTitle

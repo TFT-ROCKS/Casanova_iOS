@@ -20,9 +20,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
-                        <rect key="frame" x="18" y="18" width="360" height="61"/>
+                        <rect key="frame" x="18" y="18" width="360" height="59.5"/>
                         <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -33,12 +33,19 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE">
-                        <rect key="frame" x="18" y="94" width="360" height="20"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="VDg-fN-Bwi"/>
-                        </constraints>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
+                        <rect key="frame" x="18" y="87.5" width="360" height="36.5"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                <color key="value" red="0.42237561941146851" green="0.88711899518966675" blue="0.91412901878356934" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
+                                <color key="value" red="0.91587203741073608" green="0.97653824090957642" blue="0.98925262689590454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTextColor">
+                                <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zy-Yl-Kn3">
                         <rect key="frame" x="18" y="182" width="360" height="2"/>
@@ -151,9 +158,9 @@
                     <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="74M-XU-IRV" secondAttribute="trailing" constant="10" id="jaY-8X-vXV"/>
                     <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="5zy-Yl-Kn3" secondAttribute="trailing" id="l8P-vH-NkM"/>
                     <constraint firstItem="1bV-bR-vtT" firstAttribute="top" secondItem="6k5-m8-WgP" secondAttribute="bottom" constant="5" id="qRT-pg-hzX"/>
-                    <constraint firstItem="74M-XU-IRV" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="20" id="uQ8-Jj-X9a"/>
+                    <constraint firstItem="74M-XU-IRV" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="uQ8-Jj-X9a"/>
                     <constraint firstItem="5zy-Yl-Kn3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="uuN-I6-fc3"/>
-                    <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="15" id="vfA-7v-8tU"/>
+                    <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="10" id="vfA-7v-8tU"/>
                     <constraint firstAttribute="trailingMargin" secondItem="5zy-Yl-Kn3" secondAttribute="trailing" constant="10" id="xuO-l3-LG0"/>
                 </constraints>
             </tableViewCellContentView>
@@ -170,7 +177,7 @@
                 <outlet property="profileButton" destination="cqd-Yd-WhD" id="xnd-My-HFk"/>
                 <outlet property="separatorView" destination="5zy-Yl-Kn3" id="LVt-Tc-7Iz"/>
                 <outlet property="starButton" destination="vVL-6W-GdB" id="mxF-gg-fXD"/>
-                <outlet property="tagsView" destination="inB-G3-hzE" id="1Rk-2S-5tS"/>
+                <outlet property="tagListView" destination="inB-G3-hzE" id="Cy6-vo-g34"/>
                 <outlet property="titleLabel" destination="s2L-5p-bKQ" id="eYe-xx-h0w"/>
             </connections>
             <point key="canvasLocation" x="-88" y="0.5"/>
