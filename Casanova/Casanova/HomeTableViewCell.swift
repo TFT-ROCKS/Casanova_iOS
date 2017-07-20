@@ -48,7 +48,7 @@ class HomeTableViewCell: UITableViewCell {
         let answer = topic.answerTitle
         answerLabel.text = answer.components(separatedBy: " ")[0...50].joined(separator: " ") + " ..."
         answererNameLabel.text = topic.userName
-        answerTimeLabel.text = topic.updatedAt
+        answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: topic.updatedAt)
         numOfLikesLabel.text = "\(topic.likeCount)"
     }
 
