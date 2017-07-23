@@ -12,7 +12,7 @@ import TagListView
 class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!
-    @IBOutlet weak var difficultyImgView: UIImageView!
+    @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
@@ -38,11 +38,17 @@ class HomeTableViewCell: UITableViewCell {
         titleLabel.text = topic.topicTitle
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount) answers"
+        let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
+        diffView.backgroundColor = UIColor.clear
+        difficultyView.addSubview(diffView)
         
         // tag list view config
         tagListView.removeAllTags()
-        tagListView.addTags(topic.tags.components(separatedBy: ","))
-        tagListView.textFont = UIFont(name: "HelveticaNeue", size: 16)!
+        for tag in topic.tags.components(separatedBy: ",") {
+            let newTag = "#\(tag.uppercased())"
+            tagListView.addTag(newTag)
+        }
+        tagListView.textFont = UIFont(name: "Avenir-Medium", size: 10)!
         
         // substring answer to 300 chars
         let answer = topic.answerTitle
@@ -55,10 +61,9 @@ class HomeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-        likeButton.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
-        difficultyImgView.image = #imageLiteral(resourceName: "difficulty")
-        profileButton.setImage(#imageLiteral(resourceName: "tftProfile"), for: .normal)
+        starButton.setBackgroundImage(#imageLiteral(resourceName: "star"), for: .normal)
+        likeButton.setBackgroundImage(#imageLiteral(resourceName: "heart"), for: .normal)
+        profileButton.setBackgroundImage(#imageLiteral(resourceName: "tftProfile"), for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

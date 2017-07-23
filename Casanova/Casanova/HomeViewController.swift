@@ -18,6 +18,10 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // const 
+    let cellVerticalSpace: CGFloat = 15
+    let cellHorizontalSpace: CGFloat = 15
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +30,7 @@ class HomeViewController: UIViewController {
         homeTableView.delegate = self
         homeTableView.dataSource = self
         homeTableView.allowsSelection = false
+        homeTableView.backgroundColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
         let homeTableViewCell = UINib(nibName: "HomeTableViewCell", bundle: nil)
@@ -78,6 +83,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = cell as? HomeTableViewCell {
             
             cell.contentView.backgroundColor = UIColor.clear
+            cell.backgroundColor = UIColor.clear
             
             // remove small whiteRoundedView before adding new one
             for view in cell.contentView.subviews {
@@ -86,12 +92,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
-            let whiteRoundedView : UIView = UIView(frame: CGRect(x: 10, y: 5, width: self.view.bounds.width - 20, height: cell.bounds.height - 10))
+            let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - cellHorizontalSpace * 2, height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
             whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.cornerRadius = 6.0
-            whiteRoundedView.layer.shadowOffset = CGSize(width: -1, height: 1)
+            whiteRoundedView.layer.cornerRadius = 5
+            whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
             whiteRoundedView.layer.shadowOpacity = 0.2
             
             cell.contentView.addSubview(whiteRoundedView)
