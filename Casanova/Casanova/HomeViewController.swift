@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        // Table view setup
         homeTableView.delegate = self
         homeTableView.dataSource = self
         homeTableView.allowsSelection = false
@@ -35,6 +36,11 @@ class HomeViewController: UIViewController {
         homeTableView.estimatedRowHeight = 399
         let homeTableViewCell = UINib(nibName: "HomeTableViewCell", bundle: nil)
         homeTableView.register(homeTableViewCell, forCellReuseIdentifier: "HomeTableViewCell")
+        
+        // Navigation bar setup
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
         
         // Fetch topics
         TopicManager.shared.fetchTopics(withCompletion: { (error, topics) in
