@@ -39,7 +39,13 @@ class HomeTableViewCell: UITableViewCell {
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount) answers"
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
+        diffView.tag = 101
         diffView.backgroundColor = UIColor.clear
+        for subView in difficultyView.subviews {
+            if subView.tag == 101 {
+                subView.removeFromSuperview()
+            }
+        }
         difficultyView.addSubview(diffView)
         
         // tag list view config

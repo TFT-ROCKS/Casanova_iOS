@@ -11,8 +11,14 @@ import Alamofire
 
 class TopicManager {
     static let shared = TopicManager()
-    let url = "https://tft.rocks/api/topicsService;levelFilter=%5B%5D;searchQuery=;start=0;tagFilter=%5B%5D?returnMeta=true"
-    func fetchTopics(withCompletion block: ((ErrorMessage?, [Topic]?) -> Void)? = nil) {
+    let urlPre = "https://tft.rocks/api/topicsService;levelFilter=%5B%5D;searchQuery=;"
+    let urlPost = "tagFilter=%5B%5D?returnMeta=true"
+    func fetchTopics(from: Int, withCompletion block: ((ErrorMessage?, [Topic]?) -> Void)? = nil) {
+        // Create URL
+        let urlMid = "start=\(from);"
+        let url = urlPre + urlMid + urlPost
+        
+        // Make request
         Alamofire.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
