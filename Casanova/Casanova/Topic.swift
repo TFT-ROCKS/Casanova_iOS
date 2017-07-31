@@ -9,60 +9,35 @@
 import Foundation
 
 class Topic {
-    var likeCount: Int
-    var likeUsers: String
+    // MARK: - Home Page
     var answersCount: Int
     var topicTitle: String
-    var answerTitle: String
-    var updatedAt: String
-    var userId: Int
-    var userName: String
     var topicId: Int
-    var answerId: Int
     var status: Int
     var level: Int
     var tags: String
+    var isDetailed: Bool
     
-    init(likeCount: Int,
-         likeUsers: String,
-         answersCount: Int,
+    init(answersCount: Int,
          topicTitle: String,
-         answerTitle: String,
-         updatedAt: String,
-         userId: Int,
-         userName: String,
          topicId: Int,
-         answerId: Int,
          status: Int,
          level: Int,
          tags: String) {
         
-        self.likeCount = likeCount
-        self.likeUsers = likeUsers
         self.answersCount = answersCount
         self.topicTitle = topicTitle
-        self.answerTitle = answerTitle
-        self.updatedAt = updatedAt
-        self.userId = userId
-        self.userName = userName
         self.topicId = topicId
-        self.answerId = answerId
         self.status = status
         self.level = level
         self.tags = tags
+        self.isDetailed = false
     }
     
     convenience init?(fromJson json: [String: Any]) {
-        guard let likeCount = json["likeCount"] as? Int,
-            let likeUsers = json["likeUsers"] as? String,
-            let answersCount = json["answersCount"] as? Int,
+        guard let answersCount = json["answersCount"] as? Int,
             let topicTitle = json["topicTitle"] as? String,
-            let answerTitle = json["answerTitle"] as? String,
-            let updatedAt = json["updatedAt"] as? String,
-            let userId = json["userId"] as? Int,
-            let userName = json["userName"] as? String,
             let topicId = json["topicId"] as? Int,
-            let answerId = json["answerId"] as? Int,
             let status = json["status"] as? Int,
             let level = json["level"] as? Int,
             let tags = json["tags"] as? String
@@ -71,18 +46,15 @@ class Topic {
                 print(errorMessage.msg)
                 return nil
         }
-        self.init(likeCount: likeCount,
-                  likeUsers: likeUsers,
-                  answersCount: answersCount,
+        self.init(answersCount: answersCount,
                   topicTitle: topicTitle,
-                  answerTitle: answerTitle,
-                  updatedAt: updatedAt,
-                  userId: userId,
-                  userName: userName,
                   topicId: topicId,
-                  answerId: answerId,
                   status: status,
                   level: level,
                   tags: tags)
     }
+    
+    // MARK: - Detail Page
+    var answers: [Answer]?
+    var user: User?
 }

@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    // const
+    // Constants
     let cellVerticalSpace: CGFloat = 15
     let cellHorizontalSpace: CGFloat = 15
     
@@ -32,6 +32,8 @@ class HomeViewController: UIViewController {
         homeTableView.backgroundColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
+        
+        // Register customized cells
         let homeTableViewCell = UINib(nibName: "HomeTableViewCell", bundle: nil)
         homeTableView.register(homeTableViewCell, forCellReuseIdentifier: "HomeTableViewCell")
         let loadMoreTableViewCell = UINib(nibName: "LoadMoreTableViewCell", bundle: nil)

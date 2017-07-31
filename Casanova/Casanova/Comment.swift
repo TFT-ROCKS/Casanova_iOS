@@ -9,11 +9,28 @@
 import Foundation
 
 class Comment {
-    var timestamp: TimeInterval!
-    var text: String!
+    var commentId: Int
+    var commentTitle: Int
+    var position: String
+    var createdAt: String
+    var updatedAt: String
+    var answerId: Int
+    var userId: Int
     
-    init(timestamp: TimeInterval, text: String) {
-        self.timestamp = timestamp
-        self.text = text
+    init(commentId: Int,
+        commentTitle: Int,
+        position: String,
+        createdAt: String,
+        updatedAt: String,
+        answerId: Int,
+        userId: Int) {
+        
+        self.commentId = commentId
+        self.commentTitle = commentTitle
+        self.position = position
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.answerId = answerId
+        self.userId = userId
     }
 }

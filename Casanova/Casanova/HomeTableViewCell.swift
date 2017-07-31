@@ -15,15 +15,8 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var answerLabel: UILabel!
-    @IBOutlet weak var profileButton: UIButton!
-    @IBOutlet weak var answererNameLabel: UILabel!
-    @IBOutlet weak var answerTimeLabel: UILabel!
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var numOfStarsLabel: UILabel!
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var numOfLikesLabel: UILabel!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
