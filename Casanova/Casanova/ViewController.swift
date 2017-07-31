@@ -16,9 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var timeLabel: UILabel!
     @IBAction func postCommentBtnDidClicked(_ sender: UIButton) {
-        let newComment = Comment(timestamp: player.currentTime, text: commentTextField.text!)
-        comments.append(newComment)
-        commentTextField.text = ""
+//        let newComment = Comment(timestamp: player.currentTime, text: commentTextField.text!)
+//        comments.append(newComment)
+//        commentTextField.text = ""
     }
     @IBAction func startButtonClicked(_ sender: UIButton) {
         Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
@@ -111,7 +111,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let comment = comments[indexPath.row]
-        player.currentTime = comment.timestamp
+//        player.currentTime = comment.timestamp
         slider.value = Float(player.currentTime)
         timeLabel.text = stringFromTimeInterval(player.currentTime)
         tableView.reloadData()

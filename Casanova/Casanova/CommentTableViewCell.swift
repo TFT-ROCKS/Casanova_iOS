@@ -12,8 +12,8 @@ class CommentTableViewCell: UITableViewCell {
 
     var comment: Comment! {
         didSet {
-            self.detailTextLabel?.text = stringFromTimeInterval(comment.timestamp)
-            self.textLabel?.text = comment.text
+//            self.detailTextLabel?.text = stringFromTimeInterval(comment.timestamp)
+//            self.textLabel?.text = comment.text
         }
     }
     
