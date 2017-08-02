@@ -27,14 +27,14 @@ class AnswerDetailTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        answererButton = UIButton(frame: CGRect.zero)
-        answererNameLabel = UILabel(frame: CGRect.zero)
-        answerTimeLabel = UILabel(frame: CGRect.zero)
-        likeCountLabel = UILabel(frame: CGRect.zero)
-        likeButton = UIButton(frame: CGRect.zero)
-        audioTimeLabel = UILabel(frame: CGRect.zero)
-        audioButton = UIButton(frame: CGRect.zero)
-        audioSlider = UISlider(frame: CGRect.zero)
+        answererButton = UIButton(frame: .zero)
+        answererNameLabel = UILabel(frame: .zero)
+        answerTimeLabel = UILabel(frame: .zero)
+        likeCountLabel = UILabel(frame: .zero)
+        likeButton = UIButton(frame: .zero)
+        audioTimeLabel = UILabel(frame: .zero)
+        audioButton = UIButton(frame: .zero)
+        audioSlider = UISlider(frame: .zero)
         
         contentView.addSubview(answererButton)
         contentView.addSubview(answererNameLabel)
@@ -107,7 +107,7 @@ class AnswerDetailTableViewCell: UITableViewCell {
         
         switch reuseIdentifier! {
         case "AnswerWithTextCell":
-            answerTitleLabel = UILabel(frame: CGRect.zero)
+            answerTitleLabel = UILabel(frame: .zero)
             contentView.addSubview(answerTitleLabel!)
             answerTitleLabel?.translatesAutoresizingMaskIntoConstraints = false
             answerTitleLabel?.topAnchor.constraint(equalTo: audioButton.bottomAnchor, constant: 30).isActive = true
