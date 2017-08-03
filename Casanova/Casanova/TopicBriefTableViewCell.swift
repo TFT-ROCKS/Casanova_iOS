@@ -1,5 +1,5 @@
 //
-//  HomeTableViewCell.swift
+//  TopicBriefTableViewCell.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/18/17.
@@ -9,7 +9,7 @@
 import UIKit
 import TagListView
 
-class HomeTableViewCell: UITableViewCell {
+class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var difficultyView: UIView!

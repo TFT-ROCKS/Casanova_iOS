@@ -20,6 +20,12 @@ class AnswerDetailTableViewCell: UITableViewCell {
     var audioButton: UIButton!
     var answerTitleLabel: UILabel?
     
+    var answer: Answer! {
+        didSet {
+            updateUI()
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -128,6 +134,14 @@ class AnswerDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func updateUI() {
+        answererNameLabel.text = answer.user.username
+        answerTimeLabel.text = answer.updatedAt
+        likeCountLabel.text = "\(answer.likes.count)"
+        audioTimeLabel.text = "00:00"
+        answerTitleLabel?.text = answer.title
     }
     
 }

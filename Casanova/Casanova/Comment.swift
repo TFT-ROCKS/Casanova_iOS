@@ -9,28 +9,34 @@
 import Foundation
 
 class Comment {
-    var commentId: Int
-    var commentTitle: Int
-    var position: String
+    var id: Int
+    var title: String
     var createdAt: String
-    var updatedAt: String
-    var answerId: Int
-    var userId: Int
+    var user: User
     
-    init(commentId: Int,
-        commentTitle: Int,
-        position: String,
-        createdAt: String,
-        updatedAt: String,
-        answerId: Int,
-        userId: Int) {
+    init?(id: Int,
+          title: String,
+          createdAt: String,
+          user: User?) {
         
-        self.commentId = commentId
-        self.commentTitle = commentTitle
-        self.position = position
+        guard let user = user else {
+            return nil
+        }
+        
+        self.id = id
+        self.title = title
         self.createdAt = createdAt
-        self.updatedAt = updatedAt
-        self.answerId = answerId
-        self.userId = userId
+        self.user = user
+    }
+    
+    convenience init?(fromJSON json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let title = json["title"] as? String,
+            let createdAt = json["createdAt"] as? String,
+            let user = json["user"] as? [String: Any]
+            else {
+                return nil
+        }
+        self.init(id: id, title: title, createdAt: createdAt, user: User(json: user))
     }
 }

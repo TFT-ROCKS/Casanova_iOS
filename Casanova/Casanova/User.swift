@@ -9,25 +9,29 @@
 import Foundation
 
 class User {
+    // MARK: - Partial vars
     var id: Int!
     var username: String!
+    var userRole: String!
+    
+    // MARK: - vars for full user
     var password: String!
     var email: String!
     var createdAt: String!
     var updatedAt: String!
-    var userRole: String!
     var firstname: String!
     var lastname: String!
     
+    // MARK: - Init for Sign Up / Login Use
     init?(id: Int?,
-         username: String?,
-         password: String?,
-         email: String?,
-         createdAt: String?,
-         updatedAt: String?,
-         userRole: String?,
-         firstname: String?,
-         lastname: String?) {
+          username: String?,
+          password: String?,
+          email: String?,
+          createdAt: String?,
+          updatedAt: String?,
+          userRole: String?,
+          firstname: String?,
+          lastname: String?) {
         
         guard let id = id else {
             let msg = ErrorMessage(msg: "id == nil, when init user")
@@ -86,7 +90,7 @@ class User {
         self.lastname = lastname
         
     }
-
+    
     convenience init?(fromJSON json: [String: Any]) {
         guard let id = json["id"] as? Int else {
             let msg = ErrorMessage(msg: "id == nil, when init user from JSON")
@@ -143,5 +147,24 @@ class User {
                   userRole: userRole,
                   firstname: firstname,
                   lastname: lastname)
+    }
+    
+    // MARK: - Init for Topic Detail Use
+    init(id: Int,
+         username: String,
+         userRole: String) {
+        self.id = id
+        self.username = username
+        self.userRole = userRole
+    }
+    
+    convenience init?(json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let username = json["username"] as? String
+            else {
+                return nil
+        }
+        let userRole = json["userRole"] as? String ?? "none"
+        self.init(id: id, username: username, userRole: userRole)
     }
 }

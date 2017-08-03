@@ -9,55 +9,68 @@
 import Foundation
 
 class Answer {
-    var answerId: Int
-    var answerTitle: String
-    var updatedAt: String
-    var topicId: Int
-    var userId: Int
+    var id: Int
+    var title: String
     var ref: String
-    var status: Int
     var audioURL: String
+    var updatedAt: String
+    var user: User
+    var likes: [Like]
+    var comments: [Comment]
     
-    init(answerId: Int,
-         answerTitle: String,
-         updatedAt: String,
-         topicId: Int,
-         userId: Int,
+    init(id: Int,
+         title: String,
+         audioURL: String,
          ref: String,
-         status: Int,
-         audioURL: String) {
+         updatedAt: String,
+         user: User,
+         likes: [Like],
+         comments: [Comment]) {
         
-        self.answerId = answerId
-        self.answerTitle = answerTitle
-        self.updatedAt = updatedAt
-        self.topicId = topicId
-        self.userId = userId
+        self.id = id
+        self.title = title
         self.ref = ref
-        self.status = status
         self.audioURL = audioURL
+        self.updatedAt = updatedAt
+        
+        self.user = user
+        self.likes = likes
+        self.comments = comments
     }
     
     convenience init?(fromJson json: [String: Any]) {
-        guard let answerId = json["answerId"] as? Int,
-            let answerTitle = json["answerTitle"] as? String,
-            let updatedAt = json["updatedAt"] as? String,
-            let topicId = json["topicId"] as? Int,
-            let userId = json["userId"] as? Int,
+        guard let id = json["id"] as? Int,
+            let title = json["title"] as? String,
             let ref = json["ref"] as? String,
-            let status = json["status"] as? Int,
-            let audioURL = json["audioURL"] as? String
+            let audioURL = json["audioURL"] as? String,
+            let updatedAt = json["updatedAt"] as? String,
+            let userJSON = json["User"] as? [String: Any],
+            let likesJSON = json["Likes"] as? [Any],
+            let commentsJSON = json["Comments"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
                 print(errorMessage.msg)
                 return nil
         }
-        self.init(answerId: answerId,
-                  answerTitle: answerTitle,
-                  updatedAt: updatedAt,
-                  topicId: topicId,
-                  userId: userId,
-                  ref: ref,
-                  status: status,
-                  audioURL: audioURL)
+        // user
+        guard let user = User(json: userJSON) else { return nil }
+        // likes
+        var likes: [Like] = []
+        for likeJSON in likesJSON {
+            guard let like = likeJSON as? [String: Any] else { return nil }
+            if let like = Like(fromJSON: like) {
+                likes.append(like)
+            }
+        }
+        // comments
+        var comments: [Comment] = []
+        for commentJSON in commentsJSON {
+            guard let comment = commentJSON as? [String: Any] else { return nil }
+            if let comment = Comment(fromJSON: comment) {
+                comments.append(comment)
+            }
+        }
+        // init
+        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments)
     }
 }

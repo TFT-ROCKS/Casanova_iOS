@@ -34,8 +34,8 @@ class HomeViewController: UIViewController {
         homeTableView.estimatedRowHeight = 399
         
         // Register customized cells
-        let homeTableViewCell = UINib(nibName: "HomeTableViewCell", bundle: nil)
-        homeTableView.register(homeTableViewCell, forCellReuseIdentifier: "HomeTableViewCell")
+        let homeTableViewCell = UINib(nibName: "TopicBriefTableViewCell", bundle: nil)
+        homeTableView.register(homeTableViewCell, forCellReuseIdentifier: "TopicBriefTableViewCell")
         let loadMoreTableViewCell = UINib(nibName: "LoadMoreTableViewCell", bundle: nil)
         homeTableView.register(loadMoreTableViewCell, forCellReuseIdentifier: "LoadMoreTableViewCell")
         
@@ -96,7 +96,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "TopicBriefTableViewCell", for: indexPath) as? TopicBriefTableViewCell {
                 cell.topic = topics[indexPath.row]
                 return cell
             }
@@ -112,7 +112,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? HomeTableViewCell {
+        if let cell = cell as? TopicBriefTableViewCell {
             
             // Visualize the margin surrounding the table view cell
             cell.contentView.backgroundColor = UIColor.clear
