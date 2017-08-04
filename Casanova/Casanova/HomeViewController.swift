@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
         // Table view setup
         homeTableView.delegate = self
         homeTableView.dataSource = self
-        homeTableView.allowsSelection = false
+//        homeTableView.allowsSelection = false
         homeTableView.backgroundColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
@@ -125,13 +125,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
             
-            let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - cellHorizontalSpace * 2, height: cell.bounds.height - cellVerticalSpace / 2))
+            let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-            whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.cornerRadius = 5
+//            whiteRoundedView.layer.masksToBounds = false
+//            whiteRoundedView.layer.cornerRadius = 5
+            whiteRoundedView.layer.shadowColor = UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1).cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
-            whiteRoundedView.layer.shadowOpacity = 0.2
+            whiteRoundedView.layer.shadowOpacity = 1
             
             cell.contentView.addSubview(whiteRoundedView)
             cell.contentView.sendSubview(toBack: whiteRoundedView)
@@ -143,6 +144,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = UIColor.clear
             
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = TopicDetailViewController(withTopic: topics[indexPath.row])
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

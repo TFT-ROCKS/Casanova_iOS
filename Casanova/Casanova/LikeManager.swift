@@ -12,7 +12,7 @@ import Alamofire
 class LikeManager {
     static let shared = LikeManager()
     let url = "http://127.0.0.1:3000/api"
-    func postLike(answerID: Int, userId: Int, topicId: Int, withCompletion block: ((ErrorMessage) -> Void)? = nil) {
+    func postLike(answerID: Int, userId: Int, id: Int, withCompletion block: ((ErrorMessage) -> Void)? = nil) {
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
                                     "Referer": "http://127.0.0.1:3000/",
@@ -22,7 +22,7 @@ class LikeManager {
                                                       "operation": "create",
                                                       "params": ["answerId":answerID,
                                                                  "userId":userId,
-                                                                 "topicId":topicId],
+                                                                 "id":id],
                                                       "body": [:]]],
                                   "context": [:]]
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {

@@ -14,7 +14,8 @@ enum TopicDetailViewMode {
 }
 
 class TopicDetailViewController: UIViewController {
-
+    
+    // class vars
     var mode: TopicDetailViewMode {
         didSet {
             if mode == .record {
@@ -24,8 +25,10 @@ class TopicDetailViewController: UIViewController {
             }
         }
     }
+    var topic: Topic!
     
     // sub views
+    let topicView: TopicHeaderView
     let tableView: UITableView
     let recordButton: UIButton = UIButton(frame: .zero)
     let skipButton: UIButton = UIButton(frame: .zero)
@@ -35,7 +38,9 @@ class TopicDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init() {
+    init(withTopic topic: Topic) {
+        self.topic = topic
+        topicView = TopicHeaderView(frame: .zero)
         tableView = UITableView(frame: .zero)
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView(frame: .zero)
@@ -64,11 +69,30 @@ class TopicDetailViewController: UIViewController {
     func layoutSubviews() {
         layoutTableView()
         layoutRecordAndSkipButtons()
+        layoutTopicView()
     }
     
     func addConstraints() {
         addTableViewConstraints()
         addRecordAndSkipButtonsConstraints()
+    }
+    
+    func layoutTopicView() {
+        topicView.frame = CGRect(x: 0, y: (self.navigationController?.navigationBar.bounds.height)! + 20, width: view.bounds.width, height: 210)
+        view.addSubview(topicView)
+        view.bringSubview(toFront: topicView)
+        topicView.topic = topic
+    }
+    
+    func fetchTopicDetail() {
+        TopicManager.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
+            if error == nil {
+                // success
+                self.topic = topic
+                // reload table view
+                
+            }
+        })
     }
 
 }
@@ -86,11 +110,11 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func addTableViewConstraints() {
-        let margins = self.view.layoutMarginsGuide
-        tableView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 100).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+//        let margins = self.view.layoutMarginsGuide
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
