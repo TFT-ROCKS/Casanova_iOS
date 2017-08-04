@@ -55,6 +55,8 @@ class TopicDetailViewController: UIViewController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
+        
+        fetchTopicDetail()
     }
     
     override func viewDidLoad() {
@@ -75,13 +77,20 @@ class TopicDetailViewController: UIViewController {
     func addConstraints() {
         addTableViewConstraints()
         addRecordAndSkipButtonsConstraints()
+        addTopicViewConstraints()
     }
     
     func layoutTopicView() {
-        topicView.frame = CGRect(x: 0, y: (self.navigationController?.navigationBar.bounds.height)! + 20, width: view.bounds.width, height: 210)
         view.addSubview(topicView)
+        topicView.translatesAutoresizingMaskIntoConstraints = false
         view.bringSubview(toFront: topicView)
         topicView.topic = topic
+    }
+    
+    func addTopicViewConstraints() {
+        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.bounds.height)! + 20).isActive = true
+        topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     func fetchTopicDetail() {
@@ -110,7 +119,6 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func addTableViewConstraints() {
-//        let margins = self.view.layoutMarginsGuide
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true

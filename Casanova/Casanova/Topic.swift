@@ -62,11 +62,11 @@ class Topic {
     // MARK: - Detail Page
     var answers: [Answer]!
     
-    func fetchDetail(fromJSON json: [String: Any]) {
+    func fetchDetail(fromJSON json: [String: Any]) -> Bool{
         guard let answersJSON = json["Answers"] as? [Any] else {
             let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic detail")
             print(errorMessage.msg)
-            return
+            return false
         }
         answers = []
         isDetailed = true
@@ -77,5 +77,9 @@ class Topic {
                 }
             }
         }
+        if answers.count == 0 {
+            isDetailed = false
+        }
+        return isDetailed
     }
 }

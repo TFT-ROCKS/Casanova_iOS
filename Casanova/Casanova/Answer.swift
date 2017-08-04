@@ -12,7 +12,7 @@ class Answer {
     var id: Int
     var title: String
     var ref: String
-    var audioURL: String
+    var audioURL: String?
     var updatedAt: String
     var user: User
     var likes: [Like]
@@ -20,7 +20,7 @@ class Answer {
     
     init(id: Int,
          title: String,
-         audioURL: String,
+         audioURL: String?,
          ref: String,
          updatedAt: String,
          user: User,
@@ -41,8 +41,7 @@ class Answer {
     convenience init?(fromJson json: [String: Any]) {
         guard let id = json["id"] as? Int,
             let title = json["title"] as? String,
-            let ref = json["ref"] as? String,
-            let audioURL = json["audioURL"] as? String,
+            let ref = json["references"] as? String,
             let updatedAt = json["updatedAt"] as? String,
             let userJSON = json["User"] as? [String: Any],
             let likesJSON = json["Likes"] as? [Any],
@@ -52,6 +51,8 @@ class Answer {
                 print(errorMessage.msg)
                 return nil
         }
+        // audio url
+        let audioURL = json["audio_url"] as? String
         // user
         guard let user = User(json: userJSON) else { return nil }
         // likes

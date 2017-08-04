@@ -33,10 +33,10 @@ class Comment {
         guard let id = json["id"] as? Int,
             let title = json["title"] as? String,
             let createdAt = json["createdAt"] as? String,
-            let user = json["user"] as? [String: Any]
+            let userJSON = json["User"] as? [String: Any]
             else {
                 return nil
         }
-        self.init(id: id, title: title, createdAt: createdAt, user: User(json: user))
+        self.init(id: id, title: title, createdAt: createdAt, user: User(json: userJSON))
     }
 }

@@ -10,10 +10,21 @@ import Foundation
 import Alamofire
 
 class TopicManager {
+    /// Singleton
     static let shared = TopicManager()
     
+    /// URL for fetch topics
     let urlPre = "https://tft.rocks/api/topicsService;levelFilter=%5B%5D;searchQuery=;"
     let urlPost = "tagFilter=%5B%5D?returnMeta=true"
+    
+    /// URL for fetch single topic
+    let urlTopicDetail = "https://tft.rocks/api/topicsService;id="
+    
+    
+    /// Fetch topics for home view
+    /// - parameter from: starting index
+    /// - parameter block: completion block
+    ///
     func fetchTopics(from: Int, withCompletion block: ((ErrorMessage?, [Topic]?) -> Void)? = nil) {
         // Create URL
         let urlMid = "start=\(from);"
@@ -48,7 +59,10 @@ class TopicManager {
     }
     
     
-    let urlTopicDetail = "https://tft.rocks/api/topicsService;id="
+    
+    /// Fetch single topic detail for topic detail view
+    /// - parameter for: topic that needs detail info
+    /// - parameter block: completion block
     func fetchTopicDetail(for topic: Topic, withCompletion block: ((ErrorMessage?, Topic?) -> Void)? = nil) {
         // Create URL
         let url = urlTopicDetail + "\(topic.id)"
@@ -61,8 +75,9 @@ class TopicManager {
                 if let dict = json as? [String: Any] {
                     if let topicJSON = dict["topic"] as? [String: Any] {
                         // success
-                        topic.fetchDetail(fromJSON: topicJSON)
-                        block?(nil, topic)
+                        if topic.fetchDetail(fromJSON: topicJSON) {
+                            block?(nil, topic)
+                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch single topic detail")

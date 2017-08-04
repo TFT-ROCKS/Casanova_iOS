@@ -24,8 +24,8 @@ class Like {
     
     convenience init?(fromJSON json: [String: Any]) {
         guard let id = json["id"] as? Int,
-            let answerId = json["answerId"] as? Int,
-            let userId = json["userId"] as? Int
+            let answerId = json["AnswerId"] as? Int,
+            let userId = json["UserId"] as? Int
             else {
                 return nil
         }
