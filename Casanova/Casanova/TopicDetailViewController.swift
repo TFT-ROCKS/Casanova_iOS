@@ -42,30 +42,18 @@ class TopicDetailViewController: UIViewController {
         self.topic = topic
         topicView = TopicHeaderView(frame: .zero)
         tableView = UITableView(frame: .zero)
-        tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView(frame: .zero)
-        tableView.backgroundColor = UIColor(red: 248/255.0, green: 250/255.0, blue: 252/255.0, alpha: 1)
-        tableView.isScrollEnabled = false
         mode = .record
         
         super.init(nibName: nil, bundle: nil)
-
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 300
-        
-        fetchTopicDetail()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         layoutSubviews()
         addConstraints()
         registerCustomCell()
         configRecordAndSkipButtons()
+        fetchTopicDetail()
     }
     
     func layoutSubviews() {
@@ -80,6 +68,20 @@ class TopicDetailViewController: UIViewController {
         addTopicViewConstraints()
     }
     
+    func fetchTopicDetail() {
+        TopicManager.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
+            if error == nil {
+                // success
+                self.topic = topic
+                // reload table view
+                
+            }
+        })
+    }
+}
+
+// MARK: - TopicView
+extension TopicDetailViewController {
     func layoutTopicView() {
         view.addSubview(topicView)
         topicView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,18 +94,6 @@ class TopicDetailViewController: UIViewController {
         topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
-    
-    func fetchTopicDetail() {
-        TopicManager.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
-            if error == nil {
-                // success
-                self.topic = topic
-                // reload table view
-                
-            }
-        })
-    }
-
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -111,6 +101,22 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     func layoutTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        configTableView()
+    }
+    
+    func configTableView() {
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView(frame: .zero)
+        tableView.backgroundColor = UIColor(red: 248/255.0, green: 250/255.0, blue: 252/255.0, alpha: 1)
+        tableView.isScrollEnabled = false
+        // Hack for table view top space in between with topic view
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
     }
     
     func registerCustomCell() {
@@ -121,7 +127,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        tableView.topAnchor.constraint(equalTo: topicView.bottomAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
