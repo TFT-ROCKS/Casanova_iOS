@@ -60,6 +60,8 @@ class TopicBriefTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        selectionStyle = .none
         // Initialization code
 //        likeButton.setBackgroundImage(#imageLiteral(resourceName: "heart"), for: .normal)
 //        profileButton.setBackgroundImage(#imageLiteral(resourceName: "tftProfile"), for: .normal)

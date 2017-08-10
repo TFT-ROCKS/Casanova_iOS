@@ -14,8 +14,12 @@ class TopicManager {
     static let shared = TopicManager()
     
     /// URL for fetch topics
-    let urlPre = "https://tft.rocks/api/topicsService;levelFilter=%5B%5D;searchQuery=;"
-    let urlPost = "tagFilter=%5B%5D?returnMeta=true"
+    let urlPre = "https://tft.rocks/api/topicsService;"
+    func levelFilter(_ levels: String) -> String { return "levelFilter=\(levels);" }
+    func searchQuery(_ query: String) -> String { return "searchQuery=\(query);" }
+    func tagFilter(_ tags: String) -> String { return "tagFilter=\(tags);" }
+    func startFilter(_ from: Int) -> String { return "start=\(from)" }
+    let urlPost = "?returnMeta=true"
     
     /// URL for fetch single topic
     let urlTopicDetail = "https://tft.rocks/api/topicsService;id="
@@ -25,10 +29,13 @@ class TopicManager {
     /// - parameter from: starting index
     /// - parameter block: completion block
     ///
-    func fetchTopics(from: Int, withCompletion block: ((ErrorMessage?, [Topic]?) -> Void)? = nil) {
+    func fetchTopics(levels: [String] = [], query: String = "", tags: [String] = [], start: Int, withCompletion block: ((ErrorMessage?, [Topic]?) -> Void)? = nil) {
+        // Handle params
+        let levelsString = levels.joined(separator: ",")
+        let tagsString = tags.joined(separator: ",")
+        
         // Create URL
-        let urlMid = "start=\(from);"
-        let url = urlPre + urlMid + urlPost
+        let url = urlPre + levelFilter(levelsString) + searchQuery(query) + tagFilter(tagsString) + startFilter(start) + urlPost
         
         // Make request
         Alamofire.request(url, method: .get).responseJSON {
@@ -57,8 +64,6 @@ class TopicManager {
             }
         }
     }
-    
-    
     
     /// Fetch single topic detail for topic detail view
     /// - parameter for: topic that needs detail info

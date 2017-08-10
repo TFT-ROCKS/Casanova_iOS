@@ -51,7 +51,7 @@
         <!--Speaking-->
         <scene sceneID="gqL-h2-vpE">
             <objects>
-                <viewController id="7cg-gb-rgD" customClass="HomeViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="7cg-gb-rgD" customClass="HomeViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0GR-Q5-Qn9"/>
                         <viewControllerLayoutGuide type="bottom" id="8bg-EL-Y9F"/>
@@ -60,21 +60,68 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5j-fi-msz" customClass="TagListView" customModule="TagListView">
+                                <rect key="frame" x="0.0" y="64" width="414" height="28"/>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.98039215686274506" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableRemoveButton" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
+                                        <color key="value" red="0.90980392156862744" green="0.97254901960784312" blue="0.99215686274509807" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.90980392156862744" green="0.97254901960784312" blue="0.99215686274509807" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="14"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="removeButtonIconSize">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="removeIconLineColor">
+                                        <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="removeIconLineWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingX">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="marginY">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="marginX">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="687"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="595"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="top" secondItem="0GR-Q5-Qn9" secondAttribute="bottom" constant="-64" id="KH3-9a-jLb"/>
-                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="leading" secondItem="uJr-aZ-pxH" secondAttribute="leading" id="QbV-VG-2bj"/>
-                            <constraint firstAttribute="trailing" secondItem="A0f-Tg-Vfd" secondAttribute="trailing" id="UyV-3v-q7U"/>
-                            <constraint firstItem="8bg-EL-Y9F" firstAttribute="top" secondItem="A0f-Tg-Vfd" secondAttribute="bottom" id="cjc-Lk-abB"/>
+                            <constraint firstItem="a5j-fi-msz" firstAttribute="top" secondItem="0GR-Q5-Qn9" secondAttribute="bottom" id="4el-EN-oF5"/>
+                            <constraint firstAttribute="trailing" secondItem="A0f-Tg-Vfd" secondAttribute="trailing" id="7IL-wN-JXj"/>
+                            <constraint firstItem="a5j-fi-msz" firstAttribute="leading" secondItem="uJr-aZ-pxH" secondAttribute="leading" id="7Lx-dd-x3v"/>
+                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="leading" secondItem="uJr-aZ-pxH" secondAttribute="leading" id="Mjh-r5-Cxk"/>
+                            <constraint firstAttribute="trailing" secondItem="a5j-fi-msz" secondAttribute="trailing" id="WGu-tj-Gd0"/>
+                            <constraint firstItem="8bg-EL-Y9F" firstAttribute="top" secondItem="A0f-Tg-Vfd" secondAttribute="bottom" id="g6i-w6-iEc"/>
+                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="top" secondItem="a5j-fi-msz" secondAttribute="bottom" id="nrJ-Cd-C9Y"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="Speaking" image="speaking" selectedImage="speaking-h" id="SWt-e4-YbV"/>
                     <connections>
+                        <outlet property="filterListView" destination="a5j-fi-msz" id="O8W-Qv-maf"/>
                         <outlet property="homeTableView" destination="A0f-Tg-Vfd" id="JGR-jq-dG4"/>
                     </connections>
                 </viewController>
@@ -214,6 +261,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="8P7-T7-4o2"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Pause"/>
                                 <connections>
                                     <action selector="pauseButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XKh-EQ-i5m"/>

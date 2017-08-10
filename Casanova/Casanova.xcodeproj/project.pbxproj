@@ -50,6 +50,7 @@
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
 		80E339111F1AE4FE00F539E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80E339101F1AE4FE00F539E5 /* Assets.xcassets */; };
 		80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */; };
+		80F730B61F3C398600907F61 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F730B51F3C398600907F61 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,7 @@
 		80E339101F1AE4FE00F539E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		80E339131F1AE4FE00F539E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80E339151F1AE4FE00F539E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80F730B51F3C398600907F61 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				804D91D71F37EA0600CA6FBE /* Constants.swift */,
+				80F730B51F3C398600907F61 /* Utils.swift */,
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
@@ -426,6 +429,7 @@
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
+				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,

@@ -7,16 +7,29 @@
 //
 
 import UIKit
+import TagListView
 
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var homeTableView: UITableView!
     
+    @IBOutlet weak var filterListView: TagListView!
     // Filter view data
     let tpoArray = ["Task 1", "Task 2", "Task 3", "Task 4", "Task 5", "Task 6"]
     let catArray = ["Education", "Culture", "Family", "Job", "Activity", "Technology", "Places", "Environment", "Others"]
     let levelArray = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
+    // Filter params
+    var levels: [String] = []
+    var tags: [String] = []
+    var query: String = ""
+    // Previous filter params
+    var preLevels: [String] = []
+    var preTags: [String] = []
+    var preQuery: String = ""
+    // Update flag
+    var updateFlag = false
     
+    // Table View Data
     var topics: [Topic] = [] {
         didSet {
             homeTableView.reloadData()
@@ -37,6 +50,7 @@ class HomeViewController: UIViewController {
         homeTableView.delegate = self
         homeTableView.dataSource = self
         homeTableView.tag = Tags.HomeVC.homeTableViewTag
+        homeTableView.contentInset = UIEdgeInsets.zero
         
         //        homeTableView.allowsSelection = false
         homeTableView.backgroundColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
@@ -59,18 +73,75 @@ class HomeViewController: UIViewController {
         // Fetch topics from 0 ~ 20 (determined)
         fetchTopics(from: topics.count)
         
+        // Setup filterListView
+        filterListView.delegate = self
     }
     
     func fetchTopics(from: Int) {
         // Fetch topics
-        TopicManager.shared.fetchTopics(from: from, withCompletion: { (error, topics) in
+        TopicManager.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
             if error == nil {
                 // success
-                self.topics.append(contentsOf: topics!)
+                if self.updateFlag {
+                    self.topics = topics!
+                    self.updateFlag = false
+                } else {
+                    self.topics.append(contentsOf: topics!)
+                }
             } else {
                 // error found
             }
         })
+    }
+    
+    func updateLevels(level: Int) {
+        
+        if let index = levels.index(of: String(level)) {
+            levels.remove(at: index)
+        } else {
+            levels.append(String(level))
+        }
+        
+    }
+    
+    func updateTags(tag: String) {
+        
+        if let index = tags.index(of: tag) {
+            tags.remove(at: index)
+        } else {
+            tags.append(tag)
+        }
+    }
+}
+
+// MARK: - TagListViewDelegate
+extension HomeViewController: TagListViewDelegate {
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        sender.removeTag(title)
+        if levelArray.toLowerCase().contains(title.lowercased()) {
+            updateLevels(level: levelArray.toLowerCase().index(of: title.lowercased())! + 1)
+        }
+        if catArray.toLowerCase().contains(title.lowercased()) {
+            updateTags(tag: title.lowercased())
+        }
+        updateFlag = true
+        fetchTopics(from: 0)
+    }
+    
+    func updateFilterListView() {
+        filterListView.removeAllTags()
+        filterListView.addTags(levelsName(fromNumber: levels).toUpperCase())
+        filterListView.addTags(tags.toUpperCase())
+        
+        filterListView.textFont = Fonts.CommonVC.TagListView.tagLabelTextFont()
+    }
+    
+    func levelsName(fromNumber levels: [String]) -> [String] {
+        var res: [String] = []
+        for level in levels {
+            res.append(levelArray[Int(level)! - 1])
+        }
+        return res
     }
 }
 
@@ -107,15 +178,51 @@ extension HomeViewController {
     }
     
     func filterButtonClicked(_ sender: UIBarButtonItem) {
+        
         if filterView == nil {
             setupFilterView()
         } else {
             filterView!.isHidden = !filterView!.isHidden
+            // if filter view hidden, compare with previous filter
+            // if diff with previous filter, then start updating
+            if filterView!.isHidden && needsUpdate() {
+                updateFilterListView()
+                updateFlag = true
+                fetchTopics(from: 0)
+            } else {
+                // Saved current filter params
+                preLevels = levels
+                preTags = tags
+                filterView?.tpoTableView.reloadData()
+                filterView?.catgTableView.reloadData()
+                filterView?.levelTableView.reloadData()
+            }
         }
     }
     
     func searchButtonClicked(_ sender: UIBarButtonItem) {
         
+    }
+    
+    func needsUpdate() -> Bool {
+        if preLevels.count != levels.count || preTags.count != tags.count {
+            // Needs update
+            return true
+        } else {
+            for preLevel in preLevels {
+                if !levels.contains(preLevel) {
+                    // Needs update
+                    return true
+                }
+            }
+            for preTag in preTags {
+                if !tags.contains(preTag) {
+                    // Needs update
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 
@@ -181,14 +288,25 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case Tags.HomeVC.tpoTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
             cell.title.text = tpoArray[indexPath.row]
+            if indexPath.row == 0 || indexPath.row == 1 {
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            }
             return cell
         case Tags.HomeVC.levelTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
             cell.title.text = levelArray[indexPath.row]
+            let level = indexPath.row + 1
+            if levels.contains(String(level)) {
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            }
             return cell
         case Tags.HomeVC.catTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
             cell.title.text = catArray[indexPath.row]
+            let tag = catArray[indexPath.row]
+            if tags.toUpperCase().contains(tag.uppercased()) {
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            }
             return cell
         default:
             break
@@ -245,14 +363,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            tableView.deselectRow(at: indexPath, animated: true)
             let vc = TopicDetailViewController(withTopic: topics[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         case Tags.HomeVC.tpoTableViewTag:
             break
         case Tags.HomeVC.levelTableViewTag:
+            let level = indexPath.row + 1
+            updateLevels(level: level)
             break
         case Tags.HomeVC.catTableViewTag:
+            let tag = catArray[indexPath.row]
+            updateTags(tag: tag.lowercased())
             break
         default:
             break
@@ -278,5 +399,29 @@ extension UINavigationBar {
         let bottomBorderView = UIView(frame: bottomBorderRect)
         bottomBorderView.backgroundColor = color
         addSubview(bottomBorderView)
+    }
+}
+
+// MARK: - String Array to uppercase
+
+extension Array {
+    func toUpperCase() -> [String] {
+        var res: [String] = []
+        for str in self {
+            if let s = str as? String {
+                res.append(s.uppercased())
+            }
+        }
+        return res
+    }
+    
+    func toLowerCase() -> [String] {
+        var res: [String] = []
+        for str in self {
+            if let s = str as? String {
+                res.append(s.lowercased())
+            }
+        }
+        return res
     }
 }

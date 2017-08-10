@@ -24,6 +24,8 @@ class LoadMoreTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        selectionStyle = .none
+        
         // Add shadow to LoadMore button
         // ref: https://www.hackingwithswift.com/example-code/uikit/how-to-add-a-shadow-to-a-uiview
         
