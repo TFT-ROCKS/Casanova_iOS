@@ -54,6 +54,12 @@ class TopicDetailViewController: UIViewController {
         registerCustomCell()
         configRecordAndSkipButtons()
         fetchTopicDetail()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.tintColor = Colors.TopicDetailVC.NavBar.tintColor()
+        tableView.isHidden = true
+        view.backgroundColor = UIColor.white
+        setTitle()
+        setButtons()
     }
     
     func layoutSubviews() {
@@ -78,6 +84,24 @@ class TopicDetailViewController: UIViewController {
             }
         })
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    func setTitle() {
+        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 1
+        titleLabel.text = "Question"
+        titleLabel.font = Fonts.TopicDetailVC.NavBar.titleTextFont()
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
+    }
+    
+    func setButtons() {
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+    }
 }
 
 // MARK: - TopicView
@@ -90,7 +114,7 @@ extension TopicDetailViewController {
     }
     
     func addTopicViewConstraints() {
-        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.bounds.height)! + 20).isActive = true
+        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.bounds.height)!).isActive = true
         topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }

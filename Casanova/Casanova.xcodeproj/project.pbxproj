@@ -27,6 +27,9 @@
 		804D91D41F37D35100CA6FBE /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804D91D21F37D35100CA6FBE /* FilterTableViewCell.xib */; };
 		804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91D71F37EA0600CA6FBE /* Constants.swift */; };
 		804D91DA1F382EB100CA6FBE /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 804D91D91F382EB100CA6FBE /* Montserrat-Light.ttf */; };
+		8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8061797E1F3E69BD00B696FB /* UIView+Animation.swift */; };
+		806179821F3E69F500B696FB /* Array+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806179811F3E69F500B696FB /* Array+Helper.swift */; };
+		806179841F3E6A2300B696FB /* NavigationBar+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */; };
 		8063DE0E1F21277E00E22E9B /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8063DE0D1F21277E00E22E9B /* TimeManager.swift */; };
 		807BF5C81F29B24D000451FA /* LikeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5C71F29B24D000451FA /* LikeManager.swift */; };
 		807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5C91F29B25D000451FA /* CommentManager.swift */; };
@@ -75,6 +78,9 @@
 		804D91D21F37D35100CA6FBE /* FilterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterTableViewCell.xib; sourceTree = "<group>"; };
 		804D91D71F37EA0600CA6FBE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		804D91D91F382EB100CA6FBE /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		8061797E1F3E69BD00B696FB /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		806179811F3E69F500B696FB /* Array+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Helper.swift"; sourceTree = "<group>"; };
+		806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NavigationBar+Helper.swift"; sourceTree = "<group>"; };
 		8063DE0D1F21277E00E22E9B /* TimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
 		807BF5C71F29B24D000451FA /* LikeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeManager.swift; sourceTree = "<group>"; };
 		807BF5C91F29B25D000451FA /* CommentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
@@ -170,8 +176,6 @@
 		800FEFE51F25678200DF5531 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				804D91D71F37EA0600CA6FBE /* Constants.swift */,
-				80F730B51F3C398600907F61 /* Utils.swift */,
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
@@ -240,6 +244,18 @@
 			name = FilterView;
 			sourceTree = "<group>";
 		};
+		806179801F3E69D500B696FB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8061797E1F3E69BD00B696FB /* UIView+Animation.swift */,
+				806179811F3E69F500B696FB /* Array+Helper.swift */,
+				804D91D71F37EA0600CA6FBE /* Constants.swift */,
+				806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */,
+				80F730B51F3C398600907F61 /* Utils.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +291,7 @@
 				800FEFE31F25675600DF5531 /* Models */,
 				800FEFE41F25677300DF5531 /* Views */,
 				800FEFE21F25674500DF5531 /* Managers */,
+				806179801F3E69D500B696FB /* Helpers */,
 				800FEFE61F2567AA00DF5531 /* View Controllers */,
 				800FEFE51F25678200DF5531 /* Support Files */,
 			);
@@ -425,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */,
+				806179841F3E6A2300B696FB /* NavigationBar+Helper.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
@@ -447,9 +465,11 @@
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
 				800122C61F1EDCCF00F185AE /* TopicManager.swift in Sources */,
+				806179821F3E69F500B696FB /* Array+Helper.swift in Sources */,
 				800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */,
 				80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
+				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,
 				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,

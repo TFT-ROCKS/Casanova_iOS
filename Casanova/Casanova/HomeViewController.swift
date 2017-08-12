@@ -11,9 +11,13 @@ import TagListView
 
 class HomeViewController: UIViewController {
     
+    // Sub views
     @IBOutlet weak var homeTableView: UITableView!
-    
     @IBOutlet weak var filterListView: TagListView!
+    
+    // Constraints
+    @IBOutlet weak var homeTableViewBottomConstraint: NSLayoutConstraint!
+    
     // Filter view data
     let tpoArray = ["Task 1", "Task 2", "Task 3", "Task 4", "Task 5", "Task 6"]
     let catArray = ["Education", "Culture", "Family", "Job", "Activity", "Technology", "Places", "Environment", "Others"]
@@ -53,20 +57,20 @@ class HomeViewController: UIViewController {
         homeTableView.contentInset = UIEdgeInsets.zero
         
         //        homeTableView.allowsSelection = false
-        homeTableView.backgroundColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
+        homeTableView.backgroundColor = Colors.HomeVC.View.homeTableViewBackgroundColor()
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
         
         // Register customized cells
-        let topicBriefTableViewCell = UINib(nibName: "TopicBriefTableViewCell", bundle: nil)
-        homeTableView.register(topicBriefTableViewCell, forCellReuseIdentifier: "TopicBriefTableViewCell")
-        let loadMoreTableViewCell = UINib(nibName: "LoadMoreTableViewCell", bundle: nil)
-        homeTableView.register(loadMoreTableViewCell, forCellReuseIdentifier: "LoadMoreTableViewCell")
+        let topicBriefTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.topicBriefTableViewCell, bundle: nil)
+        homeTableView.register(topicBriefTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.topicBriefTableViewCell)
+        let loadMoreTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.loadMoreTableViewCell, bundle: nil)
+        homeTableView.register(loadMoreTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell)
         
         // Navigation bar setup
-        navigationController?.navigationBar.tintColor = UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1)
-        navigationController?.navigationBar.setBottomBorderColor(color: UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1), height: 1)
-        navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationController?.navigationBar.tintColor = Colors.CommonVC.NavBar.tintColor()
+        navigationController?.navigationBar.setBottomBorderColor(color: Colors.CommonVC.NavBar.borderColor(), height: 1)
+        navigationController?.navigationBar.barTintColor = Colors.CommonVC.NavBar.barTintColor()
         setTitle()
         setButtons()
         
@@ -149,8 +153,8 @@ extension HomeViewController: TagListViewDelegate {
 extension HomeViewController {
     func setTitle() {
         let attributedString = NSMutableAttributedString(string: "TFTROCKS", attributes: [
-            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 18.0)!,
-            NSForegroundColorAttributeName: UIColor(red: 75.0 / 255.0, green: 205.0 / 255.0, blue: 237.0 / 255.0, alpha: 1.0),
+            NSFontAttributeName: Fonts.CommonVC.NavBar.tftTitleTextFont(),
+            NSForegroundColorAttributeName: Colors.CommonVC.NavBar.tftTitleColor(),
             NSKernAttributeName: -1.6
             ])
         attributedString.addAttribute(NSKernAttributeName, value: 0.0, range: NSRange(location: 7, length: 1))
@@ -173,6 +177,7 @@ extension HomeViewController {
         let y = (navigationController?.navigationBar.frame.origin.y)! + (navigationController?.navigationBar.frame.height)!
         filterView = FilterView(frame: CGRect(x: 0, y: y, width: view.bounds.width, height: (tabBarController?.tabBar.frame.origin.y)! - y))
         filterView!.setTableViewDatasourceDelegate(dataSourceDelegate: self)
+        filterView!.isHidden = true
         view.addSubview(filterView!)
         view.bringSubview(toFront: filterView!)
     }
@@ -181,22 +186,34 @@ extension HomeViewController {
         
         if filterView == nil {
             setupFilterView()
-        } else {
-            filterView!.isHidden = !filterView!.isHidden
-            // if filter view hidden, compare with previous filter
-            // if diff with previous filter, then start updating
-            if filterView!.isHidden && needsUpdate() {
-                updateFilterListView()
-                updateFlag = true
-                fetchTopics(from: 0)
-            } else {
-                // Saved current filter params
-                preLevels = levels
-                preTags = tags
-                filterView?.tpoTableView.reloadData()
-                filterView?.catgTableView.reloadData()
-                filterView?.levelTableView.reloadData()
-            }
+        }
+        
+        if (filterView?.isHidden)! { // Fade In alpha 0 -> 1
+            filterView?.isHidden = false
+            filterView?.alpha = 0
+            filterView?.fadeIn(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
+                if success {
+                    // Saved current filter params
+                    self.preLevels = self.levels
+                    self.preTags = self.tags
+                    self.filterView?.tpoTableView.reloadData()
+                    self.filterView?.catgTableView.reloadData()
+                    self.filterView?.levelTableView.reloadData()
+                }
+            })
+        } else { // Fade Out alpha 1 -> 0
+            filterView?.fadeOut(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
+                if success {
+                    self.filterView?.isHidden = true
+                    // if filter view hidden, compare with previous filter
+                    // if diff with previous filter, then start updating
+                    if self.needsUpdate() {
+                        self.updateFilterListView()
+                        self.updateFlag = true
+                        self.fetchTopics(from: 0)
+                    }
+                }
+            })
         }
     }
     
@@ -223,6 +240,49 @@ extension HomeViewController {
             }
         }
         return false
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
+        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
+            // Hide
+            toggleTabBar(true, animated: true)
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        } else {
+            
+        }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
+        if velocity.y < 0 {
+            // Un-Hide
+            toggleTabBar(false, animated: true)
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        } else {
+            
+        }
+    }
+    
+    func toggleTabBar(_ hidden: Bool, animated: Bool) {
+        let tabBar = self.tabBarController?.tabBar
+        if tabBar!.isHidden == hidden { return }
+        let frame = tabBar?.frame
+        let offset = (hidden ? (frame?.size.height)! : -(frame?.size.height)!)
+        let duration: TimeInterval = (animated ? Double(UINavigationControllerHideShowBarDuration) : 0.0)
+        tabBar?.isHidden = false
+        if frame != nil {
+            UIView.animate(withDuration: duration,
+                           animations: {
+                            tabBar!.frame = frame!.offsetBy(dx: 0, dy: offset)
+            },
+                           completion: {
+                            if $0 {tabBar?.isHidden = hidden}
+            })
+        }
     }
 }
 
@@ -335,7 +395,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
                 //            whiteRoundedView.layer.masksToBounds = false
                 //            whiteRoundedView.layer.cornerRadius = 5
-                whiteRoundedView.layer.shadowColor = UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1).cgColor
+                whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
                 whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
                 whiteRoundedView.layer.shadowOpacity = 1
                 
@@ -387,41 +447,5 @@ extension HomeViewController: LoadMoreTableViewCellDelegate {
     func loadMoreButtonClicked() {
         // Do load more function
         fetchTopics(from: topics.count)
-    }
-}
-
-// MARK: - Navigation appearance extension
-// ref: https://stackoverflow.com/questions/19101361/ios7-change-uinavigationbar-border-color
-
-extension UINavigationBar {
-    func setBottomBorderColor(color: UIColor, height: CGFloat) {
-        let bottomBorderRect = CGRect(x: 0, y: frame.height, width: frame.width, height: height)
-        let bottomBorderView = UIView(frame: bottomBorderRect)
-        bottomBorderView.backgroundColor = color
-        addSubview(bottomBorderView)
-    }
-}
-
-// MARK: - String Array to uppercase
-
-extension Array {
-    func toUpperCase() -> [String] {
-        var res: [String] = []
-        for str in self {
-            if let s = str as? String {
-                res.append(s.uppercased())
-            }
-        }
-        return res
-    }
-    
-    func toLowerCase() -> [String] {
-        var res: [String] = []
-        for str in self {
-            if let s = str as? String {
-                res.append(s.lowercased())
-            }
-        }
-        return res
     }
 }
