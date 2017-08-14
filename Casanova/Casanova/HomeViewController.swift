@@ -68,6 +68,7 @@ class HomeViewController: UIViewController {
         homeTableView.register(loadMoreTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell)
         
         // Navigation bar setup
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = Colors.CommonVC.NavBar.tintColor()
         navigationController?.navigationBar.setBottomBorderColor(color: Colors.CommonVC.NavBar.borderColor(), height: 1)
         navigationController?.navigationBar.barTintColor = Colors.CommonVC.NavBar.barTintColor()
@@ -79,6 +80,11 @@ class HomeViewController: UIViewController {
         
         // Setup filterListView
         filterListView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     func fetchTopics(from: Int) {
@@ -189,8 +195,6 @@ extension HomeViewController {
         }
         
         if (filterView?.isHidden)! { // Fade In alpha 0 -> 1
-            filterView?.isHidden = false
-            filterView?.alpha = 0
             filterView?.fadeIn(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
                 if success {
                     // Saved current filter params
@@ -204,7 +208,6 @@ extension HomeViewController {
         } else { // Fade Out alpha 1 -> 0
             filterView?.fadeOut(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
                 if success {
-                    self.filterView?.isHidden = true
                     // if filter view hidden, compare with previous filter
                     // if diff with previous filter, then start updating
                     if self.needsUpdate() {
@@ -423,7 +426,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            let vc = TopicDetailViewController(withTopic: topics[indexPath.row])
+            let vc = TopicDetailViewController(withTopic: topics[indexPath.row], withMode: .record)
             self.navigationController?.pushViewController(vc, animated: true)
         case Tags.HomeVC.tpoTableViewTag:
             break

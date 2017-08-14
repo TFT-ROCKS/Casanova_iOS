@@ -11,11 +11,11 @@ import Alamofire
 
 class UserManager {
     static let shared = UserManager()
-    let url = "http://127.0.0.1:3000/api"
-    func signUp(username: String?, email: String?, password: String?, withCompletion block: ((ErrorMessage) -> Void)? = nil) {
+    let url = "https://tft.rocks/api"
+    func signUp(username: String?, email: String?, password: String?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
-                                    "Referer": "http://127.0.0.1:3000/",
+                                    "Referer": "https://tft.rocks/",
                                     "X-Requested-With": "XMLHttpRequest",
                                     "Connection": "keep-alive"]
         let params: Parameters = ["requests": ["g0": ["resource": "userService",
@@ -37,7 +37,7 @@ class UserManager {
                         block?(errorMessage)
                     } else {
                         // success
-                        
+                        block?(nil)
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when sign up")
@@ -50,10 +50,10 @@ class UserManager {
         }
     }
     
-    func signIn(email: String?, password: String?, withCompletion block: ((ErrorMessage) -> Void)? = nil) {
+    func signIn(email: String?, password: String?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
-                                    "Referer": "http://127.0.0.1:3000/",
+                                    "Referer": "https://tft.rocks/",
                                     "X-Requested-With": "XMLHttpRequest",
                                     "Connection": "keep-alive"]
         let params: Parameters = ["requests": ["g0": ["resource": "userService",
@@ -76,7 +76,9 @@ class UserManager {
                         // success
                         if let dict = json["g0"] as? [String: Any] {
                             if let dict = dict["data"] as? [String: Any] {
-                                let user = User(fromJSON: dict)
+                                if let user = User(fromJSON: dict) {
+                                    block?(nil)
+                                }
                             }
                         }
                     }

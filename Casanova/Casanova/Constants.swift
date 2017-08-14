@@ -22,6 +22,15 @@ struct Tags {
 }
 
 struct Colors {
+    struct LoginVC {
+        struct Buttons {
+            static func loginButtonColor() -> UIColor { return UIColor(red: 75.0 / 255.0, green: 205.0 / 255.0, blue: 237.0 / 255.0, alpha: 1.0) }
+            static func signupButtonColor() -> UIColor { return UIColor(red: 75.0 / 255.0, green: 205.0 / 255.0, blue: 237.0 / 255.0, alpha: 1.0) }
+        }
+        struct Labels {
+            static func errorLabelTextColor() -> UIColor { return UIColor(red: 254 / 255.0, green: 40 / 255.0, blue: 81 / 255.0, alpha: 0.5) }
+        }
+    }
     struct HomeVC {
         struct View {
             static func homeTableViewBackgroundColor() -> UIColor { return UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1) }
@@ -50,10 +59,21 @@ struct Colors {
         struct NavBar {
             static func tintColor() -> UIColor { return UIColor(red: 164.0 / 255.0, green: 170.0 / 255.0, blue: 179.0 / 255.0, alpha: 1.0) }
         }
+        struct View {
+            static func backgroundColor() -> UIColor { return UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1) }
+        }
+        struct Buttons {
+            static func skipButtonTextColor() -> UIColor { return UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1) }
+        }
     }
 }
 
 struct Fonts {
+    struct SignupVC {
+        struct Labels {
+            static func errorLabelFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 14)! }
+        }
+    }
     struct HomeVC {
         struct FilterView {
             static func filterLabelTextFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 14.0)! }
@@ -72,6 +92,9 @@ struct Fonts {
         struct NavBar {
             static func titleTextFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 18.0)! }
         }
+        struct Buttons {
+            static func skipButtonFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 18.0)! }
+        }
     }
 }
 
@@ -85,11 +108,22 @@ struct ReuseIDs {
             static let filterTableViewCell = "FilterTableViewCell"
         }
     }
+    struct TopicDetailVC {
+        struct View {
+            static let answerWithTextCell = "AnswerWithTextCell"
+            static let answerWithoutTextCell = "AnswerWithoutTextCell"
+        }
+    }
 }
 
 struct Duration {
     struct HomeVC {
         struct FilterView {
+            static let fadeInOrOutDuration: Double = 0.2
+        }
+    }
+    struct TopicDetailVC {
+        struct View {
             static let fadeInOrOutDuration: Double = 0.2
         }
     }

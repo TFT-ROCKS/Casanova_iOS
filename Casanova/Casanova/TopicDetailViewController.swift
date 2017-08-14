@@ -28,8 +28,8 @@ class TopicDetailViewController: UIViewController {
     var topic: Topic!
     
     // sub views
-    let topicView: TopicHeaderView
-    let tableView: UITableView
+    let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
+    let tableView: UITableView = UITableView(frame: .zero)
     let recordButton: UIButton = UIButton(frame: .zero)
     let skipButton: UIButton = UIButton(frame: .zero)
     
@@ -38,11 +38,9 @@ class TopicDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withTopic topic: Topic) {
+    init(withTopic topic: Topic, withMode mode: TopicDetailViewMode) {
         self.topic = topic
-        topicView = TopicHeaderView(frame: .zero)
-        tableView = UITableView(frame: .zero)
-        mode = .record
+        self.mode = mode
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -51,27 +49,40 @@ class TopicDetailViewController: UIViewController {
         super.viewDidLoad()
         layoutSubviews()
         addConstraints()
-        registerCustomCell()
-        configRecordAndSkipButtons()
         fetchTopicDetail()
+        setTitle()
+        
+        // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = Colors.TopicDetailVC.NavBar.tintColor()
-        tableView.isHidden = true
-        view.backgroundColor = UIColor.white
-        setTitle()
-        setButtons()
+        
+        if mode == .record {
+            tableView.isHidden = true
+        }
+        
+        view.backgroundColor = Colors.TopicDetailVC.View.backgroundColor()
     }
     
     func layoutSubviews() {
-        layoutTableView()
-        layoutRecordAndSkipButtons()
         layoutTopicView()
+        layoutTableView()
+        
+        if mode == .record {
+            layoutRecordAndSkipButtons()
+        }
     }
     
     func addConstraints() {
-        addTableViewConstraints()
-        addRecordAndSkipButtonsConstraints()
         addTopicViewConstraints()
+        addTableViewConstraints()
+        
+        if mode == .record {
+            addRecordAndSkipButtonsConstraints()
+        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     func fetchTopicDetail() {
@@ -85,10 +96,6 @@ class TopicDetailViewController: UIViewController {
         })
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     func setTitle() {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
@@ -97,10 +104,6 @@ class TopicDetailViewController: UIViewController {
         titleLabel.font = Fonts.TopicDetailVC.NavBar.titleTextFont()
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
-    }
-    
-    func setButtons() {
-//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
     }
 }
 
@@ -126,6 +129,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
+        registerCustomCell()
     }
     
     func configTableView() {
@@ -144,8 +148,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func registerCustomCell() {
-        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: "AnswerWithTextCell")
-        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: "AnswerWithoutTextCell")
+        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell)
+        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell)
     }
     
     func addTableViewConstraints() {
@@ -179,13 +183,14 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "AnswerWithTextCell", for: indexPath) as? AnswerDetailTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell, for: indexPath) as? AnswerDetailTableViewCell {
             return cell
-        } else if let cell = tableView.dequeueReusableCell(withIdentifier: "AnswerWithoutTextCell", for: indexPath) as? AnswerDetailTableViewCell {
+        } else if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell, for: indexPath) as? AnswerDetailTableViewCell {
             return cell
         }
         return UITableViewCell()
     }
+    
 }
 
 // MARK: - Record Button and Skip Buttons
@@ -201,6 +206,7 @@ extension TopicDetailViewController {
         view.addSubview(skipButton)
         view.bringSubview(toFront: recordButton)
         view.bringSubview(toFront: skipButton)
+        configRecordAndSkipButtons()
     }
     
     func configRecordAndSkipButtons() {
@@ -220,9 +226,9 @@ extension TopicDetailViewController {
         speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
         recordButton.addSubview(speakingImgView)
         let skipLabel = UILabel(frame: CGRect(x: 14.4, y: 2.45, width: 35.2, height: 25))
-        skipLabel.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        skipLabel.font = Fonts.TopicDetailVC.Buttons.skipButtonFont()
         skipLabel.text = "Skip"
-        skipLabel.textColor = UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1)
+        skipLabel.textColor = Colors.TopicDetailVC.Buttons.skipButtonTextColor()
         skipButton.addSubview(skipLabel)
     }
     
@@ -241,10 +247,20 @@ extension TopicDetailViewController {
     }
     
     func recordButtonClicked(_ sender: UIButton) {
-        
+        skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
     
     func skipButtonClicked(_ sender: UIButton) {
-    
+        recordButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
+            if success {
+                self.skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
+                    if success {
+                        self.recordButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                    }
+                }
+            }
+        }
     }
+    
+    
 }

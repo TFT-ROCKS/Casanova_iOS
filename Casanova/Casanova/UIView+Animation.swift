@@ -16,6 +16,8 @@ extension UIView {
      - parameter duration: custom animation duration
      */
     func fadeIn(withDuration duration: TimeInterval = 1.0, withCompletionBlock block: ((Bool) -> Swift.Void)? = nil) {
+        self.isHidden = false
+        self.alpha = 0.0
         UIView.animate(withDuration: duration, animations: {
             self.alpha = 1.0
         }, completion: { success in
@@ -32,6 +34,7 @@ extension UIView {
         UIView.animate(withDuration: duration, animations: {
             self.alpha = 0.0
         }, completion: { success in
+            self.isHidden = true
             block?(success)
         })
     }
