@@ -20,6 +20,7 @@ class SignInViewController: UIViewController {
         UserManager.shared.signIn(email: usernameTextField.text, password: passwordTextField.text, withCompletion: { error in
             if error == nil {
                 // Success
+                self.errorLabel.text = " "
                 let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
                 self.navigationController?.setViewControllers([tc], animated: false)
             } else {
@@ -59,7 +60,7 @@ class SignInViewController: UIViewController {
         // Error label configs
         errorLabel.font = Fonts.SignupVC.Labels.errorLabelFont()
         errorLabel.textColor = Colors.LoginVC.Labels.errorLabelTextColor()
-        errorLabel.text = ""
+        errorLabel.text = " " // Set to " " instead of "" to hold the height constraint
         
         // Log in / Sign up buttons configs
         logInButton.layer.cornerRadius = 22.5
@@ -124,7 +125,10 @@ class SignInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        errorLabel.text = " "
         self.view.endEditing(true)
+        self.usernameTextField.resignFirstResponder()
+        self.passwordTextField.resignFirstResponder()
         
         // Add Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)

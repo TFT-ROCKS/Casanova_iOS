@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 enum TopicDetailViewMode {
     case record
@@ -30,8 +31,28 @@ class TopicDetailViewController: UIViewController {
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
+    
     let recordButton: UIButton = UIButton(frame: .zero)
+    let speakingImgView: UIImageView = UIImageView(frame: .zero)
     let skipButton: UIButton = UIButton(frame: .zero)
+    let clockIcon: UIImageView = UIImageView(frame: .zero)
+    let timeLabel: UILabel = UILabel(frame: .zero)
+    
+    let audioBarButton: UIButton = UIButton(frame: .zero)
+    let audioTimeLabel: UILabel = UILabel(frame: .zero)
+    let postButton: UIButton = UIButton(frame: .zero)
+    
+    let rewardImageView: UIImageView = UIImageView(frame: .zero)
+    let rewardLabel: UILabel = UILabel(frame: .zero)
+    
+    var timer: Timer!
+    var seconds: Int = 60
+    let secs: Int = 60
+    
+    // record
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
     
     // init
     required init?(coder aDecoder: NSCoder) {
@@ -61,24 +82,38 @@ class TopicDetailViewController: UIViewController {
         }
         
         view.backgroundColor = Colors.TopicDetailVC.View.backgroundColor()
+        
+        recordingSession = AVAudioSession.sharedInstance()
+        
+        // record setup
+        if mode == .record {
+            do {
+                try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                try recordingSession.setActive(true)
+                recordingSession.requestRecordPermission() { [unowned self] allowed in
+                    DispatchQueue.main.async {
+                        if allowed {
+                            self.layoutRecordViews()
+                            self.addRecordConstraints()
+                        } else {
+                            // failed to record!
+                        }
+                    }
+                }
+            } catch {
+                // failed to record!
+            }
+        }
     }
     
     func layoutSubviews() {
         layoutTopicView()
         layoutTableView()
-        
-        if mode == .record {
-            layoutRecordAndSkipButtons()
-        }
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
-        
-        if mode == .record {
-            addRecordAndSkipButtonsConstraints()
-        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -114,10 +149,19 @@ extension TopicDetailViewController {
         topicView.translatesAutoresizingMaskIntoConstraints = false
         view.bringSubview(toFront: topicView)
         topicView.topic = topic
+        configTopicView()
+    }
+    
+    func configTopicView() {
+        // Add shadow layer to topic header view
+        topicView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        topicView.layer.shadowColor = Colors.TopicDetailVC.TopicView.shadowColor().cgColor
+        topicView.layer.shadowRadius = 3.0
+        topicView.layer.shadowOpacity = 1.0
     }
     
     func addTopicViewConstraints() {
-        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.bounds.height)!).isActive = true
+        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
@@ -194,45 +238,104 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 // MARK: - Record Button and Skip Buttons
-extension TopicDetailViewController {
+extension TopicDetailViewController: AVAudioRecorderDelegate {
     
-    func registerRecordAndSkipButtons() {
+    func registerButtons() {
         recordButton.addTarget(self, action: #selector(self.recordButtonClicked(_:)), for: .touchUpInside)
         skipButton.addTarget(self, action: #selector(self.skipButtonClicked(_:)), for: .touchUpInside)
+        postButton.addTarget(self, action: #selector(self.postButtonClicked(_:)), for: .touchUpInside)
     }
     
-    func layoutRecordAndSkipButtons() {
+    func layoutRecordViews() {
         view.addSubview(recordButton)
         view.addSubview(skipButton)
+        view.addSubview(clockIcon)
+        view.addSubview(timeLabel)
+        view.addSubview(audioBarButton)
+        view.addSubview(postButton)
+        view.addSubview(rewardLabel)
+        view.addSubview(rewardImageView)
+        
         view.bringSubview(toFront: recordButton)
         view.bringSubview(toFront: skipButton)
-        configRecordAndSkipButtons()
+        view.bringSubview(toFront: clockIcon)
+        view.bringSubview(toFront: timeLabel)
+        view.bringSubview(toFront: audioBarButton)
+        view.bringSubview(toFront: postButton)
+        
+        configRecordViews()
+        initRecordViews()
+        registerButtons()
     }
     
-    func configRecordAndSkipButtons() {
+    func configRecordViews() {
         // config buttons
         recordButton.layer.borderColor = UIColor(red: 120/255.0, green: 215/255.0, blue: 245/255.0, alpha: 1).cgColor
         recordButton.layer.borderWidth = 2.0
         recordButton.layer.cornerRadius = 85.9 / 2
         recordButton.layer.masksToBounds = true
+        recordButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        recordButton.layer.shadowRadius = 4
+        recordButton.layer.shadowColor = Colors.TopicDetailVC.Buttons.shadowColor().cgColor
+        recordButton.layer.shadowOpacity = 1
         recordButton.translatesAutoresizingMaskIntoConstraints = false
+        
         skipButton.layer.borderColor = UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1).cgColor
         skipButton.layer.borderWidth = 1.0
         skipButton.layer.cornerRadius = 29.9 / 2
         skipButton.layer.masksToBounds = true
         skipButton.translatesAutoresizingMaskIntoConstraints = false
+        
         // buttons' sub views
-        let speakingImgView = UIImageView(frame: CGRect(x: 31.6, y: 27.4, width: 22.9, height: 30.6))
+        speakingImgView.frame = CGRect(x: 31.6, y: 27.4, width: 22.9, height: 30.6)
         speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
         recordButton.addSubview(speakingImgView)
+        
         let skipLabel = UILabel(frame: CGRect(x: 14.4, y: 2.45, width: 35.2, height: 25))
         skipLabel.font = Fonts.TopicDetailVC.Buttons.skipButtonFont()
         skipLabel.text = "Skip"
         skipLabel.textColor = Colors.TopicDetailVC.Buttons.skipButtonTextColor()
         skipButton.addSubview(skipLabel)
+        
+        // clock icon and time label
+        clockIcon.translatesAutoresizingMaskIntoConstraints = false
+        clockIcon.image = #imageLiteral(resourceName: "clock")
+        clockIcon.contentMode = .scaleAspectFit
+        
+        timeLabel.backgroundColor = UIColor.clear
+        timeLabel.font = Fonts.TopicDetailVC.Labels.timeLabelFont()
+        timeLabel.textColor = Colors.TopicDetailVC.Labels.timeLabelTextColor()
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(secs))
+        
+        // audioBarButton
+        audioBarButton.translatesAutoresizingMaskIntoConstraints = false
+        audioBarButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        audioBarButton.layer.shadowRadius = 4
+        audioBarButton.layer.shadowColor = Colors.TopicDetailVC.Buttons.shadowColor().cgColor
+        audioBarButton.layer.shadowOpacity = 1
+        audioBarButton.setImage(#imageLiteral(resourceName: "audio_bar"), for: .normal)
+        audioBarButton.imageView?.contentMode = .scaleAspectFit
+        audioTimeLabel.frame = CGRect(x: 38, y: 8.5, width: 41, height: 22)
+        audioTimeLabel.textColor = UIColor.white
+        audioTimeLabel.font = Fonts.TopicDetailVC.Labels.timeLabelFont()
+        audioBarButton.addSubview(audioTimeLabel)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleSingleTap(_:)))
+        audioBarButton.addGestureRecognizer(tap)
+        
+        // post button
+        postButton.translatesAutoresizingMaskIntoConstraints = false
+        postButton.layer.borderWidth = 1
+        postButton.layer.borderColor = Colors.TopicDetailVC.Buttons.postButtonColor().cgColor
+        postButton.layer.cornerRadius = 29.9 / 2
+        postButton.layer.masksToBounds = true
+        postButton.setTitle("Post", for: .normal)
+        postButton.titleLabel?.font = Fonts.TopicDetailVC.Buttons.postButtonFont()
+        postButton.setTitleColor(Colors.TopicDetailVC.Buttons.postButtonColor(), for: .normal)
     }
     
-    func addRecordAndSkipButtonsConstraints() {
+    func addRecordConstraints() {
         // record button constraints
         recordButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         recordButton.widthAnchor.constraint(equalToConstant: 85.9).isActive = true
@@ -244,10 +347,50 @@ extension TopicDetailViewController {
         skipButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
         skipButton.heightAnchor.constraint(equalToConstant: 29.9).isActive = true
         skipButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -37.1).isActive = true
+        
+        // clock icon constraints
+        clockIcon.widthAnchor.constraint(equalToConstant: 15.0).isActive = true
+        clockIcon.heightAnchor.constraint(equalToConstant: 15.0).isActive = true
+        clockIcon.leadingAnchor.constraint(equalTo: recordButton.leadingAnchor, constant: 10).isActive = true
+        clockIcon.topAnchor.constraint(equalTo: recordButton.bottomAnchor, constant: 35).isActive = true
+        
+        // time label constraints
+        timeLabel.widthAnchor.constraint(equalToConstant: 41).isActive = true
+        timeLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: clockIcon.trailingAnchor, constant: 6).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: clockIcon.centerYAnchor).isActive = true
+        
+        // audioBarButton constraints
+        audioBarButton.widthAnchor.constraint(equalToConstant: 117).isActive = true
+        audioBarButton.heightAnchor.constraint(equalToConstant: 39).isActive = true
+        audioBarButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -119).isActive = true
+        audioBarButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        // post button constraints
+        postButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 29.9).isActive = true
+        postButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -37.1).isActive = true
+        postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func initRecordViews() {
+        recordButton.isHidden = false
+        skipButton.isHidden = false
+        recordButton.fadeIn()
+        skipButton.fadeIn()
+        
+        clockIcon.isHidden = true
+        timeLabel.isHidden = true
+        audioBarButton.isHidden = true
+        postButton.isHidden = true
+        rewardLabel.isHidden = true
+        rewardImageView.isHidden = true
     }
     
     func recordButtonClicked(_ sender: UIButton) {
-        skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+        if audioRecorder == nil {
+            startRecording()
+        }
     }
     
     func skipButtonClicked(_ sender: UIButton) {
@@ -255,12 +398,159 @@ extension TopicDetailViewController {
             if success {
                 self.skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
                     if success {
-                        self.recordButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                        self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                     }
                 }
             }
         }
     }
     
+    func playButtonClicked() {
+        seconds = secs
+        audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForPlayer), userInfo: nil, repeats: true)
+        audioPlayer.play()
+    }
     
+    func deleteButtonClicked() {
+        // reset player
+        audioPlayer.stop()
+        audioPlayer = nil
+        
+        // reset record
+        audioBarButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
+            if success {
+                self.initRecordViews()
+                self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
+                self.recordButton.layer.borderWidth = 2
+                self.recordButton.setBackgroundImage(nil, for: .normal)
+                self.recordButton.isEnabled = true
+                
+                // reset timer
+                self.seconds = self.secs
+            }
+        })
+    }
+    
+    func postButtonClicked(_ sender: UIButton) {
+    }
+    
+    func handleSingleTap(_ sender: UIGestureRecognizer) {
+        let leftPart = CGRect(x: 0, y: 0, width: audioBarButton.bounds.width / 2, height: audioBarButton.bounds.height)
+        let point = sender.location(in: audioBarButton)
+        if leftPart.contains(point) {
+            // play audio
+            playButtonClicked()
+        } else {
+            // delete audio
+            deleteButtonClicked()
+        }
+    }
+    
+    func updateTimerForRecorder() {
+        if seconds < 1 {
+            finishRecording(success: true)
+        } else {
+            seconds -= 1
+            timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
+        }
+    }
+    
+    func updateTimerForPlayer() {
+        if seconds < 1 {
+            timer.invalidate()
+        } else {
+            seconds -= 1
+            audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
+        }
+    }
+    
+    func startRecording() {
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(topic.id)-speaking.m4a")
+        
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder.delegate = self
+            audioRecorder.record()
+            
+        } catch {
+            finishRecording(success: false)
+            return
+        }
+        
+        recordButton.isEnabled = false
+        recordButton.setBackgroundImage(#imageLiteral(resourceName: "record_btn"), for: .normal)
+        recordButton.layer.borderWidth = 0
+        speakingImgView.image = #imageLiteral(resourceName: "speaking-w")
+        skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
+            if success {
+                self.clockIcon.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+                self.timeLabel.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
+                    if success {
+                        // start timer
+                        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForRecorder), userInfo: nil, repeats: true)
+                    }
+                })
+            }
+        })
+    }
+    
+    func finishRecording(success: Bool) {
+        audioRecorder.stop()
+        audioRecorder = nil
+        if success {
+            timer.invalidate()
+            // time up
+            recordButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+            clockIcon.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+            timeLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
+                if success {
+                    // show audio bar button and post button
+                    self.audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(self.secs))
+                    self.audioBarButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+                    self.postButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+                    
+                    // Prepare for audio player
+                    let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.m4a")
+                    do {
+                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
+                    } catch {
+                        // couldn't load file :(
+                    }
+                    self.audioPlayer.prepareToPlay()
+                }
+            })
+        } else {
+            // reset views
+            self.initRecordViews()
+            self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
+            self.recordButton.layer.borderWidth = 2
+            self.recordButton.setBackgroundImage(nil, for: .normal)
+            self.recordButton.isEnabled = true
+            
+            // reset timer
+            self.seconds = self.secs
+        }
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    // MARK: - AVAudioRecorderDelegate
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            finishRecording(success: false)
+        }
+    }
 }

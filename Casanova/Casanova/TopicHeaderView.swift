@@ -68,7 +68,7 @@ class TopicHeaderView: UIView {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont(name: "Avenir-Medium", size: 10)!
+        tagListView.textFont = UIFont(name: "Avenir-Medium", size: 12)!
         
     }
     

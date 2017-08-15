@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Tab bar config
         UITabBar.appearance().tintColor = UIColor(red: 75/255.0, green: 205/255.0, blue: 237/255.0, alpha: 1.0)
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: -60), for: .default)
+        UINavigationBar.appearance().isTranslucent = false
         
         return true
     }

@@ -25,6 +25,8 @@ class SignUpViewController: UIViewController {
             if let error = error {
                 self.errorLabel.text = error.msg
             } else {
+                // Success
+                self.errorLabel.text = " "
                 self.delegate.fillEmailTextField(with: self.emailTextField.text!)
                 self.delegate.fillPasswordTextField(with: self.passwordTextField.text!)
                 self.navigationController?.popViewController(animated: true)
@@ -70,7 +72,7 @@ class SignUpViewController: UIViewController {
         // Error label configs
         errorLabel.font = Fonts.SignupVC.Labels.errorLabelFont()
         errorLabel.textColor = Colors.LoginVC.Labels.errorLabelTextColor()
-        errorLabel.text = ""
+        errorLabel.text = " "
         
         // Sign up button configs
         signUpButton.layer.cornerRadius = 22.5

@@ -53,6 +53,7 @@ struct Colors {
             static func barTintColor() -> UIColor { return UIColor.white }
             static func borderColor() -> UIColor { return barTintColor() }
             static func tftTitleColor() -> UIColor { return UIColor(red: 75.0 / 255.0, green: 205.0 / 255.0, blue: 237.0 / 255.0, alpha: 1.0) }
+            static func shadowColor() -> UIColor { return UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1) }
         }
     }
     struct TopicDetailVC {
@@ -64,6 +65,14 @@ struct Colors {
         }
         struct Buttons {
             static func skipButtonTextColor() -> UIColor { return UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1) }
+            static func postButtonColor() -> UIColor { return UIColor(red: 75/255.0, green: 205/255.0, blue: 237/255.0, alpha: 1) }
+            static func shadowColor() -> UIColor { return UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1) }
+        }
+        struct TopicView {
+            static func shadowColor() -> UIColor { return UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1) }
+        }
+        struct Labels {
+            static func timeLabelTextColor() -> UIColor { return UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1) }
         }
     }
 }
@@ -94,6 +103,10 @@ struct Fonts {
         }
         struct Buttons {
             static func skipButtonFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 18.0)! }
+            static func postButtonFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 17.0)! }
+        }
+        struct Labels {
+            static func timeLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 14.0)! }
         }
     }
 }

@@ -85,6 +85,11 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Nav bar config
+        navigationController?.navigationBar.layer.shadowColor = Colors.CommonVC.NavBar.shadowColor().cgColor
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        navigationController?.navigationBar.layer.shadowRadius = 3.0
+        navigationController?.navigationBar.layer.shadowOpacity = 1.0
     }
     
     func fetchTopics(from: Int) {
@@ -180,8 +185,8 @@ extension HomeViewController {
     }
     
     func setupFilterView() {
-        let y = (navigationController?.navigationBar.frame.origin.y)! + (navigationController?.navigationBar.frame.height)!
-        filterView = FilterView(frame: CGRect(x: 0, y: y, width: view.bounds.width, height: (tabBarController?.tabBar.frame.origin.y)! - y))
+//        let y = (navigationController?.navigationBar.frame.origin.y)! + (navigationController?.navigationBar.frame.height)!
+        filterView = FilterView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (tabBarController?.tabBar.frame.origin.y)!))
         filterView!.setTableViewDatasourceDelegate(dataSourceDelegate: self)
         filterView!.isHidden = true
         view.addSubview(filterView!)
@@ -396,8 +401,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
                 whiteRoundedView.tag = 100
                 whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-                //            whiteRoundedView.layer.masksToBounds = false
-                //            whiteRoundedView.layer.cornerRadius = 5
+                whiteRoundedView.layer.masksToBounds = false
                 whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
                 whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
                 whiteRoundedView.layer.shadowOpacity = 1
