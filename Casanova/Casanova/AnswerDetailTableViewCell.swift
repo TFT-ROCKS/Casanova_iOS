@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class AnswerDetailTableViewCell: UITableViewCell {
+class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
     var answererButton: UIButton!
     var answererNameLabel: UILabel!
@@ -32,6 +33,7 @@ class AnswerDetailTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         
         answererButton = UIButton(frame: .zero)
         answererNameLabel = UILabel(frame: .zero)
@@ -61,12 +63,12 @@ class AnswerDetailTableViewCell: UITableViewCell {
         audioSlider.translatesAutoresizingMaskIntoConstraints = false
         
         // MARK: - Constraints
-        let margins = contentView.layoutMarginsGuide
+        
         // answererButton constraints
         answererButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         answererButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        answererButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: 12).isActive = true
-        answererButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 12).isActive = true
+        answererButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
+        answererButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12).isActive = true
         
         // answererNameLabel constraints
         answererNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -83,7 +85,7 @@ class AnswerDetailTableViewCell: UITableViewCell {
         // likeCountLabel constraints
         likeCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         likeCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
-        likeCountLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -12).isActive = true
+        likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
         likeCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // likeButton constraints
@@ -95,7 +97,7 @@ class AnswerDetailTableViewCell: UITableViewCell {
         // audioTimeLabel constraints
         audioTimeLabel.widthAnchor.constraint(equalToConstant: 34).isActive = true
         audioTimeLabel.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        audioTimeLabel.topAnchor.constraint(equalTo: answerTimeLabel.bottomAnchor, constant: 8).isActive = true
+        audioTimeLabel.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
         audioTimeLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
         
         // audioButton constraints
@@ -114,20 +116,32 @@ class AnswerDetailTableViewCell: UITableViewCell {
         switch reuseIdentifier! {
         case "AnswerWithTextCell":
             answerTitleLabel = UILabel(frame: .zero)
+            answerTitleLabel?.numberOfLines = 0
+            answerTitleLabel?.textAlignment = .left
             contentView.addSubview(answerTitleLabel!)
             answerTitleLabel?.translatesAutoresizingMaskIntoConstraints = false
-            answerTitleLabel?.topAnchor.constraint(equalTo: audioButton.bottomAnchor, constant: 30).isActive = true
-            answerTitleLabel?.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 24).isActive = true
-            answerTitleLabel?.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -24).isActive = true
-            answerTitleLabel?.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -24).isActive = true
+            answerTitleLabel?.topAnchor.constraint(equalTo: audioTimeLabel.bottomAnchor, constant: 30).isActive = true
+            answerTitleLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
+            answerTitleLabel?.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
+            answerTitleLabel?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24).isActive = true
             
+            answerTitleLabel?.font = UIFont(name: "Montserrat-Light", size: 16.0)!
+            answerTitleLabel?.textColor = UIColor(red: 74 / 255.0, green: 74 / 255.0, blue: 74 / 255.0, alpha: 1)
         case "AnswerWithoutTextCell":
-            audioButton.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -50).isActive = true
+            audioButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
             
         default:
             break
         }
 
+        answererNameLabel.font = Fonts.TopicDetailVC.Labels.answererNameLabelFont()
+        answererNameLabel.textColor = Colors.TopicDetailVC.Labels.answererNameLabelTextColor()
+        answerTimeLabel.font = Fonts.TopicDetailVC.Labels.answerTimeLabelFont()
+        answerTimeLabel.textColor = Colors.TopicDetailVC.Labels.answerTimeLabelTextColor()
+        audioTimeLabel.font = Fonts.TopicDetailVC.Labels.audioTimeLabelFont()
+        audioTimeLabel.textColor = Colors.TopicDetailVC.Labels.audioTimeLabelTextColor()
+        likeCountLabel.font = Fonts.TopicDetailVC.Labels.likeCountLabelFont()
+        likeCountLabel.textColor = Colors.TopicDetailVC.Labels.likeCountLabelTextColor()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -138,10 +152,20 @@ class AnswerDetailTableViewCell: UITableViewCell {
     
     func updateUI() {
         answererNameLabel.text = answer.user.username
-        answerTimeLabel.text = answer.updatedAt
+        answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: answer.updatedAt)
         likeCountLabel.text = "\(answer.likes.count)"
         audioTimeLabel.text = "00:00"
         answerTitleLabel?.text = answer.title
+        audioSlider.isEnabled = false
+        
+        answererButton.layer.cornerRadius = 15
+        answererButton.layer.masksToBounds = true
+        answererButton.layer.borderColor = UIColor.clear.cgColor
+        answererButton.layer.borderWidth = 0
+        answererButton.backgroundColor = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1)
+        
+        likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
+        audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
     }
     
 }

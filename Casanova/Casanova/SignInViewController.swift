@@ -17,16 +17,16 @@ class SignInViewController: UIViewController {
     }
     @IBOutlet weak var logInButton: UIButton!
     @IBAction func logInButtonClicked(_ sender: UIButton) {
-        UserManager.shared.signIn(email: usernameTextField.text, password: passwordTextField.text, withCompletion: { error in
-            if error == nil {
-                // Success
-                self.errorLabel.text = " "
+//        UserManager.shared.signIn(email: usernameTextField.text, password: passwordTextField.text, withCompletion: { error in
+//            if error == nil {
+//                // Success
+//                self.errorLabel.text = " "
                 let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
                 self.navigationController?.setViewControllers([tc], animated: false)
-            } else {
-                self.errorLabel.text = error?.msg
-            }
-        })
+//            } else {
+//                self.errorLabel.text = error?.msg
+//            }
+//        })
     }
     @IBOutlet weak var signUpButton: UIButton!
     @IBAction func signUpButtonClicked(_ sender: UIButton) {

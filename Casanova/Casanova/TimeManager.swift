@@ -51,4 +51,17 @@ class TimeManager {
         let seconds = Int(time) % 60
         return String(format:"%02i:%02i", minutes, seconds)
     }
+    
+    func stringFromTimeInterval(_ interval: TimeInterval) -> String {
+        
+        let ti = Int(interval)
+        
+        let ms = Int(interval.truncatingRemainder(dividingBy: 1) * 1000)
+        
+        let seconds = ti % 60
+        let minutes = (ti / 60) % 60
+        let hours = (ti / 3600)
+        
+        return String(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
+    }
 }

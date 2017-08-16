@@ -27,6 +27,8 @@ class TopicDetailViewController: UIViewController {
         }
     }
     var topic: Topic!
+    var answers: [Answer]?
+    var cellInUse = -1
     
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
@@ -125,8 +127,9 @@ class TopicDetailViewController: UIViewController {
             if error == nil {
                 // success
                 self.topic = topic
+                self.answers = topic?.answers
                 // reload table view
-                
+                self.tableView.reloadData()
             }
         })
     }
@@ -168,7 +171,7 @@ extension TopicDetailViewController {
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
-extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -178,9 +181,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func configTableView() {
         tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView(frame: .zero)
+        
         tableView.backgroundColor = UIColor(red: 248/255.0, green: 250/255.0, blue: 252/255.0, alpha: 1)
-        tableView.isScrollEnabled = false
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -204,37 +206,116 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        switch mode {
-        case .record:
-            return 1
-        case .reward:
-            return 10
-        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch mode {
-        case .record:
-            return 1
-        case .reward:
-            switch section {
-            case 0:
-                return 1
-            default:
-                return 1
-            }
-        }
+        return answers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell, for: indexPath) as? AnswerDetailTableViewCell {
-            return cell
-        } else if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell, for: indexPath) as? AnswerDetailTableViewCell {
-            return cell
+        if let answers = answers {
+            let answer = answers[indexPath.row]
+            if answer.title == "" {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell, for: indexPath) as! AnswerDetailTableViewCell
+                cell.answer = answer
+                cell.audioSlider.tag = indexPath.row
+                cell.audioButton.tag = indexPath.row
+                cell.audioButton.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
+                cell.audioSlider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell, for: indexPath) as! AnswerDetailTableViewCell
+                cell.answer = answer
+                cell.audioSlider.tag = indexPath.row
+                cell.audioButton.tag = indexPath.row
+                cell.audioButton.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
+                cell.audioSlider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
+                return cell
+            }
         }
         return UITableViewCell()
     }
     
+    func audioButtonTapped(_ sender: UIButton) {
+        if cellInUse != -1 {
+            // reset previous cell in use
+            if let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell {
+                cell.audioSlider.value = 0
+                cell.audioSlider.isEnabled = false
+                cell.audioTimeLabel.text = "00:00"
+                if audioPlayer != nil {
+                    audioPlayer.stop()
+                    audioPlayer = nil
+                }
+                if timer != nil {
+                    timer.invalidate()
+                }
+            }
+        }
+        if let url = URL(string: answers![sender.tag].audioURL ?? "") {
+            let index = sender.tag
+            cellInUse = sender.tag
+            downloadFileFromURL(url: url, tag: index)
+        }
+    }
+    
+    func downloadFileFromURL(url: URL, tag: Int) {
+        
+        var downloadTask: URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
+            self?.play(url: URL!, row: tag)
+        })
+        downloadTask.resume()
+    }
+    
+    func play(url: URL, row: Int) {
+        print("playing \(url)")
+        let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as! AnswerDetailTableViewCell
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer.delegate = self
+            audioPlayer.prepareToPlay()
+            cell.audioSlider.maximumValue = Float(audioPlayer.duration)
+            cell.audioSlider.value = 0.0
+            cell.audioSlider.isEnabled = true
+            audioPlayer.volume = 1.0
+            audioPlayer.play()
+            Utils.runOnMainThread {
+                self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime(_:)), userInfo: row, repeats: true)
+            }
+            
+        } catch let error as NSError {
+            //self.player = nil
+            print(error.localizedDescription)
+        } catch {
+            print("AVAudioPlayer init failed")
+        }
+        
+    }
+    
+    func sliderValueChanged(_ sender: UISlider) {
+        if sender.tag != cellInUse { return }
+        let cell = tableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! AnswerDetailTableViewCell
+        if audioPlayer != nil {
+            audioPlayer.currentTime = TimeInterval(sender.value)
+            cell.audioTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
+        }
+    }
+    
+    func updateTime(_ timer: Timer) {
+        if let cell = tableView.cellForRow(at: IndexPath(row: timer.userInfo as! Int, section: 0)) as? AnswerDetailTableViewCell {
+            cell.audioSlider.value = Float(audioPlayer.currentTime)
+            cell.audioTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        timer.invalidate()
+        if let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell {
+            cell.audioSlider.isEnabled = false
+        }
+    }
 }
 
 // MARK: - Record Button and Skip Buttons
@@ -390,6 +471,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     func recordButtonClicked(_ sender: UIButton) {
         if audioRecorder == nil {
             startRecording()
+        } else {
+            finishRecording(success: true)
         }
     }
     
@@ -406,9 +489,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func playButtonClicked() {
-        seconds = secs
+        seconds = Int(audioPlayer.duration)
         audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
-        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForPlayer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForPlayer), userInfo: nil, repeats: true)
         audioPlayer.play()
     }
     
@@ -416,6 +499,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         // reset player
         audioPlayer.stop()
         audioPlayer = nil
+        timer.invalidate()
         
         // reset record
         audioBarButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
@@ -424,7 +508,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                 self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
                 self.recordButton.layer.borderWidth = 2
                 self.recordButton.setBackgroundImage(nil, for: .normal)
-                self.recordButton.isEnabled = true
                 
                 // reset timer
                 self.seconds = self.secs
@@ -479,19 +562,21 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder.delegate = self
             audioRecorder.record()
+            // record button animation
+            recordButton.blink()
             
         } catch {
             finishRecording(success: false)
             return
         }
         
-        recordButton.isEnabled = false
         recordButton.setBackgroundImage(#imageLiteral(resourceName: "record_btn"), for: .normal)
         recordButton.layer.borderWidth = 0
         speakingImgView.image = #imageLiteral(resourceName: "speaking-w")
         skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
             if success {
                 self.clockIcon.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+                self.timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(self.secs))
                 self.timeLabel.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
                     if success {
                         // start timer
@@ -503,8 +588,11 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func finishRecording(success: Bool) {
+        recordButton.stopBlink()
         audioRecorder.stop()
         audioRecorder = nil
+        // reset timer
+        self.seconds = self.secs
         if success {
             timer.invalidate()
             // time up
@@ -513,7 +601,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
             timeLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
                 if success {
                     // show audio bar button and post button
-                    self.audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(self.secs))
+                    
                     self.audioBarButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
                     self.postButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
                     
@@ -525,6 +613,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         // couldn't load file :(
                     }
                     self.audioPlayer.prepareToPlay()
+                    
+                    self.audioTimeLabel.text = TimeManager.shared.timeString(time: self.audioPlayer.duration)
                 }
             })
         } else {
@@ -533,10 +623,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
             self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
             self.recordButton.layer.borderWidth = 2
             self.recordButton.setBackgroundImage(nil, for: .normal)
-            self.recordButton.isEnabled = true
-            
-            // reset timer
-            self.seconds = self.secs
         }
     }
     
