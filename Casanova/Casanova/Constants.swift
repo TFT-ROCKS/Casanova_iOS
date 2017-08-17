@@ -78,6 +78,7 @@ struct Colors {
             static func audioTimeLabelTextColor() -> UIColor { return UIColor(red: 202/255.0, green: 202/255.0, blue: 202/255.0, alpha: 1) }
             static func likeCountLabelTextColor() -> UIColor { return UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1.0) }
             static func commentCountLabelTextColor() -> UIColor { return UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1.0) }
+            static func rewardLabelTextColor() -> UIColor { return UIColor(red: 164 / 255.0, green: 170 / 255.0, blue: 179 / 255.0, alpha: 1) }
         }
     }
 }
@@ -117,6 +118,7 @@ struct Fonts {
             static func audioTimeLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 10.0)! }
             static func likeCountLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 14.0)! }
             static func commentCountLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 14.0)! }
+            static func rewardLabelFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 17.0)! }
         }
     }
 }
@@ -148,6 +150,8 @@ struct Duration {
     struct TopicDetailVC {
         struct View {
             static let fadeInOrOutDuration: Double = 0.2
+            static let rewardFadeInDuration: Double = 1
+            static let rewardFadeOutDuration: Double = 2
         }
     }
 }

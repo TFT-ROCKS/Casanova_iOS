@@ -11,11 +11,13 @@ import AVFoundation
 
 class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
-    var answererButton: UIButton!
+    var answererButton: UIWebView!
     var answererNameLabel: UILabel!
     var answerTimeLabel: UILabel!
     var likeButton: UIButton!
     var likeCountLabel: UILabel!
+    var commentButton: UIButton!
+    var commentCountLabel: UILabel!
     var audioTimeLabel: UILabel!
     var audioSlider: UISlider!
     var audioButton: UIButton!
@@ -35,11 +37,13 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         
-        answererButton = UIButton(frame: .zero)
+        answererButton = UIWebView(frame: .zero)
         answererNameLabel = UILabel(frame: .zero)
         answerTimeLabel = UILabel(frame: .zero)
         likeCountLabel = UILabel(frame: .zero)
         likeButton = UIButton(frame: .zero)
+        commentCountLabel = UILabel(frame: .zero)
+        commentButton = UIButton(frame: .zero)
         audioTimeLabel = UILabel(frame: .zero)
         audioButton = UIButton(frame: .zero)
         audioSlider = UISlider(frame: .zero)
@@ -49,6 +53,8 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         contentView.addSubview(answerTimeLabel)
         contentView.addSubview(likeCountLabel)
         contentView.addSubview(likeButton)
+        contentView.addSubview(commentCountLabel)
+        contentView.addSubview(commentButton)
         contentView.addSubview(audioSlider)
         contentView.addSubview(audioButton)
         contentView.addSubview(audioTimeLabel)
@@ -58,6 +64,8 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         likeCountLabel.translatesAutoresizingMaskIntoConstraints = false
         likeButton.translatesAutoresizingMaskIntoConstraints = false
+        commentCountLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentButton.translatesAutoresizingMaskIntoConstraints = false
         audioTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         audioButton.translatesAutoresizingMaskIntoConstraints = false
         audioSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -67,8 +75,8 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         // answererButton constraints
         answererButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         answererButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        answererButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
-        answererButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12).isActive = true
+        answererButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
+        answererButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         
         // answererNameLabel constraints
         answererNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -85,14 +93,26 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         // likeCountLabel constraints
         likeCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         likeCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
-        likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
+        likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         likeCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // likeButton constraints
         likeButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
         likeButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        likeButton.trailingAnchor.constraint(equalTo: likeCountLabel.leadingAnchor, constant: -5).isActive = true
+        likeButton.trailingAnchor.constraint(equalTo: likeCountLabel.leadingAnchor, constant: -8).isActive = true
         likeButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
+        
+        // commentCount constraints
+        commentCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        commentCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
+        commentCountLabel.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -8).isActive = true
+        commentCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
+        
+        // commentButton constraints
+        commentButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        commentButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        commentButton.trailingAnchor.constraint(equalTo: commentCountLabel.leadingAnchor, constant: -8).isActive = true
+        commentButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // audioTimeLabel constraints
         audioTimeLabel.widthAnchor.constraint(equalToConstant: 34).isActive = true
@@ -121,19 +141,19 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
             contentView.addSubview(answerTitleLabel!)
             answerTitleLabel?.translatesAutoresizingMaskIntoConstraints = false
             answerTitleLabel?.topAnchor.constraint(equalTo: audioTimeLabel.bottomAnchor, constant: 30).isActive = true
-            answerTitleLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
-            answerTitleLabel?.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-            answerTitleLabel?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24).isActive = true
+            answerTitleLabel?.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
+            answerTitleLabel?.trailingAnchor.constraint(equalTo: audioButton.trailingAnchor).isActive = true
+            answerTitleLabel?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29).isActive = true
             
             answerTitleLabel?.font = UIFont(name: "Montserrat-Light", size: 16.0)!
             answerTitleLabel?.textColor = UIColor(red: 74 / 255.0, green: 74 / 255.0, blue: 74 / 255.0, alpha: 1)
         case "AnswerWithoutTextCell":
-            audioButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
+            audioButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
             
         default:
             break
         }
-
+        
         answererNameLabel.font = Fonts.TopicDetailVC.Labels.answererNameLabelFont()
         answererNameLabel.textColor = Colors.TopicDetailVC.Labels.answererNameLabelTextColor()
         answerTimeLabel.font = Fonts.TopicDetailVC.Labels.answerTimeLabelFont()
@@ -142,6 +162,18 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         audioTimeLabel.textColor = Colors.TopicDetailVC.Labels.audioTimeLabelTextColor()
         likeCountLabel.font = Fonts.TopicDetailVC.Labels.likeCountLabelFont()
         likeCountLabel.textColor = Colors.TopicDetailVC.Labels.likeCountLabelTextColor()
+        commentCountLabel.font = Fonts.TopicDetailVC.Labels.likeCountLabelFont()
+        commentCountLabel.textColor = Colors.TopicDetailVC.Labels.likeCountLabelTextColor()
+        
+        likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
+        commentButton.setImage(#imageLiteral(resourceName: "cmt_btn"), for: .normal)
+        audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+        
+        answererButton.layer.cornerRadius = 15
+        answererButton.layer.masksToBounds = true
+        answererButton.layer.borderColor = UIColor.clear.cgColor
+        answererButton.layer.borderWidth = 0
+        answererButton.scrollView.isScrollEnabled = false
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -154,18 +186,32 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answererNameLabel.text = answer.user.username
         answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: answer.updatedAt)
         likeCountLabel.text = "\(answer.likes.count)"
-        audioTimeLabel.text = "00:00"
-        answerTitleLabel?.text = answer.title
-        audioSlider.isEnabled = false
+        commentCountLabel.text = "\(answer.comments.count)"
+
+        // load image into webView
+        let path: String = Bundle.main.path(forResource: "TFTicons_avatar_\(answer.user.id % 8)", ofType: "svg")!
+        let url: URL = URL(fileURLWithPath: path)  //Creating a URL which points towards our path
+        // Creating a page request which will load our URL (Which points to our path)
+        let request: URLRequest = URLRequest(url: url)
+        answererButton.delegate = self
+        answererButton.loadRequest(request)  // Telling our webView to load our above request
         
-        answererButton.layer.cornerRadius = 15
-        answererButton.layer.masksToBounds = true
-        answererButton.layer.borderColor = UIColor.clear.cgColor
-        answererButton.layer.borderWidth = 0
-        answererButton.backgroundColor = UIColor(red: CGFloat(drand48()), green: CGFloat(drand48()), blue: CGFloat(drand48()), alpha: 1)
+        // substring answer to 50 words
+        let components = answer.title.components(separatedBy: " ")
+        if components.count < 50 {
+            answerTitleLabel?.text = answer.title
+        } else {
+            answerTitleLabel?.text = components[0...50].joined(separator: " ") + " ..."
+        }
+    }
+}
+
+extension AnswerDetailTableViewCell: UIWebViewDelegate {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         
-        likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
-        audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
     }
     
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        
+    }
 }

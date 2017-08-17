@@ -50,21 +50,13 @@ class TopicBriefTableViewCell: UITableViewCell {
         }
         tagListView.textFont = UIFont(name: "Avenir-Medium", size: 12)!
         
-        // substring answer to 300 chars
-//        let answer = topic.answerTitle
-//        answerLabel.text = answer.components(separatedBy: " ")[0...50].joined(separator: " ") + " ..."
-//        answererNameLabel.text = topic.userName
-//        answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: topic.updatedAt)
-//        numOfLikesLabel.text = "\(topic.likeCount)"
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
         selectionStyle = .none
-        // Initialization code
-//        likeButton.setBackgroundImage(#imageLiteral(resourceName: "heart"), for: .normal)
-//        profileButton.setBackgroundImage(#imageLiteral(resourceName: "tftProfile"), for: .normal)
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
