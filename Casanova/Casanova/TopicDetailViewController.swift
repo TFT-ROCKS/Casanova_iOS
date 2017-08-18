@@ -82,13 +82,13 @@ class TopicDetailViewController: UIViewController {
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = Colors.TopicDetailVC.NavBar.tintColor()
+        navigationController?.navigationBar.tintColor = UIColor.navTintColor
         
         if mode == .record {
             tableView.isHidden = true
         }
         
-        view.backgroundColor = Colors.TopicDetailVC.View.backgroundColor()
+        view.backgroundColor = UIColor.bgdColor
         
         recordingSession = AVAudioSession.sharedInstance()
         
@@ -172,7 +172,8 @@ class TopicDetailViewController: UIViewController {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.text = "Question"
-        titleLabel.font = Fonts.TopicDetailVC.NavBar.titleTextFont()
+        titleLabel.font = UIFont.mr(size: 17)
+        titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
     }
@@ -191,7 +192,7 @@ extension TopicDetailViewController {
     func configTopicView() {
         // Add shadow layer to topic header view
         topicView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        topicView.layer.shadowColor = Colors.TopicDetailVC.TopicView.shadowColor().cgColor
+        topicView.layer.shadowColor = UIColor.shadowColor.cgColor
         topicView.layer.shadowRadius = 3.0
         topicView.layer.shadowOpacity = 1.0
     }
@@ -215,7 +216,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func configTableView() {
         tableView.separatorStyle = .none
         
-        tableView.backgroundColor = UIColor(red: 248/255.0, green: 250/255.0, blue: 252/255.0, alpha: 1)
+        tableView.backgroundColor = UIColor.bgdColor
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -301,9 +302,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
             whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
+            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
             whiteRoundedView.layer.shadowOpacity = 1
             
@@ -453,7 +454,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         recordButton.layer.masksToBounds = true
         recordButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         recordButton.layer.shadowRadius = 4
-        recordButton.layer.shadowColor = Colors.TopicDetailVC.Buttons.shadowColor().cgColor
+        recordButton.layer.shadowColor = UIColor.shadowColor.cgColor
         recordButton.layer.shadowOpacity = 1
         recordButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -469,9 +470,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         recordButton.addSubview(speakingImgView)
         
         let skipLabel = UILabel(frame: CGRect(x: 14.4, y: 2.45, width: 35.2, height: 25))
-        skipLabel.font = Fonts.TopicDetailVC.Buttons.skipButtonFont()
+        skipLabel.font = UIFont.mr(size: 14)
         skipLabel.text = "Skip"
-        skipLabel.textColor = Colors.TopicDetailVC.Buttons.skipButtonTextColor()
+        skipLabel.textColor = UIColor.tftCoolGrey
         skipButton.addSubview(skipLabel)
         
         // clock icon and time label
@@ -480,8 +481,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.contentMode = .scaleAspectFit
         
         timeLabel.backgroundColor = UIColor.clear
-        timeLabel.font = Fonts.TopicDetailVC.Labels.timeLabelFont()
-        timeLabel.textColor = Colors.TopicDetailVC.Labels.timeLabelTextColor()
+        timeLabel.font = UIFont.mr(size: 12)
+        timeLabel.textColor = UIColor.nonBodyTextColor
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(secs))
         
@@ -489,13 +490,13 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioBarButton.translatesAutoresizingMaskIntoConstraints = false
         audioBarButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         audioBarButton.layer.shadowRadius = 4
-        audioBarButton.layer.shadowColor = Colors.TopicDetailVC.Buttons.shadowColor().cgColor
+        audioBarButton.layer.shadowColor = UIColor.shadowColor.cgColor
         audioBarButton.layer.shadowOpacity = 1
         audioBarButton.setImage(#imageLiteral(resourceName: "audio_bar"), for: .normal)
         audioBarButton.imageView?.contentMode = .scaleAspectFit
         audioTimeLabel.frame = CGRect(x: 38, y: 8.5, width: 41, height: 22)
         audioTimeLabel.textColor = UIColor.white
-        audioTimeLabel.font = Fonts.TopicDetailVC.Labels.timeLabelFont()
+        audioTimeLabel.font = UIFont.mr(size: 12)
         audioBarButton.addSubview(audioTimeLabel)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleSingleTap(_:)))
@@ -504,12 +505,12 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         // post button
         postButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.layer.borderWidth = 1
-        postButton.layer.borderColor = Colors.TopicDetailVC.Buttons.postButtonColor().cgColor
+        postButton.layer.borderColor = UIColor.brandColor.cgColor
         postButton.layer.cornerRadius = 29.9 / 2
         postButton.layer.masksToBounds = true
         postButton.setTitle("Post", for: .normal)
-        postButton.titleLabel?.font = Fonts.TopicDetailVC.Buttons.postButtonFont()
-        postButton.setTitleColor(Colors.TopicDetailVC.Buttons.postButtonColor(), for: .normal)
+        postButton.titleLabel?.font = UIFont.mr(size: 14)
+        postButton.setTitleColor(UIColor.brandColor, for: .normal)
         
         // reward image
         rewardImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -520,8 +521,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         rewardLabel.translatesAutoresizingMaskIntoConstraints = false
         rewardLabel.textAlignment = .center
         rewardLabel.text = "Successfully posted! Check it again in \"Profile\""
-        rewardLabel.font = Fonts.TopicDetailVC.Labels.rewardLabelFont()
-        rewardLabel.textColor = Colors.TopicDetailVC.Labels.rewardLabelTextColor()
+        rewardLabel.font = UIFont.mr(size: 14)
+        rewardLabel.textColor = UIColor.nonBodyTextColor
         rewardLabel.numberOfLines = 0
     }
     

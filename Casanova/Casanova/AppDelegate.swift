@@ -17,9 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Tab bar config
-        UITabBar.appearance().tintColor = UIColor(red: 75/255.0, green: 205/255.0, blue: 237/255.0, alpha: 1.0)
+        UITabBar.appearance().tintColor = UIColor.brandColor
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: -60), for: .default)
         UINavigationBar.appearance().isTranslucent = false
+        
+//        for family: String in UIFont.familyNames
+//        {
+//            print("\(family)")
+//            for names: String in UIFont.fontNames(forFamilyName: family)
+//            {
+//                print("== \(names)")
+//            }
+//        }
         
         return true
     }

@@ -28,8 +28,8 @@ class TopicBriefTableViewCell: UITableViewCell {
     
     func updateUI() {
         // Update UI
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
-        titleLabel.text = topic.title
+        
+        titleLabel.attributedText = AttrString.topicAttrString(topic.title)
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount) answers"
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
@@ -48,15 +48,20 @@ class TopicBriefTableViewCell: UITableViewCell {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont(name: "Avenir-Medium", size: 12)!
-        
+        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textColor = UIColor.brandColor
+        tagListView.borderColor = UIColor.brandColor
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        contentView.backgroundColor = UIColor.bgdColor
         selectionStyle = .none
-
+        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
+        
+        difficultyLabel.font = UIFont.mr(size: 14)
+        numOfAnswersLabel.font = UIFont.mr(size: 14)
+        numOfStarsLabel.font = UIFont.mr(size: 14)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -31,9 +31,10 @@
 	<string>TFT would like to use the microphone to record your voice</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Montserrat-Light.ttf</string>
-		<string>Montserrat-Bold.ttf</string>
-		<string>Montserrat-Regular.ttf</string>
+		<string>Merriweather-Light.ttf</string>
+		<string>Merriweather-Regular.ttf</string>
+		<string>Muli-Light.ttf</string>
+		<string>Muli.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -152,8 +152,8 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
             
             // config
             audioButton!.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
-            audioTimeLabel!.font = Fonts.TopicDetailVC.Labels.audioTimeLabelFont()
-            audioTimeLabel!.textColor = Colors.TopicDetailVC.Labels.audioTimeLabelTextColor()
+            audioTimeLabel!.font = UIFont.mr(size: 12)
+            audioTimeLabel!.textColor = UIColor.tftCoolGrey
         } else {
             answerTitleLabel.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
         }
@@ -162,29 +162,29 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTitleLabel.trailingAnchor.constraint(equalTo: likeCountLabel.trailingAnchor).isActive = true
         answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29).isActive = true
         
-        answererNameLabel.font = Fonts.TopicDetailVC.Labels.answererNameLabelFont()
-        answererNameLabel.textColor = Colors.TopicDetailVC.Labels.answererNameLabelTextColor()
-        answerTimeLabel.font = Fonts.TopicDetailVC.Labels.answerTimeLabelFont()
-        answerTimeLabel.textColor = Colors.TopicDetailVC.Labels.answerTimeLabelTextColor()
+        answererNameLabel.font = UIFont.mr(size: 14)
+        answererNameLabel.textColor = UIColor.nonBodyTextColor
+        answerTimeLabel.font = UIFont.mr(size: 12)
+        answerTimeLabel.textColor = UIColor.nonBodyTextColor
         
-        likeCountLabel.font = Fonts.TopicDetailVC.Labels.likeCountLabelFont()
-        likeCountLabel.textColor = Colors.TopicDetailVC.Labels.likeCountLabelTextColor()
-        commentCountLabel.font = Fonts.TopicDetailVC.Labels.likeCountLabelFont()
-        commentCountLabel.textColor = Colors.TopicDetailVC.Labels.likeCountLabelTextColor()
+        likeCountLabel.font = UIFont.mr(size: 14)
+        likeCountLabel.textColor = UIColor.nonBodyTextColor
+        commentCountLabel.font = UIFont.mr(size: 14)
+        commentCountLabel.textColor = UIColor.nonBodyTextColor
         
         likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
         commentButton.setImage(#imageLiteral(resourceName: "cmt_btn"), for: .normal)
         
         answerTitleLabel.numberOfLines = 0
         answerTitleLabel.textAlignment = .left
-        answerTitleLabel.font = UIFont(name: "Montserrat-Light", size: 16.0)!
-        answerTitleLabel.textColor = UIColor(red: 74 / 255.0, green: 74 / 255.0, blue: 74 / 255.0, alpha: 1)
         
         answererButton.layer.cornerRadius = 15
         answererButton.layer.masksToBounds = true
         answererButton.layer.borderColor = UIColor.clear.cgColor
         answererButton.layer.borderWidth = 0
         answererButton.scrollView.isScrollEnabled = false
+        
+        contentView.backgroundColor = UIColor.bgdColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -209,14 +209,14 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         switch mode! {
         case .full:
-            answerTitleLabel.text = answer.title
+            answerTitleLabel.attributedText = AttrString.answerAttrString(answer.title)
         case .short:
             // substring answer to 50 words
             let components = answer.title.components(separatedBy: " ")
             if components.count < 50 {
-                answerTitleLabel.text = answer.title
+                answerTitleLabel.attributedText = AttrString.answerAttrString(answer.title)
             } else {
-                answerTitleLabel.text = components[0...50].joined(separator: " ") + " ..."
+                answerTitleLabel.attributedText = AttrString.answerAttrString(components[0...50].joined(separator: " ") + " ...")
             }
         }
     }

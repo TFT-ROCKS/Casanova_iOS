@@ -25,7 +25,7 @@ class FilterTableViewCell: UITableViewCell {
     }
     
     func updateUI() {
-        self.checkBox.layer.backgroundColor = self.checked ? Colors.HomeVC.FilterView.filterCheckboxColor().cgColor : UIColor.clear.cgColor
+        self.checkBox.layer.backgroundColor = self.checked ? UIColor.brandColor.cgColor : UIColor.clear.cgColor
     }
     
     override func awakeFromNib() {
@@ -37,10 +37,7 @@ class FilterTableViewCell: UITableViewCell {
         checkBox.layer.borderWidth = 1
         checkBox.layer.cornerRadius = 2
         checkBox.layer.masksToBounds = true
-        checkBox.layer.borderColor = Colors.HomeVC.FilterView.filterCheckboxColor().cgColor
-        // Title label config
-        title.font = Fonts.HomeVC.FilterView.filterSelectionTextFont()
-        title.textColor = Colors.HomeVC.FilterView.filterSelectionTextColor()
+        checkBox.layer.borderColor = UIColor.brandColor.cgColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

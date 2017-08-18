@@ -49,6 +49,8 @@ class SignUpViewController: UIViewController {
         
         // Padding textfield
         let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: usernameTextField.frame.height))
+        usernameTextField.font = UIFont.mr(size: 17)
+        usernameTextField.textColor = UIColor.nonBodyTextColor
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
         usernameTextField.placeholder = "Username"
@@ -56,6 +58,8 @@ class SignUpViewController: UIViewController {
         usernameTextField.layer.masksToBounds = true
         
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: emailTextField.frame.height))
+        emailTextField.font = UIFont.mr(size: 17)
+        emailTextField.textColor = UIColor.nonBodyTextColor
         emailTextField.leftView = paddingView2
         emailTextField.leftViewMode = .always
         emailTextField.placeholder = "E-mail"
@@ -63,6 +67,8 @@ class SignUpViewController: UIViewController {
         emailTextField.layer.masksToBounds = true
         
         let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: passwordTextField.frame.height))
+        passwordTextField.font = UIFont.mr(size: 17)
+        passwordTextField.textColor = UIColor.nonBodyTextColor
         passwordTextField.leftView = paddingView3
         passwordTextField.leftViewMode = .always
         passwordTextField.placeholder = "Password"
@@ -70,25 +76,18 @@ class SignUpViewController: UIViewController {
         passwordTextField.layer.masksToBounds = true
         
         // Error label configs
-        errorLabel.font = Fonts.SignupVC.Labels.errorLabelFont()
-        errorLabel.textColor = Colors.LoginVC.Labels.errorLabelTextColor()
+        errorLabel.font = UIFont.mr(size: 12)
+        errorLabel.textColor = UIColor.red
         errorLabel.text = " "
         
         // Sign up button configs
         signUpButton.layer.cornerRadius = 22.5
         signUpButton.layer.masksToBounds = true
-        signUpButton.layer.borderColor = Colors.LoginVC.Buttons.signupButtonColor().cgColor
+        signUpButton.layer.borderColor = UIColor.brandColor.cgColor
         signUpButton.layer.borderWidth = 1.0
-        signUpButton.layer.backgroundColor = Colors.LoginVC.Buttons.signupButtonColor().cgColor
+        signUpButton.layer.backgroundColor = UIColor.brandColor.cgColor
         
-        let signupTitle = NSMutableAttributedString(string: "Sign up", attributes: [
-            NSFontAttributeName: UIFont(name: "Montserrat-Regular", size: 17.0)!,
-            NSForegroundColorAttributeName: UIColor(white: 1.0, alpha: 1.0),
-            NSKernAttributeName: -0.38
-            ])
-        signupTitle.addAttribute(NSKernAttributeName, value: -0.36, range: NSRange(location: 6, length: 1))
-        
-        signUpButton.setAttributedTitle(signupTitle, for: .normal)
+        signUpButton.setAttributedTitle(AttrString.titleAttrString("Sign up", textColor: UIColor.bgdColor), for: .normal)
         
         // Record Constraint
         bottomConstraintConstant = bottomConstraint.constant

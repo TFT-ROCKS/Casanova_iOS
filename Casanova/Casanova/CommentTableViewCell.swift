@@ -130,10 +130,10 @@ class CommentTableViewCell: UITableViewCell {
 //        audioTimeLabel!.font = Fonts.AnswerDetailVC.Labels.audioTimeLabelFont()
 //        audioTimeLabel!.textColor = Colors.AnswerDetailVC.Labels.audioTimeLabelTextColor()
         
-        commenterNameLabel.font = Fonts.AnswerDetailVC.Labels.commenterNameLabelFont()
-        commenterNameLabel.textColor = Colors.AnswerDetailVC.Labels.commenterNameLabelTextColor()
-        commentTimeLabel.font = Fonts.AnswerDetailVC.Labels.commentTimeLabelFont()
-        commentTimeLabel.textColor = Colors.AnswerDetailVC.Labels.commentTimeLabelTextColor()
+        commenterNameLabel.font = UIFont.mr(size: 14)
+        commenterNameLabel.textColor = UIColor.nonBodyTextColor
+        commentTimeLabel.font = UIFont.mr(size: 12)
+        commentTimeLabel.textColor = UIColor.tftCoolGrey
         
 //        likeCountLabel.font = Fonts.AnswerDetailVC.Labels.likeCountLabelFont()
 //        likeCountLabel.textColor = Colors.AnswerDetailVC.Labels.likeCountLabelTextColor()
@@ -142,8 +142,6 @@ class CommentTableViewCell: UITableViewCell {
         
         commentTitleLabel.numberOfLines = 0
         commentTitleLabel.textAlignment = .left
-        commentTitleLabel.font = UIFont(name: "Montserrat-Light", size: 16.0)!
-        commentTitleLabel.textColor = UIColor(red: 74 / 255.0, green: 74 / 255.0, blue: 74 / 255.0, alpha: 1)
         
         commenterButton.layer.cornerRadius = 15
         commenterButton.layer.masksToBounds = true
@@ -170,7 +168,7 @@ class CommentTableViewCell: UITableViewCell {
         let request: URLRequest = URLRequest(url: url)
         commenterButton.delegate = self
         commenterButton.loadRequest(request)  // Telling our webView to load our above request
-        commentTitleLabel.text = comment.title
+        commentTitleLabel.attributedText = AttrString.answerAttrString(comment.title)
         
     }
 }

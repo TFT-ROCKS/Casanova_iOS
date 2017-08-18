@@ -24,12 +24,15 @@ class LoadMoreTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        loadMoreButton.setTitleColor(UIColor.brandColor, for: .normal)
+        loadMoreButton.backgroundColor = UIColor.tftDuckEggBlue
+        
         selectionStyle = .none
         
         // Add shadow to LoadMore button
         // ref: https://www.hackingwithswift.com/example-code/uikit/how-to-add-a-shadow-to-a-uiview
         
-        loadMoreButton.layer.shadowColor = UIColor(red: 217 / 255.0, green: 225 / 255.0, blue: 239 / 255.0, alpha: 1).cgColor
+        loadMoreButton.layer.shadowColor = UIColor.shadowColor.cgColor
         loadMoreButton.layer.shadowOpacity = 1
         loadMoreButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         loadMoreButton.layer.shadowRadius = 2

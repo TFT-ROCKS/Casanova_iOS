@@ -48,15 +48,19 @@ class TopicHeaderView: UIView {
     func commonInit() {
         Bundle.main.loadNibNamed("TopicHeaderView", owner: self, options: nil)
         addSubview(contentView)
+        contentView.backgroundColor = UIColor.bgdColor
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         mode = .plain
+        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
+        difficultyLabel.font = UIFont.mr(size: 14)
+        numOfAnswersLabel.font = UIFont.mr(size: 14)
+        numOfStarsLabel.font = UIFont.mr(size: 14)
     }
     
     func updateUI() {
         // Update UI
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
-        titleLabel.text = topic.title
+        titleLabel.attributedText = AttrString.topicAttrString(topic.title)
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount) answers"
         
@@ -72,20 +76,29 @@ class TopicHeaderView: UIView {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont(name: "Avenir-Medium", size: 12)!
+        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textColor = UIColor.brandColor
+        tagListView.borderColor = UIColor.brandColor
         
+        difficultyLabel.textColor = UIColor.nonBodyTextColor
+        numOfAnswersLabel.textColor = UIColor.nonBodyTextColor
+        titleLabel.textColor = UIColor.nonBodyTextColor
+        numOfStarsLabel.textColor = UIColor.nonBodyTextColor
+        tagListView.textColor = UIColor.brandColor
+        tagListView.borderColor = UIColor.brandColor
     }
     
     func cool() {
         if mode == .plain {
             mode = .cool
+            // add bgd img view
             let bgdImgView = UIImageView(frame: CGRect(x: 0, y: -1, width: contentView.bounds.width, height: contentView.bounds.height))
             bgdImgView.tag = 111
             bgdImgView.image = #imageLiteral(resourceName: "header_bgd")
             contentView.addSubview(bgdImgView)
             contentView.sendSubview(toBack: bgdImgView)
             
-            // remove diffView and reinit it
+            // remove diffView and re-init it
             for view in difficultyView.subviews {
                 if view.tag == 101 {
                     view.removeFromSuperview()
@@ -96,24 +109,46 @@ class TopicHeaderView: UIView {
             diffView.backgroundColor = UIColor.clear
             difficultyView.addSubview(diffView)
             
-            // diff label
             difficultyLabel.textColor = UIColor.white
             numOfAnswersLabel.textColor = UIColor.white
             titleLabel.textColor = UIColor.white
             numOfStarsLabel.textColor = UIColor.white
             tagListView.textColor = UIColor.white
+            tagListView.borderColor = UIColor.white
+            starButton.setImage(#imageLiteral(resourceName: "star-w"), for: .normal)
         }
     }
     
     func plain() {
         if mode == .cool {
             mode = .plain
+            // rm bgd img view
             for view in contentView.subviews {
                 if view.tag == 111 {
                     view.removeFromSuperview()
                 }
             }
+            
+            // remove diffView and re-init it
+            for view in difficultyView.subviews {
+                if view.tag == 101 {
+                    view.removeFromSuperview()
+                }
+            }
+            let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level, mode: .plain)
+            diffView.tag = 101
+            diffView.backgroundColor = UIColor.clear
+            difficultyView.addSubview(diffView)
+            
+            difficultyLabel.textColor = UIColor.nonBodyTextColor
+            numOfAnswersLabel.textColor = UIColor.nonBodyTextColor
+            titleLabel.textColor = UIColor.nonBodyTextColor
+            numOfStarsLabel.textColor = UIColor.nonBodyTextColor
+            tagListView.textColor = UIColor.brandColor
+            tagListView.borderColor = UIColor.brandColor
+            starButton.setImage(#imageLiteral(resourceName: "star-h"), for: .normal)
         }
+        
     }
     
     override func awakeFromNib() {

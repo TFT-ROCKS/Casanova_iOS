@@ -57,7 +57,7 @@ class HomeViewController: UIViewController {
         homeTableView.contentInset = UIEdgeInsets.zero
         
         //        homeTableView.allowsSelection = false
-        homeTableView.backgroundColor = Colors.HomeVC.View.homeTableViewBackgroundColor()
+        homeTableView.backgroundColor = UIColor.bgdColor
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
         
@@ -69,9 +69,9 @@ class HomeViewController: UIViewController {
         
         // Navigation bar setup
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = Colors.CommonVC.NavBar.tintColor()
-        navigationController?.navigationBar.setBottomBorderColor(color: Colors.CommonVC.NavBar.borderColor(), height: 1)
-        navigationController?.navigationBar.barTintColor = Colors.CommonVC.NavBar.barTintColor()
+        navigationController?.navigationBar.tintColor = UIColor.navTintColor
+        navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
+        navigationController?.navigationBar.barTintColor = UIColor.bgdColor
         setTitle()
         setButtons()
         
@@ -86,7 +86,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Nav bar config
-        navigationController?.navigationBar.layer.shadowColor = Colors.CommonVC.NavBar.shadowColor().cgColor
+        navigationController?.navigationBar.layer.shadowColor = UIColor.shadowColor.cgColor
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         navigationController?.navigationBar.layer.shadowRadius = 3.0
         navigationController?.navigationBar.layer.shadowOpacity = 1.0
@@ -148,7 +148,7 @@ extension HomeViewController: TagListViewDelegate {
         filterListView.addTags(levelsName(fromNumber: levels).toUpperCase())
         filterListView.addTags(tags.toUpperCase())
         
-        filterListView.textFont = Fonts.CommonVC.TagListView.tagLabelTextFont()
+        filterListView.textFont = UIFont.mr(size: 14)
     }
     
     func levelsName(fromNumber levels: [String]) -> [String] {
@@ -163,12 +163,7 @@ extension HomeViewController: TagListViewDelegate {
 // MARK: - Navigation Bar Items
 extension HomeViewController {
     func setTitle() {
-        let attributedString = NSMutableAttributedString(string: "TFTROCKS", attributes: [
-            NSFontAttributeName: Fonts.CommonVC.NavBar.tftTitleTextFont(),
-            NSForegroundColorAttributeName: Colors.CommonVC.NavBar.tftTitleColor(),
-            NSKernAttributeName: -1.6
-            ])
-        attributedString.addAttribute(NSKernAttributeName, value: 0.0, range: NSRange(location: 7, length: 1))
+        let attributedString = AttrString.titleAttrString("TFTROCKS", textColor: UIColor.brandColor)
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
@@ -355,14 +350,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
         case Tags.HomeVC.tpoTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
-            cell.title.text = tpoArray[indexPath.row]
+            cell.title.attributedText = AttrString.normalLabelAttrString(tpoArray[indexPath.row])
             if indexPath.row == 0 || indexPath.row == 1 {
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             }
             return cell
         case Tags.HomeVC.levelTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
-            cell.title.text = levelArray[indexPath.row]
+            cell.title.attributedText = AttrString.normalLabelAttrString(levelArray[indexPath.row])
             let level = indexPath.row + 1
             if levels.contains(String(level)) {
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
@@ -370,7 +365,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case Tags.HomeVC.catTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
-            cell.title.text = catArray[indexPath.row]
+            cell.title.attributedText = AttrString.normalLabelAttrString(catArray[indexPath.row])
             let tag = catArray[indexPath.row]
             if tags.toUpperCase().contains(tag.uppercased()) {
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
@@ -400,9 +395,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
                 whiteRoundedView.tag = 100
-                whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
+                whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
                 whiteRoundedView.layer.masksToBounds = false
-                whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
+                whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
                 whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
                 whiteRoundedView.layer.shadowOpacity = 1
                 

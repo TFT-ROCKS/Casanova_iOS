@@ -8,8 +8,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Montserrat-Light.ttf">
-            <string>Montserrat-Light</string>
+        <array key="Merriweather-Regular.ttf">
+            <string>Merriweather-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -31,14 +31,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RnQ-BR-wm8">
-                    <rect key="frame" x="24" y="7" width="440" height="62.5"/>
+                    <rect key="frame" x="24" y="7" width="440" height="64.5"/>
                     <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
-                    <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="Merriweather-Regular" family="Merriweather" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggY-Pv-14P" customClass="TagListView" customModule="TagListView">
-                    <rect key="frame" x="24" y="75" width="440" height="90.5"/>
+                    <rect key="frame" x="24" y="77" width="440" height="88.5"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                             <color key="value" red="0.29411764709999999" green="0.80392156859999997" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -55,9 +55,9 @@ class AnswerDetailViewController: UIViewController {
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = Colors.AnswerDetailVC.NavBar.tintColor()
+        navigationController?.navigationBar.tintColor = UIColor.navTintColor
         
-        view.backgroundColor = Colors.AnswerDetailVC.View.backgroundColor()
+        view.backgroundColor = UIColor.bgdColor
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,7 +93,8 @@ class AnswerDetailViewController: UIViewController {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.text = "Answer"
-        titleLabel.font = Fonts.AnswerDetailVC.NavBar.titleTextFont()
+        titleLabel.font = UIFont.mr(size: 17)
+        titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
     }
@@ -112,7 +113,7 @@ extension AnswerDetailViewController {
     func configTopicView() {
         // Add shadow layer to topic header view
         topicView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        topicView.layer.shadowColor = Colors.AnswerDetailVC.TopicView.shadowColor().cgColor
+        topicView.layer.shadowColor = UIColor.shadowColor.cgColor
         topicView.layer.shadowRadius = 3.0
         topicView.layer.shadowOpacity = 1.0
     }
@@ -136,7 +137,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     func configTableView() {
         tableView.separatorStyle = .none
         
-        tableView.backgroundColor = UIColor(red: 248/255.0, green: 250/255.0, blue: 252/255.0, alpha: 1)
+        tableView.backgroundColor = UIColor.bgdColor
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -182,8 +183,8 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         } else { // Comments section
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 40))
             let label = UILabel(frame: CGRect(x: 24, y: 5, width: 130, height: 20))
-            label.font = Fonts.AnswerDetailVC.Labels.sectionHeaderLabelFont()
-            label.textColor = Colors.AnswerDetailVC.Labels.sectionHeaderLabelTextColor()
+            label.font = UIFont.mr(size: 14)
+            label.textColor = UIColor.nonBodyTextColor
             label.text = "Comments (\(comments.count))"
             headerView.addSubview(label)
             return headerView
@@ -250,9 +251,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
             whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
+            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
             whiteRoundedView.layer.shadowOpacity = 1
             
@@ -275,9 +276,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
             whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = Colors.HomeVC.View.topicBriefTableViewCellShadowColor().cgColor
+            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
             whiteRoundedView.layer.shadowOpacity = 1
             

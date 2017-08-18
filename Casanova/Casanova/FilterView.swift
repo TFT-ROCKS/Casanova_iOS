@@ -34,17 +34,9 @@ class FilterView: UIView, UITableViewDelegate {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        tpoLabel.font = Fonts.HomeVC.FilterView.filterLabelTextFont()
-        tpoLabel.textColor = Colors.HomeVC.FilterView.filterLabelTextColor()
-        tpoLabel.text = "TPO"
-        
-        levelLabel.font = Fonts.HomeVC.FilterView.filterLabelTextFont()
-        levelLabel.textColor = Colors.HomeVC.FilterView.filterLabelTextColor()
-        levelLabel.text = "LEVEL"
-        
-        catLabel.font = Fonts.HomeVC.FilterView.filterLabelTextFont()
-        catLabel.textColor = Colors.HomeVC.FilterView.filterLabelTextColor()
-        catLabel.text = "CATEGORIES"
+        tpoLabel.attributedText = AttrString.normalLabelAttrString("TPO")
+        levelLabel.attributedText = AttrString.normalLabelAttrString("LEVEL")
+        catLabel.attributedText = AttrString.normalLabelAttrString("CATEGORIES")
     }
 
     func setTableViewDatasourceDelegate <D: UITableViewDataSource & UITableViewDelegate> (dataSourceDelegate: D) {
