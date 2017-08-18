@@ -32,6 +32,9 @@ class TopicDetailViewController: UIViewController {
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
     
+    // status bar
+    var statusBarShouldBeHidden = false
+    
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
@@ -124,6 +127,16 @@ class TopicDetailViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Hide the status bar
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     func layoutSubviews() {
         layoutTopicView()
         layoutTableView()
@@ -135,7 +148,11 @@ class TopicDetailViewController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return statusBarShouldBeHidden
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
     }
     
     func fetchTopicDetail() {
@@ -210,8 +227,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func registerCustomCell() {
-        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell)
-        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell)
+        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell)
+        tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell)
         let loadMoreTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.loadMoreTableViewCell, bundle: nil)
         tableView.register(loadMoreTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell)
     }
@@ -235,26 +252,28 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         if let answers = answers {
             let answer = answers[indexPath.row]
             var cell: AnswerDetailTableViewCell
-            if answer.title == "" {
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutTextCell, for: indexPath) as! AnswerDetailTableViewCell
+            
+            if answer.audioURL == nil {
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithTextCell, for: indexPath) as! AnswerDetailTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
             }
+            cell.mode = .short
             cell.answer = answer
-            cell.audioButton.tag = indexPath.row
-            cell.audioSlider.tag = indexPath.row
-            cell.audioButton.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
-            cell.audioSlider.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
+            cell.audioButton?.tag = indexPath.row
+            cell.audioSlider?.tag = indexPath.row
+            cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
+            cell.audioSlider?.addTarget(self, action: #selector(self.sliderValueChanged(_:)), for: .valueChanged)
             if indexPath.row != cellInUse {
-                cell.audioTimeLabel.text = "00:00"
-                cell.audioSlider.isEnabled = false
-                cell.audioSlider.value = 0
+                cell.audioTimeLabel?.text = "00:00"
+                cell.audioSlider?.isEnabled = false
+                cell.audioSlider?.value = 0
             } else {
                 if audioPlayer != nil {
-                    cell.audioSlider.isEnabled = true
-                    cell.audioTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
-                    cell.audioSlider.value = Float(audioPlayer.currentTime)
-                    cell.audioSlider.maximumValue = Float(audioPlayer.duration)
+                    cell.audioSlider?.isEnabled = true
+                    cell.audioTimeLabel?.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
+                    cell.audioSlider?.value = Float(audioPlayer.currentTime)
+                    cell.audioSlider?.maximumValue = Float(audioPlayer.duration)
                 } else {
                     
                 }
@@ -300,13 +319,21 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answers![indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func audioButtonTapped(_ sender: UIButton) {
+        if cellInUse == sender.tag {
+            return
+        }
         if cellInUse != -1 {
             // reset previous cell in use
             if let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell {
-                cell.audioTimeLabel.text = "00:00"
-                cell.audioSlider.isEnabled = false
-                cell.audioSlider.value = 0
+                cell.audioTimeLabel?.text = "00:00"
+                cell.audioSlider?.isEnabled = false
+                cell.audioSlider?.value = 0
                 if audioPlayer != nil {
                     audioPlayer.stop()
                     audioPlayer = nil
@@ -341,9 +368,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
                 audioPlayer.volume = 1.0
                 audioPlayer.play()
                 
-                cell.audioSlider.maximumValue = Float(audioPlayer.duration)
-                cell.audioSlider.value = 0.0
-                cell.audioSlider.isEnabled = true
+                cell.audioSlider?.maximumValue = Float(audioPlayer.duration)
+                cell.audioSlider?.value = 0.0
+                cell.audioSlider?.isEnabled = true
                 
                 Utils.runOnMainThread {
                     self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
@@ -363,22 +390,22 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         guard let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell else { return }
         if audioPlayer != nil {
             audioPlayer.currentTime = TimeInterval(sender.value)
-            cell.audioTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
+            cell.audioTimeLabel?.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
         }
     }
     
     func updateTime(_ timer: Timer) {
         if let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell {
-            cell.audioSlider.value = Float(audioPlayer.currentTime)
-            cell.audioTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
+            cell.audioSlider?.value = Float(audioPlayer.currentTime)
+            cell.audioTimeLabel?.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
         }
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if let cell = tableView.cellForRow(at: IndexPath(row: cellInUse, section: 0)) as? AnswerDetailTableViewCell {
-            cell.audioSlider.value = 0
-            cell.audioSlider.isEnabled = false
-            cell.audioTimeLabel.text = "00:00"
+            cell.audioSlider?.value = 0
+            cell.audioSlider?.isEnabled = false
+            cell.audioTimeLabel?.text = "00:00"
         }
         audioPlayer.stop()
         audioPlayer = nil
@@ -786,6 +813,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
             navigationController?.setNavigationBarHidden(true, animated: true)
+            topicView.cool()
         } else {
             
         }
@@ -795,6 +823,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
         if velocity.y < 0 {
             // Un-Hide
             navigationController?.setNavigationBarHidden(false, animated: true)
+            topicView.plain()
         } else {
             
         }

@@ -21,7 +21,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
     @IBAction func signUpButtonClicked(_ sender: UIButton) {
-        UserManager.shared.signUp(username: usernameTextField.text, email: emailTextField.text, password: passwordTextField.text, withCompletion: { error in
+        UserManager.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, withCompletion: { error in
             if let error = error {
                 self.errorLabel.text = error.msg
             } else {

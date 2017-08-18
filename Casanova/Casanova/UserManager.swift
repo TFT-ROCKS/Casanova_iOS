@@ -12,7 +12,21 @@ import Alamofire
 class UserManager {
     static let shared = UserManager()
     let url = "https://tft.rocks/api"
-    func signUp(username: String?, email: String?, password: String?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+    func signUp(username: String, email: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        if username == "" {
+            let errorMessage = ErrorMessage(msg: Errors.usernameNotValid)
+            block?(errorMessage)
+            return
+        } else if email == "" {
+            let errorMessage = ErrorMessage(msg: Errors.emailNotValid)
+            block?(errorMessage)
+            return
+        } else if password == "" {
+            let errorMessage = ErrorMessage(msg: Errors.passwordNotValid)
+            block?(errorMessage)
+            return
+        }
+        
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
                                     "Referer": "https://tft.rocks/",
@@ -50,7 +64,19 @@ class UserManager {
         }
     }
     
-    func signIn(email: String?, password: String?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+    func signIn(usernameOrEmail: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        if usernameOrEmail == "" {
+            let errorMessage = ErrorMessage(msg: Errors.usernameOrEmailNotValid)
+            block?(errorMessage)
+            return
+        } else if password == "" {
+            let errorMessage = ErrorMessage(msg: Errors.passwordNotValid)
+            block?(errorMessage)
+            return
+        }
+        
+        let usernameOrEmailKey = isValidEmailAddress(emailAddressString: usernameOrEmail) ? "email" : "username"
+        
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
                                     "Referer": "https://tft.rocks/",
@@ -59,7 +85,7 @@ class UserManager {
         let params: Parameters = ["requests": ["g0": ["resource": "userService",
                                                       "operation": "update",
                                                       "params": [:],
-                                                      "body": ["email": email,
+                                                      "body": [usernameOrEmailKey: usernameOrEmail,
                                                                "password": password]]],
                                   "context": [:]]
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
@@ -91,5 +117,27 @@ class UserManager {
                 block?(errorMessage)
             }
         }
+    }
+    
+    func isValidEmailAddress(emailAddressString: String) -> Bool {
+        
+        var returnValue = true
+        let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
+        
+        do {
+            let regex = try NSRegularExpression(pattern: emailRegEx)
+            let nsString = emailAddressString as NSString
+            let results = regex.matches(in: emailAddressString, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0 {
+                returnValue = false
+            }
+            
+        } catch let error as NSError {
+            print("invalid regex: \(error.localizedDescription)")
+            returnValue = false
+        }
+        
+        return  returnValue
     }
 }

@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+struct Errors {
+    public static let usernameNotValid = "At least provide a username, ok?"
+    public static let emailNotValid = "Come on, your email is not valid"
+    public static let passwordNotValid = "What's your password, bro?"
+    public static let usernameOrEmailNotValid = "Dude, please enter your username or email!"
+}
+
 struct Tags {
     struct HomeVC {
         static let homeTableViewTag = 100
@@ -81,6 +88,29 @@ struct Colors {
             static func rewardLabelTextColor() -> UIColor { return UIColor(red: 164 / 255.0, green: 170 / 255.0, blue: 179 / 255.0, alpha: 1) }
         }
     }
+    struct AnswerDetailVC {
+        struct NavBar {
+            static func tintColor() -> UIColor { return UIColor(red: 164.0 / 255.0, green: 170.0 / 255.0, blue: 179.0 / 255.0, alpha: 1.0) }
+        }
+        struct View {
+            static func backgroundColor() -> UIColor { return UIColor(red: 248 / 255.0, green: 250 / 255.0, blue: 252 / 255.0, alpha: 1) }
+        }
+        struct Buttons {
+            static func skipButtonTextColor() -> UIColor { return UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1) }
+            static func postButtonColor() -> UIColor { return UIColor(red: 75/255.0, green: 205/255.0, blue: 237/255.0, alpha: 1) }
+            static func shadowColor() -> UIColor { return UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1) }
+        }
+        struct TopicView {
+            static func shadowColor() -> UIColor { return UIColor(red: 217/255.0, green: 225/255.0, blue: 239/255.0, alpha: 1) }
+        }
+        struct Labels {
+            static func sectionHeaderLabelTextColor() -> UIColor { return UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1.0) }
+            static func commenterNameLabelTextColor() -> UIColor { return UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1.0) }
+            static func commentTimeLabelTextColor() -> UIColor { return UIColor(red: 155/255.0, green: 155/255.0, blue: 155/255.0, alpha: 1) }
+            static func audioTimeLabelTextColor() -> UIColor { return UIColor(red: 202/255.0, green: 202/255.0, blue: 202/255.0, alpha: 1) }
+            static func likeCountLabelTextColor() -> UIColor { return UIColor(red: 74.0 / 255.0, green: 74.0 / 255.0, blue: 74.0 / 255.0, alpha: 1.0) }
+        }
+    }
 }
 
 struct Fonts {
@@ -121,6 +151,18 @@ struct Fonts {
             static func rewardLabelFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 17.0)! }
         }
     }
+    struct AnswerDetailVC {
+        struct NavBar {
+            static func titleTextFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 18.0)! }
+        }
+        struct Labels {
+            static func sectionHeaderLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 14.0)! }
+            static func commenterNameLabelFont() -> UIFont { return UIFont(name: "Montserrat-Regular", size: 14.0)! }
+            static func commentTimeLabelFont() -> UIFont { return UIFont(name: "Montserrat-Light", size: 10.0)! }
+            static func audioTimeLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 10.0)! }
+            static func likeCountLabelFont() -> UIFont { return UIFont(name: "Avenir-Medium", size: 14.0)! }
+        }
+    }
 }
 
 struct ReuseIDs {
@@ -135,9 +177,13 @@ struct ReuseIDs {
     }
     struct TopicDetailVC {
         struct View {
-            static let answerWithTextCell = "AnswerWithTextCell"
+            static let answerDefaultCell = "AnswerDefaultCell"
             static let answerWithoutTextCell = "AnswerWithoutTextCell"
+            static let answerWithoutAudioCell = "AnswerWithoutAudioCell"
         }
+    }
+    struct AnswerDetailVC {
+        static let commentTableViewCell = "CommentDefaultCell"
     }
 }
 

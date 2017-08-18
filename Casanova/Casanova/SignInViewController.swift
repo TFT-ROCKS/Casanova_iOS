@@ -17,7 +17,7 @@ class SignInViewController: UIViewController {
     }
     @IBOutlet weak var logInButton: UIButton!
     @IBAction func logInButtonClicked(_ sender: UIButton) {
-        UserManager.shared.signIn(email: usernameTextField.text, password: passwordTextField.text, withCompletion: { error in
+        UserManager.shared.signIn(usernameOrEmail: usernameTextField.text!, password: passwordTextField.text!, withCompletion: { error in
             if error == nil {
                 // Success
                 self.errorLabel.text = " "
@@ -46,7 +46,7 @@ class SignInViewController: UIViewController {
         let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: usernameTextField.frame.height))
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
-        usernameTextField.placeholder = "E-mail"
+        usernameTextField.placeholder = "E-mail or Username"
         usernameTextField.layer.cornerRadius = 22.5
         usernameTextField.layer.masksToBounds = true
         

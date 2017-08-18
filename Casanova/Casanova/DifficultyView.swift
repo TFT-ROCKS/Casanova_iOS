@@ -10,8 +10,14 @@ import UIKit
 
 class DifficultyView: UIView {
     var level: Int = 0
+    var mode: TopicHeaderViewMode
     
-    init(frame: CGRect, level: Int) {
+    convenience init(frame: CGRect, level: Int) {
+        self.init(frame: frame, level: level, mode: nil)
+    }
+    
+    init(frame: CGRect, level: Int, mode: TopicHeaderViewMode?) {
+        self.mode = mode ?? .plain
         super.init(frame: frame)
         self.level = level
     }
@@ -28,7 +34,7 @@ class DifficultyView: UIView {
         // horizontal space: (self.width - (4+1.2) * 5) / 4
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.setLineWidth(0.6)
-        let color = UIColor(red: 75 / 255.0, green: 205 / 255.0, blue: 237 / 255.0, alpha: 1).cgColor
+        let color = (mode == .plain) ? UIColor(red: 75 / 255.0, green: 205 / 255.0, blue: 237 / 255.0, alpha: 1).cgColor : UIColor.white.cgColor
         ctx?.setStrokeColor(color)
         
         let height = self.bounds.size.height
