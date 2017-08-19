@@ -20,4 +20,24 @@ class Utils {
             }
         }
     }
+    
+    static func doesCurrentUserLikeThisAnswer(_ answer: Answer) -> Bool {
+        let currentUser = Environment.shared.currentUser
+        for like in answer.likes {
+            if currentUser?.id == like.userId {
+                return true
+            }
+        }
+        return false
+    }
+    
+    static func likeIdFromAnswer(_ answer: Answer) -> Int? {
+        let currentUser = Environment.shared.currentUser
+        for like in answer.likes {
+            if currentUser?.id == like.userId {
+                return like.id
+            }
+        }
+        return nil
+    }
 }

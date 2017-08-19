@@ -203,6 +203,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             }
             cell.mode = .full
             cell.answer = answer
+            let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
+            cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
+            cell.likeButton.setImage(img, for: .normal)
             cell.audioButton?.tag = indexPath.row
             cell.audioSlider?.tag = indexPath.row
             cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
@@ -291,6 +294,17 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             cell.contentView.backgroundColor = UIColor.clear
             cell.backgroundColor = UIColor.clear
         }
+    }
+    
+    func likeButtonTapped(_ sender: UIButton) {
+        let answerId = answer.id
+        let topicId = topic.id
+        let userId = Environment.shared.currentUser?.id
+        LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+            if error == nil {
+                self.answer.likes.append(like!)
+            }
+        })
     }
     
     func audioButtonTapped(_ sender: UIButton) {

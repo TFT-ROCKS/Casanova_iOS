@@ -261,6 +261,10 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             }
             cell.mode = .short
             cell.answer = answer
+            let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
+            cell.likeButton.tag = indexPath.row
+            cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
+            cell.likeButton.setImage(img, for: .normal)
             cell.audioButton?.tag = indexPath.row
             cell.audioSlider?.tag = indexPath.row
             cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
@@ -323,6 +327,34 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answers![indexPath.row])
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func likeButtonTapped(_ sender: UIButton) {
+        let topicId = topic.id
+        let userId = Environment.shared.currentUser?.id
+        let answer = answers?[sender.tag]
+        let answerId = answer?.id
+        if Utils.doesCurrentUserLikeThisAnswer(answer!) {
+            // un-like it
+            let likeId = Utils.likeIdFromAnswer(answer!)
+            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+                if error == nil {
+                    answer?.removeLike(withId: likeId!)
+                    self.tableView.reloadData()
+                }
+            })
+        } else {
+            // like it
+            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+                if error == nil {
+                    if let answers = self.answers {
+                        let answer = answers[sender.tag]
+                        answer.likes.append(like!)
+                        self.tableView.reloadData()
+                    }
+                }
+            })
+        }
     }
     
     func audioButtonTapped(_ sender: UIButton) {
@@ -413,6 +445,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         cellInUse = -1
         timer.invalidate()
     }
+    
 }
 
 // MARK: - Record Button and Skip Buttons
@@ -517,7 +550,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         rewardImageView.contentMode = .scaleAspectFit
         rewardImageView.image = #imageLiteral(resourceName: "reward_image")
         
-        // reward label 
+        // reward label
         rewardLabel.translatesAutoresizingMaskIntoConstraints = false
         rewardLabel.textAlignment = .center
         rewardLabel.text = "Successfully posted! Check it again in \"Profile\""
@@ -826,7 +859,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarHidden(false, animated: true)
             topicView.plain()
         } else {
-
+            
         }
     }
 }

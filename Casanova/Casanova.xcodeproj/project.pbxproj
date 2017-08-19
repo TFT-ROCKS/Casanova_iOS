@@ -72,6 +72,7 @@
 		80FB45861F47894C0034D525 /* Muli-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80FB45841F47894C0034D525 /* Muli-Light.ttf */; };
 		80FB45871F47894C0034D525 /* Muli.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80FB45851F47894C0034D525 /* Muli.ttf */; };
 		80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB45881F4797B00034D525 /* UIFont+Addition.swift */; };
+		80FB458B1F482B890034D525 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB458A1F482B890034D525 /* Environment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +144,7 @@
 		80FB45841F47894C0034D525 /* Muli-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Light.ttf"; sourceTree = "<group>"; };
 		80FB45851F47894C0034D525 /* Muli.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Muli.ttf; sourceTree = "<group>"; };
 		80FB45881F4797B00034D525 /* UIFont+Addition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Addition.swift"; sourceTree = "<group>"; };
+		80FB458A1F482B890034D525 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +193,7 @@
 				80B3139D1F1B35B4001CFDC7 /* Topic.swift */,
 				80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */,
 				80B3139F1F1B35B4001CFDC7 /* User.swift */,
+				80FB458A1F482B890034D525 /* Environment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				806179821F3E69F500B696FB /* Array+Helper.swift in Sources */,
 				800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */,
 				80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */,
+				80FB458B1F482B890034D525 /* Environment.swift in Sources */,
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,

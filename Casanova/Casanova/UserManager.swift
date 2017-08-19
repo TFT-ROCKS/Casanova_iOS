@@ -64,14 +64,14 @@ class UserManager {
         }
     }
     
-    func signIn(usernameOrEmail: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+    func signIn(usernameOrEmail: String, password: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
         if usernameOrEmail == "" {
             let errorMessage = ErrorMessage(msg: Errors.usernameOrEmailNotValid)
-            block?(errorMessage)
+            block?(errorMessage, nil)
             return
         } else if password == "" {
             let errorMessage = ErrorMessage(msg: Errors.passwordNotValid)
-            block?(errorMessage)
+            block?(errorMessage, nil)
             return
         }
         
@@ -97,24 +97,24 @@ class UserManager {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage)
+                        block?(errorMessage, nil)
                     } else {
                         // success
                         if let dict = json["g0"] as? [String: Any] {
                             if let dict = dict["data"] as? [String: Any] {
                                 if let user = User(fromJSON: dict) {
-                                    block?(nil)
+                                    block?(nil, user)
                                 }
                             }
                         }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when sign in")
-                    block?(errorMessage)
+                    block?(errorMessage, nil)
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when sign in")
-                block?(errorMessage)
+                block?(errorMessage, nil)
             }
         }
     }

@@ -17,9 +17,11 @@ class SignInViewController: UIViewController {
     }
     @IBOutlet weak var logInButton: UIButton!
     @IBAction func logInButtonClicked(_ sender: UIButton) {
-        UserManager.shared.signIn(usernameOrEmail: usernameTextField.text!, password: passwordTextField.text!, withCompletion: { error in
+        UserManager.shared.signIn(usernameOrEmail: usernameTextField.text!, password: passwordTextField.text!, withCompletion: { (error, user) in
             if error == nil {
                 // Success
+                // Store current user
+                Environment.shared.currentUser = user
                 self.errorLabel.text = " "
                 let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
                 self.navigationController?.setViewControllers([tc], animated: false)
