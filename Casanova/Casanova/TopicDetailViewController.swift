@@ -826,7 +826,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarHidden(false, animated: true)
             topicView.plain()
         } else {
-            
+
         }
     }
 }

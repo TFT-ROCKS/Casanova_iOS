@@ -441,6 +441,25 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             break
         }
     }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        switch tableView.tag {
+        case Tags.HomeVC.homeTableViewTag:
+            break
+        case Tags.HomeVC.tpoTableViewTag:
+            break
+        case Tags.HomeVC.levelTableViewTag:
+            let level = indexPath.row + 1
+            updateLevels(level: level)
+            break
+        case Tags.HomeVC.catTableViewTag:
+            let tag = catArray[indexPath.row]
+            updateTags(tag: tag.lowercased())
+            break
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - LoadMoreTableViewCellDelegate
