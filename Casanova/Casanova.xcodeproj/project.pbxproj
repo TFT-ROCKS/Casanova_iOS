@@ -46,6 +46,8 @@
 		807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5C91F29B25D000451FA /* CommentManager.swift */; };
 		807BF5CC1F29B275000451FA /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5CB1F29B275000451FA /* TagManager.swift */; };
 		807BF5CE1F29B291000451FA /* AnswerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5CD1F29B291000451FA /* AnswerManager.swift */; };
+		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
+		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
 		80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313991F1B35B4001CFDC7 /* Comment.swift */; };
 		80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */; };
@@ -116,6 +118,8 @@
 		807BF5C91F29B25D000451FA /* CommentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
 		807BF5CB1F29B275000451FA /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		807BF5CD1F29B291000451FA /* AnswerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerManager.swift; sourceTree = "<group>"; };
+		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
+		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		80B313991F1B35B4001CFDC7 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 		800FEFE41F25677300DF5531 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				80A6C9EE1F497964000CE9FB /* PostTextView.swift */,
+				80A6C9F01F497980000CE9FB /* PostTextView.xib */,
 				80FB457C1F46D1D10034D525 /* Others */,
 				80FB457D1F46D1E50034D525 /* CommentTableViewCell */,
 				804D91D01F37C83500CA6FBE /* FilterView */,
@@ -467,6 +473,7 @@
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
 				80FB45861F47894C0034D525 /* Muli-Light.ttf in Resources */,
 				80524B391F45809A00363D7D /* TFTicons_avatar_6.svg in Resources */,
+				80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */,
 				80FB45831F4788E80034D525 /* Merriweather-Regular.ttf in Resources */,
 				80524B351F45809A00363D7D /* TFTicons_avatar_2.svg in Resources */,
 				80524B371F45809A00363D7D /* TFTicons_avatar_4.svg in Resources */,
@@ -538,6 +545,7 @@
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
 				805EC8911F418A16005197DF /* ActivitiesViewController.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
+				80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */,
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,

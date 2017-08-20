@@ -11,16 +11,30 @@ import Alamofire
 
 class CommentManager {
     static let shared = CommentManager()
-    let url = "http://127.0.0.1:3000/api"
-    func postComment(answerID: Int, userId: Int, title: String, withCompletion block: ((ErrorMessage) -> Void)? = nil) {
+    let url = "https://tft.rocks/api"
+    func postComment(answerId: Int?, userId: Int?, title: String, withCompletion block: ((ErrorMessage?, Comment?) -> Void)? = nil) {
+        guard let answerId = answerId else {
+            let msg = "answerId == nil, when comment answer"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage, nil)
+            return
+        }
+        
+        guard let userId = userId else {
+            let msg = "userId == nil, when comment answer"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage, nil)
+            return
+        }
+        
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
-                                    "Referer": "http://127.0.0.1:3000/",
+                                    "Referer": "https://tft.rocks/topic/\(answerId)",
                                     "X-Requested-With": "XMLHttpRequest",
                                     "Connection": "keep-alive"]
         let params: Parameters = ["requests": ["g0": ["resource": "commentService",
                                                       "operation": "create",
-                                                      "params": ["answerId":answerID,
+                                                      "params": ["answerId":answerId,
                                                                  "userId":userId,
                                                                  "title":title],
                                                       "body": [:]]],
@@ -29,23 +43,29 @@ class CommentManager {
             response in
             
             if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
+                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage)
+                        block?(errorMessage, nil)
                     } else {
                         // success
-                        
+                        if let json = json["g0"] as? [String: Any] {
+                            if let dict = json["data"] as? [String: Any] {
+                                if let comment = Comment(fromJSON: dict) {
+                                    block?(nil, comment)
+                                }
+                            }
+                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post comment")
-                    block?(errorMessage)
+                    block?(errorMessage, nil)
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when post comment")
-                block?(errorMessage)
+                block?(errorMessage, nil)
             }
         }
     }

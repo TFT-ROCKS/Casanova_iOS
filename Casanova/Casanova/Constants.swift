@@ -63,6 +63,9 @@ struct Duration {
             static let rewardFadeOutDuration: Double = 2
         }
     }
+    struct AnswerDetailVC {
+        static let fadeInOrOutDuration: Double = 0.3
+    }
 }
 
 struct AttrString {

@@ -24,6 +24,10 @@ class AnswerDetailViewController: UIViewController {
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
+    let postTextView: PostTextView = PostTextView(frame: .zero)
+    
+    // bottom constraint
+    var bottomConstraint: NSLayoutConstraint!
     
     var timer: Timer!
     var seconds: Int = 60
@@ -34,6 +38,21 @@ class AnswerDetailViewController: UIViewController {
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     
+    // button
+    lazy var cmtBtn: UIButton = {
+        let minimumTappableHeight: CGFloat = 60
+        let button = UIButton(frame: CGRect(x: self.view.bounds.width - minimumTappableHeight, y: self.view.center.y,
+                                            width: minimumTappableHeight,
+                                            height: minimumTappableHeight))
+        button.layer.cornerRadius = minimumTappableHeight / 2
+        button.layer.masksToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "comment_btn"), for: .normal)
+        
+        return button
+    }()
+    var center: CGPoint!
+    let threshold: CGFloat = 20.0
+    
     // init
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -43,6 +62,7 @@ class AnswerDetailViewController: UIViewController {
         self.topic = topic
         self.answer = answer
         self.comments = answer.comments
+        self.postTextView.answer = answer
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -58,6 +78,14 @@ class AnswerDetailViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         
         view.backgroundColor = UIColor.bgdColor
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add Notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,16 +100,21 @@ class AnswerDetailViewController: UIViewController {
         if audioRecorder != nil {
             audioRecorder.stop()
         }
+        
+        // Remove Notifications
+        NotificationCenter.default.removeObserver(self)
     }
     
     func layoutSubviews() {
         layoutTopicView()
         layoutTableView()
+        layoutPostTextView()
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
+        addPostTextViewConstraints()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -125,6 +158,84 @@ extension AnswerDetailViewController {
     }
 }
 
+// MARK: - PostTextView
+extension AnswerDetailViewController: PostTextViewDelegate {
+    func layoutPostTextView() {
+        view.addSubview(postTextView)
+        postTextView.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubview(toFront: postTextView)
+        postTextView.delegate = self
+        postTextView.isHidden = true
+        
+        view.addSubview(cmtBtn)
+        cmtBtn.addTarget(self, action: #selector(cmtBtnDragged(control:event:)), for: .touchDragInside)
+        cmtBtn.addTarget(self, action: #selector(cmtBtnDragged(control:event:)), for: [.touchDragExit, .touchDragOutside])
+        cmtBtn.addTarget(self, action: #selector(cmtBtnTapped(_:)), for: .touchUpInside)
+        cmtBtn.addTarget(self, action: #selector(cmtBtnTouchedDown(_:)), for: .touchDown)
+    }
+    
+    func cmtBtnDragged(control: UIControl, event: UIEvent) {
+        if let center = event.allTouches?.first?.location(in: self.view) {
+            control.center = center
+        }
+    }
+    
+    func cmtBtnTouchedDown(_ sender: UIButton) {
+        // record cmtBtn pos
+        center = cmtBtn.center
+    }
+    
+    func distanceBetweenPoints(_ p1: CGPoint, p2: CGPoint) -> CGFloat {
+        return sqrt((pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)))
+    }
+    
+    func cmtBtnTapped(_ sender: UIButton) {
+        if distanceBetweenPoints(cmtBtn.center, p2: center) > threshold { return }
+        cmtBtn.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+    }
+    
+    func addPostTextViewConstraints() {
+        NSLayoutConstraint(item: postTextView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
+        
+        NSLayoutConstraint(item: postTextView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
+        
+        bottomConstraint = NSLayoutConstraint(item: postTextView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant:0.0)
+        bottomConstraint.isActive = true
+    }
+    
+    // Deal with keyboard notification
+    func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration: TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+            let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            if (endFrame?.origin.y)! >= UIScreen.main.bounds.height {
+                bottomConstraint.constant = 0
+            } else {
+                bottomConstraint.constant = -(endFrame?.size.height ?? 0)
+            }
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: nil)
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    func reloadTableView() {
+        comments = answer.comments
+        tableView.reloadData()
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
+    }
+}
+
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
@@ -148,6 +259,12 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
         tableView.estimatedSectionHeaderHeight = 40
+        
+        // tap gesture added to table view
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(self.viewTapped(_:)))
+        tgr.cancelsTouchesInView = false
+        tgr.delegate = self
+        self.tableView.addGestureRecognizer(tgr)
     }
     
     func registerCustomCell() {
@@ -397,6 +514,14 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+extension AnswerDetailViewController: UIGestureRecognizerDelegate {
+    
+    func viewTapped(_ tgr: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+}
+
 // MARK: - UIScrollViewDelegate
 extension AnswerDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -404,6 +529,8 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
             // Hide
             navigationController?.setNavigationBarHidden(true, animated: true)
             topicView.cool()
+            cmtBtn.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {
             
         }

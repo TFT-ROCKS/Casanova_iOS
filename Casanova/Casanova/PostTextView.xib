@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostTextView" customModule="Casanova" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="BUd-5e-uha"/>
+                <outlet property="placeholderLabel" destination="P6b-u9-YnJ" id="nm3-3r-wEc"/>
+                <outlet property="postButton" destination="fS8-xb-Vo1" id="sRh-dj-Pn9"/>
+                <outlet property="textView" destination="TvH-35-EAd" id="4Jf-IH-VWd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="115"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TvH-35-EAd">
+                    <rect key="frame" x="24" y="15" width="393" height="54"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="Lqz-To-hwa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fS8-xb-Vo1">
+                    <rect key="frame" x="366.5" y="77" width="50.5" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="AX6-xq-1MY"/>
+                        <constraint firstAttribute="width" constant="50.600000000000001" id="dGq-lJ-7Qf"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="postButtonClicked:" destination="-1" eventType="touchUpInside" id="54d-z6-W6T"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6b-u9-YnJ">
+                    <rect key="frame" x="37" y="23" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fS8-xb-Vo1" secondAttribute="bottom" constant="12" id="2eu-Dc-PZx"/>
+                <constraint firstItem="fS8-xb-Vo1" firstAttribute="trailing" secondItem="TvH-35-EAd" secondAttribute="trailing" id="F4A-v0-RXQ"/>
+                <constraint firstItem="TvH-35-EAd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="JKv-Og-ES1"/>
+                <constraint firstItem="TvH-35-EAd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="VdD-a8-G44"/>
+                <constraint firstItem="P6b-u9-YnJ" firstAttribute="top" secondItem="TvH-35-EAd" secondAttribute="top" constant="8" id="Wsj-tH-N3M"/>
+                <constraint firstItem="P6b-u9-YnJ" firstAttribute="leading" secondItem="TvH-35-EAd" secondAttribute="leading" constant="13" id="gyN-Sm-ZsH"/>
+                <constraint firstAttribute="trailing" secondItem="TvH-35-EAd" secondAttribute="trailing" constant="24" id="iVv-eh-da3"/>
+                <constraint firstItem="fS8-xb-Vo1" firstAttribute="top" secondItem="TvH-35-EAd" secondAttribute="bottom" constant="7.4000000000000004" id="pt8-UI-xBH"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-148" y="51"/>
+        </view>
+    </objects>
+</document>
