@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioControlView" customModule="Casanova" customModuleProvider="target">
+            <connections>
+                <outlet property="audioBar" destination="U4U-6r-umc" id="wCT-ok-x0B"/>
+                <outlet property="audioButton" destination="BDT-On-6bK" id="brC-mU-OvU"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="nOq-k7-pCM"/>
+                <outlet property="playTimeLabel" destination="SEG-9V-RAf" id="jzI-f2-giN"/>
+                <outlet property="profileView" destination="phq-BS-2kl" id="s1I-YJ-8ym"/>
+                <outlet property="usernameLabel" destination="0KT-1k-fkW" id="jAw-oA-6BR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="531" height="54"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phq-BS-2kl">
+                    <rect key="frame" x="10" y="8" width="38" height="38"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="phq-BS-2kl" secondAttribute="height" multiplier="1:1" id="v8Y-z5-KO7"/>
+                    </constraints>
+                </webView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KT-1k-fkW">
+                    <rect key="frame" x="58" y="8" width="80" height="16.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="M2f-Oi-DnY"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEG-9V-RAf">
+                    <rect key="frame" x="58" y="29.5" width="80" height="16.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="U4U-6r-umc">
+                    <rect key="frame" x="151" y="12" width="323" height="31"/>
+                    <color key="tintColor" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </slider>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDT-On-6bK">
+                    <rect key="frame" x="487" y="10" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="BDT-On-6bK" secondAttribute="height" multiplier="1:1" id="ecq-do-k6A"/>
+                    </constraints>
+                    <connections>
+                        <action selector="audioButtonTapped:" destination="-1" eventType="touchUpInside" id="41d-py-nzI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="SEG-9V-RAf" firstAttribute="height" secondItem="0KT-1k-fkW" secondAttribute="height" id="7RG-mE-v2P"/>
+                <constraint firstItem="phq-BS-2kl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="A8O-Qw-vnT"/>
+                <constraint firstItem="phq-BS-2kl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FTT-uB-f9L"/>
+                <constraint firstItem="U4U-6r-umc" firstAttribute="leading" secondItem="SEG-9V-RAf" secondAttribute="trailing" constant="15" id="KFe-2h-hlv"/>
+                <constraint firstItem="BDT-On-6bK" firstAttribute="leading" secondItem="U4U-6r-umc" secondAttribute="trailing" constant="15" id="MBY-2j-CAs"/>
+                <constraint firstAttribute="trailing" secondItem="BDT-On-6bK" secondAttribute="trailing" constant="10" id="PKD-tt-oLP"/>
+                <constraint firstItem="SEG-9V-RAf" firstAttribute="bottom" secondItem="phq-BS-2kl" secondAttribute="bottom" id="T1i-5p-Ev3"/>
+                <constraint firstItem="BDT-On-6bK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="T4l-Gc-UUs"/>
+                <constraint firstItem="U4U-6r-umc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WhN-xt-vex"/>
+                <constraint firstItem="phq-BS-2kl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="YSy-EM-KoI"/>
+                <constraint firstItem="0KT-1k-fkW" firstAttribute="leading" secondItem="phq-BS-2kl" secondAttribute="trailing" constant="10" id="g5d-5e-YAD"/>
+                <constraint firstItem="U4U-6r-umc" firstAttribute="leading" secondItem="0KT-1k-fkW" secondAttribute="trailing" constant="15" id="lSq-Me-8Y2"/>
+                <constraint firstItem="SEG-9V-RAf" firstAttribute="top" secondItem="0KT-1k-fkW" secondAttribute="bottom" constant="5" id="o8M-mu-Spm"/>
+                <constraint firstItem="SEG-9V-RAf" firstAttribute="leading" secondItem="phq-BS-2kl" secondAttribute="trailing" constant="10" id="rtg-Xe-ROb"/>
+                <constraint firstItem="0KT-1k-fkW" firstAttribute="top" secondItem="phq-BS-2kl" secondAttribute="top" id="uaR-CO-1j1"/>
+                <constraint firstItem="BDT-On-6bK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="zn1-KT-qJF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-28.5" y="46"/>
+        </view>
+    </objects>
+</document>

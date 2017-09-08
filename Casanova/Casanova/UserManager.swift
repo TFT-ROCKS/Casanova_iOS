@@ -11,6 +11,7 @@ import Alamofire
 
 class UserManager {
     static let shared = UserManager()
+    let userDefault = UserDefaults.standard
     let url = "https://tft.rocks/api"
     func signUp(username: String, email: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         if username == "" {
@@ -139,5 +140,10 @@ class UserManager {
         }
         
         return  returnValue
+    }
+    
+    func saveLoginInfoToDevice(username: String, password: String) {
+        userDefault.set(username, forKey: "username")
+        userDefault.set(password, forKey: "password")
     }
 }
