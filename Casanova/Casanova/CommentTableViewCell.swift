@@ -8,10 +8,11 @@
 
 import UIKit
 import AVFoundation
+import SVGKit
 
 class CommentTableViewCell: UITableViewCell {
     
-    var commenterButton: UIWebView!
+    var commenterButton: SVGKImageView!
     var commenterNameLabel: UILabel!
     var commentTimeLabel: UILabel!
 //    var likeButton: UIButton!
@@ -36,7 +37,7 @@ class CommentTableViewCell: UITableViewCell {
         
         selectionStyle = .none
         
-        commenterButton = UIWebView(frame: .zero)
+        commenterButton = SVGKFastImageView(frame: .zero)
         commenterNameLabel = UILabel(frame: .zero)
         commentTimeLabel = UILabel(frame: .zero)
 //        likeCountLabel = UILabel(frame: .zero)
@@ -147,7 +148,6 @@ class CommentTableViewCell: UITableViewCell {
         commenterButton.layer.masksToBounds = true
         commenterButton.layer.borderColor = UIColor.clear.cgColor
         commenterButton.layer.borderWidth = 0
-        commenterButton.scrollView.isScrollEnabled = false
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -161,13 +161,9 @@ class CommentTableViewCell: UITableViewCell {
         commentTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: comment.createdAt)
 //        likeCountLabel.text = "\(comment.likes.count)"
         
-        // load image into webView
-        let path: String = Bundle.main.path(forResource: "TFTicons_avatar_\(comment.user.id % 8)", ofType: "svg")!
-        let url: URL = URL(fileURLWithPath: path)  //Creating a URL which points towards our path
-        // Creating a page request which will load our URL (Which points to our path)
-        let request: URLRequest = URLRequest(url: url)
-        commenterButton.delegate = self
-        commenterButton.loadRequest(request)  // Telling our webView to load our above request
+        // avatar
+        let avatar = SVGKImage(named: "TFTicons_avatar_\(comment.user.id % 8)")
+        commenterButton.image = avatar
         commentTitleLabel.attributedText = AttrString.answerAttrString(comment.title)
         
     }

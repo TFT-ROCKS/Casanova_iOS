@@ -1,15 +1,36 @@
 PODS:
   - Alamofire (4.5.0)
+  - CocoaLumberjack (3.2.1):
+    - CocoaLumberjack/Default (= 3.2.1)
+    - CocoaLumberjack/Extensions (= 3.2.1)
+  - CocoaLumberjack/Default (3.2.1)
+  - CocoaLumberjack/Extensions (3.2.1):
+    - CocoaLumberjack/Default
+  - SVGKit (2.0.1):
+    - CocoaLumberjack (~> 3.x)
   - TagListView (1.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - SVGKit (from `https://github.com/SVGKit/SVGKit.git`, branch `2.x`)
   - TagListView (~> 1.0)
+
+EXTERNAL SOURCES:
+  SVGKit:
+    :branch: 2.x
+    :git: https://github.com/SVGKit/SVGKit.git
+
+CHECKOUT OPTIONS:
+  SVGKit:
+    :commit: 8949b61e7ae25529678e34a548288cc838061674
+    :git: https://github.com/SVGKit/SVGKit.git
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
+  SVGKit: 4055d9e809b5db8633755979cfb3b02dc5a8c20d
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
 
-PODFILE CHECKSUM: 2d9ac922a511b2e0db75a06ec5905242f0e941fb
+PODFILE CHECKSUM: 2390905fd3c954c4faa22533a467c79e08decc2e
 
 COCOAPODS: 1.2.1

@@ -8,5 +8,6 @@ target 'Casanova' do
   # Pods for Casanova
   pod 'Alamofire', '~> 4.4'
   pod 'TagListView', '~> 1.0'
+  pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :branch => '2.x'
 
 end

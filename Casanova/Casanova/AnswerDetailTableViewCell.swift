@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SVGKit
 
 enum AnswerMode {
     case short
@@ -16,7 +17,7 @@ enum AnswerMode {
 
 class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
-    var answererButton: UIWebView!
+    var answererButton: SVGKImageView!
     var answererNameLabel: UILabel!
     var answerTimeLabel: UILabel!
     var likeButton: UIButton!
@@ -43,7 +44,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         selectionStyle = .none
         
-        answererButton = UIWebView(frame: .zero)
+        answererButton = SVGKFastImageView(frame: .zero)
         answererNameLabel = UILabel(frame: .zero)
         answerTimeLabel = UILabel(frame: .zero)
         likeCountLabel = UILabel(frame: .zero)
@@ -159,7 +160,6 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answererButton.layer.masksToBounds = true
         answererButton.layer.borderColor = UIColor.clear.cgColor
         answererButton.layer.borderWidth = 0
-        answererButton.scrollView.isScrollEnabled = false
         
         contentView.backgroundColor = UIColor.bgdColor
     }
@@ -176,14 +176,10 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeCountLabel.text = "\(answer.likes.count)"
         commentCountLabel.text = "\(answer.comments.count)"
         
-        // load image into webView
-        let path: String = Bundle.main.path(forResource: "TFTicons_avatar_\(answer.user.id % 8)", ofType: "svg")!
-        let url: URL = URL(fileURLWithPath: path)  //Creating a URL which points towards our path
-        // Creating a page request which will load our URL (Which points to our path)
-        let request: URLRequest = URLRequest(url: url)
-        answererButton.delegate = self
-        answererButton.loadRequest(request)  // Telling our webView to load our above request
-        
+        // avatar
+        let avatar = SVGKImage(named: "TFTicons_avatar_\(answer.user.id % 8)")
+        answererButton.image = avatar
+    
         switch mode! {
         case .full:
             answerTitleLabel.attributedText = AttrString.answerAttrString(answer.title)
