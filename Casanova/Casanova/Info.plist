@@ -31,6 +31,8 @@
 	<string>TFT would like to use the microphone to record your voice</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>PingFang SC Regular.ttf</string>
+		<string>PingFang Light.ttf</string>
 		<string>Merriweather-Light.ttf</string>
 		<string>Merriweather-Regular.ttf</string>
 		<string>Muli-Light.ttf</string>

@@ -18,6 +18,7 @@ class PostTextView: UIView {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var postButton: UIButton!
     @IBAction func postButtonClicked(_ sender: UIButton) {
+        postButton.isEnabled = false
         // check comment text
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             textView.text = ""
@@ -37,7 +38,9 @@ class PostTextView: UIView {
                 self.placeholderLabel.text = "Comment this answer"
                 self.placeholderLabel.isHidden = false
                 self.textView.resignFirstResponder()
+                self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
             }
+            self.postButton.isEnabled = true
         })
     }
     @IBOutlet weak var placeholderLabel: UILabel!

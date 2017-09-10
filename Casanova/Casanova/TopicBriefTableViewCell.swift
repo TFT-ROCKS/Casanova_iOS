@@ -55,7 +55,7 @@ class TopicBriefTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = UIColor.bgdColor
+        contentView.backgroundColor = UIColor.white
         selectionStyle = .none
         starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
         

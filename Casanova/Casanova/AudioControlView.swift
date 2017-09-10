@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVGKit
 
 protocol AudioControlViewDelegate: class {
     func audioButtonTappedOnBar()
@@ -19,7 +20,7 @@ class AudioControlView: UIView, UIWebViewDelegate {
     var isPlaying: Bool = false
 
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var profileView: UIWebView!
+    @IBOutlet weak var profileView: SVGKFastImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var playTimeLabel: UILabel!
     @IBOutlet weak var audioBar: UISlider!
@@ -48,20 +49,21 @@ class AudioControlView: UIView, UIWebViewDelegate {
         profileView.layer.masksToBounds = true
         profileView.layer.borderColor = UIColor.clear.cgColor
         profileView.layer.borderWidth = 0
-        profileView.scrollView.isScrollEnabled = false
+        
+        usernameLabel.font = UIFont.pfl(size: 14)
+        usernameLabel.textColor = UIColor.nonBodyTextColor
+        playTimeLabel.font = UIFont.mr(size: 12)
+        playTimeLabel.textColor = UIColor.tftCoolGrey
     }
     
     func updateUI(withTag tag: Int, answer: Answer) {
         if cellInUse != tag {
             cellInUse = tag
             // Update UI
-            // load image into webView
-            let path: String = Bundle.main.path(forResource: "TFTicons_avatar_\(answer.user.id % 8)", ofType: "svg")!
-            let url: URL = URL(fileURLWithPath: path)  //Creating a URL which points towards our path
-            // Creating a page request which will load our URL (Which points to our path)
-            let request: URLRequest = URLRequest(url: url)
-            profileView.delegate = self
-            profileView.loadRequest(request)  // Telling our webView to load our above request
+            
+            // avatar
+            let avatar = SVGKImage(named: "TFTicons_avatar_\(answer.user.id % 8)")
+            profileView.image = avatar
             
             usernameLabel.text = answer.user.username
             

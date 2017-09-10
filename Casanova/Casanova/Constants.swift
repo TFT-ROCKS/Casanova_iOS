@@ -95,21 +95,21 @@ struct AttrString {
     
     static func titleAttrString(_ string: String, textColor: UIColor) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli", size: 17)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "PingFangSC-Regular", size: 17)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
     
     static func normalLabelAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli", size: 14)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "PingFangSC-Regular", size: 14)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.nonBodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
     
     static func smallLabelAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli", size: 12)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "PingFangSC-Regular", size: 12)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.nonBodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }

@@ -15,10 +15,10 @@ class MyTabBarController: UITabBarController {
 
         let vc1 = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         let vc2 = storyboard?.instantiateViewController(withIdentifier: "SavedViewController") as! SavedViewController
-        let vc3 = storyboard?.instantiateViewController(withIdentifier: "ActivitiesViewController") as! ActivitiesViewController
+//        let vc3 = storyboard?.instantiateViewController(withIdentifier: "ActivitiesViewController") as! ActivitiesViewController
         let vc4 = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        self.viewControllers = [vc1, vc2, vc3, vc4]
+        self.viewControllers = [vc1, vc2, vc4]
     }
 
     override func didReceiveMemoryWarning() {

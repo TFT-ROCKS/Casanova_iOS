@@ -21,6 +21,7 @@ class SignInViewController: UIViewController {
             if error == nil {
                 // Success
                 // Store current user
+                Environment.shared.saveLoginInfoToDevice(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
                 Environment.shared.currentUser = user
                 self.errorLabel.text = " "
                 let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
@@ -41,6 +42,7 @@ class SignInViewController: UIViewController {
     var bottomConstraintConstant: CGFloat!
     
     @IBOutlet weak var errorLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

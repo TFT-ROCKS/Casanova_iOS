@@ -50,6 +50,11 @@
 		80826CEE1F6245EC00956E03 /* AnswerDetailToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80826CED1F6245EC00956E03 /* AnswerDetailToolBar.xib */; };
 		80826CF21F62465800956E03 /* AudioControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80826CF11F62465800956E03 /* AudioControlView.swift */; };
 		80826CF41F62466500956E03 /* AudioControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80826CF31F62466500956E03 /* AudioControlView.xib */; };
+		80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80826CF71F63C6C000956E03 /* LandingViewController.swift */; };
+		80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80826CFB1F64EAF500956E03 /* TopicDetailToolBar.swift */; };
+		80826CFE1F64EB0000956E03 /* TopicDetailToolBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80826CFD1F64EB0000956E03 /* TopicDetailToolBar.xib */; };
+		80826D011F651F5900956E03 /* PingFang Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80826CFF1F651F5900956E03 /* PingFang Light.ttf */; };
+		80826D021F651F5900956E03 /* PingFang SC Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80826D001F651F5900956E03 /* PingFang SC Regular.ttf */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
@@ -126,6 +131,11 @@
 		80826CED1F6245EC00956E03 /* AnswerDetailToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerDetailToolBar.xib; sourceTree = "<group>"; };
 		80826CF11F62465800956E03 /* AudioControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioControlView.swift; sourceTree = "<group>"; };
 		80826CF31F62466500956E03 /* AudioControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioControlView.xib; sourceTree = "<group>"; };
+		80826CF71F63C6C000956E03 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		80826CFB1F64EAF500956E03 /* TopicDetailToolBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailToolBar.swift; sourceTree = "<group>"; };
+		80826CFD1F64EB0000956E03 /* TopicDetailToolBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicDetailToolBar.xib; sourceTree = "<group>"; };
+		80826CFF1F651F5900956E03 /* PingFang Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PingFang Light.ttf"; sourceTree = "<group>"; };
+		80826D001F651F5900956E03 /* PingFang SC Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PingFang SC Regular.ttf"; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -243,6 +253,7 @@
 		800FEFE61F2567AA00DF5531 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				80826CF71F63C6C000956E03 /* LandingViewController.swift */,
 				800122C31F1EDBC400F185AE /* HomeViewController.swift */,
 				80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */,
 				80FB45791F46C1290034D525 /* AnswerDetailViewController.swift */,
@@ -282,6 +293,8 @@
 				80FB45811F4788E80034D525 /* Merriweather-Regular.ttf */,
 				80FB45841F47894C0034D525 /* Muli-Light.ttf */,
 				80FB45851F47894C0034D525 /* Muli.ttf */,
+				80826CFF1F651F5900956E03 /* PingFang Light.ttf */,
+				80826D001F651F5900956E03 /* PingFang SC Regular.ttf */,
 				80524B2A1F45808700363D7D /* Images */,
 			);
 			name = Resources;
@@ -341,6 +354,8 @@
 			children = (
 				80826CEB1F6245D600956E03 /* AnswerDetailToolBar.swift */,
 				80826CED1F6245EC00956E03 /* AnswerDetailToolBar.xib */,
+				80826CFB1F64EAF500956E03 /* TopicDetailToolBar.swift */,
+				80826CFD1F64EB0000956E03 /* TopicDetailToolBar.xib */,
 			);
 			name = ToolBar;
 			sourceTree = "<group>";
@@ -497,10 +512,13 @@
 				804D91D41F37D35100CA6FBE /* FilterTableViewCell.xib in Resources */,
 				80524B341F45809A00363D7D /* TFTicons_avatar_1.svg in Resources */,
 				800FEFEB1F25691400DF5531 /* LoadMoreTableViewCell.xib in Resources */,
+				80826D011F651F5900956E03 /* PingFang Light.ttf in Resources */,
+				80826D021F651F5900956E03 /* PingFang SC Regular.ttf in Resources */,
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
 				80524B331F45809A00363D7D /* TFTicons_avatar_0.svg in Resources */,
 				80E339111F1AE4FE00F539E5 /* Assets.xcassets in Resources */,
 				80FB45821F4788E80034D525 /* Merriweather-Light.ttf in Resources */,
+				80826CFE1F64EB0000956E03 /* TopicDetailToolBar.xib in Resources */,
 				80FB45871F47894C0034D525 /* Muli.ttf in Resources */,
 				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
 				80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */,
@@ -587,6 +605,7 @@
 				80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */,
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
+				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
@@ -615,6 +634,7 @@
 				80FB458B1F482B890034D525 /* Environment.swift in Sources */,
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
+				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,

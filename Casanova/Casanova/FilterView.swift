@@ -35,8 +35,8 @@ class FilterView: UIView, UITableViewDelegate {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         tpoLabel.attributedText = AttrString.normalLabelAttrString("TPO")
-        levelLabel.attributedText = AttrString.normalLabelAttrString("LEVEL")
-        catLabel.attributedText = AttrString.normalLabelAttrString("CATEGORIES")
+        levelLabel.attributedText = AttrString.normalLabelAttrString("难度")
+        catLabel.attributedText = AttrString.normalLabelAttrString("分类")
     }
 
     func setTableViewDatasourceDelegate <D: UITableViewDataSource & UITableViewDelegate> (dataSourceDelegate: D) {

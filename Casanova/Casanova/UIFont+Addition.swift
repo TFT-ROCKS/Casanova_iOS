@@ -14,4 +14,12 @@ extension UIFont {
         return UIFont(name: "Muli", size: size)!
     }
     
+    class func pfl(size: CGFloat) -> UIFont {
+        return UIFont(name: "PingFangSC-Light", size: size)!
+    }
+    
+    class func pfr(size: CGFloat) -> UIFont {
+        return UIFont(name: "PingFangSC-Regular", size: size)!
+    }
+    
 }

@@ -73,7 +73,7 @@ class AnswerDetailViewController: UIViewController {
         super.viewDidLoad()
         layoutSubviews()
         addConstraints()
-        setTitle()
+        setTitle(title: "答案详情")
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -108,31 +108,31 @@ class AnswerDetailViewController: UIViewController {
     }
     
     func layoutSubviews() {
-        layoutTopicView()
         layoutTableView()
-        layoutPostTextView()
         layoutToolBar()
         layoutAudioControlBar()
+        layoutTopicView()
+        layoutPostTextView()
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
-        addPostTextViewConstraints()
         addToolBarConstraints()
         addAudioControlBarConstraints()
+        addPostTextViewConstraints()
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
-    func setTitle() {
+    func setTitle(title: String) {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
-        titleLabel.text = "Answer"
-        titleLabel.font = UIFont.mr(size: 17)
+        titleLabel.text = title
+        titleLabel.font = UIFont.pfr(size: 17)
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
@@ -150,6 +150,7 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
     
     func configToolBar() {
         toolBar.delegate = self
+        toolBar.isLike = Utils.doesCurrentUserLikeThisAnswer(answer)
     }
     
     func addToolBarConstraints() {
@@ -162,15 +163,20 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
     // MARK: - AnswerDetailToolBarDelegate
     
     func questionButtonClickedOnToolBar() {
-        
+        if toolBar.isQuestion {
+            showTopicView()
+        } else {
+            hideTopicView()
+        }
     }
     
-    func likeButtonClickedOnToolBar() {
-        
+    func likeButtonClickedOnToolBar(_ sender: UIButton) {
+        likeButtonTapped(sender)
     }
     
     func commentButtonClickedOnToolBar() {
-        
+        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
+        postTextView.textView.becomeFirstResponder()
     }
 }
 
@@ -220,6 +226,7 @@ extension AnswerDetailViewController: AudioControlViewDelegate {
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
             }
         }
+        tableView.reloadData()
     }
 }
 
@@ -239,12 +246,27 @@ extension AnswerDetailViewController {
         topicView.layer.shadowColor = UIColor.shadowColor.cgColor
         topicView.layer.shadowRadius = 3.0
         topicView.layer.shadowOpacity = 1.0
+        
+        // Hide topic view
+        topicView.isHidden = true
     }
     
     func addTopicViewConstraints() {
         topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+    
+    func hideTopicView() {
+        if topicView.isHidden == true { return }
+        toolBar.isQuestion = false
+        topicView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+    }
+    
+    func showTopicView() {
+        if topicView.isHidden == false { return }
+        toolBar.isQuestion = true
+        topicView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
@@ -262,6 +284,7 @@ extension AnswerDetailViewController: PostTextViewDelegate {
         cmtBtn.addTarget(self, action: #selector(cmtBtnDragged(control:event:)), for: [.touchDragExit, .touchDragOutside])
         cmtBtn.addTarget(self, action: #selector(cmtBtnTapped(_:)), for: .touchUpInside)
         cmtBtn.addTarget(self, action: #selector(cmtBtnTouchedDown(_:)), for: .touchDown)
+        cmtBtn.isHidden = true
     }
     
     func cmtBtnDragged(control: UIControl, event: UIEvent) {
@@ -368,7 +391,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: topicView.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
@@ -390,9 +413,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         } else { // Comments section
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 40))
             let label = UILabel(frame: CGRect(x: 24, y: 5, width: 130, height: 20))
-            label.font = UIFont.mr(size: 14)
+            label.font = UIFont.pfr(size: 14)
             label.textColor = UIColor.nonBodyTextColor
-            label.text = "Comments (\(comments.count))"
+            label.text = "评论 (\(comments.count))"
             headerView.addSubview(label)
             return headerView
         }
@@ -415,7 +438,15 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             cell.likeButton.setImage(img, for: .normal)
             cell.audioButton?.tag = indexPath.row
             cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
-            
+            if indexPath.row != cellInUse {
+                cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+            } else {
+                if audioPlayer != nil && audioControlBar.isPlaying {
+                    cell.audioButton?.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                } else {
+                    cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+                }
+            }
             return cell
             
         } else { // Comments section
@@ -446,7 +477,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
             whiteRoundedView.layer.masksToBounds = false
             whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -471,7 +502,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
             whiteRoundedView.layer.masksToBounds = false
             whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -489,18 +520,41 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func likeButtonTapped(_ sender: UIButton) {
+        sender.isEnabled = false
         let answerId = answer.id
         let topicId = topic.id
         let userId = Environment.shared.currentUser?.id
-        LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
-            if error == nil {
-                self.answer.likes.append(like!)
-            }
-        })
+        if Utils.doesCurrentUserLikeThisAnswer(answer) {
+            // un-like it
+            let likeId = Utils.likeIdFromAnswer(answer)
+            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+                if error == nil {
+                    self.answer.removeLike(withId: likeId!)
+                    self.tableView.reloadData()
+                    self.toolBar.isLike = false
+                    
+                }
+                sender.isEnabled = true
+            })
+        } else {
+            // like it
+            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+                if error == nil {
+                    self.answer.likes.append(like!)
+                    self.tableView.reloadData()
+                    self.toolBar.isLike = true
+                    
+                }
+                sender.isEnabled = true
+            })
+        }
     }
     
     func audioButtonTapped(_ sender: UIButton) {
         if cellInUse == sender.tag {
+            let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
+            sender.setImage(img, for: .normal)
+            audioButtonTappedOnBar()
             return
         }
         if cellInUse != -1 {
@@ -518,20 +572,21 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         }
         if let url = URL(string: answer.audioURL ?? "") {
             cellInUse = sender.tag
-            downloadFileFromURL(url)
+            sender.isEnabled = false
+            downloadFileFromURL(url, sender: sender)
         }
     }
     
-    func downloadFileFromURL(_ url: URL) {
+    func downloadFileFromURL(_ url: URL, sender: UIButton) {
         
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
-            self?.play(url: URL!)
+            self?.play(url: URL!, sender: sender)
         })
         downloadTask.resume()
     }
     
-    func play(url: URL) {
+    func play(url: URL, sender: UIButton) {
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -541,6 +596,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             audioPlayer.play()
             
             Utils.runOnMainThread {
+                sender.isEnabled = true
+                sender.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                
                 self.audioControlBar.audioBar.maximumValue = Float(self.audioPlayer.duration)
                 self.audioControlBar.audioBar.value = 0.0
                 self.audioControlBar.playTimeLabel.text = "00:00"
@@ -597,6 +655,9 @@ extension AnswerDetailViewController: UIGestureRecognizerDelegate {
     
     func viewTapped(_ tgr: UITapGestureRecognizer) {
         self.view.endEditing(true)
+        if postTextView.isHidden == false {
+            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
+        }
     }
 }
 
@@ -605,9 +666,7 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
-            navigationController?.setNavigationBarHidden(true, animated: true)
-            topicView.cool()
-            cmtBtn.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+            hideTopicView()
             postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {
             
@@ -617,17 +676,8 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.y < 0 {
             // Un-Hide
-            navigationController?.setNavigationBarHidden(false, animated: true)
-            topicView.plain()
         } else {
             
         }
-    }
-}
-
-//
-extension UIBarButtonItem {
-    convenience init(image: UIImage?, title: String?, target: Any?, action: Selector?) {
-        self.init(image: image, style: .plain, target: target, action: action)
     }
 }

@@ -38,6 +38,7 @@ class TopicDetailViewController: UIViewController {
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
+    let toolBar: TopicDetailToolBar = TopicDetailToolBar(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     
     let recordButton: UIButton = UIButton(frame: .zero)
@@ -79,7 +80,7 @@ class TopicDetailViewController: UIViewController {
         layoutSubviews()
         addConstraints()
         fetchTopicDetail()
-        setTitle()
+        setTitle(title: "问题")
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -139,14 +140,16 @@ class TopicDetailViewController: UIViewController {
     }
     
     func layoutSubviews() {
-        layoutTopicView()
         layoutTableView()
+        layoutToolBar()
         layoutAudioControlBar()
+        layoutTopicView()
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
+        addToolBarConstraints()
         addAudioControlBarConstraints()
     }
     
@@ -170,15 +173,55 @@ class TopicDetailViewController: UIViewController {
         })
     }
     
-    func setTitle() {
+    func setTitle(title: String) {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
-        titleLabel.text = "Question"
-        titleLabel.font = UIFont.mr(size: 17)
+        titleLabel.text = title
+        titleLabel.font = UIFont.pfr(size: 17)
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
+    }
+}
+
+// MARK: - Tool Bar
+extension TopicDetailViewController: TopicDetailToolBarDelegate {
+    func layoutToolBar() {
+        view.addSubview(toolBar)
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubview(toFront: toolBar)
+        configToolBar()
+    }
+    
+    func configToolBar() {
+        toolBar.delegate = self
+        toolBar.isHidden = true
+    }
+    
+    func addToolBarConstraints() {
+        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        toolBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
+    }
+    
+    // MARK: - TopicDetailToolBarDelegate
+    
+    func questionButtonClickedOnToolBar() {
+        if toolBar.isQuestion {
+            showTopicView()
+        } else {
+            hideTopicView()
+        }
+    }
+    
+    func saveButtonClickedOnToolBar() {
+        
+    }
+    
+    func answerButtonClickedOnToolBar() {
+        
     }
 }
 
@@ -198,7 +241,7 @@ extension TopicDetailViewController: AudioControlViewDelegate {
     }
     
     func addAudioControlBarConstraints() {
-        audioControlBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        audioControlBar.bottomAnchor.constraint(equalTo: toolBar.topAnchor).isActive = true
         audioControlBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         audioControlBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         audioControlBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
@@ -228,6 +271,7 @@ extension TopicDetailViewController: AudioControlViewDelegate {
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
             }
         }
+        tableView.reloadData()
     }
 }
 
@@ -253,6 +297,18 @@ extension TopicDetailViewController {
         topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+    
+    func hideTopicView() {
+        if topicView.isHidden == true { return }
+        toolBar.isQuestion = false
+        topicView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+    }
+    
+    func showTopicView() {
+        if topicView.isHidden == false { return }
+        toolBar.isQuestion = true
+        topicView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
@@ -289,7 +345,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: topicView.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
@@ -322,10 +378,10 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             if indexPath.row != cellInUse {
                 cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
             } else {
-                if audioPlayer != nil {
+                if audioPlayer != nil && audioControlBar.isPlaying {
                     cell.audioButton?.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
                 } else {
-                    
+                    cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
                 }
             }
             return cell
@@ -351,7 +407,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
             whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
+            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
             whiteRoundedView.layer.masksToBounds = false
             whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
             whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -404,6 +460,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     
     func audioButtonTapped(_ sender: UIButton) {
         if cellInUse == sender.tag {
+            let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
+            sender.setImage(img, for: .normal)
+            audioButtonTappedOnBar()
             return
         }
         if cellInUse != -1 {
@@ -421,20 +480,21 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         }
         if let url = URL(string: answers![sender.tag].audioURL ?? "") {
             cellInUse = sender.tag
-            downloadFileFromURL(url)
+            sender.isEnabled = false
+            downloadFileFromURL(url, sender: sender)
         }
     }
     
-    func downloadFileFromURL(_ url: URL) {
+    func downloadFileFromURL(_ url: URL, sender: UIButton) {
         
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
-            self?.play(url: URL!)
+            self?.play(url: URL!, sender: sender)
         })
         downloadTask.resume()
     }
     
-    func play(url: URL) {
+    func play(url: URL, sender: UIButton) {
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -444,6 +504,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             audioPlayer.play()
             
             Utils.runOnMainThread {
+                sender.isEnabled = true
+                sender.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                
                 self.audioControlBar.audioBar.maximumValue = Float(self.audioPlayer.duration)
                 self.audioControlBar.audioBar.value = 0.0
                 self.audioControlBar.playTimeLabel.text = "00:00"
@@ -550,8 +613,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         recordButton.addSubview(speakingImgView)
         
         let skipLabel = UILabel(frame: CGRect(x: 14.4, y: 2.45, width: 35.2, height: 25))
-        skipLabel.font = UIFont.mr(size: 14)
-        skipLabel.text = "Skip"
+        skipLabel.textAlignment = .center
+        skipLabel.font = UIFont.pfr(size: 14)
+        skipLabel.text = "跳过"
         skipLabel.textColor = UIColor.tftCoolGrey
         skipButton.addSubview(skipLabel)
         
@@ -588,8 +652,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         postButton.layer.borderColor = UIColor.brandColor.cgColor
         postButton.layer.cornerRadius = 29.9 / 2
         postButton.layer.masksToBounds = true
-        postButton.setTitle("Post", for: .normal)
-        postButton.titleLabel?.font = UIFont.mr(size: 14)
+        postButton.setTitle("发布", for: .normal)
+        postButton.titleLabel?.font = UIFont.pfr(size: 14)
+        postButton.titleLabel?.textAlignment = .center
         postButton.setTitleColor(UIColor.brandColor, for: .normal)
         
         // reward image
@@ -696,6 +761,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                 self.skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
                     if success {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                        self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                        self.hideTopicView()
+                        self.setTitle(title: "优秀答案")
                     }
                 }
             }
@@ -742,6 +810,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     self.rewardLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: { success in
                         if success {
                             self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                            self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                            self.hideTopicView()
+                            self.setTitle(title: "优秀答案")
                         }
                     })
                 }
@@ -893,8 +964,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
-            navigationController?.setNavigationBarHidden(true, animated: true)
-            topicView.cool()
+            hideTopicView()
         } else {
             
         }
@@ -903,8 +973,7 @@ extension TopicDetailViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if velocity.y < 0 {
             // Un-Hide
-            navigationController?.setNavigationBarHidden(false, animated: true)
-            topicView.plain()
+            
         } else {
             
         }

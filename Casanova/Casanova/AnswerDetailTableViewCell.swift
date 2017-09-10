@@ -161,7 +161,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answererButton.layer.borderColor = UIColor.clear.cgColor
         answererButton.layer.borderWidth = 0
         
-        contentView.backgroundColor = UIColor.bgdColor
+        contentView.backgroundColor = UIColor.white
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

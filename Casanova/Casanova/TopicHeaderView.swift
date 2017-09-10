@@ -48,7 +48,7 @@ class TopicHeaderView: UIView {
     func commonInit() {
         Bundle.main.loadNibNamed("TopicHeaderView", owner: self, options: nil)
         addSubview(contentView)
-        contentView.backgroundColor = UIColor.bgdColor
+        contentView.backgroundColor = UIColor.white
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         mode = .plain

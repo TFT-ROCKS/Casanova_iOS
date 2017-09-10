@@ -71,7 +71,7 @@ class HomeViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
-        navigationController?.navigationBar.barTintColor = UIColor.bgdColor
+        navigationController?.navigationBar.barTintColor = UIColor.white
         setTitle()
         setButtons()
         
@@ -395,7 +395,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
                 whiteRoundedView.tag = 100
-                whiteRoundedView.layer.backgroundColor = UIColor.bgdColor.cgColor
+                whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
                 whiteRoundedView.layer.masksToBounds = false
                 whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
                 whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)

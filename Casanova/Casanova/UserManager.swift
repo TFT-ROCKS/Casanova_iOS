@@ -141,9 +141,5 @@ class UserManager {
         
         return  returnValue
     }
-    
-    func saveLoginInfoToDevice(username: String, password: String) {
-        userDefault.set(username, forKey: "username")
-        userDefault.set(password, forKey: "password")
-    }
+
 }
