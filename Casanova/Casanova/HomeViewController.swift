@@ -18,6 +18,9 @@ class HomeViewController: UIViewController {
     // Constraints
     @IBOutlet weak var homeTableViewBottomConstraint: NSLayoutConstraint!
     
+    // status bar
+    var statusBarShouldBeHidden = false
+    
     // Filter view data
     let tpoArray = ["Task 1", "Task 2", "Task 3", "Task 4", "Task 5", "Task 6"]
     let catArray = ["Education", "Culture", "Family", "Job", "Activity", "Technology", "Places", "Environment", "Others"]
@@ -127,6 +130,23 @@ class HomeViewController: UIViewController {
             tags.append(tag)
         }
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
+    func setStatusBar(hidden: Bool) {
+        // Hide the status bar
+        statusBarShouldBeHidden = hidden
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
 }
 
 // MARK: - TagListViewDelegate
@@ -179,11 +199,19 @@ extension HomeViewController {
         tabBarController?.navigationItem.rightBarButtonItem = searchButton
     }
     
+    func searchButtonClicked(_ sender: UIBarButtonItem) {
+        
+    }
+}
+
+// MARK: - FilterViewDelegate
+extension HomeViewController: FilterViewDelegate {
+    
     func setupFilterView() {
-//        let y = (navigationController?.navigationBar.frame.origin.y)! + (navigationController?.navigationBar.frame.height)!
-        filterView = FilterView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: (tabBarController?.tabBar.frame.origin.y)!))
+        filterView = FilterView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: UIScreen.main.bounds.height))
         filterView!.setTableViewDatasourceDelegate(dataSourceDelegate: self)
         filterView!.isHidden = true
+        filterView?.delegate = self
         view.addSubview(filterView!)
         view.bringSubview(toFront: filterView!)
     }
@@ -193,35 +221,18 @@ extension HomeViewController {
         if filterView == nil {
             setupFilterView()
         }
-        
-        if (filterView?.isHidden)! { // Fade In alpha 0 -> 1
-            filterView?.fadeIn(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
-                if success {
-                    // Saved current filter params
-                    self.preLevels = self.levels
-                    self.preTags = self.tags
-                    self.filterView?.tpoTableView.reloadData()
-                    self.filterView?.catgTableView.reloadData()
-                    self.filterView?.levelTableView.reloadData()
-                }
-            })
-        } else { // Fade Out alpha 1 -> 0
-            filterView?.fadeOut(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
-                if success {
-                    // if filter view hidden, compare with previous filter
-                    // if diff with previous filter, then start updating
-                    if self.needsUpdate() {
-                        self.updateFilterListView()
-                        self.updateFlag = true
-                        self.fetchTopics(from: 0)
-                    }
-                }
-            })
-        }
-    }
-    
-    func searchButtonClicked(_ sender: UIBarButtonItem) {
-        
+        // Fade In alpha 0 -> 1
+        beforeShowFilterView()
+        filterView?.fadeIn(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
+            if success {
+                // Saved current filter params
+                self.preLevels = self.levels
+                self.preTags = self.tags
+                self.filterView?.tpoTableView.reloadData()
+                self.filterView?.catgTableView.reloadData()
+                self.filterView?.levelTableView.reloadData()
+            }
+        })
     }
     
     func needsUpdate() -> Bool {
@@ -243,6 +254,50 @@ extension HomeViewController {
             }
         }
         return false
+    }
+    
+    func beforeShowFilterView() {
+        toggleTabBar(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        setStatusBar(hidden: true)
+    }
+    
+    func afterDismissFilterView() {
+        toggleTabBar(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        setStatusBar(hidden: false)
+    }
+    
+    func backButtonTappedOnFilterView() {
+        afterDismissFilterView()
+        tags = preTags
+        levels = preLevels
+        filterView?.fadeOut(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration)
+    }
+    
+    func clearButtonTappedOnFilterView() {
+        tags = []
+        levels = []
+        // reload table views
+        filterView?.tpoTableView.reloadData()
+        filterView?.catgTableView.reloadData()
+        filterView?.levelTableView.reloadData()
+    }
+    
+    func doneButtonTappedOnFilterView() {
+        afterDismissFilterView()
+        // Fade Out alpha 1 -> 0
+        filterView?.fadeOut(withDuration: Duration.HomeVC.FilterView.fadeInOrOutDuration, withCompletionBlock: { success in
+            if success {
+                // if filter view hidden, compare with previous filter
+                // if diff with previous filter, then start updating
+                if self.needsUpdate() {
+                    self.updateFilterListView()
+                    self.updateFlag = true
+                    self.fetchTopics(from: 0)
+                }
+            }
+        })
     }
 }
 

@@ -21,6 +21,9 @@ class AnswerDetailViewController: UIViewController {
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
     
+    // audio downloading flag
+    var isDownloading: Bool = false
+    
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
@@ -551,6 +554,8 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func audioButtonTapped(_ sender: UIButton) {
+        if isDownloading { return }
+        
         if cellInUse == sender.tag {
             let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
             sender.setImage(img, for: .normal)
@@ -578,7 +583,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func downloadFileFromURL(_ url: URL, sender: UIButton) {
-        
+        isDownloading = true
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
             self?.play(url: URL!, sender: sender)
@@ -595,7 +600,11 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             audioPlayer.volume = 1.0
             audioPlayer.play()
             
+            isDownloading = false
+            
             Utils.runOnMainThread {
+                self.tableView.reloadData()
+                
                 sender.isEnabled = true
                 sender.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
                 

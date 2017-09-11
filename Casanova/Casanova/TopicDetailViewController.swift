@@ -32,6 +32,9 @@ class TopicDetailViewController: UIViewController {
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
     
+    // audio task
+    var isDownloading: Bool = false
+    
     // status bar
     var statusBarShouldBeHidden = false
     
@@ -113,6 +116,12 @@ class TopicDetailViewController: UIViewController {
                 // failed to record!
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -221,7 +230,19 @@ extension TopicDetailViewController: TopicDetailToolBarDelegate {
     }
     
     func answerButtonClickedOnToolBar() {
-        
+        if audioPlayer != nil {
+            audioPlayer.stop()
+            audioPlayer = nil
+        }
+        if timer != nil {
+            timer.invalidate()
+            timer = nil
+        }
+        showTopicView()
+        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+        tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+        toolBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+        initRecordViews()
     }
 }
 
@@ -459,6 +480,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func audioButtonTapped(_ sender: UIButton) {
+        if isDownloading { return }
+        
         if cellInUse == sender.tag {
             let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
             sender.setImage(img, for: .normal)
@@ -486,7 +509,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func downloadFileFromURL(_ url: URL, sender: UIButton) {
-        
+        isDownloading = true
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
             self?.play(url: URL!, sender: sender)
@@ -503,7 +526,11 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             audioPlayer.volume = 1.0
             audioPlayer.play()
             
+            isDownloading = false
+            
             Utils.runOnMainThread {
+                self.tableView.reloadData()
+                
                 sender.isEnabled = true
                 sender.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
                 

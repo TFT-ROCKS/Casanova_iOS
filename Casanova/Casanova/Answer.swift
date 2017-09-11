@@ -17,6 +17,7 @@ class Answer {
     var user: User
     var likes: [Like]
     var comments: [Comment]
+    var topic: Topic?
     
     init(id: Int,
          title: String,
@@ -25,7 +26,8 @@ class Answer {
          updatedAt: String,
          user: User,
          likes: [Like],
-         comments: [Comment]) {
+         comments: [Comment],
+         topic: Topic?) {
         
         self.id = id
         self.title = title
@@ -36,6 +38,7 @@ class Answer {
         self.user = user
         self.likes = likes
         self.comments = comments
+        self.topic = topic
     }
     
     convenience init?(fromJson json: [String: Any]) {
@@ -54,6 +57,11 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
+        // topic
+        var topic: Topic? = nil
+        if let topicJSON = json["Topic"] as? [String: Any] {
+            topic = Topic(fromJson: topicJSON)
+        }
         // user
         guard let user = User(json: userJSON) else { return nil }
         // likes
@@ -73,7 +81,7 @@ class Answer {
             }
         }
         // init
-        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments)
+        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
     }
     
     func removeLike(withId likeId: Int) {

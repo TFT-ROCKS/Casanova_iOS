@@ -8,15 +8,36 @@
 
 import UIKit
 
+protocol FilterViewDelegate: class {
+    func backButtonTappedOnFilterView()
+    func doneButtonTappedOnFilterView()
+    func clearButtonTappedOnFilterView()
+}
+
 class FilterView: UIView, UITableViewDelegate {
 
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tpoLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var catLabel: UILabel!
     @IBOutlet weak var tpoTableView: UITableView!
     @IBOutlet weak var levelTableView: UITableView!
     @IBOutlet weak var catgTableView: UITableView!
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        delegate.backButtonTappedOnFilterView()
+    }
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var clearButton: UIButton!
+    @IBAction func clearButtonTapped(_ sender: UIButton) {
+        delegate.clearButtonTappedOnFilterView()
+    }
+    @IBOutlet weak var doneButton: UIButton!
+    @IBAction func doneButtonTapped(_ sender: UIButton) {
+        delegate.doneButtonTappedOnFilterView()
+    }
+    
+    weak var delegate: FilterViewDelegate!
     
     override init(frame: CGRect) { // For using custom view in code
         super.init(frame: frame)
@@ -37,6 +58,23 @@ class FilterView: UIView, UITableViewDelegate {
         tpoLabel.attributedText = AttrString.normalLabelAttrString("TPO")
         levelLabel.attributedText = AttrString.normalLabelAttrString("难度")
         catLabel.attributedText = AttrString.normalLabelAttrString("分类")
+        
+        titleLabel.font = UIFont.pfl(size: 17)
+        titleLabel.textColor = UIColor.tftCoolGrey
+        titleLabel.text = "筛选"
+        
+        clearButton.setTitle("清除", for: .normal)
+        clearButton.setTitleColor(UIColor.tftCoolGrey, for: .normal)
+        clearButton.titleLabel?.font = UIFont.pfl(size: 17)
+        
+        doneButton.setTitle("确认", for: .normal)
+        doneButton.setTitleColor(UIColor.brandColor, for: .normal)
+        doneButton.titleLabel?.font = UIFont.pfl(size: 17)
+        
+        doneButton.layer.cornerRadius = doneButton.bounds.height / 2
+        doneButton.layer.masksToBounds = true
+        doneButton.layer.borderColor = UIColor.brandColor.cgColor
+        doneButton.layer.borderWidth = 2
     }
 
     func setTableViewDatasourceDelegate <D: UITableViewDataSource & UITableViewDelegate> (dataSourceDelegate: D) {
