@@ -59,6 +59,37 @@ class Topic {
                   isTrending: isTrending)
     }
     
+    convenience init?(fromLikedAnswersJSON json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let title = json["title"] as? String,
+            let level = json["level"] as? Int,
+            let status = json["status"] as? Int,
+            let isTrending = json["isTrending"] as? Int,
+            let answers = json["Answers"] as? [Any],
+            let tags = json["Tags"] as? [Any]
+            else {
+                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from liked answers JSON")
+                print(errorMessage.msg)
+                return nil
+        }
+        let answersCount = answers.count
+        var tagsArr: [String] = []
+        for tag in tags {
+            guard let tag = tag as? [String: Any] else { return nil }
+            if let tagString = tag["title"] as? String {
+                tagsArr.append(tagString)
+            }
+        }
+        let tagsStr = tagsArr.joined(separator: ",")
+        self.init(answersCount: answersCount,
+                  title: title,
+                  id: id,
+                  status: status,
+                  level: level,
+                  tags: tagsStr,
+                  isTrending: isTrending)
+    }
+    
     // MARK: - Detail Page
     var answers: [Answer]!
     

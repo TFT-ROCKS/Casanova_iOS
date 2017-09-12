@@ -29,9 +29,16 @@ class TopicBriefTableViewCell: UITableViewCell {
     func updateUI() {
         // Update UI
         
-        titleLabel.attributedText = AttrString.topicAttrString(topic.title)
+        if reuseIdentifier == ReuseIDs.HomeVC.View.topicBriefTableViewCell {
+            titleLabel.attributedText = AttrString.topicAttrString(topic.title)
+        } else if reuseIdentifier == ReuseIDs.SavedVC.View.topicBriefAppendTableViewCell {
+            titleLabel.attributedText = AttrString.smallTopicAttrString(topic.title)
+        }
+        
+        difficultyLabel.font = UIFont.mr(size: 12)
         difficultyLabel.text = difficulties[topic.level - 1]
-        numOfAnswersLabel.text = "\(topic.answersCount) answers"
+        numOfAnswersLabel.text = "\(topic.answersCount)个回答"
+        numOfAnswersLabel.font = UIFont.pfr(size: 12)
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
         diffView.tag = 101
         diffView.backgroundColor = UIColor.clear

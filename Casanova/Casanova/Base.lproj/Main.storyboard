@@ -96,7 +96,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RyI-pw-TBf">
                                 <rect key="frame" x="59" y="415" width="296" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="Forget password?">
+                                <state key="normal" title="忘记密码">
                                     <color key="titleColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -108,7 +108,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="vj3-LY-dqq"/>
                                 </constraints>
-                                <state key="normal" title="Log in"/>
                                 <connections>
                                     <action selector="logInButtonClicked:" destination="xzL-1F-2Ij" eventType="touchUpInside" id="5qY-HF-aSX"/>
                                 </connections>
@@ -118,7 +117,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="K3E-JA-c88"/>
                                 </constraints>
-                                <state key="normal" title="Sign up"/>
                                 <connections>
                                     <action selector="signUpButtonClicked:" destination="xzL-1F-2Ij" eventType="touchUpInside" id="v8O-rp-qQO"/>
                                 </connections>
@@ -135,20 +133,20 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neM-L4-mkx">
-                                <rect key="frame" x="40" y="595" width="146.66666666666666" height="2"/>
+                                <rect key="frame" x="40" y="594.66666666666663" width="146.66666666666666" height="2"/>
                                 <color key="backgroundColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="JBz-jP-hBK"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1t-jT-aou">
-                                <rect key="frame" x="227.66666666666663" y="595" width="146.33333333333337" height="2"/>
+                                <rect key="frame" x="227.66666666666663" y="594.66666666666663" width="146.33333333333337" height="2"/>
                                 <color key="backgroundColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Zny-1D-3UE"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pk-EJ-Da2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="或" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pk-EJ-Da2">
                                 <rect key="frame" x="190" y="586" width="34" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="6h3-h9-1hz"/>
@@ -289,7 +287,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="3a0-IR-aHX"/>
                                 </constraints>
-                                <state key="normal" title="Sign up"/>
                                 <connections>
                                     <action selector="signUpButtonClicked:" destination="8Ge-YA-9M9" eventType="touchUpInside" id="Rbd-EB-EQb"/>
                                 </connections>
@@ -306,20 +303,20 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWb-mI-Q65">
-                                <rect key="frame" x="40" y="595" width="146.66666666666666" height="2"/>
+                                <rect key="frame" x="40" y="594.66666666666663" width="146.66666666666666" height="2"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.88235294119999996" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="gMc-Zg-bNg"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Zj-ep-ZKn">
-                                <rect key="frame" x="227.66666666666663" y="595" width="146.33333333333337" height="2"/>
+                                <rect key="frame" x="227.66666666666663" y="594.66666666666663" width="146.33333333333337" height="2"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.88235294119999996" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Dpk-dG-bbT"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plF-ak-rCO">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="或" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plF-ak-rCO">
                                 <rect key="frame" x="190" y="586" width="34" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="g2c-zS-C7I"/>
@@ -532,7 +529,7 @@
         <scene sceneID="nQd-CB-M0H">
             <objects>
                 <navigationController id="t1L-eL-nid" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="wTT-fC-0N9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wTT-fC-0N9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

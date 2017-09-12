@@ -31,4 +31,13 @@ class Like {
         }
         self.init(id: id, answerId: answerId, userId: userId)
     }
+    
+    convenience init?(fromLikedAnswersJSON json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let userId = json["UserId"] as? Int
+            else {
+                return nil
+        }
+        self.init(id: id, answerId: -1, userId: userId)
+    }
 }

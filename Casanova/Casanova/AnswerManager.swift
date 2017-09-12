@@ -23,7 +23,7 @@ class AnswerManager {
     ///
     func fetchLikedAnswers(forUser user: User, withCompletion block: ((ErrorMessage?, [Answer]?) -> Void)? = nil) {
         // Create URL
-        let url = urlAnswersService + "\(user.id)"
+        let url = urlAnswersService + "\(user.id!)"
         
         // Make request
         Alamofire.request(url, method: .get).responseJSON {
@@ -36,7 +36,7 @@ class AnswerManager {
                         var answers: [Answer] = []
                         for answerJSON in answersArr {
                             if let answerJSON = answerJSON as? [String: Any] {
-                                if let answer = Answer(fromJson: answerJSON) {
+                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
                                     answers.append(answer)
                                 }
                             }

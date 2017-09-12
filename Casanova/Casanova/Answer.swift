@@ -17,7 +17,7 @@ class Answer {
     var user: User
     var likes: [Like]
     var comments: [Comment]
-    var topic: Topic?
+    var topic: Topic? // may not have topic
     
     init(id: Int,
          title: String,
@@ -57,11 +57,6 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
-        // topic
-        var topic: Topic? = nil
-        if let topicJSON = json["Topic"] as? [String: Any] {
-            topic = Topic(fromJson: topicJSON)
-        }
         // user
         guard let user = User(json: userJSON) else { return nil }
         // likes
@@ -69,6 +64,49 @@ class Answer {
         for likeJSON in likesJSON {
             guard let like = likeJSON as? [String: Any] else { return nil }
             if let like = Like(fromJSON: like) {
+                likes.append(like)
+            }
+        }
+        // comments
+        var comments: [Comment] = []
+        for commentJSON in commentsJSON {
+            guard let comment = commentJSON as? [String: Any] else { return nil }
+            if let comment = Comment(fromJSON: comment) {
+                comments.append(comment)
+            }
+        }
+        // init
+        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil)
+    }
+    
+    convenience init?(fromLikedAnswersJson json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let title = json["title"] as? String,
+            let updatedAt = json["updatedAt"] as? String,
+            let userJSON = json["User"] as? [String: Any],
+            let likesJSON = json["Likes"] as? [Any],
+            let commentsJSON = json["Comments"] as? [Any]
+            else {
+                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
+                print(errorMessage.msg)
+                return nil
+        }
+        // ref
+        let ref = json["references"] as? String
+        // audio url
+        let audioURL = json["audio_url"] as? String
+        // topic
+        var topic: Topic? = nil
+        if let topicJSON = json["Topic"] as? [String: Any] {
+            topic = Topic(fromLikedAnswersJSON: topicJSON)
+        }
+        // user
+        guard let user = User(json: userJSON) else { return nil }
+        // likes
+        var likes: [Like] = []
+        for likeJSON in likesJSON {
+            guard let like = likeJSON as? [String: Any] else { return nil }
+            if let like = Like(fromLikedAnswersJSON: like) {
                 likes.append(like)
             }
         }

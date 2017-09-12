@@ -142,7 +142,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         answererNameLabel.font = UIFont.mr(size: 14)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
-        answerTimeLabel.font = UIFont.mr(size: 12)
+        answerTimeLabel.font = UIFont.pfr(size: 12)
         answerTimeLabel.textColor = UIColor.nonBodyTextColor
         
         likeCountLabel.font = UIFont.mr(size: 14)

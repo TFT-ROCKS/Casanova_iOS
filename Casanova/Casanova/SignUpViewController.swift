@@ -21,13 +21,22 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
     @IBAction func signUpButtonClicked(_ sender: UIButton) {
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        indicatorView.frame = signUpButton.bounds
+        indicatorView.tag = 5
+        signUpButton.addSubview(indicatorView)
+        signUpButton.setAttributedTitle(AttrString.titleAttrString("", textColor: UIColor.brandColor), for: .normal)
+        indicatorView.startAnimating()
         UserManager.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, withCompletion: { error in
             if let error = error {
+                self.signUpButton.viewWithTag(5)?.removeFromSuperview()
+                self.signUpButton.setAttributedTitle(AttrString.titleAttrString("注册", textColor: UIColor.white), for: .normal)
                 self.errorLabel.text = error.msg
             } else {
                 // Success
+                self.signUpButton.viewWithTag(5)?.removeFromSuperview()
                 self.errorLabel.text = " "
-                self.delegate.fillEmailTextField(with: self.emailTextField.text!)
+                self.delegate.fillEmailTextField(with: self.usernameTextField.text!)
                 self.delegate.fillPasswordTextField(with: self.passwordTextField.text!)
                 self.navigationController?.popViewController(animated: true)
             }
@@ -53,7 +62,7 @@ class SignUpViewController: UIViewController {
         usernameTextField.textColor = UIColor.nonBodyTextColor
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
-        usernameTextField.placeholder = "Username"
+        usernameTextField.placeholder = "用户名"
         usernameTextField.layer.cornerRadius = 22.5
         usernameTextField.layer.masksToBounds = true
         
@@ -62,7 +71,7 @@ class SignUpViewController: UIViewController {
         emailTextField.textColor = UIColor.nonBodyTextColor
         emailTextField.leftView = paddingView2
         emailTextField.leftViewMode = .always
-        emailTextField.placeholder = "E-mail"
+        emailTextField.placeholder = "邮箱"
         emailTextField.layer.cornerRadius = 22.5
         emailTextField.layer.masksToBounds = true
         
@@ -71,13 +80,13 @@ class SignUpViewController: UIViewController {
         passwordTextField.textColor = UIColor.nonBodyTextColor
         passwordTextField.leftView = paddingView3
         passwordTextField.leftViewMode = .always
-        passwordTextField.placeholder = "Password"
+        passwordTextField.placeholder = "密码"
         passwordTextField.layer.cornerRadius = 22.5
         passwordTextField.layer.masksToBounds = true
         
         // Error label configs
-        errorLabel.font = UIFont.mr(size: 12)
-        errorLabel.textColor = UIColor.red
+        errorLabel.font = UIFont.pfr(size: 12)
+        errorLabel.textColor = UIColor.errorTextColor
         errorLabel.text = " "
         
         // Sign up button configs
@@ -87,7 +96,7 @@ class SignUpViewController: UIViewController {
         signUpButton.layer.borderWidth = 1.0
         signUpButton.layer.backgroundColor = UIColor.brandColor.cgColor
         
-        signUpButton.setAttributedTitle(AttrString.titleAttrString("Sign up", textColor: UIColor.bgdColor), for: .normal)
+        signUpButton.setAttributedTitle(AttrString.titleAttrString("注册", textColor: UIColor.white), for: .normal)
         
         // Record Constraint
         bottomConstraintConstant = bottomConstraint.constant

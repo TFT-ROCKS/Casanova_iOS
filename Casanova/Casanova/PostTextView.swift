@@ -64,7 +64,7 @@ class PostTextView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        textView.backgroundColor = UIColor(white: 245 / 255.0, alpha: 1)
+        textView.backgroundColor = UIColor.cmtBgdColor
         textView.font = UIFont.mr(size: 16)
         textView.textColor = UIColor.nonBodyTextColor
         textView.delegate = self

@@ -257,11 +257,11 @@
 				800122C31F1EDBC400F185AE /* HomeViewController.swift */,
 				80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */,
 				80FB45791F46C1290034D525 /* AnswerDetailViewController.swift */,
+				805EC88E1F418A0B005197DF /* SavedViewController.swift */,
 				80E3390B1F1AE4FD00F539E5 /* ViewController.swift */,
 				805EC8841F416C7E005197DF /* SignInViewController.swift */,
 				805EC8861F416C8A005197DF /* SignUpViewController.swift */,
 				805EC88C1F41896B005197DF /* MyTabBarController.swift */,
-				805EC88E1F418A0B005197DF /* SavedViewController.swift */,
 				805EC8901F418A16005197DF /* ActivitiesViewController.swift */,
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 			);

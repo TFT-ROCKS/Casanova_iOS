@@ -24,6 +24,9 @@ class AnswerDetailViewController: UIViewController {
     // audio downloading flag
     var isDownloading: Bool = false
     
+    // status bar
+    var statusBarShouldBeHidden = false
+    
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
@@ -86,6 +89,24 @@ class AnswerDetailViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Hide the status bar
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .slide
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -124,10 +145,6 @@ class AnswerDetailViewController: UIViewController {
         addToolBarConstraints()
         addAudioControlBarConstraints()
         addPostTextViewConstraints()
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
     
     func setTitle(title: String) {
@@ -440,6 +457,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
             cell.likeButton.setImage(img, for: .normal)
             cell.audioButton?.tag = indexPath.row
+            cell.audioButton?.isEnabled = true
             cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
             if indexPath.row != cellInUse {
                 cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
@@ -471,11 +489,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             cell.backgroundColor = UIColor.clear
             
             // remove small whiteRoundedView before adding new one
-            for view in cell.contentView.subviews {
-                if view.tag == 100 {
-                    view.removeFromSuperview()
-                }
-            }
+            cell.viewWithTag(100)?.removeFromSuperview()
             
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
@@ -496,11 +510,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             cell.backgroundColor = UIColor.clear
             
             // remove small whiteRoundedView before adding new one
-            for view in cell.contentView.subviews {
-                if view.tag == 100 {
-                    view.removeFromSuperview()
-                }
-            }
+            cell.viewWithTag(100)?.removeFromSuperview()
             
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
@@ -584,6 +594,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     
     func downloadFileFromURL(_ url: URL, sender: UIButton) {
         isDownloading = true
+        // activity indicator
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        indicatorView.tag = 5
+        indicatorView.frame = sender.bounds
+        sender.addSubview(indicatorView)
+        indicatorView.startAnimating()
+        // end of activity indicator
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
             self?.play(url: URL!, sender: sender)
@@ -603,6 +620,12 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             isDownloading = false
             
             Utils.runOnMainThread {
+                // remove indicator view
+                if let indicatorView = sender.viewWithTag(5) as? UIActivityIndicatorView {
+                    indicatorView.stopAnimating()
+                    indicatorView.removeFromSuperview()
+                }
+                
                 self.tableView.reloadData()
                 
                 sender.isEnabled = true

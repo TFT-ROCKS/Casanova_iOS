@@ -75,8 +75,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
         navigationController?.navigationBar.barTintColor = UIColor.white
-        setTitle()
-        setButtons()
         
         // Fetch topics from 0 ~ 20 (determined)
         fetchTopics(from: topics.count)
@@ -88,6 +86,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setTitle()
+        setButtons()
         // Nav bar config
         navigationController?.navigationBar.layer.shadowColor = UIColor.shadowColor.cgColor
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
@@ -393,11 +393,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case Tags.HomeVC.homeTableViewTag:
             switch indexPath.section {
             case 0:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TopicBriefTableViewCell", for: indexPath) as! TopicBriefTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.topicBriefTableViewCell, for: indexPath) as! TopicBriefTableViewCell
                 cell.topic = topics[indexPath.row]
                 return cell
             case 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadMoreTableViewCell", for: indexPath) as! LoadMoreTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell, for: indexPath) as! LoadMoreTableViewCell
                 cell.delegate = self
                 return cell
             default:

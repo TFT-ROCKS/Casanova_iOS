@@ -22,16 +22,16 @@ class TimeManager {
         let interval = Date().timeIntervalSince(date)
         if interval / 60.0 < 1.0 {
             // less than 1 min, display in seconds
-            return "\(Int(interval)) seconds ago"
+            return "\(Int(interval))秒前"
         } else if interval / (60.0 * 60.0) < 1.0 {
             // less than 1 hour, display in minutes
-            return "\(Int(interval / 60.0)) minutes ago"
+            return "\(Int(interval / 60.0))分钟前"
         } else if interval / (60.0 * 60.0 * 24.0) < 1.0 {
             // less than 1 day, display in hours
-            return "\(Int(interval / (60.0 * 60.0))) hours ago"
+            return "\(Int(interval / (60.0 * 60.0)))小时前"
         } else if interval / (60.0 * 60.0 * 24.0 * MAX_DAYS) < 1.0 {
             // less than MAX_DAYS days, display in days
-            return "\(Int(interval / (60.0 * 60.0 * 24.0))) days ago"
+            return "\(Int(interval / (60.0 * 60.0 * 24.0)))天前"
         } else {
             // more than MAX_DAYS days, display original date-time
             let formatter = DateFormatter()

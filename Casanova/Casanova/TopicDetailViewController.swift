@@ -34,6 +34,7 @@ class TopicDetailViewController: UIViewController {
     
     // audio task
     var isDownloading: Bool = false
+    var downloadTask: URLSessionDownloadTask!
     
     // status bar
     var statusBarShouldBeHidden = false
@@ -136,6 +137,11 @@ class TopicDetailViewController: UIViewController {
         if audioRecorder != nil {
             audioRecorder.stop()
         }
+        if downloadTask != nil {
+            downloadTask.cancel()
+        }
+        isDownloading = false
+        cellInUse = -1
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -395,6 +401,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
             cell.likeButton.setImage(img, for: .normal)
             cell.audioButton?.tag = indexPath.row
+            cell.audioButton?.isEnabled = true
             cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
             if indexPath.row != cellInUse {
                 cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
@@ -419,11 +426,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             cell.backgroundColor = UIColor.clear
             
             // remove small whiteRoundedView before adding new one
-            for view in cell.contentView.subviews {
-                if view.tag == 100 {
-                    view.removeFromSuperview()
-                }
-            }
+            cell.viewWithTag(100)?.removeFromSuperview()
             
             let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
             whiteRoundedView.tag = 100
@@ -510,9 +513,17 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     
     func downloadFileFromURL(_ url: URL, sender: UIButton) {
         isDownloading = true
-        var downloadTask: URLSessionDownloadTask
-        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
-            self?.play(url: URL!, sender: sender)
+        // activity indicator
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        indicatorView.tag = 5
+        indicatorView.frame = sender.bounds
+        sender.addSubview(indicatorView)
+        indicatorView.startAnimating()
+        // end of activity indicator
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [unowned self] (URL, response, error) -> Void in
+            if error == nil {
+                self.play(url: URL!, sender: sender)
+            }
         })
         downloadTask.resume()
     }
@@ -529,6 +540,12 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             isDownloading = false
             
             Utils.runOnMainThread {
+                // remove indicator view
+                if let indicatorView = sender.viewWithTag(5) as? UIActivityIndicatorView {
+                    indicatorView.stopAnimating()
+                    indicatorView.removeFromSuperview()
+                }
+                
                 self.tableView.reloadData()
                 
                 sender.isEnabled = true

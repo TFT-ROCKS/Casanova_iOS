@@ -18,7 +18,7 @@ class UserManager {
             let errorMessage = ErrorMessage(msg: Errors.usernameNotValid)
             block?(errorMessage)
             return
-        } else if email == "" {
+        } else if email == "" || !isValidEmailAddress(emailAddressString: email) {
             let errorMessage = ErrorMessage(msg: Errors.emailNotValid)
             block?(errorMessage)
             return
