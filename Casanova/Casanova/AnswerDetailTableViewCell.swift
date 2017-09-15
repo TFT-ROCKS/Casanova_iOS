@@ -176,9 +176,9 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeCountLabel.text = "\(answer.likes.count)"
         commentCountLabel.text = "\(answer.comments.count)"
         
-        // avatar
-        let avatar = SVGKImage(named: "TFTicons_avatar_\(answer.user.id % 8)")
-        answererButton.image = avatar
+        // avator
+        let avator = SVGKImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+        answererButton.image = avator
     
         switch mode! {
         case .full:

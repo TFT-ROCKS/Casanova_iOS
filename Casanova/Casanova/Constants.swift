@@ -53,6 +53,9 @@ struct ReuseIDs {
     struct AnswerDetailVC {
         static let commentTableViewCell = "CommentDefaultCell"
     }
+    struct ProfileVC {
+        static let profileTableViewCell = "ProfileTableViewCell"
+    }
 }
 
 struct Duration {

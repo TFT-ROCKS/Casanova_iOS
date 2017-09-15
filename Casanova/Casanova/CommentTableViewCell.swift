@@ -161,9 +161,9 @@ class CommentTableViewCell: UITableViewCell {
         commentTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: comment.createdAt)
 //        likeCountLabel.text = "\(comment.likes.count)"
         
-        // avatar
-        let avatar = SVGKImage(named: "TFTicons_avatar_\(comment.user.id % 8)")
-        commenterButton.image = avatar
+        // avator
+        let avator = SVGKImage(named: "TFTicons_avator_\(comment.user.id % 8)")
+        commenterButton.image = avator
         commentTitleLabel.attributedText = AttrString.answerAttrString(comment.title)
         
     }

@@ -61,9 +61,9 @@ class AudioControlView: UIView, UIWebViewDelegate {
             cellInUse = tag
             // Update UI
             
-            // avatar
-            let avatar = SVGKImage(named: "TFTicons_avatar_\(answer.user.id % 8)")
-            profileView.image = avatar
+            // avator
+            let avator = SVGKImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+            profileView.image = avator
             
             usernameLabel.text = answer.user.username
             
