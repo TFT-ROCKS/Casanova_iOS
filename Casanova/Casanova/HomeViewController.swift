@@ -45,6 +45,10 @@ class HomeViewController: UIViewController {
     
     // Subviews
     var filterView: FilterView?
+    var searchBox: UITextField!
+    var titleLabel: UILabel!
+    
+    var isSearchMode: Bool = false
     
     // Constants
     let cellVerticalSpace: CGFloat = 15
@@ -70,25 +74,28 @@ class HomeViewController: UIViewController {
         let loadMoreTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.loadMoreTableViewCell, bundle: nil)
         homeTableView.register(loadMoreTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell)
         
-        // Navigation bar setup
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = UIColor.navTintColor
-        navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
-        navigationController?.navigationBar.barTintColor = UIColor.white
-        
         // Fetch topics from 0 ~ 20 (determined)
         fetchTopics(from: topics.count)
         
         // Setup filterListView
         filterListView.delegate = self
+        
+        // nav items
+        setTitle()
+        setSearchBox()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setTitle()
+        showTitle()
         setButtons()
+        
         // Nav bar config
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.tintColor = UIColor.navTintColor
+        navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
+        navigationController?.navigationBar.barTintColor = UIColor.white
         navigationController?.navigationBar.layer.shadowColor = UIColor.shadowColor.cgColor
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         navigationController?.navigationBar.layer.shadowRadius = 3.0
@@ -184,12 +191,19 @@ extension HomeViewController: TagListViewDelegate {
 extension HomeViewController {
     func setTitle() {
         let attributedString = AttrString.titleAttrString("TFTROCKS", textColor: UIColor.brandColor)
-        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
+        titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.attributedText = attributedString
         titleLabel.sizeToFit()
+    }
+    
+    func showTitle() {
         tabBarController?.navigationItem.titleView = titleLabel
+    }
+    
+    func showSearchBox() {
+        tabBarController?.navigationItem.titleView = searchBox
     }
     
     func setButtons() {
@@ -198,9 +212,58 @@ extension HomeViewController {
         tabBarController?.navigationItem.leftBarButtonItem = filterButton
         tabBarController?.navigationItem.rightBarButtonItem = searchButton
     }
-    
+}
+
+extension HomeViewController: UITextFieldDelegate {
     func searchButtonClicked(_ sender: UIBarButtonItem) {
-        
+        if !isSearchMode {
+            isSearchMode = true
+            showSearchBox()
+            // change appearance
+            sender.image = nil
+            sender.title = "取消"
+        } else {
+            // end search
+            if query != "" {
+                query = ""
+                updateFlag = true
+                fetchTopics(from: 0)
+            }
+            searchBox.text = ""
+            isSearchMode = false
+            showTitle()
+            // change back
+            sender.image = #imageLiteral(resourceName: "search")
+            sender.title = ""
+        }
+    }
+    
+    func setSearchBox() {
+        searchBox = UITextField(frame: CGRect(x: view.bounds.width * (1 - 0.66) / 2, y: ((navigationController?.navigationBar.bounds.height)! - 34.0) / 2.0, width: view.bounds.width * 0.66, height: 34.0))
+        searchBox.placeholder = "搜索话题"
+        searchBox.layer.cornerRadius = 5
+        searchBox.layer.masksToBounds = true
+        searchBox.font = UIFont.pfr(size: 14)
+        searchBox.textColor = UIColor.tftCoolGrey
+        searchBox.backgroundColor = UIColor.bgdColor
+        searchBox.returnKeyType = .search
+        searchBox.delegate = self
+        searchBox.clearButtonMode = .whileEditing
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: searchBox.frame.height))
+        searchBox.leftView = paddingView
+        searchBox.leftViewMode = .always
+        let searchIconView = UIImageView(frame: CGRect(x: 10, y: 7, width: 20, height: 20))
+        searchIconView.image = #imageLiteral(resourceName: "search-h")
+        searchIconView.contentMode = .scaleAspectFit
+        paddingView.addSubview(searchIconView)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        query = (textField.text?.replacingOccurrences(of: "\\s+", with: "_", options: .regularExpression))!
+        updateFlag = true
+        fetchTopics(from: 0)
+        return true
     }
 }
 

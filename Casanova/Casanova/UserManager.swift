@@ -142,4 +142,26 @@ class UserManager {
         return  returnValue
     }
 
+    func logOut(withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        let headers: HTTPHeaders = ["Content-Type": "application/json",
+                                    "Accept": "*/*",
+                                    "Referer": "https://tft.rocks/",
+                                    "X-Requested-With": "XMLHttpRequest",
+                                    "Connection": "keep-alive"]
+        let params: Parameters = ["requests": ["g0": ["resource": "userService",
+                                                      "operation": "update",
+                                                      "params": ["key":"logout"],
+                                                      "body": []]],
+                                  "context": [:]]
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+            response in
+            if response.result.isSuccess {
+                block?(nil)
+            } else {
+                let errorMsg = ErrorMessage(msg: response.result.error.debugDescription)
+                print(errorMsg.msg)
+                block?(errorMsg)
+            }
+        }
+    }
 }

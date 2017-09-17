@@ -20,6 +20,11 @@ class Environment {
         userDefault.set(password, forKey: "password")
     }
     
+    func resetLoginInfoOnDevice() {
+        userDefault.set(nil, forKey: "username")
+        userDefault.set(nil, forKey: "password")
+    }
+    
     func readLoginInfoFromDevice() -> [String: Any]? {
         var info: [String: Any] = [:]
         guard let username = userDefault.string(forKey: "username") else { return nil }

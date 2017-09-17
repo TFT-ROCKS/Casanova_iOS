@@ -37,7 +37,6 @@ class SavedViewController: UIViewController {
         super.viewDidLoad()
         layoutSubviews()
         addConstraints()
-        fetchLikedAnswers()
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -49,6 +48,7 @@ class SavedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        fetchLikedAnswers()
         setTitle(title: "我的收藏")
         setButtons()
         tableView.reloadData()

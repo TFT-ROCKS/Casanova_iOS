@@ -40,7 +40,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OXc-lg-byV">
-                    <rect key="frame" x="0.0" y="432" width="175" height="253"/>
+                    <rect key="frame" x="0.0" y="432" width="175" height="243"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azx-Hd-dK8">
@@ -88,7 +88,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVb-ht-lr7">
-                    <rect key="frame" x="147.5" y="695" width="80" height="35"/>
+                    <rect key="frame" x="147.5" y="675" width="80" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="BWi-Ls-nXV"/>
                         <constraint firstAttribute="height" constant="35" id="snB-A2-IT6"/>
@@ -120,11 +120,11 @@
                 <constraint firstItem="T00-xq-D9u" firstAttribute="width" secondItem="e7z-U7-Kmb" secondAttribute="width" id="bHJ-BG-se1"/>
                 <constraint firstAttribute="trailing" secondItem="OXc-lg-byV" secondAttribute="trailing" constant="200" id="gIa-bx-JVl"/>
                 <constraint firstItem="OXc-lg-byV" firstAttribute="top" secondItem="2GK-FS-tgy" secondAttribute="bottom" constant="5" id="igL-uF-45y"/>
-                <constraint firstAttribute="bottom" secondItem="uVb-ht-lr7" secondAttribute="bottom" constant="10" id="j2J-hE-Y5v"/>
+                <constraint firstAttribute="bottom" secondItem="uVb-ht-lr7" secondAttribute="bottom" constant="30" id="j2J-hE-Y5v"/>
                 <constraint firstItem="1sg-67-Ste" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="j8T-e2-bLW"/>
                 <constraint firstItem="Wl2-o2-W33" firstAttribute="top" secondItem="1sg-67-Ste" secondAttribute="top" id="ljY-5G-Ycq"/>
                 <constraint firstItem="azx-Hd-dK8" firstAttribute="leading" secondItem="e7z-U7-Kmb" secondAttribute="leading" constant="15" id="oec-4s-dVH"/>
-                <constraint firstItem="uVb-ht-lr7" firstAttribute="top" secondItem="OXc-lg-byV" secondAttribute="bottom" constant="10" id="qjc-zl-BxT"/>
+                <constraint firstItem="uVb-ht-lr7" firstAttribute="top" secondItem="OXc-lg-byV" secondAttribute="bottom" id="qjc-zl-BxT"/>
                 <constraint firstItem="e7z-U7-Kmb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rg2-qB-YON"/>
                 <constraint firstItem="Wl2-o2-W33" firstAttribute="bottom" secondItem="1sg-67-Ste" secondAttribute="bottom" id="tRU-PA-dBl"/>
                 <constraint firstItem="nMj-hh-yWs" firstAttribute="trailing" secondItem="T00-xq-D9u" secondAttribute="trailing" id="tyN-xJ-fap"/>
