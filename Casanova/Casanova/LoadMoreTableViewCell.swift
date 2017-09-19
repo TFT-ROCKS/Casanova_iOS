@@ -9,14 +9,14 @@
 import UIKit
 
 protocol LoadMoreTableViewCellDelegate: class {
-    func loadMoreButtonClicked()
+    func loadMoreButtonClicked(_ sender: UIButton)
 }
 
 class LoadMoreTableViewCell: UITableViewCell {
 
     @IBOutlet weak var loadMoreButton: UIButton!
     @IBAction func loadMoreButtonClicked(_ sender: UIButton) {
-        delegate.loadMoreButtonClicked()
+        delegate.loadMoreButtonClicked(sender)
     }
     
     weak var delegate: LoadMoreTableViewCellDelegate!

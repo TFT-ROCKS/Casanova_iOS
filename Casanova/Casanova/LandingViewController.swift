@@ -7,14 +7,19 @@
 //
 
 import UIKit
+ 
 
 class LandingViewController: UIViewController {
-
+    
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        label.font = UIFont.pfr(size: 20)
+        label.numberOfLines = 0
+        label.text = "登陆中，请稍后..."
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,12 +35,17 @@ class LandingViewController: UIViewController {
             UserManager.shared.signIn(usernameOrEmail: username, password: password, withCompletion: { (error, user) in
                 if error == nil {
                     // Success
-                    // Store current user
-                    Environment.shared.currentUser = user
-                    let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
-                    let navigationController = UINavigationController(rootViewController: tc)
-                    navigationController.modalTransitionStyle = .crossDissolve
-                    self.present(navigationController, animated: true, completion: nil)
+                    Utils.runOnMainThread {
+                        let avator = UIImage(named: "TFTicons_avator_\((user?.id)! % 8)")
+                        self.imageView.stopRotating()
+                        self.imageView.image = avator
+                        self.label.text = "\((user?.username)!)\n\n   欢迎回来！"
+                        
+                        // Store current user
+                        Environment.shared.currentUser = user
+                        // Show home view controller
+                        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.showHomeViewController), userInfo: nil, repeats: false)
+                    }
                 } else {
                     self.showSignInViewController()
                 }
@@ -51,5 +61,12 @@ class LandingViewController: UIViewController {
         navigationController.modalTransitionStyle = .crossDissolve
         present(navigationController, animated: true, completion: nil)
     }
-
+    
+    func showHomeViewController() {
+        let tc = storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
+        let navigationController = UINavigationController(rootViewController: tc)
+        navigationController.modalTransitionStyle = .crossDissolve
+        present(navigationController, animated: true, completion: nil)
+    }
+    
 }

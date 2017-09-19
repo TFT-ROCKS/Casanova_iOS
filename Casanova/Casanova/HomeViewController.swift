@@ -489,6 +489,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell, for: indexPath) as! LoadMoreTableViewCell
                 cell.delegate = self
+                cell.loadMoreButton.setTitle("LOAD MORE", for: .normal)
                 return cell
             default:
                 return UITableViewCell()
@@ -610,7 +611,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - LoadMoreTableViewCellDelegate
 
 extension HomeViewController: LoadMoreTableViewCellDelegate {
-    func loadMoreButtonClicked() {
+    func loadMoreButtonClicked(_ sender: UIButton) {
+        sender.setTitle("", for: .normal)
+        sender.viewWithTag(5)?.removeFromSuperview()
+        // activity indicator
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        indicatorView.tag = 5
+        indicatorView.frame = sender.bounds
+        sender.addSubview(indicatorView)
+        indicatorView.startAnimating()
         // Do load more function
         fetchTopics(from: topics.count)
     }

@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import SVGKit
+ 
 
 class ProfileViewController: UIViewController {
 
     // sub views
     var headerView: UIView = UIView(frame: .zero)
     var tableView: UITableView = UITableView(frame: .zero, style: .grouped)
-    var avatorView: SVGKImageView = SVGKFastImageView(frame: .zero)
+    var avatorView: UIImageView = UIImageView(frame: .zero)
     var usernameLabel: UILabel = UILabel(frame: .zero)
     var emailLabel: UILabel = UILabel(frame: .zero)
     
@@ -97,7 +97,7 @@ extension ProfileViewController {
         // data
         let user = Environment.shared.currentUser!
         
-        let avator = SVGKImage(named: "TFTicons_avator_\(user.id % 8)")
+        let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
         avatorView.image = avator
         usernameLabel.text = user.firstname != "" ? user.firstname : user.username
         emailLabel.text = user.email

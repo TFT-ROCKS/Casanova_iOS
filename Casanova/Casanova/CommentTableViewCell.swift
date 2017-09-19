@@ -8,11 +8,11 @@
 
 import UIKit
 import AVFoundation
-import SVGKit
+ 
 
 class CommentTableViewCell: UITableViewCell {
     
-    var commenterButton: SVGKImageView!
+    var commenterButton: UIImageView!
     var commenterNameLabel: UILabel!
     var commentTimeLabel: UILabel!
 //    var likeButton: UIButton!
@@ -37,7 +37,7 @@ class CommentTableViewCell: UITableViewCell {
         
         selectionStyle = .none
         
-        commenterButton = SVGKFastImageView(frame: .zero)
+        commenterButton = UIImageView(frame: .zero)
         commenterNameLabel = UILabel(frame: .zero)
         commentTimeLabel = UILabel(frame: .zero)
 //        likeCountLabel = UILabel(frame: .zero)
@@ -162,7 +162,7 @@ class CommentTableViewCell: UITableViewCell {
 //        likeCountLabel.text = "\(comment.likes.count)"
         
         // avator
-        let avator = SVGKImage(named: "TFTicons_avator_\(comment.user.id % 8)")
+        let avator = UIImage(named: "TFTicons_avator_\(comment.user.id % 8)")
         commenterButton.image = avator
         commentTitleLabel.attributedText = AttrString.answerAttrString(comment.title)
         

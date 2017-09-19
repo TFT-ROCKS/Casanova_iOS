@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import SVGKit
+ 
 
 enum AnswerMode {
     case short
@@ -17,7 +17,7 @@ enum AnswerMode {
 
 class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
-    var answererButton: SVGKImageView!
+    var answererButton: UIImageView!
     var answererNameLabel: UILabel!
     var answerTimeLabel: UILabel!
     var likeButton: UIButton!
@@ -47,7 +47,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         selectionStyle = .none
         
-        answererButton = SVGKFastImageView(frame: .zero)
+        answererButton = UIImageView(frame: .zero)
         answererNameLabel = UILabel(frame: .zero)
         answerTimeLabel = UILabel(frame: .zero)
         likeCountLabel = UILabel(frame: .zero)
@@ -181,7 +181,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         commentCountLabel.text = "\(answer.comments.count)"
         
         // avator
-        let avator = SVGKImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+        let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
         answererButton.image = avator
     
         switch mode! {

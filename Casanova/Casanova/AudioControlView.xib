@@ -15,7 +15,7 @@
                 <outlet property="audioButton" destination="BDT-On-6bK" id="brC-mU-OvU"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="nOq-k7-pCM"/>
                 <outlet property="playTimeLabel" destination="SEG-9V-RAf" id="jzI-f2-giN"/>
-                <outlet property="profileView" destination="5kh-ZE-AIb" id="6mm-0S-Oys"/>
+                <outlet property="profileView" destination="5kh-ZE-AIb" id="izC-lH-soU"/>
                 <outlet property="usernameLabel" destination="0KT-1k-fkW" id="jAw-oA-6BR"/>
             </connections>
         </placeholder>
@@ -52,7 +52,7 @@
                         <action selector="audioButtonTapped:" destination="-1" eventType="touchUpInside" id="41d-py-nzI"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-ZE-AIb" customClass="SVGKFastImageView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-ZE-AIb" customClass="UIImageView">
                     <rect key="frame" x="10" y="8" width="37" height="37"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SVGKit
+ 
 
 protocol AudioControlViewDelegate: class {
     func audioButtonTappedOnBar()
@@ -20,7 +20,7 @@ class AudioControlView: UIView, UIWebViewDelegate {
     var isPlaying: Bool = false
 
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var profileView: SVGKFastImageView!
+    @IBOutlet weak var profileView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var playTimeLabel: UILabel!
     @IBOutlet weak var audioBar: UISlider!
@@ -62,7 +62,7 @@ class AudioControlView: UIView, UIWebViewDelegate {
             // Update UI
             
             // avator
-            let avator = SVGKImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+            let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
             profileView.image = avator
             
             usernameLabel.text = answer.user.username
