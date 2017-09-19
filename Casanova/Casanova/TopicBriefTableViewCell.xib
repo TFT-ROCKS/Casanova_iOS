@@ -116,6 +116,7 @@
                 <outlet property="starButton" destination="vVL-6W-GdB" id="vzg-ll-F8V"/>
                 <outlet property="tagListView" destination="inB-G3-hzE" id="UKE-eU-Iab"/>
                 <outlet property="titleLabel" destination="s2L-5p-bKQ" id="v0H-wm-PZw"/>
+                <outlet property="topConstraint" destination="hq2-ql-jTE" id="okO-4L-DGU"/>
             </connections>
             <point key="canvasLocation" x="-88" y="-94"/>
         </tableViewCell>

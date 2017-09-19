@@ -28,12 +28,15 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var answerTitleLabel: UILabel!
     
     var mode: AnswerMode!
+    var isLikedCard: Bool = false
     
     var answer: Answer! {
         didSet {
             updateUI()
         }
     }
+    
+    var bottomConstraint: NSLayoutConstraint!
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -138,7 +141,8 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTitleLabel.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
         answerTitleLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
         answerTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29).isActive = true
+        bottomConstraint = answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29)
+        bottomConstraint.isActive = true
         
         answererNameLabel.font = UIFont.mr(size: 14)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
@@ -191,6 +195,10 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
             } else {
                 answerTitleLabel.attributedText = AttrString.answerAttrString(components[0...50].joined(separator: " ") + " ...")
             }
+        }
+        
+        if isLikedCard {
+            bottomConstraint.constant = -10
         }
     }
 }

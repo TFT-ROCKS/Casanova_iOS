@@ -49,6 +49,22 @@ class HomeViewController: UIViewController {
     var titleLabel: UILabel!
     
     var isSearchMode: Bool = false
+    var needsShowSearchBox: Bool {
+        get {
+            if isSearchMode {
+                if query.trimmingCharacters(in: CharacterSet.whitespaces) == "" {
+                    isSearchMode = false
+                    searchBox.text = ""
+                    return false
+                }
+                else {
+                    return true
+                }
+            } else {
+                return false
+            }
+        }
+    }
     
     // Constants
     let cellVerticalSpace: CGFloat = 15
@@ -88,7 +104,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        showTitle()
+        needsShowSearchBox ? showSearchBox() : showTitle()
         setButtons()
         
         // Nav bar config
@@ -100,6 +116,12 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         navigationController?.navigationBar.layer.shadowRadius = 3.0
         navigationController?.navigationBar.layer.shadowOpacity = 1.0
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        searchBox.resignFirstResponder()
     }
     
     func fetchTopics(from: Int) {
@@ -208,7 +230,10 @@ extension HomeViewController {
     
     func setButtons() {
         let filterButton = UIBarButtonItem(image: #imageLiteral(resourceName: "filter"), style: .plain, target: self, action: #selector(filterButtonClicked(_:)))
-        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style: .plain, target: self, action: #selector(searchButtonClicked(_:)))
+        let searchButton = UIBarButtonItem(image: needsShowSearchBox ? nil : #imageLiteral(resourceName: "search"), style: .plain, target: self, action: #selector(searchButtonClicked(_:)))
+        if needsShowSearchBox {
+            searchButton.title = "取消"
+        }
         tabBarController?.navigationItem.leftBarButtonItem = filterButton
         tabBarController?.navigationItem.rightBarButtonItem = searchButton
     }
@@ -219,11 +244,13 @@ extension HomeViewController: UITextFieldDelegate {
         if !isSearchMode {
             isSearchMode = true
             showSearchBox()
+            searchBox.becomeFirstResponder()
             // change appearance
             sender.image = nil
             sender.title = "取消"
         } else {
             // end search
+            searchBox.resignFirstResponder()
             if query != "" {
                 query = ""
                 updateFlag = true

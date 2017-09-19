@@ -17,6 +17,7 @@ class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var numOfAnswersLabel: UILabel!
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var numOfStarsLabel: UILabel!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -25,6 +26,8 @@ class TopicBriefTableViewCell: UITableViewCell {
             updateUI()
         }
     }
+    
+    var isLikedCard: Bool = false
     
     func updateUI() {
         // Update UI
@@ -58,6 +61,10 @@ class TopicBriefTableViewCell: UITableViewCell {
         tagListView.textFont = UIFont.mr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
+        
+        if isLikedCard {
+            topConstraint.constant = 0
+        }
     }
 
     override func awakeFromNib() {

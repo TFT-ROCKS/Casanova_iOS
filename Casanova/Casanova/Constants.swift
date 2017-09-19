@@ -41,6 +41,7 @@ struct ReuseIDs {
     struct SavedVC {
         struct View {
             static let topicBriefAppendTableViewCell = "TopicBriefAppendTableViewCell"
+            static let separatorLineTableViewCell = "SeparatorLineTableViewCell"
         }
     }
     struct TopicDetailVC {

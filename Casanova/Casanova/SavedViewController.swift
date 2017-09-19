@@ -180,7 +180,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
     }
     
     func configTableView() {
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLineEtched
         
         tableView.backgroundColor = UIColor.bgdColor
         // Hack for table view top space in between with topic view
@@ -225,6 +225,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
             }
+            cell.isLikedCard = true
             cell.mode = .short
             cell.answer = answer
             let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -246,6 +247,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.SavedVC.View.topicBriefAppendTableViewCell, for: indexPath) as! TopicBriefTableViewCell
+            cell.isLikedCard = true
             cell.topic = answer.topic
             return cell
         }

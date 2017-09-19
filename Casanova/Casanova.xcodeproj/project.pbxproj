@@ -32,6 +32,8 @@
 		80524B381F45809A00363D7D /* TFTicons_avator_5.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80524B301F45809A00363D7D /* TFTicons_avator_5.svg */; };
 		80524B391F45809A00363D7D /* TFTicons_avator_6.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80524B311F45809A00363D7D /* TFTicons_avator_6.svg */; };
 		80524B3A1F45809A00363D7D /* TFTicons_avator_7.svg in Resources */ = {isa = PBXBuildFile; fileRef = 80524B321F45809A00363D7D /* TFTicons_avator_7.svg */; };
+		8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */; };
+		8055791C1F70DC94002942A2 /* SeparatorLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */; };
 		805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8841F416C7E005197DF /* SignInViewController.swift */; };
 		805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8861F416C8A005197DF /* SignUpViewController.swift */; };
 		805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC88C1F41896B005197DF /* MyTabBarController.swift */; };
@@ -113,6 +115,8 @@
 		80524B301F45809A00363D7D /* TFTicons_avator_5.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TFTicons_avator_5.svg; sourceTree = "<group>"; };
 		80524B311F45809A00363D7D /* TFTicons_avator_6.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TFTicons_avator_6.svg; sourceTree = "<group>"; };
 		80524B321F45809A00363D7D /* TFTicons_avator_7.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TFTicons_avator_7.svg; sourceTree = "<group>"; };
+		805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLineTableViewCell.swift; sourceTree = "<group>"; };
+		8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeparatorLineTableViewCell.xib; sourceTree = "<group>"; };
 		805EC8841F416C7E005197DF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		805EC8861F416C8A005197DF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		805EC88C1F41896B005197DF /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				804D91CB1F37C75900CA6FBE /* TopicHeaderView */,
 				800FEFEC1F2571B300DF5531 /* LoadMoreTableViewCell */,
 				800FEFE71F2567E100DF5531 /* HomeTableViewCell */,
+				8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */,
 				80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */,
 			);
 			name = Views;
@@ -333,6 +338,15 @@
 				80524B321F45809A00363D7D /* TFTicons_avator_7.svg */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */,
+				8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */,
+			);
+			name = SeparatorLineTableViewCell;
 			sourceTree = "<group>";
 		};
 		806179801F3E69D500B696FB /* Helpers */ = {
@@ -509,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				804D91CF1F37C82E00CA6FBE /* FilterView.xib in Resources */,
+				8055791C1F70DC94002942A2 /* SeparatorLineTableViewCell.xib in Resources */,
 				804D91D41F37D35100CA6FBE /* FilterTableViewCell.xib in Resources */,
 				80524B341F45809A00363D7D /* TFTicons_avator_1.svg in Resources */,
 				800FEFEB1F25691400DF5531 /* LoadMoreTableViewCell.xib in Resources */,
@@ -635,6 +650,7 @@
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
+				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
