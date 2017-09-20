@@ -24,6 +24,8 @@ class ProfileViewController: UIViewController {
         layoutSubViews()
         addSubViewConstraints()
         configSubViews()
+        
+        navigationController?.navigationBar.topItem?.title = " "
     }
     
     override func viewWillAppear(_ animated: Bool) {

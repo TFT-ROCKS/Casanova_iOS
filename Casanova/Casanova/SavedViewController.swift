@@ -25,7 +25,7 @@ class SavedViewController: UIViewController {
     var statusBarShouldBeHidden = false
     
     // sub views
-    let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
+    let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     
     var timer: Timer!
@@ -41,6 +41,7 @@ class SavedViewController: UIViewController {
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
+        navigationController?.navigationBar.topItem?.title = " "
         
         view.backgroundColor = UIColor.bgdColor
     }
@@ -181,7 +182,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
     
     func configTableView() {
         tableView.separatorStyle = .singleLineEtched
-        
+        tableView.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
         tableView.backgroundColor = UIColor.bgdColor
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
@@ -213,6 +214,12 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = UIColor.clear
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

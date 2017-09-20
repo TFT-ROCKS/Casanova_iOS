@@ -84,6 +84,7 @@ class AnswerDetailViewController: UIViewController {
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
+        navigationController?.navigationBar.topItem?.title = " "
         
         view.backgroundColor = UIColor.bgdColor
         

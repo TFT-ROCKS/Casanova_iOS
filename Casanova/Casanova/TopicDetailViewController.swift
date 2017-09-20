@@ -89,6 +89,7 @@ class TopicDetailViewController: UIViewController {
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
+        navigationController?.navigationBar.topItem?.title = " "
         
         if mode == .record {
             tableView.isHidden = true

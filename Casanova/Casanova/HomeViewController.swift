@@ -99,6 +99,8 @@ class HomeViewController: UIViewController {
         // nav items
         setTitle()
         setSearchBox()
+        
+        navigationController?.navigationBar.topItem?.title = " "
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -347,13 +349,13 @@ extension HomeViewController: FilterViewDelegate {
     }
     
     func beforeShowFilterView() {
-        toggleTabBar(true, animated: true)
+        tabBarController?.tabBar.fadeOut(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
         navigationController?.setNavigationBarHidden(true, animated: true)
         setStatusBar(hidden: true)
     }
     
     func afterDismissFilterView() {
-        toggleTabBar(false, animated: true)
+        tabBarController?.tabBar.fadeIn(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
         navigationController?.setNavigationBarHidden(false, animated: true)
         setStatusBar(hidden: false)
     }
@@ -397,7 +399,7 @@ extension HomeViewController: UIScrollViewDelegate {
         if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
-            toggleTabBar(true, animated: true)
+            tabBarController?.tabBar.fadeOut(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
             navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
             
@@ -408,28 +410,10 @@ extension HomeViewController: UIScrollViewDelegate {
         if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
         if velocity.y < 0 {
             // Un-Hide
-            toggleTabBar(false, animated: true)
+            tabBarController?.tabBar.fadeIn(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
             navigationController?.setNavigationBarHidden(false, animated: true)
         } else {
             
-        }
-    }
-    
-    func toggleTabBar(_ hidden: Bool, animated: Bool) {
-        let tabBar = self.tabBarController?.tabBar
-        if tabBar!.isHidden == hidden { return }
-        let frame = tabBar?.frame
-        let offset = (hidden ? (frame?.size.height)! : -(frame?.size.height)!)
-        let duration: TimeInterval = (animated ? Double(UINavigationControllerHideShowBarDuration) : 0.0)
-        tabBar?.isHidden = false
-        if frame != nil {
-            UIView.animate(withDuration: duration,
-                           animations: {
-                            tabBar!.frame = frame!.offsetBy(dx: 0, dy: offset)
-            },
-                           completion: {
-                            if $0 {tabBar?.isHidden = hidden}
-            })
         }
     }
 }

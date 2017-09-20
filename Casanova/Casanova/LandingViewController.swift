@@ -17,7 +17,7 @@ class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        label.font = UIFont.pfr(size: 20)
+        label.font = UIFont.pfr(size: 17)
         label.numberOfLines = 0
         label.text = "登陆中，请稍后..."
     }

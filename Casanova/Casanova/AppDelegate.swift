@@ -18,9 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Tab bar config
         UITabBar.appearance().tintColor = UIColor.brandColor
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: -60), for: .default)
         UINavigationBar.appearance().isTranslucent = false
-        
 //        for family: String in UIFont.familyNames
 //        {
 //            print("\(family)")
