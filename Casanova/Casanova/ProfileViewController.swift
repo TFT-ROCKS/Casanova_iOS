@@ -194,9 +194,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                // My Answers
+                presentUserAnswersVC()
+            default:
+                break
+            }
         case 2:
             switch indexPath.row {
             case 0:
+                // Log out
                 presentLogOutAlertSheet()
             default:
                 break
@@ -208,6 +217,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ProfileViewController {
+    // My Answers logic
+    func presentUserAnswersVC() {
+        let vc = UserAnswersViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // Log out logic
     func presentLogOutAlertSheet() {
         let alert = UIAlertController(title: "", message: "确认要退出登录吗", preferredStyle: .actionSheet)
         let confirm = UIAlertAction(title: "登出", style: .default, handler: { [unowned self] _ in

@@ -19,6 +19,7 @@
 		800FEFEB1F25691400DF5531 /* LoadMoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800FEFE91F25691400DF5531 /* LoadMoreTableViewCell.xib */; };
 		802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802E8E411F34660B00A9345E /* TopicHeaderView.swift */; };
 		802E8E441F34662200A9345E /* TopicHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802E8E431F34662200A9345E /* TopicHeaderView.xib */; };
+		803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803307871F726E9C00BAE470 /* UserAnswersViewController.swift */; };
 		804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91CC1F37C7E800CA6FBE /* FilterView.swift */; };
 		804D91CF1F37C82E00CA6FBE /* FilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804D91CE1F37C82E00CA6FBE /* FilterView.xib */; };
 		804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */; };
@@ -72,6 +73,7 @@
 		80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */; };
 		80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */; };
 		80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */; };
+		80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSManager.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -102,6 +104,7 @@
 		800FEFE91F25691400DF5531 /* LoadMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreTableViewCell.xib; sourceTree = "<group>"; };
 		802E8E411F34660B00A9345E /* TopicHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderView.swift; sourceTree = "<group>"; };
 		802E8E431F34662200A9345E /* TopicHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicHeaderView.xib; sourceTree = "<group>"; };
+		803307871F726E9C00BAE470 /* UserAnswersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnswersViewController.swift; sourceTree = "<group>"; };
 		804D91CC1F37C7E800CA6FBE /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		804D91CE1F37C82E00CA6FBE /* FilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterView.xib; sourceTree = "<group>"; };
 		804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 		80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerBriefTableViewCell.xib; sourceTree = "<group>"; };
 		80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailTableViewCell.swift; sourceTree = "<group>"; };
 		80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
+		80C2AA0D1F737F98001F298D /* OSSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSManager.swift; sourceTree = "<group>"; };
+		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +209,7 @@
 				807BF5C91F29B25D000451FA /* CommentManager.swift */,
 				807BF5CB1F29B275000451FA /* TagManager.swift */,
 				807BF5CD1F29B291000451FA /* AnswerManager.swift */,
+				80C2AA0D1F737F98001F298D /* OSSManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -248,6 +254,7 @@
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
+				80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */,
 				80E339101F1AE4FE00F539E5 /* Assets.xcassets */,
 				80E339151F1AE4FE00F539E5 /* Info.plist */,
 				800122BD1F1DCB3B00F185AE /* test.mp3 */,
@@ -263,6 +270,7 @@
 				80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */,
 				80FB45791F46C1290034D525 /* AnswerDetailViewController.swift */,
 				805EC88E1F418A0B005197DF /* SavedViewController.swift */,
+				803307871F726E9C00BAE470 /* UserAnswersViewController.swift */,
 				80E3390B1F1AE4FD00F539E5 /* ViewController.swift */,
 				805EC8841F416C7E005197DF /* SignInViewController.swift */,
 				805EC8861F416C8A005197DF /* SignUpViewController.swift */,
@@ -495,6 +503,7 @@
 					80E339051F1AE4FD00F539E5 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = N74Z9L6N77;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -621,9 +630,11 @@
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
+				80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
+				803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
@@ -727,6 +738,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -771,6 +783,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -783,6 +796,7 @@
 			baseConfigurationReference = E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = N74Z9L6N77;
 				INFOPLIST_FILE = Casanova/Info.plist;
@@ -792,6 +806,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -801,6 +817,7 @@
 			baseConfigurationReference = 74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = N74Z9L6N77;
 				INFOPLIST_FILE = Casanova/Info.plist;
@@ -810,6 +827,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

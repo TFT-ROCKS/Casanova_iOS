@@ -26,7 +26,7 @@ class CommentManager {
             block?(errorMessage, nil)
             return
         }
-        
+        // TODO: need to fix the referer using topicId
         let headers: HTTPHeaders = ["Content-Type": "application/json",
                                     "Accept": "*/*",
                                     "Referer": "https://tft.rocks/topic/\(answerId)",

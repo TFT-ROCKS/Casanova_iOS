@@ -1,15 +1,18 @@
 PODS:
   - Alamofire (4.5.0)
+  - AliyunOSSiOS (2.6.3)
   - TagListView (1.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - AliyunOSSiOS (~> 2.6.2)
   - TagListView (~> 1.0)
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  AliyunOSSiOS: 98d79abaceed7485ec0e28dd09c5464acf4a67a0
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
 
-PODFILE CHECKSUM: 2d9ac922a511b2e0db75a06ec5905242f0e941fb
+PODFILE CHECKSUM: 4ca22536b766c9413eaf0a327b2b840d4c39ee21
 
 COCOAPODS: 1.2.1

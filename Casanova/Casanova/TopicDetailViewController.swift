@@ -27,7 +27,11 @@ class TopicDetailViewController: UIViewController {
         }
     }
     var topic: Topic!
-    var answers: [Answer]?
+    var answers: [Answer]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
@@ -54,6 +58,7 @@ class TopicDetailViewController: UIViewController {
     let audioBarButton: UIButton = UIButton(frame: .zero)
     let audioTimeLabel: UILabel = UILabel(frame: .zero)
     let postButton: UIButton = UIButton(frame: .zero)
+    let progressView: UIProgressView = UIProgressView(frame: .zero)
     
     let rewardImageView: UIImageView = UIImageView(frame: .zero)
     let rewardLabel: UILabel = UILabel(frame: .zero)
@@ -373,8 +378,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -557,10 +562,10 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
                 self.audioControlBar.playTimeLabel.text = "00:00"
                 self.audioControlBar.audioBar.isEnabled = true
                 self.audioControlBar.updateUI(withTag: self.cellInUse, answer: self.answers![self.cellInUse])
-            }
-            
-            if audioControlBar.isHidden {
-                audioControlBar.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+                
+                if self.audioControlBar.isHidden {
+                    self.audioControlBar.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+                }
             }
             
             Utils.runOnMainThread {
@@ -591,15 +596,12 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
-        audioControlBar.audioBar.value = 0
-        audioControlBar.audioBar.isEnabled = false
-        audioControlBar.playTimeLabel.text = "00:00"
-        
         audioPlayer.stop()
         audioPlayer = nil
         cellInUse = -1
         timer.invalidate()
+        tableView.reloadData()
+        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
@@ -618,6 +620,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.addSubview(clockIcon)
         view.addSubview(timeLabel)
         view.addSubview(audioBarButton)
+        view.addSubview(progressView)
         view.addSubview(postButton)
         view.addSubview(rewardLabel)
         view.addSubview(rewardImageView)
@@ -627,7 +630,10 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.bringSubview(toFront: clockIcon)
         view.bringSubview(toFront: timeLabel)
         view.bringSubview(toFront: audioBarButton)
+        view.bringSubview(toFront: progressView)
         view.bringSubview(toFront: postButton)
+        view.bringSubview(toFront: rewardLabel)
+        view.bringSubview(toFront: rewardImageView)
         
         configRecordViews()
         initRecordViews()
@@ -636,9 +642,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     
     func configRecordViews() {
         // config buttons
-        recordButton.layer.borderColor = UIColor(red: 120/255.0, green: 215/255.0, blue: 245/255.0, alpha: 1).cgColor
+        recordButton.layer.borderColor = UIColor.tftSkyBlue.cgColor
         recordButton.layer.borderWidth = 2.0
-        recordButton.layer.cornerRadius = 85.9 / 2
+        recordButton.layer.cornerRadius = 85.0 / 2
         recordButton.layer.masksToBounds = true
         recordButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         recordButton.layer.shadowRadius = 4
@@ -646,20 +652,20 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         recordButton.layer.shadowOpacity = 1
         recordButton.translatesAutoresizingMaskIntoConstraints = false
         
-        skipButton.layer.borderColor = UIColor(red: 164/255.0, green: 170/255.0, blue: 179/255.0, alpha: 1).cgColor
-        skipButton.layer.borderWidth = 1.0
-        skipButton.layer.cornerRadius = 29.9 / 2
+        skipButton.layer.borderColor = UIColor.tftCoolGrey.cgColor
+        skipButton.layer.borderWidth = 2.0
+        skipButton.layer.cornerRadius = 35.0 / 2
         skipButton.layer.masksToBounds = true
         skipButton.translatesAutoresizingMaskIntoConstraints = false
         
         // buttons' sub views
-        speakingImgView.frame = CGRect(x: 31.6, y: 27.4, width: 22.9, height: 30.6)
+        speakingImgView.frame = CGRect(x: 31.1, y: 27.2, width: 22.9, height: 30.6)
         speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
         recordButton.addSubview(speakingImgView)
         
-        let skipLabel = UILabel(frame: CGRect(x: 14.4, y: 2.45, width: 35.2, height: 25))
+        let skipLabel = UILabel(frame: CGRect(x: 15.0, y: 5.5, width: 50, height: 24))
         skipLabel.textAlignment = .center
-        skipLabel.font = UIFont.pfr(size: 14)
+        skipLabel.font = UIFont.pfl(size: 17)
         skipLabel.text = "跳过"
         skipLabel.textColor = UIColor.tftCoolGrey
         skipButton.addSubview(skipLabel)
@@ -670,7 +676,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.contentMode = .scaleAspectFit
         
         timeLabel.backgroundColor = UIColor.clear
-        timeLabel.font = UIFont.mr(size: 12)
+        timeLabel.font = UIFont.mr(size: 14)
         timeLabel.textColor = UIColor.nonBodyTextColor
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(secs))
@@ -681,11 +687,12 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioBarButton.layer.shadowRadius = 4
         audioBarButton.layer.shadowColor = UIColor.shadowColor.cgColor
         audioBarButton.layer.shadowOpacity = 1
-        audioBarButton.setImage(#imageLiteral(resourceName: "audio_bar"), for: .normal)
+        audioBarButton.setImage(#imageLiteral(resourceName: "audio_bar_new"), for: .normal)
         audioBarButton.imageView?.contentMode = .scaleAspectFit
-        audioTimeLabel.frame = CGRect(x: 38, y: 8.5, width: 41, height: 22)
+        audioTimeLabel.frame = CGRect(x: 60.5, y: 11.5, width: 59, height: 22)
         audioTimeLabel.textColor = UIColor.white
-        audioTimeLabel.font = UIFont.mr(size: 12)
+        audioTimeLabel.font = UIFont.mr(size: 16)
+        audioTimeLabel.textAlignment = .center
         audioBarButton.addSubview(audioTimeLabel)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleSingleTap(_:)))
@@ -693,25 +700,34 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         
         // post button
         postButton.translatesAutoresizingMaskIntoConstraints = false
-        postButton.layer.borderWidth = 1
-        postButton.layer.borderColor = UIColor.brandColor.cgColor
-        postButton.layer.cornerRadius = 29.9 / 2
+        postButton.layer.borderWidth = 2
+        postButton.layer.borderColor = UIColor.tftSkyBlue.cgColor
+        postButton.layer.cornerRadius = 35.0 / 2
         postButton.layer.masksToBounds = true
         postButton.setTitle("发布", for: .normal)
-        postButton.titleLabel?.font = UIFont.pfr(size: 14)
+        postButton.titleLabel?.font = UIFont.pfl(size: 17)
         postButton.titleLabel?.textAlignment = .center
-        postButton.setTitleColor(UIColor.brandColor, for: .normal)
+        postButton.setTitleColor(UIColor.tftSkyBlue, for: .normal)
+        
+        // progress view
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.layer.borderWidth = 3
+        progressView.layer.borderColor = UIColor.progressBarColor.cgColor
+        progressView.layer.cornerRadius = 39 / 2.0
+        progressView.layer.masksToBounds = true
+        progressView.progressTintColor = UIColor.progressBarColor
+        progressView.trackTintColor = UIColor.clear
         
         // reward image
         rewardImageView.translatesAutoresizingMaskIntoConstraints = false
-        rewardImageView.contentMode = .scaleAspectFit
-        rewardImageView.image = #imageLiteral(resourceName: "reward_image")
+        rewardImageView.contentMode = .scaleToFill
+        rewardImageView.image = #imageLiteral(resourceName: "check")
         
         // reward label
         rewardLabel.translatesAutoresizingMaskIntoConstraints = false
         rewardLabel.textAlignment = .center
         rewardLabel.text = "Successfully posted! Check it again in \"Profile\""
-        rewardLabel.font = UIFont.mr(size: 14)
+        rewardLabel.font = UIFont.mr(size: 17)
         rewardLabel.textColor = UIColor.nonBodyTextColor
         rewardLabel.numberOfLines = 0
     }
@@ -719,15 +735,15 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     func addRecordConstraints() {
         // record button constraints
         recordButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        recordButton.widthAnchor.constraint(equalToConstant: 85.9).isActive = true
-        recordButton.heightAnchor.constraint(equalToConstant: 85.9).isActive = true
-        recordButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -95.1).isActive = true
+        recordButton.widthAnchor.constraint(equalToConstant: 85).isActive = true
+        recordButton.heightAnchor.constraint(equalToConstant: 85).isActive = true
+        recordButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -96).isActive = true
         
         // skip button constraints
         skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        skipButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        skipButton.heightAnchor.constraint(equalToConstant: 29.9).isActive = true
-        skipButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -37.1).isActive = true
+        skipButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        skipButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        skipButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24).isActive = true
         
         // clock icon constraints
         clockIcon.widthAnchor.constraint(equalToConstant: 15.0).isActive = true
@@ -742,27 +758,33 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         timeLabel.centerYAnchor.constraint(equalTo: clockIcon.centerYAnchor).isActive = true
         
         // audioBarButton constraints
-        audioBarButton.widthAnchor.constraint(equalToConstant: 117).isActive = true
-        audioBarButton.heightAnchor.constraint(equalToConstant: 39).isActive = true
-        audioBarButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -119).isActive = true
+        audioBarButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
+        audioBarButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        audioBarButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -116).isActive = true
         audioBarButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        // progressView constraints
+        progressView.widthAnchor.constraint(equalTo: audioBarButton.widthAnchor).isActive = true
+        progressView.heightAnchor.constraint(equalTo: audioBarButton.heightAnchor).isActive = true
+        progressView.bottomAnchor.constraint(equalTo: audioBarButton.bottomAnchor).isActive = true
+        progressView.leadingAnchor.constraint(equalTo: audioBarButton.leadingAnchor).isActive = true
+        
         // post button constraints
-        postButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 29.9).isActive = true
-        postButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -37.1).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        postButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24).isActive = true
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         // reward image constraints
-        rewardImageView.widthAnchor.constraint(equalToConstant: 138).isActive = true
-        rewardImageView.heightAnchor.constraint(equalToConstant: 138).isActive = true
-        rewardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        rewardImageView.topAnchor.constraint(equalTo: topicView.bottomAnchor, constant: 29).isActive = true
+        rewardImageView.widthAnchor.constraint(equalToConstant: 37).isActive = true
+        rewardImageView.heightAnchor.constraint(equalToConstant: 23.7).isActive = true
+        rewardImageView.centerXAnchor.constraint(equalTo: audioBarButton.centerXAnchor).isActive = true
+        rewardImageView.centerYAnchor.constraint(equalTo: audioBarButton.centerYAnchor).isActive = true
         
         // reward label constraints
         rewardLabel.widthAnchor.constraint(equalToConstant: 245).isActive = true
         rewardLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        rewardLabel.topAnchor.constraint(equalTo: rewardImageView.bottomAnchor, constant: 10).isActive = true
+        rewardLabel.bottomAnchor.constraint(equalTo: audioBarButton.topAnchor, constant: -100).isActive = true
     }
     
     func initRecordViews() {
@@ -774,6 +796,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.isHidden = true
         timeLabel.isHidden = true
         audioBarButton.isHidden = true
+        progressView.isHidden = true
+        progressView.progress = 0.0
         postButton.isHidden = true
         rewardLabel.isHidden = true
         rewardImageView.isHidden = true
@@ -843,25 +867,66 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func postButtonClicked(_ sender: UIButton) {
-        // TODO: post audio
-        
-        // Animation: reward image and reward label fade in
-        postButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
-        audioBarButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
-            self.rewardImageView.fadeIn(withDuration: Duration.TopicDetailVC.View.rewardFadeInDuration, withCompletionBlock: nil)
-            self.rewardLabel.fadeIn(withDuration: Duration.TopicDetailVC.View.rewardFadeInDuration, withCompletionBlock: { success in
-                if success {
-                    self.rewardImageView.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: nil)
-                    self.rewardLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: { success in
-                        if success {
-                            self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-                            self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-                            self.hideTopicView()
-                            self.setTitle(title: "优秀答案")
+        if audioPlayer != nil {
+            audioPlayer.stop()
+        }
+        if timer != nil {
+            timer.invalidate()
+        }
+        if audioRecorder != nil {
+            audioRecorder.stop()
+        }
+        self.seconds = self.secs
+        animateAfterBeforeUploadAudio()
+        let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.wav")
+        OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
+            print(bytesSent, totalByteSent, totalBytesExpectedToSend)
+            Utils.runOnMainThread {
+                self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
+            }
+        }, withCompletionBlock: { (error, url) in
+            if error == nil {
+                print("upload audio success")
+                // Upload answer
+                AnswerManager.shared.postAnswer(topicId: self.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
+                    if error == nil {
+                        // success
+                        self.answers?.append(answer!)
+                        // animation
+                        Utils.runOnMainThread {
+                            self.animateAfterPostAnswer()
                         }
-                    })
-                }
-            })
+                    }
+                })
+            }
+        })
+    }
+    
+    func animateAfterBeforeUploadAudio() {
+        self.postButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+        self.audioBarButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
+            if success {
+                self.progressView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+            }
+        })
+    }
+    
+    func animateAfterPostAnswer() {
+        // Animation: reward image and reward label fade in
+        self.rewardImageView.fadeIn(withDuration: Duration.TopicDetailVC.View.rewardFadeInDuration, withCompletionBlock: nil)
+        self.rewardLabel.fadeIn(withDuration: Duration.TopicDetailVC.View.rewardFadeInDuration, withCompletionBlock: { success in
+            if success {
+                self.progressView.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: nil)
+                self.rewardImageView.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: nil)
+                self.rewardLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: { success in
+                    if success {
+                        self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                        self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+                        self.hideTopicView()
+                        self.setTitle(title: "优秀答案")
+                    }
+                })
+            }
         })
     }
     
@@ -896,7 +961,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func startRecording() {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(topic.id)-speaking.m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(topic.id)-speaking.wav")
         let fileManager = FileManager.default
         
         if fileManager.fileExists(atPath: audioFilename.path) {
@@ -908,10 +973,10 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         }
         
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: 12000,
             AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVEncoderAudioQualityKey: AVAudioQuality.low.rawValue
         ]
         
         do {
@@ -968,7 +1033,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     self.postButton.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
                     
                     // Prepare for audio player
-                    let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.m4a")
+                    let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.wav")
                     do {
                         self.audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
                     } catch {

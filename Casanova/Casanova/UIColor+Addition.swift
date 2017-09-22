@@ -53,6 +53,10 @@ extension UIColor {
         return UIColor(white: 245.0 / 255.0, alpha: 1.0)
     }
     
+    @nonobjc class var tftSkyBlue: UIColor {
+        return UIColor(red: 84.0 / 255.0, green: 199.0 / 255.0, blue: 252.0 / 255.0, alpha: 1.0)
+    }
+    
     class var shadowColor: UIColor { return tftLightBlueGrey }
     class var brandColor: UIColor { return tftLightblue }
     class var bgdColor: UIColor { return tftPaleGrey }
@@ -61,4 +65,5 @@ extension UIColor {
     class var navTintColor: UIColor { return tftCoolGrey }
     class var errorTextColor: UIColor { return tftPigPink }
     class var cmtBgdColor: UIColor { return tftWhite }
+    class var progressBarColor: UIColor { return tftSkyBlue }
 }

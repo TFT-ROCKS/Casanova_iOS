@@ -412,8 +412,8 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -672,14 +672,18 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         
-        audioControlBar.audioBar.value = 0
-        audioControlBar.audioBar.isEnabled = false
-        audioControlBar.playTimeLabel.text = "00:00"
+//        audioControlBar.audioBar.value = 0
+//        audioControlBar.audioBar.isEnabled = false
+//        audioControlBar.playTimeLabel.text = "00:00"
+//        audioControlBar.audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+//        audioControlBar.isPlaying = false
         
         audioPlayer.stop()
         audioPlayer = nil
         cellInUse = -1
         timer.invalidate()
+        tableView.reloadData()
+        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
