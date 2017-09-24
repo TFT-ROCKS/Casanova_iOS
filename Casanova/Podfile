@@ -9,5 +9,6 @@ target 'Casanova' do
   pod 'Alamofire', '~> 4.4'
   pod 'TagListView', '~> 1.0'
   pod 'AliyunOSSiOS', '~> 2.6.2'
+  pod 'NVActivityIndicatorView'
 
 end

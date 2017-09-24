@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import NVActivityIndicatorView
 
 enum TopicDetailViewMode {
     case record
@@ -29,6 +30,7 @@ class TopicDetailViewController: UIViewController {
     var topic: Topic!
     var answers: [Answer]? {
         didSet {
+            activityIndicatorView.stopAnimating()
             tableView.reloadData()
         }
     }
@@ -49,6 +51,12 @@ class TopicDetailViewController: UIViewController {
     let toolBar: TopicDetailToolBar = TopicDetailToolBar(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     
+    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
+    var needsToShowIndicatorView: Bool {
+        get {
+           return answers == nil || answers!.count == 0
+        }
+    }
     let recordButton: UIButton = UIButton(frame: .zero)
     let speakingImgView: UIImageView = UIImageView(frame: .zero)
     let skipButton: UIButton = UIButton(frame: .zero)
@@ -188,8 +196,6 @@ class TopicDetailViewController: UIViewController {
                 // success
                 self.topic = topic
                 self.answers = topic?.answers
-                // reload table view
-                self.tableView.reloadData()
             }
         })
     }
@@ -349,21 +355,20 @@ extension TopicDetailViewController {
 extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
     
     func configTableView() {
         tableView.separatorStyle = .none
-        
         tableView.backgroundColor = UIColor.bgdColor
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
     }
@@ -380,6 +385,11 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
+        
+        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -833,6 +843,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        if self.needsToShowIndicatorView {
+                            self.activityIndicatorView.startAnimating()
+                        }
                     }
                 }
             }
@@ -924,6 +937,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        if self.needsToShowIndicatorView {
+                            self.activityIndicatorView.startAnimating()
+                        }
                     }
                 })
             }
