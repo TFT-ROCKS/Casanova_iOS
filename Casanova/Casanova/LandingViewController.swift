@@ -35,14 +35,14 @@ class LandingViewController: UIViewController {
             UserManager.shared.signIn(usernameOrEmail: username, password: password, withCompletion: { (error, user) in
                 if error == nil {
                     // Success
+                    // Store current user
+                    Environment.shared.currentUser = user
+                    Environment.shared.prepareForCurrentUser()
                     Utils.runOnMainThread {
                         let avator = UIImage(named: "TFTicons_avator_\((user?.id)! % 8)")
                         self.imageView.stopRotating()
                         self.imageView.image = avator
                         self.label.text = "\((user?.username)!)\n\n   欢迎回来！"
-                        
-                        // Store current user
-                        Environment.shared.currentUser = user
                         // Show home view controller
                         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.showHomeViewController), userInfo: nil, repeats: false)
                     }

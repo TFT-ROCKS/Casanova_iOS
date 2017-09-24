@@ -12,10 +12,13 @@ import AVFoundation
 class AnswerDetailViewController: UIViewController {
     
     // class vars
-    
     var topic: Topic!
     var answer: Answer!
-    var comments: [Comment]!
+    var comments: [Comment]! {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
@@ -405,6 +408,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell)
         tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell)
         tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell)
+        tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser)
         let loadMoreTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.loadMoreTableViewCell, bundle: nil)
         tableView.register(loadMoreTableViewCell, forCellReuseIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell)
     }
@@ -472,12 +476,18 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             return cell
             
         } else { // Comments section
+            let comment = comments[indexPath.row]
+            var cell: CommentTableViewCell? = nil
+            if comment.user.id == Environment.shared.currentUser?.id {
+                // current user's comment
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser, for: indexPath) as? CommentTableViewCell
+                cell?.delegate = self
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell, for: indexPath) as? CommentTableViewCell
+            }
+            cell!.comment = comment
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell, for: indexPath) as! CommentTableViewCell
-            cell.comment = comments[indexPath.row]
-            
-            return cell
-            
+            return cell!
         }
     }
     
@@ -715,6 +725,46 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
             // Un-Hide
         } else {
             
+        }
+    }
+}
+
+// MARK: - CommentTableViewCellDelegate
+extension AnswerDetailViewController: CommentTableViewCellDelegate {
+    func menuButtonTappedOnCommentTableViewCell(_ sender: UIButton) {
+        presentDeleteCommentAlertSheet(commentId: sender.tag)
+    }
+    
+    // Delete comment alert sheet
+    func presentDeleteCommentAlertSheet(commentId: Int) {
+        let alert = UIAlertController(title: "", message: "删除评论", preferredStyle: .actionSheet)
+        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+            CommentManager.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
+                if error == nil {
+                    // delete comment successfully
+                    // remove comment from this answer locally
+                    self.removeComment(commentId)
+                }
+            })
+        })
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // Remove local cached comments
+    func removeComment(_ commentId: Int) {
+        var index: Int? = nil
+        for i in 0..<comments.count {
+            if commentId == comments[i].id {
+                index = i
+            }
+        }
+        if index != nil {
+            comments.remove(at: index!)
         }
     }
 }

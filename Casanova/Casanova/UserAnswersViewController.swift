@@ -12,7 +12,11 @@ import AVFoundation
 class UserAnswersViewController: UIViewController {
     
     // class vars
-    var answers: [Answer] = []
+    var answers: [Answer] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
@@ -52,14 +56,19 @@ class UserAnswersViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = " "
         
         view.backgroundColor = UIColor.bgdColor
+        
+        registerObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchUserAnswers()
+//        fetchUserAnswers()
         setTitle(title: "我的回答")
         tableView.reloadData()
+        if let answers = Environment.shared.answers {
+            self.answers = answers
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +89,12 @@ class UserAnswersViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // Hide the status bar
+        statusBarShouldBeHidden = true
+        UIView.animate(withDuration: 0.25) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     func layoutSubviews() {
@@ -100,15 +115,15 @@ class UserAnswersViewController: UIViewController {
         return .slide
     }
     
-    func fetchUserAnswers() {
-        AnswerManager.shared.fetchUserAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
-            if error == nil {
-                // success
-                self.answers = answers!
-                self.tableView.reloadData()
-            }
-        })
-    }
+//    func fetchUserAnswers() {
+//        AnswerManager.shared.fetchUserAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
+//            if error == nil {
+//                // success
+//                self.answers = answers!
+//                self.tableView.reloadData()
+//            }
+//        })
+//    }
     
     func setTitle(title: String) {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
@@ -477,6 +492,18 @@ extension UserAnswersViewController: UIScrollViewDelegate {
         } else {
             
         }
+    }
+}
+
+// MARK: - Notification
+extension UserAnswersViewController {
+    func registerObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserInfoPrepared(_:)), name: Notifications.userInfoPreparedNotification, object: nil)
+    }
+    
+    // MARK: - Observer Handlers
+    func handleUserInfoPrepared(_ notification: Notification) {
+        self.answers = Environment.shared.answers!
     }
 }
 

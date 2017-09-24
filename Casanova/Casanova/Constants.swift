@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+struct Notifications {
+    static let userInfoPreparedNotification = Notification.Name("UserInfoPrepared")
+}
+
 struct Errors {
     public static let usernameNotValid = "At least provide a username, ok?"
     public static let emailNotValid = "Come on, your email is not valid"
@@ -53,6 +57,7 @@ struct ReuseIDs {
     }
     struct AnswerDetailVC {
         static let commentTableViewCell = "CommentDefaultCell"
+        static let commentTableViewCellForCurrentUser = "CommentTableViewCellForCurrentUser"
     }
     struct ProfileVC {
         static let profileTableViewCell = "ProfileTableViewCell"

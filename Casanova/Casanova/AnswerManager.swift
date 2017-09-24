@@ -92,6 +92,59 @@ class AnswerManager {
         }
     }
     
+    /// Fetch Answers and LikedAnswers of a user
+    /// - parameter user: user
+    /// - parameter block: completion block
+    ///
+    func fetchUserInfo(forUser user: User, withCompletion block: ((ErrorMessage?, [Answer]?, [Answer]?) -> Void)? = nil) {
+        // Create URL
+        let url = urlAnswersService + "\(user.id!)"
+        
+        // Make request
+        Alamofire.request(url, method: .get).responseJSON {
+            response in
+            if let json = response.result.value {
+                //print("JSON: \(json)") // serialized json response
+                if let dict = json as? [String: Any] {
+                    if let answersArr = dict["answers"] as? [Any], let likedAnswersArr = dict["likedAnswers"] as? [Any] {
+                        // success
+                        var answers: [Answer] = []
+                        for answerJSON in answersArr {
+                            if let answerJSON = answerJSON as? [String: Any] {
+                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+                                    answers.append(answer)
+                                }
+                            }
+                        }
+                        var likedAnswers: [Answer] = []
+                        for answerJSON in likedAnswersArr {
+                            if let answerJSON = answerJSON as? [String: Any] {
+                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+                                    likedAnswers.append(answer)
+                                }
+                            }
+                        }
+                        block?(nil, answers, likedAnswers)
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch user info")
+                    block?(errorMessage, nil, nil)
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when trying to fetch fetch user info")
+                block?(errorMessage, nil, nil)
+            }
+        }
+    }
+    
+    /// Post an answer from a user
+    /// - parameter topicId: topic id
+    /// - parameter userId: user id
+    /// - parameter title: title
+    /// - parameter audioUrl: audio url
+    /// - parameter ref: reference
+    /// - parameter block: completion block
+    ///
     func postAnswer(topicId: Int?, userId: Int?, title: String, audioUrl: String, ref: String, withCompletion block: ((ErrorMessage?, Answer?) -> Void)? = nil) {
         guard let topicId = topicId else {
             let msg = "topicId == nil, when post answer"
@@ -149,6 +202,60 @@ class AnswerManager {
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when post answer")
                 block?(errorMessage, nil)
+            }
+        }
+    }
+    
+    func deleteAnswer(topicId: Int?, answerId: Int?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        guard let topicId = topicId else {
+            let msg = "topicId == nil, when delete answer"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage)
+            return
+        }
+        
+        guard let answerId = answerId else {
+            let msg = "answerId == nil, when delete answer"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage)
+            return
+        }
+        
+        let headers: HTTPHeaders = ["Content-Type": "application/json",
+                                    "Accept": "*/*",
+                                    "Referer": "https://tft.rocks/topic/\(topicId)",
+            "X-Requested-With": "XMLHttpRequest",
+            "Connection": "keep-alive"]
+        let params: Parameters = ["requests": ["g0": ["resource": "answersService",
+                                                      "operation": "delete",
+                                                      "params": ["answerId":answerId],
+                                                      "body": [:]]],
+                                  "context": [:]]
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+            response in
+            
+            if let json = response.result.value {
+                //print("JSON: \(json)") // serialized json response
+                if let json = json as? [String: Any] {
+                    if let msg = json["message"] as? String {
+                        // failure
+                        let errorMessage = ErrorMessage(msg: msg)
+                        block?(errorMessage)
+                    } else {
+                        // success
+                        if let json = json["g0"] as? [String: Any] {
+                            if json["data"] != nil {
+                                block?(nil)
+                            }
+                        }
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when delete answer")
+                    block?(errorMessage)
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when delete answer")
+                block?(errorMessage)
             }
         }
     }

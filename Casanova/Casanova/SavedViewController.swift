@@ -12,7 +12,11 @@ import AVFoundation
 class SavedViewController: UIViewController {
     
     // class vars
-    var answers: [Answer] = []
+    var answers: [Answer] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
@@ -44,15 +48,24 @@ class SavedViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = " "
         
         view.backgroundColor = UIColor.bgdColor
+        
+        registerObservers()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchLikedAnswers()
+//        fetchLikedAnswers()
         setTitle(title: "我的收藏")
         setButtons()
         tableView.reloadData()
+        if let answers = Environment.shared.likedAnswers {
+            self.answers = answers
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,15 +106,15 @@ class SavedViewController: UIViewController {
         return .slide
     }
     
-    func fetchLikedAnswers() {
-        AnswerManager.shared.fetchLikedAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
-            if error == nil {
-                // success
-                self.answers = answers!
-                self.tableView.reloadData()
-            }
-        })
-    }
+//    func fetchLikedAnswers() {
+//        AnswerManager.shared.fetchLikedAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
+//            if error == nil {
+//                // success
+//                self.answers = answers!
+//                self.tableView.reloadData()
+//            }
+//        })
+//    }
     
     func setTitle(title: String) {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
@@ -478,3 +491,14 @@ extension SavedViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - Notification
+extension SavedViewController {
+    func registerObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserInfoPrepared(_:)), name: Notifications.userInfoPreparedNotification, object: nil)
+    }
+    
+    // MARK: - Observer Handlers
+    func handleUserInfoPrepared(_ notification: Notification) {
+        self.answers = Environment.shared.likedAnswers!
+    }
+}

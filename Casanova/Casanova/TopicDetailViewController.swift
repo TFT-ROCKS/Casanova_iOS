@@ -410,6 +410,10 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
             }
+            if answer.user.id == Environment.shared.currentUser?.id {
+                cell.canBeDeleted = true
+            }
+            cell.delegate = self
             cell.mode = .short
             cell.answer = answer
             let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -615,9 +619,46 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
 }
 
+// MARK: - AnswerDetailTableViewCellDelegate
+extension TopicDetailViewController: AnswerDetailTableViewCellDelegate {
+    func trashButtonTappedOnAnswerDetailTableViewCell(_ sender: UIButton) {
+        presentDeleteAnswerAlertSheet(answerId: sender.tag)
+    }
+    
+    // Delete comment alert sheet
+    func presentDeleteAnswerAlertSheet(answerId: Int) {
+        let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
+        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+            AnswerManager.shared.deleteAnswer(topicId: self.topic.id, answerId: answerId, withCompletion: { error in
+                self.removeAnswer(answerId)
+                Environment.shared.removeAnswer(answerId)
+            })
+        })
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // Remove local cached answers
+    func removeAnswer(_ answerId: Int) {
+        var index: Int? = nil
+        for i in 0..<answers!.count {
+            if answerId == answers![i].id {
+                index = i
+            }
+        }
+        if index != nil {
+            answers!.remove(at: index!)
+        }
+    }
+}
+
 // MARK: - Record Button and Skip Buttons
 extension TopicDetailViewController: AVAudioRecorderDelegate {
-    
+
     func registerButtons() {
         recordButton.addTarget(self, action: #selector(self.recordButtonClicked(_:)), for: .touchUpInside)
         skipButton.addTarget(self, action: #selector(self.skipButtonClicked(_:)), for: .touchUpInside)
@@ -736,8 +777,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         // reward label
         rewardLabel.translatesAutoresizingMaskIntoConstraints = false
         rewardLabel.textAlignment = .center
-        rewardLabel.text = "Successfully posted! Check it again in \"Profile\""
-        rewardLabel.font = UIFont.mr(size: 17)
+        rewardLabel.text = "发布成功\n请在\"我的主页\"中查看"
+        rewardLabel.font = UIFont.pfl(size: 17)
         rewardLabel.textColor = UIColor.nonBodyTextColor
         rewardLabel.numberOfLines = 0
     }
@@ -905,6 +946,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     if error == nil {
                         // success
                         self.answers?.append(answer!)
+                        Environment.shared.needsPrepareUserInfo()
                         // animation
                         Utils.runOnMainThread {
                             self.animateAfterPostAnswer()

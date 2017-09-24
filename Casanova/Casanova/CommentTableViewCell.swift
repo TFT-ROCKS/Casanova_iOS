@@ -9,7 +9,9 @@
 import UIKit
 import AVFoundation
  
-
+protocol CommentTableViewCellDelegate: class {
+    func menuButtonTappedOnCommentTableViewCell(_ sender: UIButton)
+}
 class CommentTableViewCell: UITableViewCell {
     
     var commenterButton: UIImageView!
@@ -21,6 +23,13 @@ class CommentTableViewCell: UITableViewCell {
 //    var audioSlider: UISlider?
 //    var audioButton: UIButton?
     var commentTitleLabel: UILabel!
+    var menuButton: UIButton?
+    func menuButtonTapped(_ sender: UIButton) {
+        sender.tag = comment!.id
+        delegate?.menuButtonTappedOnCommentTableViewCell(sender)
+    }
+    
+    weak var delegate: CommentTableViewCellDelegate?
     
     var comment: Comment! {
         didSet {
@@ -108,6 +117,16 @@ class CommentTableViewCell: UITableViewCell {
         commentTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         commentTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29).isActive = true
         
+        // menuButton constraint
+        if reuseIdentifier! == ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser {
+            menuButton = UIButton(frame: .zero)
+            contentView.addSubview(menuButton!)
+            menuButton!.translatesAutoresizingMaskIntoConstraints = false
+            menuButton!.widthAnchor.constraint(equalToConstant: 25).isActive = true
+            menuButton!.heightAnchor.constraint(equalToConstant: 25).isActive = true
+            menuButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+            menuButton!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+        }
 //        // audioTimeLabel constraints
 //        audioTimeLabel!.widthAnchor.constraint(equalToConstant: 34).isActive = true
 //        audioTimeLabel!.heightAnchor.constraint(equalToConstant: 14).isActive = true
@@ -148,6 +167,10 @@ class CommentTableViewCell: UITableViewCell {
         commenterButton.layer.masksToBounds = true
         commenterButton.layer.borderColor = UIColor.clear.cgColor
         commenterButton.layer.borderWidth = 0
+        
+        menuButton?.imageView?.contentMode = .scaleAspectFit
+        menuButton?.setImage(#imageLiteral(resourceName: "menu"), for: .normal)
+        menuButton?.addTarget(self, action: #selector(self.menuButtonTapped(_:)), for: .touchUpInside)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -8,12 +8,14 @@
 
 import UIKit
 import TagListView
+import NVActivityIndicatorView
 
 class HomeViewController: UIViewController {
     
     // Sub views
     @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var filterListView: TagListView!
+    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .audioEqualizer, color: .brandColor)
     
     // Constraints
     @IBOutlet weak var homeTableViewBottomConstraint: NSLayoutConstraint!
@@ -42,6 +44,7 @@ class HomeViewController: UIViewController {
             homeTableView.reloadData()
         }
     }
+    var isFetching: Bool = false
     
     // Subviews
     var filterView: FilterView?
@@ -83,6 +86,15 @@ class HomeViewController: UIViewController {
         homeTableView.backgroundColor = UIColor.bgdColor
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
+        
+        // Activity Indicator View
+        view.addSubview(activityIndicatorView)
+        view.bringSubview(toFront: activityIndicatorView)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         // Register customized cells
         let topicBriefTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.topicBriefTableViewCell, bundle: nil)
@@ -126,9 +138,22 @@ class HomeViewController: UIViewController {
         searchBox.resignFirstResponder()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if isFetching {
+            activityIndicatorView.startAnimating()
+        }
+    }
+    
     func fetchTopics(from: Int) {
+        isFetching = true
+        // Start activity indicator animation
+        activityIndicatorView.startAnimating()
         // Fetch topics
         TopicManager.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
+            self.isFetching = false
+            self.activityIndicatorView.stopAnimating()
             if error == nil {
                 // success
                 if self.updateFlag {

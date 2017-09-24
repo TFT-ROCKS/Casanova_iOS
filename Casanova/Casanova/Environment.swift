@@ -12,6 +12,24 @@ class Environment {
     static let shared = Environment()
     
     var currentUser: User?
+    var answers: [Answer]?
+    func removeAnswer(_ answerId: Int) {
+        var index: Int? = nil
+        for i in 0..<answers!.count {
+            if answerId == answers![i].id {
+                index = i
+            }
+        }
+        if index != nil {
+            answers!.remove(at: index!)
+        }
+    }
+    
+    func needsPrepareUserInfo() {
+        prepareForCurrentUser()
+    }
+    
+    var likedAnswers: [Answer]?
     
     let userDefault = UserDefaults.standard
     
@@ -33,5 +51,20 @@ class Environment {
         info["password"] = password
         
         return info
+    }
+    
+    func prepareForCurrentUser() {
+        guard let user = currentUser else {
+            return
+        }
+        AnswerManager.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
+            self.answers = answers
+            self.likedAnswers = likedAnswers
+            self.postUserInfoPreparedNotification()
+        })
+    }
+    
+    func postUserInfoPreparedNotification() {
+        NotificationCenter.default.post(name: Notifications.userInfoPreparedNotification, object: nil, userInfo: nil)
     }
 }

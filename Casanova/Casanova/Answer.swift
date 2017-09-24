@@ -163,4 +163,16 @@ class Answer {
             likes.remove(at: index!)
         }
     }
+    
+    func removeComment(withId commentId: Int) {
+        var index: Int? = nil
+        for i in 0..<comments.count {
+            if commentId == comments[i].id {
+                index = i
+            }
+        }
+        if index != nil {
+            comments.remove(at: index!)
+        }
+    }
 }

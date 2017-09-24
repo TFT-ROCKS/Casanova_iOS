@@ -8,7 +8,10 @@
 
 import UIKit
 import AVFoundation
- 
+
+protocol AnswerDetailTableViewCellDelegate: class {
+    func trashButtonTappedOnAnswerDetailTableViewCell(_ sender: UIButton)
+}
 
 enum AnswerMode {
     case short
@@ -26,9 +29,17 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var commentCountLabel: UILabel!
     var audioButton: UIButton?
     var answerTitleLabel: UILabel!
+    var trashButton: UIButton!
+    func trashButtonTapped(_ sender: UIButton) {
+        sender.tag = answer.id
+        delegate.trashButtonTappedOnAnswerDetailTableViewCell(sender)
+    }
     
     var mode: AnswerMode!
     var isLikedCard: Bool = false
+    var canBeDeleted: Bool = false
+    
+    weak var delegate: AnswerDetailTableViewCellDelegate!
     
     var answer: Answer! {
         didSet {
@@ -55,6 +66,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         commentCountLabel = UILabel(frame: .zero)
         commentButton = UIButton(frame: .zero)
         answerTitleLabel = UILabel(frame: .zero)
+        trashButton = UIButton(frame: .zero)
         
         contentView.addSubview(answererButton)
         contentView.addSubview(answererNameLabel)
@@ -64,6 +76,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         contentView.addSubview(commentCountLabel)
         contentView.addSubview(commentButton)
         contentView.addSubview(answerTitleLabel)
+        contentView.addSubview(trashButton)
         
         answererButton.translatesAutoresizingMaskIntoConstraints = false
         answererNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +86,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         commentCountLabel.translatesAutoresizingMaskIntoConstraints = false
         commentButton.translatesAutoresizingMaskIntoConstraints = false
         answerTitleLabel?.translatesAutoresizingMaskIntoConstraints = false
+        trashButton.translatesAutoresizingMaskIntoConstraints = false
         
         // MARK: - Constraints
         
@@ -117,6 +131,12 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         commentButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
         commentButton.trailingAnchor.constraint(equalTo: commentCountLabel.leadingAnchor, constant: -8).isActive = true
         commentButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
+        
+        // trashButton constraints
+        trashButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        trashButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        trashButton.trailingAnchor.constraint(equalTo: commentButton.leadingAnchor, constant: -12).isActive = true
+        trashButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         if reuseIdentifier! != ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell {
             audioButton = UIButton(frame: .zero)
@@ -165,6 +185,9 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answererButton.layer.borderColor = UIColor.clear.cgColor
         answererButton.layer.borderWidth = 0
         
+        trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
+        trashButton.addTarget(self, action: #selector(self.trashButtonTapped(_:)), for: .touchUpInside)
+        
         contentView.backgroundColor = UIColor.white
     }
     
@@ -200,15 +223,11 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         if isLikedCard {
             bottomConstraint.constant = -10
         }
-    }
-}
-
-extension AnswerDetailTableViewCell: UIWebViewDelegate {
-    func webViewDidFinishLoad(_ webView: UIWebView) {
         
-    }
-    
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        
+        if canBeDeleted {
+            trashButton.isHidden = false
+        } else {
+            trashButton.isHidden = true
+        }
     }
 }

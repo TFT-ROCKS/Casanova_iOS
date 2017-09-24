@@ -69,5 +69,69 @@ class CommentManager {
             }
         }
     }
+    
+    func deleteComment(answerId: Int?, commentId: Int?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        guard let answerId = answerId else {
+            let msg = "answerId == nil, when delete comment"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage)
+            return
+        }
+        
+        guard let commentId = commentId else {
+            let msg = "commentId == nil, when delete comment"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage)
+            return
+        }
+        // TODO: need to fix the referer using topicId
+        let headers: HTTPHeaders = ["Content-Type": "application/json",
+                                    "Accept": "*/*",
+                                    "Referer": "https://tft.rocks/topic/\(answerId)",
+            "X-Requested-With": "XMLHttpRequest",
+            "Connection": "keep-alive"]
+        let params: Parameters = ["requests": ["g0": ["resource": "commentService",
+                                                      "operation": "create",
+                                                      "params": ["id":commentId,
+                                                                 "action":"delete"],
+                                                      "body": [:]]],
+                                  "context": [:]]
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+            response in
+            
+            if let json = response.result.value {
+                //print("JSON: \(json)") // serialized json response
+                if let json = json as? [String: Any] {
+                    if let msg = json["message"] as? String {
+                        // failure
+                        let errorMessage = ErrorMessage(msg: msg)
+                        block?(errorMessage)
+                    } else {
+                        // success
+                        if let json = json["g0"] as? [String: Any] {
+                            if let dict = json["data"] as? [String: Any] {
+                                if let flag = dict["deletedComment"] as? Bool {
+                                    if flag == true {
+                                        block?(nil)
+                                    }
+                                    else {
+                                        let msg = "delete comment failed, server error"
+                                        let errorMessage = ErrorMessage(msg: msg)
+                                        block?(errorMessage)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when delete comment")
+                    block?(errorMessage)
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when delete comment")
+                block?(errorMessage)
+            }
+        }
+    }
 }
 
