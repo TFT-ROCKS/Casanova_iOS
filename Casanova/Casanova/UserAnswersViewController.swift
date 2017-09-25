@@ -138,6 +138,32 @@ class UserAnswersViewController: UIViewController {
     
 }
 
+// MARK: - trashButtonTapped
+extension UserAnswersViewController {
+    func trashButtonTappedOnAnswerDetailTableViewCell(_ sender: UIButton) {
+        presentDeleteAnswerAlertSheet(answerIdx: sender.tag)
+    }
+    
+    // Delete answer alert sheet
+    func presentDeleteAnswerAlertSheet(answerIdx: Int) {
+        let answerId = answers[answerIdx].id
+        let topicId = answers[answerIdx].topic?.id
+        let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
+        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+            AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
+                self.answers.remove(at: answerIdx)
+                Environment.shared.removeAnswer(answerId)
+            })
+        })
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        
+        present(alert, animated: true, completion: nil)
+    }
+}
+
 // MARK: - Audio Control Bar
 extension UserAnswersViewController: AudioControlViewDelegate {
     func layoutAudioControlBar() {
@@ -248,6 +274,11 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
+            }
+            if answer.user.id == Environment.shared.currentUser?.id {
+                cell.canBeDeleted = true
+                cell.trashButton.tag = indexPath.section
+                cell.trashButton.addTarget(self, action: #selector(self.trashButtonTappedOnAnswerDetailTableViewCell(_:)), for: .touchUpInside)
             }
             cell.isLikedCard = true
             cell.mode = .short
@@ -455,14 +486,11 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func updateTime(_ timer: Timer) {
-        
         audioControlBar.audioBar.value = Float(audioPlayer.currentTime)
         audioControlBar.playTimeLabel.text = TimeManager.shared.timeString(time: audioPlayer.currentTime)
-        
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
         audioControlBar.audioBar.value = 0
         audioControlBar.audioBar.isEnabled = false
         audioControlBar.playTimeLabel.text = "00:00"

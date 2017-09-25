@@ -735,7 +735,7 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
         presentDeleteCommentAlertSheet(commentId: sender.tag)
     }
     
-    // Delete comment alert sheet
+    // Delete answer alert sheet
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alert = UIAlertController(title: "", message: "删除评论", preferredStyle: .actionSheet)
         let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in

@@ -9,10 +9,6 @@
 import UIKit
 import AVFoundation
 
-protocol AnswerDetailTableViewCellDelegate: class {
-    func trashButtonTappedOnAnswerDetailTableViewCell(_ sender: UIButton)
-}
-
 enum AnswerMode {
     case short
     case full
@@ -30,16 +26,10 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var audioButton: UIButton?
     var answerTitleLabel: UILabel!
     var trashButton: UIButton!
-    func trashButtonTapped(_ sender: UIButton) {
-        sender.tag = answer.id
-        delegate.trashButtonTappedOnAnswerDetailTableViewCell(sender)
-    }
     
     var mode: AnswerMode!
     var isLikedCard: Bool = false
     var canBeDeleted: Bool = false
-    
-    weak var delegate: AnswerDetailTableViewCellDelegate!
     
     var answer: Answer! {
         didSet {
@@ -186,7 +176,6 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answererButton.layer.borderWidth = 0
         
         trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
-        trashButton.addTarget(self, action: #selector(self.trashButtonTapped(_:)), for: .touchUpInside)
         
         contentView.backgroundColor = UIColor.white
     }

@@ -122,8 +122,8 @@ class CommentTableViewCell: UITableViewCell {
             menuButton = UIButton(frame: .zero)
             contentView.addSubview(menuButton!)
             menuButton!.translatesAutoresizingMaskIntoConstraints = false
-            menuButton!.widthAnchor.constraint(equalToConstant: 25).isActive = true
-            menuButton!.heightAnchor.constraint(equalToConstant: 25).isActive = true
+            menuButton!.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            menuButton!.heightAnchor.constraint(equalToConstant: 24).isActive = true
             menuButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
             menuButton!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
         }

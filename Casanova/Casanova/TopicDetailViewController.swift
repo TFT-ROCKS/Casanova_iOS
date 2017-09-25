@@ -412,8 +412,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             }
             if answer.user.id == Environment.shared.currentUser?.id {
                 cell.canBeDeleted = true
+                cell.trashButton.tag = indexPath.row
+                cell.trashButton.addTarget(self, action: #selector(self.trashButtonTappedOnAnswerDetailTableViewCell(_:)), for: .touchUpInside)
             }
-            cell.delegate = self
             cell.mode = .short
             cell.answer = answer
             let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -620,17 +621,19 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
 }
 
 // MARK: - AnswerDetailTableViewCellDelegate
-extension TopicDetailViewController: AnswerDetailTableViewCellDelegate {
+extension TopicDetailViewController {
     func trashButtonTappedOnAnswerDetailTableViewCell(_ sender: UIButton) {
-        presentDeleteAnswerAlertSheet(answerId: sender.tag)
+        presentDeleteAnswerAlertSheet(answerIdx: sender.tag)
     }
     
     // Delete comment alert sheet
-    func presentDeleteAnswerAlertSheet(answerId: Int) {
+    func presentDeleteAnswerAlertSheet(answerIdx: Int) {
+        let answerId = answers![answerIdx].id
+        let topicId = topic.id
         let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
         let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
-            AnswerManager.shared.deleteAnswer(topicId: self.topic.id, answerId: answerId, withCompletion: { error in
-                self.removeAnswer(answerId)
+            AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
+                self.answers!.remove(at: answerIdx)
                 Environment.shared.removeAnswer(answerId)
             })
         })
@@ -640,19 +643,6 @@ extension TopicDetailViewController: AnswerDetailTableViewCellDelegate {
         alert.addAction(cancel)
         
         present(alert, animated: true, completion: nil)
-    }
-    
-    // Remove local cached answers
-    func removeAnswer(_ answerId: Int) {
-        var index: Int? = nil
-        for i in 0..<answers!.count {
-            if answerId == answers![i].id {
-                index = i
-            }
-        }
-        if index != nil {
-            answers!.remove(at: index!)
-        }
     }
 }
 
