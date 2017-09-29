@@ -69,6 +69,9 @@
 		80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */; };
 		80B313A71F1B35B4001CFDC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139F1F1B35B4001CFDC7 /* User.swift */; };
 		80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313A81F1B4DE8001CFDC7 /* UserManager.swift */; };
+		80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B5B3141F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift */; };
+		80B5B3171F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B5B3151F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib */; };
+		80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */; };
 		80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */; };
 		80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */; };
 		80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */; };
@@ -154,6 +157,9 @@
 		80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicTag.swift; sourceTree = "<group>"; };
 		80B3139F1F1B35B4001CFDC7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		80B313A81F1B4DE8001CFDC7 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		80B5B3141F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		80B5B3151F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
+		80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerBriefTableViewCell.swift; sourceTree = "<group>"; };
 		80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerBriefTableViewCell.xib; sourceTree = "<group>"; };
 		80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 				800FEFEC1F2571B300DF5531 /* LoadMoreTableViewCell */,
 				800FEFE71F2567E100DF5531 /* HomeTableViewCell */,
 				8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */,
+				80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */,
 				80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */,
 			);
 			name = Views;
@@ -277,6 +284,7 @@
 				805EC88C1F41896B005197DF /* MyTabBarController.swift */,
 				805EC8901F418A16005197DF /* ActivitiesViewController.swift */,
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
+				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -398,6 +406,15 @@
 				80826CF31F62466500956E03 /* AudioControlView.xib */,
 			);
 			name = AudioControlView;
+			sourceTree = "<group>";
+		};
+		80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				80B5B3141F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift */,
+				80B5B3151F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib */,
+			);
+			name = ProfileSettingsTableViewCell;
 			sourceTree = "<group>";
 		};
 		80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */ = {
@@ -535,6 +552,7 @@
 				8055791C1F70DC94002942A2 /* SeparatorLineTableViewCell.xib in Resources */,
 				804D91D41F37D35100CA6FBE /* FilterTableViewCell.xib in Resources */,
 				800FEFEB1F25691400DF5531 /* LoadMoreTableViewCell.xib in Resources */,
+				80B5B3171F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib in Resources */,
 				80826D011F651F5900956E03 /* PingFang Light.ttf in Resources */,
 				80826D021F651F5900956E03 /* PingFang SC Regular.ttf in Resources */,
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
@@ -661,9 +679,11 @@
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
+				80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */,
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
+				80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,
 				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,

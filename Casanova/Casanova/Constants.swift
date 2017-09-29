@@ -30,6 +30,13 @@ struct Tags {
     struct SavedVC {
         
     }
+    struct ProfileVC {
+        struct SettingsVC {
+            static let usernameTableViewCellTag = 10
+            static let firstnameTableViewCellTag = 11
+            static let lastnameTableViewCellTag = 12
+        }
+    }
 }
 
 struct ReuseIDs {
@@ -61,6 +68,7 @@ struct ReuseIDs {
     }
     struct ProfileVC {
         static let profileTableViewCell = "ProfileTableViewCell"
+        static let settingsTableViewCell = "ProfileSettingsTableViewCell"
     }
 }
 

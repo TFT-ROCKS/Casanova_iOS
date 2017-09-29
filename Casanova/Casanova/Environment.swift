@@ -38,6 +38,10 @@ class Environment {
         userDefault.set(password, forKey: "password")
     }
     
+    func updateUserNameToDevice(username: String) {
+        userDefault.set(username, forKey: "username")
+    }
+    
     func resetLoginInfoOnDevice() {
         userDefault.set(nil, forKey: "username")
         userDefault.set(nil, forKey: "password")

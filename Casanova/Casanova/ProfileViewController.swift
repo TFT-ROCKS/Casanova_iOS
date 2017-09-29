@@ -202,6 +202,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             default:
                 break
             }
+        case 1:
+            switch indexPath.row {
+            case 0:
+                // Settings
+                let vc = SettingsViewController()
+                navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
         case 2:
             switch indexPath.row {
             case 0:

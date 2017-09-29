@@ -164,4 +164,50 @@ class UserManager {
             }
         }
     }
+    
+    func update(userId: Int, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
+        
+        let headers: HTTPHeaders = ["Content-Type": "application/json",
+                                    "Accept": "*/*",
+                                    "Referer": "https://tft.rocks/profile/\(userId)",
+                                    "X-Requested-With": "XMLHttpRequest",
+                                    "Connection": "keep-alive"]
+        let params: Parameters = ["requests": ["g0": ["resource": "userService",
+                                                      "operation": "update",
+                                                      "params": ["key":"editprofile"],
+                                                      "body": ["id": userId,
+                                                               "username": username,
+                                                               "firstname": firstname,
+                                                               "lastname": lastname]]],
+                                  "context": [:]]
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+            response in
+            
+            if let json = response.result.value {
+                //print("JSON: \(json)") // serialized json response
+                if let json = json as? [String: Any] {
+                    if let msg = json["message"] as? String {
+                        // failure
+                        let errorMessage = ErrorMessage(msg: msg)
+                        block?(errorMessage, nil)
+                    } else {
+                        // success
+                        if let dict = json["g0"] as? [String: Any] {
+                            if let dict = dict["data"] as? [String: Any] {
+                                if let user = User(fromJSON: dict) {
+                                    block?(nil, user)
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when edit user profile")
+                    block?(errorMessage, nil)
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when edit user profile")
+                block?(errorMessage, nil)
+            }
+        }
+    }
 }
