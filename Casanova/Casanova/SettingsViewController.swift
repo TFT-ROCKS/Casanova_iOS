@@ -28,6 +28,10 @@ class SettingsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -56,6 +56,10 @@ class TopicHeaderView: UIView {
         difficultyLabel.font = UIFont.mr(size: 14)
         numOfAnswersLabel.font = UIFont.mr(size: 14)
         numOfStarsLabel.font = UIFont.mr(size: 14)
+        
+        // hide for now
+        starButton.isHidden = true
+        numOfStarsLabel.isHidden = true
     }
     
     func updateUI() {

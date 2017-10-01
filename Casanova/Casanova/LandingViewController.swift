@@ -58,6 +58,7 @@ class LandingViewController: UIViewController {
     func showSignInViewController() {
         let signInVC = storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
         let navigationController = UINavigationController(rootViewController: signInVC)
+        navigationController.view.backgroundColor = UIColor.bgdColor
         navigationController.modalTransitionStyle = .crossDissolve
         present(navigationController, animated: true, completion: nil)
     }
@@ -65,6 +66,7 @@ class LandingViewController: UIViewController {
     func showHomeViewController() {
         let tc = storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
         let navigationController = UINavigationController(rootViewController: tc)
+        navigationController.view.backgroundColor = UIColor.bgdColor
         navigationController.modalTransitionStyle = .crossDissolve
         present(navigationController, animated: true, completion: nil)
     }

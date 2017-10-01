@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostTextViewDelegate: class {
     func reloadTableView()
+    func toggleButtonTapped(_ sender: UIButton)
 }
 
 class PostTextView: UIView {
@@ -23,7 +24,7 @@ class PostTextView: UIView {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             textView.text = ""
             placeholderLabel.isHidden = false
-            placeholderLabel.text = "Say something before post"
+            placeholderLabel.text = "你啥也没说呢"
             return
         }
         // post comment
@@ -35,7 +36,7 @@ class PostTextView: UIView {
                 
                 // remove text
                 self.textView.text = ""
-                self.placeholderLabel.text = "Comment this answer"
+                self.placeholderLabel.text = "评论这个答案"
                 self.placeholderLabel.isHidden = false
                 self.textView.resignFirstResponder()
                 self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
@@ -44,9 +45,22 @@ class PostTextView: UIView {
         })
     }
     @IBOutlet weak var placeholderLabel: UILabel!
+    @IBOutlet weak var toggleButton: UIButton!
+    @IBAction func toggleButtonTapped(_ sender: UIButton) {
+        // function
+        delegate.toggleButtonTapped(sender)
+        // switch image
+        isExpanded = !isExpanded
+        if isExpanded {
+            toggleButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
+        } else {
+            toggleButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
+        }
+    }
     
     weak var answer: Answer!
     weak var delegate: PostTextViewDelegate!
+    var isExpanded: Bool = false
     
     override init(frame: CGRect) { // For using custom view in code
         super.init(frame: frame)
@@ -65,19 +79,19 @@ class PostTextView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         textView.backgroundColor = UIColor.cmtBgdColor
-        textView.font = UIFont.mr(size: 16)
+        textView.font = UIFont.pfr(size: 16)
         textView.textColor = UIColor.nonBodyTextColor
         textView.delegate = self
         
-        placeholderLabel.text = "Comment this answer"
+        placeholderLabel.text = "评论这个答案"
         placeholderLabel.textColor = UIColor.tftCoolGrey
-        placeholderLabel.font = UIFont.mr(size: 16)
+        placeholderLabel.font = UIFont.pfl(size: 16)
         
         postButton.layer.borderColor = UIColor.brandColor.cgColor
         postButton.layer.borderWidth = 1
         postButton.layer.cornerRadius = 3
         postButton.layer.masksToBounds = true
-        postButton.setAttributedTitle(AttrString.titleAttrString("POST", textColor: UIColor.brandColor), for: .normal)
+        postButton.setAttributedTitle(AttrString.titleAttrString("发布", textColor: UIColor.brandColor), for: .normal)
     }
 }
 

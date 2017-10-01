@@ -76,6 +76,10 @@ class TopicBriefTableViewCell: UITableViewCell {
         difficultyLabel.font = UIFont.mr(size: 14)
         numOfAnswersLabel.font = UIFont.mr(size: 14)
         numOfStarsLabel.font = UIFont.mr(size: 14)
+        
+        // hide for now
+        starButton.isHidden = true
+        numOfStarsLabel.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

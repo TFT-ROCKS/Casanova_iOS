@@ -22,7 +22,7 @@ class TopicDetailViewController: UIViewController {
     }
     var firstTimeThisTopic: Bool! {
         get {
-            return !(Environment.shared.answers?.containsTopic(topic.id))!
+            return !((Environment.shared.answers?.containsTopic(topic.id)) ?? false)
         }
     }
     var cellInUse = -1
@@ -32,9 +32,6 @@ class TopicDetailViewController: UIViewController {
     // audio task
     var isDownloading: Bool = false
     var downloadTask: URLSessionDownloadTask!
-    
-    // status bar
-    var statusBarShouldBeHidden = false
     
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
@@ -138,12 +135,6 @@ class TopicDetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Hide the status bar
-        statusBarShouldBeHidden = true
-        UIView.animate(withDuration: 0.25) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-        
         if !firstTimeThisTopic && needsToShowIndicatorView {
             activityIndicatorView.startAnimating()
         }
@@ -166,11 +157,7 @@ class TopicDetailViewController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return statusBarShouldBeHidden
-    }
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        return true
     }
     
     func fetchTopicDetail() {
@@ -913,10 +900,14 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func playButtonClicked() {
+        // reset player
+        timer.invalidate()
+        
         seconds = Int(audioPlayer.duration)
         audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForPlayer), userInfo: nil, repeats: true)
         audioPlayer.play()
+        audioPlayer.currentTime = 0
     }
     
     func deleteButtonClicked() {

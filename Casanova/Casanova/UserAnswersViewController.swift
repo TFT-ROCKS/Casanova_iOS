@@ -26,9 +26,6 @@ class UserAnswersViewController: UIViewController {
     var isDownloading: Bool = false
     var downloadTask: URLSessionDownloadTask!
     
-    // status bar
-    var statusBarShouldBeHidden = false
-    
     // sub views
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
@@ -95,12 +92,6 @@ class UserAnswersViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Hide the status bar
-        statusBarShouldBeHidden = true
-        UIView.animate(withDuration: 0.25) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
     }
     
     func layoutSubviews() {
@@ -114,11 +105,7 @@ class UserAnswersViewController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return statusBarShouldBeHidden
-    }
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        return true
     }
     
 //    func fetchUserAnswers() {

@@ -28,9 +28,6 @@ class AnswerDetailViewController: UIViewController {
     // audio downloading flag
     var isDownloading: Bool = false
     
-    // status bar
-    var statusBarShouldBeHidden = false
-    
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
@@ -41,6 +38,8 @@ class AnswerDetailViewController: UIViewController {
     
     // bottom constraint
     var bottomConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint!
+    var topConstraint: NSLayoutConstraint!
     
     var timer: Timer!
     var seconds: Int = 60
@@ -97,20 +96,10 @@ class AnswerDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Hide the status bar
-        statusBarShouldBeHidden = true
-        UIView.animate(withDuration: 0.25) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
     }
     
     override var prefersStatusBarHidden: Bool {
-        return statusBarShouldBeHidden
-    }
-    
-    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        return true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -339,6 +328,12 @@ extension AnswerDetailViewController: PostTextViewDelegate {
         
         NSLayoutConstraint(item: postTextView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
         
+        heightConstraint = NSLayoutConstraint(item: postTextView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 115)
+        heightConstraint.isActive = true
+        
+        topConstraint = NSLayoutConstraint(item: postTextView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1.0, constant: 0.0)
+        topConstraint.isActive = false
+        
         bottomConstraint = NSLayoutConstraint(item: postTextView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant:0.0)
         bottomConstraint.isActive = true
     }
@@ -372,6 +367,23 @@ extension AnswerDetailViewController: PostTextViewDelegate {
         comments = answer.comments
         tableView.reloadData()
         tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
+    }
+    
+    func toggleButtonTapped(_ sender: UIButton) {
+        if postTextView.isExpanded {
+            // collapse
+            topConstraint.isActive = false
+            heightConstraint.isActive = true
+        } else {
+            // expand
+            topConstraint.isActive = true
+            heightConstraint.isActive = false
+        }
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.0,
+                       options: .curveLinear,
+                       animations: { self.view.layoutIfNeeded() },
+                       completion: nil)
     }
 }
 
