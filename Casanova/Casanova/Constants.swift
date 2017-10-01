@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 struct Notifications {
-    static let userInfoPreparedNotification = Notification.Name("UserInfoPrepared")
+    static let userInfoPreparedNotification = Notification.Name("UserInfoPreparedNotification")
+    static let userProfileUpdatedNotification = Notification.Name("UserProfileUpdatedNotification")
+    static let userInfoUpdatedNotification = Notification.Name("UserInfoUpdatedNotification")
 }
 
 struct Errors {

@@ -10,28 +10,19 @@ import UIKit
 import AVFoundation
 import NVActivityIndicatorView
 
-enum TopicDetailViewMode {
-    case record
-    case reward
-}
-
 class TopicDetailViewController: UIViewController {
     
     // class vars
-    var mode: TopicDetailViewMode {
-        didSet {
-            if mode == .record {
-                tableView.isScrollEnabled = false
-            } else {
-                tableView.isScrollEnabled = true
-            }
-        }
-    }
     var topic: Topic!
     var answers: [Answer]? {
         didSet {
             activityIndicatorView.stopAnimating()
             tableView.reloadData()
+        }
+    }
+    var firstTimeThisTopic: Bool! {
+        get {
+            return !(Environment.shared.answers?.containsTopic(topic.id))!
         }
     }
     var cellInUse = -1
@@ -54,7 +45,7 @@ class TopicDetailViewController: UIViewController {
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     var needsToShowIndicatorView: Bool {
         get {
-           return answers == nil || answers!.count == 0
+            return answers == nil || answers!.count == 0
         }
     }
     let recordButton: UIButton = UIButton(frame: .zero)
@@ -85,11 +76,11 @@ class TopicDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withTopic topic: Topic, withMode mode: TopicDetailViewMode) {
-        self.topic = topic
-        self.mode = mode
-        
+    init(withTopic topic: Topic) {
         super.init(nibName: nil, bundle: nil)
+        
+        self.topic = topic
+        recordingSession = AVAudioSession.sharedInstance()
     }
     
     override func viewDidLoad() {
@@ -97,39 +88,25 @@ class TopicDetailViewController: UIViewController {
         layoutSubviews()
         addConstraints()
         fetchTopicDetail()
-        setTitle(title: "问题")
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
         
-        if mode == .record {
-            tableView.isHidden = true
-        }
-        
         view.backgroundColor = UIColor.bgdColor
         
-        recordingSession = AVAudioSession.sharedInstance()
-        
-        // record setup
-        if mode == .record {
-            do {
-                try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-                try recordingSession.setActive(true)
-                recordingSession.requestRecordPermission() { [unowned self] allowed in
-                    DispatchQueue.main.async {
-                        if allowed {
-                            self.layoutRecordViews()
-                            self.addRecordConstraints()
-                        } else {
-                            // failed to record!
-                        }
-                    }
-                }
-            } catch {
-                // failed to record!
-            }
+        setup()
+    }
+    
+    func setup() {
+        if firstTimeThisTopic {
+            tableView.isHidden = true
+            toolBar.isHidden = true
+            setTitle(title: "问题")
+        } else {
+            topicView.isHidden = true
+            setTitle(title: "优秀答案")
         }
     }
     
@@ -166,6 +143,10 @@ class TopicDetailViewController: UIViewController {
         UIView.animate(withDuration: 0.25) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        
+        if !firstTimeThisTopic && needsToShowIndicatorView {
+            activityIndicatorView.startAnimating()
+        }
     }
     
     func layoutSubviews() {
@@ -173,6 +154,7 @@ class TopicDetailViewController: UIViewController {
         layoutToolBar()
         layoutAudioControlBar()
         layoutTopicView()
+        layoutRecordViews()
     }
     
     func addConstraints() {
@@ -180,6 +162,7 @@ class TopicDetailViewController: UIViewController {
         addTableViewConstraints()
         addToolBarConstraints()
         addAudioControlBarConstraints()
+        addRecordConstraints()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -223,7 +206,6 @@ extension TopicDetailViewController: TopicDetailToolBarDelegate {
     
     func configToolBar() {
         toolBar.delegate = self
-        toolBar.isHidden = true
     }
     
     func addToolBarConstraints() {
@@ -261,6 +243,7 @@ extension TopicDetailViewController: TopicDetailToolBarDelegate {
         tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         toolBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         initRecordViews()
+        setTitle(title: "问题")
     }
 }
 
@@ -486,6 +469,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     answer?.removeLike(withId: likeId!)
+                    Environment.shared.likedAnswers?.removeAnswer((answer?.id)!)
                     self.tableView.reloadData()
                 }
             })
@@ -496,6 +480,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
                     if let answers = self.answers {
                         let answer = answers[sender.tag]
                         answer.likes.append(like!)
+                        Environment.shared.needsUpdateUserInfoFromServer = true
                         self.tableView.reloadData()
                     }
                 }
@@ -648,7 +633,7 @@ extension TopicDetailViewController {
 
 // MARK: - Record Button and Skip Buttons
 extension TopicDetailViewController: AVAudioRecorderDelegate {
-
+    
     func registerButtons() {
         recordButton.addTarget(self, action: #selector(self.recordButtonClicked(_:)), for: .touchUpInside)
         skipButton.addTarget(self, action: #selector(self.skipButtonClicked(_:)), for: .touchUpInside)
@@ -677,7 +662,11 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.bringSubview(toFront: rewardImageView)
         
         configRecordViews()
-        initRecordViews()
+        if firstTimeThisTopic {
+            initRecordViews()
+        } else {
+            hideRecordViews()
+        }
         registerButtons()
     }
     
@@ -851,12 +840,52 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         }
     }
     
+    func hideRecordViews() {
+        recordButton.isHidden = true
+        skipButton.isHidden = true
+        clockIcon.isHidden = true
+        timeLabel.isHidden = true
+        audioBarButton.isHidden = true
+        progressView.isHidden = true
+        postButton.isHidden = true
+        rewardLabel.isHidden = true
+        rewardImageView.isHidden = true
+    }
+    
     func recordButtonClicked(_ sender: UIButton) {
         if audioRecorder == nil {
-            startRecording()
+            do {
+                try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                try recordingSession.setActive(true)
+                recordingSession.requestRecordPermission() { [unowned self] allowed in
+                    DispatchQueue.main.async {
+                        if allowed {
+                            self.startRecording()
+                        } else {
+                            // failed to record!
+                            self.handleMicNotEnabled()
+                        }
+                    }
+                }
+            } catch {
+                // failed to record!
+            }
         } else {
             finishRecording(success: true)
         }
+    }
+    
+    func handleMicNotEnabled() {
+        let alertVC = UIAlertController(title: "TFT无法获取麦克风权限", message: "请在隐私中打开麦克风允许", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "打开隐私设置", style: .default) { value in
+            let path = UIApplicationOpenSettingsURLString
+            if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.openURL(settingsURL)
+            }
+        })
+        alertVC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        
+        present(alertVC, animated: true, completion: nil)
     }
     
     func skipButtonClicked(_ sender: UIButton) {
@@ -931,8 +960,14 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         }, withCompletionBlock: { (error, url) in
             if error == nil {
                 print("upload audio success")
+                Utils.runOnMainThread {
+                    self.activityIndicatorView.startAnimating()
+                }
                 // Upload answer
                 AnswerManager.shared.postAnswer(topicId: self.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
+                    Utils.runOnMainThread {
+                        self.activityIndicatorView.stopAnimating()
+                    }
                     if error == nil {
                         // success
                         self.answers?.append(answer!)

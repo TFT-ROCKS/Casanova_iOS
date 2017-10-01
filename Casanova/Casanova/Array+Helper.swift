@@ -29,4 +29,29 @@ extension Array {
         }
         return res
     }
+    
+    /// Check if answers array contains this topic
+    func containsTopic(_ id: Int) -> Bool {
+        for answer in self {
+            if let answer = answer as? Answer {
+                if answer.topic?.id == id { return true }
+            }
+        }
+        return false
+    }
+    
+    /// Remove certain answer from answers array if contains
+    mutating func removeAnswer(_ id: Int) {
+        var index: Int? = nil
+        for i in 0..<self.count {
+            if let answer = self[i] as? Answer {
+                if answer.id == id {
+                    index = i
+                }
+            }
+        }
+        if index != nil {
+            self.remove(at: index!)
+        }
+    }
 }

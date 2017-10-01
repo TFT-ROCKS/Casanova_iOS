@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import NVActivityIndicatorView
 
 class AnswerDetailViewController: UIViewController {
     
@@ -36,6 +37,7 @@ class AnswerDetailViewController: UIViewController {
     let postTextView: PostTextView = PostTextView(frame: .zero)
     let toolBar: AnswerDetailToolBar = AnswerDetailToolBar(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
+    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     
     // bottom constraint
     var bottomConstraint: NSLayoutConstraint!
@@ -377,7 +379,9 @@ extension AnswerDetailViewController: PostTextViewDelegate {
 extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
@@ -418,6 +422,11 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
+        
+        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -554,6 +563,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     self.answer.removeLike(withId: likeId!)
+                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
                     self.tableView.reloadData()
                     self.toolBar.isLike = false
                     
@@ -565,6 +575,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     self.answer.likes.append(like!)
+                    Environment.shared.needsUpdateUserInfoFromServer = true
                     self.tableView.reloadData()
                     self.toolBar.isLike = true
                     
@@ -739,7 +750,11 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alert = UIAlertController(title: "", message: "删除评论", preferredStyle: .actionSheet)
         let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+            self.activityIndicatorView.startAnimating()
             CommentManager.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
+                Utils.runOnMainThread {
+                    self.activityIndicatorView.stopAnimating()
+                }
                 if error == nil {
                     // delete comment successfully
                     // remove comment from this answer locally

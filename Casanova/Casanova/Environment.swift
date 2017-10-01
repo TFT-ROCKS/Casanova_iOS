@@ -11,8 +11,14 @@ import Foundation
 class Environment {
     static let shared = Environment()
     
-    var currentUser: User?
+    var currentUser: User? {
+        didSet {
+            postUserProfileUpdatedNotification()
+        }
+    }
+    
     var answers: [Answer]?
+    
     func removeAnswer(_ answerId: Int) {
         var index: Int? = nil
         for i in 0..<answers!.count {
@@ -29,7 +35,13 @@ class Environment {
         prepareForCurrentUser()
     }
     
-    var likedAnswers: [Answer]?
+    var needsUpdateUserInfoFromServer: Bool = false
+    
+    var likedAnswers: [Answer]? {
+        didSet {
+            postUserInfoUpdatedNotification()
+        }
+    }
     
     let userDefault = UserDefaults.standard
     
@@ -68,7 +80,33 @@ class Environment {
         })
     }
     
+    func updateForCurrentUser(withCompletion block: ((ErrorMessage?) -> Swift.Void)? = nil) {
+        guard let user = currentUser else {
+            block?(ErrorMessage(msg: "User Not Found"))
+            return
+        }
+        AnswerManager.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
+            if error == nil {
+                self.answers = answers
+                self.likedAnswers = likedAnswers
+                self.postUserInfoUpdatedNotification()
+                block?(nil)
+            } else {
+                let e = ErrorMessage(msg: error.debugDescription)
+                block?(e)
+            }
+        })
+    }
+    
     func postUserInfoPreparedNotification() {
         NotificationCenter.default.post(name: Notifications.userInfoPreparedNotification, object: nil, userInfo: nil)
+    }
+    
+    func postUserProfileUpdatedNotification() {
+        NotificationCenter.default.post(name: Notifications.userProfileUpdatedNotification, object: nil, userInfo: nil)
+    }
+    
+    func postUserInfoUpdatedNotification() {
+        NotificationCenter.default.post(name: Notifications.userInfoUpdatedNotification, object: nil, userInfo: nil)
     }
 }

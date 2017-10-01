@@ -18,6 +18,10 @@ class ProfileViewController: UIViewController {
     var usernameLabel: UILabel = UILabel(frame: .zero)
     var emailLabel: UILabel = UILabel(frame: .zero)
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +30,7 @@ class ProfileViewController: UIViewController {
         configSubViews()
         
         navigationController?.navigationBar.topItem?.title = " "
+        registerNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,9 +101,11 @@ extension ProfileViewController {
         emailLabel.textColor = UIColor.tftCoolGrey
         emailLabel.textAlignment = .center
         
-        // data
+        updateHeaderView()
+    }
+    
+    func updateHeaderView() {
         let user = Environment.shared.currentUser!
-        
         let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
         avatorView.image = avator
         usernameLabel.text = user.firstname != "" ? user.firstname : user.username
@@ -261,5 +268,16 @@ extension ProfileViewController {
     func showSignInViewController() {
         let signInVC = storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
         self.navigationController?.setViewControllers([signInVC], animated: false)
+    }
+}
+
+// MARK: - Notification Handlers
+extension ProfileViewController {
+    func registerNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserProfileUpdated(_:)), name: Notifications.userProfileUpdatedNotification, object: nil)
+    }
+    
+    func handleUserProfileUpdated(_ notification: Notification) {
+        updateHeaderView()
     }
 }

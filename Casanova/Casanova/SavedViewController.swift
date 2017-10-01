@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import NVActivityIndicatorView
 
 class SavedViewController: UIViewController {
     
@@ -31,6 +32,7 @@ class SavedViewController: UIViewController {
     // sub views
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
+    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     
     var timer: Timer!
     
@@ -59,7 +61,6 @@ class SavedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        fetchLikedAnswers()
         setTitle(title: "我的收藏")
         setButtons()
         tableView.reloadData()
@@ -86,6 +87,14 @@ class SavedViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if Environment.shared.needsUpdateUserInfoFromServer {
+            activityIndicatorView.startAnimating()
+            Environment.shared.updateForCurrentUser(withCompletion: { error in
+                Environment.shared.needsUpdateUserInfoFromServer = false
+                self.activityIndicatorView.stopAnimating()
+            })
+        }
     }
     
     func layoutSubviews() {
@@ -105,16 +114,6 @@ class SavedViewController: UIViewController {
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
     }
-    
-//    func fetchLikedAnswers() {
-//        AnswerManager.shared.fetchLikedAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
-//            if error == nil {
-//                // success
-//                self.answers = answers!
-//                self.tableView.reloadData()
-//            }
-//        })
-//    }
     
     func setTitle(title: String) {
         let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
@@ -188,7 +187,9 @@ extension SavedViewController: AudioControlViewDelegate {
 extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
@@ -219,6 +220,11 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -320,7 +326,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             let vc = AnswerDetailViewController(withTopic: answer.topic!, withAnswer: answer)
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 1 {
-            let vc = TopicDetailViewController(withTopic: answer.topic!, withMode: .record)
+            let vc = TopicDetailViewController(withTopic: answer.topic!)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -336,6 +342,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     answer.removeLike(withId: likeId!)
+                    Environment.shared.likedAnswers?.removeAnswer(answer.id)
                     self.tableView.reloadData()
                 }
             })
@@ -344,6 +351,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     answer.likes.append(like!)
+                    Environment.shared.needsUpdateUserInfoFromServer = true
                     self.tableView.reloadData()
                 }
             })
@@ -495,10 +503,15 @@ extension SavedViewController: UIScrollViewDelegate {
 extension SavedViewController {
     func registerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserInfoPrepared(_:)), name: Notifications.userInfoPreparedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleUserInfoUpdated(_:)), name: Notifications.userInfoUpdatedNotification, object: nil)
     }
     
     // MARK: - Observer Handlers
     func handleUserInfoPrepared(_ notification: Notification) {
+        self.answers = Environment.shared.likedAnswers!
+    }
+    
+    func handleUserInfoUpdated(_ notification: Notification) {
         self.answers = Environment.shared.likedAnswers!
     }
 }

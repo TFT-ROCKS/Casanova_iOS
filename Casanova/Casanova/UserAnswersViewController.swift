@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import NVActivityIndicatorView
 
 class UserAnswersViewController: UIViewController {
     
@@ -29,6 +30,7 @@ class UserAnswersViewController: UIViewController {
     var statusBarShouldBeHidden = false
     
     // sub views
+    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     
@@ -39,6 +41,10 @@ class UserAnswersViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -150,9 +156,15 @@ extension UserAnswersViewController {
         let topicId = answers[answerIdx].topic?.id
         let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
         let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+            self.activityIndicatorView.startAnimating()
             AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
-                self.answers.remove(at: answerIdx)
-                Environment.shared.removeAnswer(answerId)
+                Utils.runOnMainThread {
+                    self.activityIndicatorView.stopAnimating()
+                }
+                if error == nil {
+                    self.answers.remove(at: answerIdx)
+                    Environment.shared.removeAnswer(answerId)
+                }
             })
         })
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -218,7 +230,9 @@ extension UserAnswersViewController: AudioControlViewDelegate {
 extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
@@ -249,6 +263,11 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
+        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -355,7 +374,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             let vc = AnswerDetailViewController(withTopic: answer.topic!, withAnswer: answer)
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 1 {
-            let vc = TopicDetailViewController(withTopic: answer.topic!, withMode: .record)
+            let vc = TopicDetailViewController(withTopic: answer.topic!)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
