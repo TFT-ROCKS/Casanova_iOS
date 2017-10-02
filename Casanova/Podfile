@@ -10,5 +10,5 @@ target 'Casanova' do
   pod 'TagListView', '~> 1.0'
   pod 'AliyunOSSiOS', '~> 2.6.2'
   pod 'NVActivityIndicatorView'
-
+  pod 'Down'
 end

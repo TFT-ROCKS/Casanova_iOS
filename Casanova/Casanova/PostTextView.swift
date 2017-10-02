@@ -28,6 +28,7 @@ class PostTextView: UIView {
             return
         }
         // post comment
+        postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
         CommentManager.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
             if error == nil {
                 // success
@@ -41,6 +42,7 @@ class PostTextView: UIView {
                 self.textView.resignFirstResponder()
                 self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
             }
+            self.postButton.setAttributedTitle(AttrString.titleAttrString("发布", textColor: UIColor.brandColor), for: .normal)
             self.postButton.isEnabled = true
         })
     }

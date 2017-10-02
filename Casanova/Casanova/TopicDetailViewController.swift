@@ -837,6 +837,13 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         postButton.isHidden = true
         rewardLabel.isHidden = true
         rewardImageView.isHidden = true
+        
+        do {
+            try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
+            try recordingSession.setActive(true)
+        } catch {
+            
+        }
     }
     
     func recordButtonClicked(_ sender: UIButton) {

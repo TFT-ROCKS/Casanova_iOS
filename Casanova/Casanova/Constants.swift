@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Down
 
 struct Notifications {
     static let userInfoPreparedNotification = Notification.Name("UserInfoPreparedNotification")
@@ -107,7 +108,7 @@ struct AttrString {
     
     static func topicAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 0), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 1.5), range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli-Light", size: 17)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
@@ -124,8 +125,10 @@ struct AttrString {
     }
     
     static func answerAttrString(_ string: String) -> NSAttributedString {
-        let attrString = NSMutableAttributedString(string: string)
-        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 4), range: NSMakeRange(0, attrString.length))
+        let down = Down(markdownString: string)
+        let temp = try? down.toAttributedString()
+        let attrString = NSMutableAttributedString(attributedString: temp!)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))

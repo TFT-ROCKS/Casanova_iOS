@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.5.0)
   - AliyunOSSiOS (2.6.3)
+  - Down (0.3.4)
   - NVActivityIndicatorView (4.0.0):
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
@@ -9,15 +10,17 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AliyunOSSiOS (~> 2.6.2)
+  - Down
   - NVActivityIndicatorView
   - TagListView (~> 1.0)
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   AliyunOSSiOS: 98d79abaceed7485ec0e28dd09c5464acf4a67a0
+  Down: 3f35b61e51a603df3e9e7e0289b15752e72f82e6
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
 
-PODFILE CHECKSUM: 5a1da1ee5943f91c8dbafa45f956438fc97189a0
+PODFILE CHECKSUM: 5e8b4373bd6946af58891a5057b40c150f784fc2
 
 COCOAPODS: 1.2.1
