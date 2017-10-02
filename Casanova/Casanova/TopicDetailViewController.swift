@@ -45,6 +45,7 @@ class TopicDetailViewController: UIViewController {
             return answers == nil || answers!.count == 0
         }
     }
+    let recordHintLabel: UILabel = UILabel(frame: .zero)
     let recordButton: UIButton = UIButton(frame: .zero)
     let speakingImgView: UIImageView = UIImageView(frame: .zero)
     let skipButton: UIButton = UIButton(frame: .zero)
@@ -628,6 +629,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func layoutRecordViews() {
+        view.addSubview(recordHintLabel)
         view.addSubview(recordButton)
         view.addSubview(skipButton)
         view.addSubview(clockIcon)
@@ -638,6 +640,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.addSubview(rewardLabel)
         view.addSubview(rewardImageView)
         
+        view.bringSubview(toFront: recordHintLabel)
         view.bringSubview(toFront: recordButton)
         view.bringSubview(toFront: skipButton)
         view.bringSubview(toFront: clockIcon)
@@ -658,6 +661,13 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func configRecordViews() {
+        // config recordHintLabel
+        recordHintLabel.font = UIFont.pfr(size: 14)
+        recordHintLabel.textColor = UIColor.tftCoolGrey
+        recordHintLabel.text = "点击录音"
+        recordHintLabel.textAlignment = .center
+        recordHintLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         // config buttons
         recordButton.layer.borderColor = UIColor.tftSkyBlue.cgColor
         recordButton.layer.borderWidth = 2.0
@@ -750,6 +760,12 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func addRecordConstraints() {
+        // record hint label constraints
+        recordHintLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        recordHintLabel.widthAnchor.constraint(equalToConstant: 130.0).isActive = true
+        recordHintLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        recordHintLabel.bottomAnchor.constraint(equalTo: recordButton.topAnchor, constant: -16).isActive = true
+        
         // record button constraints
         recordButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         recordButton.widthAnchor.constraint(equalToConstant: 85).isActive = true
@@ -805,10 +821,18 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func initRecordViews() {
+        recordHintLabel.isHidden = false
         recordButton.isHidden = false
         skipButton.isHidden = false
+        recordHintLabel.fadeIn()
         recordButton.fadeIn()
         skipButton.fadeIn()
+        
+        recordHintLabel.text = "点击录音"
+        speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
+        recordButton.layer.borderWidth = 2
+        recordButton.setBackgroundImage(nil, for: .normal)
+        seconds = secs
         
         clockIcon.isHidden = true
         timeLabel.isHidden = true
@@ -828,6 +852,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func hideRecordViews() {
+        recordHintLabel.isHidden = true
         recordButton.isHidden = true
         skipButton.isHidden = true
         clockIcon.isHidden = true
@@ -889,6 +914,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         } catch {
             
         }
+        recordHintLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         recordButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
             if success {
                 self.skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
@@ -928,12 +954,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioBarButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
             if success {
                 self.initRecordViews()
-                self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
-                self.recordButton.layer.borderWidth = 2
-                self.recordButton.setBackgroundImage(nil, for: .normal)
-                
-                // reset timer
-                self.seconds = self.secs
             }
         })
     }
@@ -948,7 +968,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         if audioRecorder != nil {
             audioRecorder.stop()
         }
-        self.seconds = self.secs
+        seconds = secs
         animateAfterBeforeUploadAudio()
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.wav")
         OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
@@ -1078,6 +1098,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         speakingImgView.image = #imageLiteral(resourceName: "speaking-w")
         skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
             if success {
+                self.recordHintLabel.text = "点击结束"
                 self.clockIcon.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
                 self.timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(self.secs))
                 self.timeLabel.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
@@ -1105,8 +1126,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         if success {
             timer.invalidate()
             // time up
-            recordButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
-            clockIcon.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
+            recordHintLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+            recordButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
+            clockIcon.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
             timeLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: { success in
                 if success {
                     // show audio bar button and post button
@@ -1130,9 +1152,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         } else {
             // reset views
             self.initRecordViews()
-            self.speakingImgView.image = #imageLiteral(resourceName: "speaking-h")
-            self.recordButton.layer.borderWidth = 2
-            self.recordButton.setBackgroundImage(nil, for: .normal)
         }
     }
     
