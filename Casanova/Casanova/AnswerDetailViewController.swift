@@ -573,11 +573,10 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             let likeId = Utils.likeIdFromAnswer(answer)
             LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
-                    self.answer.removeLike(withId: likeId!)
+                    self.answer.likes.removeLike(likeId!)
                     Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
                     self.tableView.reloadData()
                     self.toolBar.isLike = false
-                    
                 }
                 sender.isEnabled = true
             })
@@ -769,7 +768,8 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
                 if error == nil {
                     // delete comment successfully
                     // remove comment from this answer locally
-                    self.removeComment(commentId)
+                    self.comments.removeComment(commentId)
+                    self.answer.comments.removeComment(commentId)
                 }
             })
         })
@@ -779,18 +779,5 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
         alert.addAction(cancel)
         
         present(alert, animated: true, completion: nil)
-    }
-    
-    // Remove local cached comments
-    func removeComment(_ commentId: Int) {
-        var index: Int? = nil
-        for i in 0..<comments.count {
-            if commentId == comments[i].id {
-                index = i
-            }
-        }
-        if index != nil {
-            comments.remove(at: index!)
-        }
     }
 }

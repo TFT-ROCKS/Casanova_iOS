@@ -54,4 +54,34 @@ extension Array {
             self.remove(at: index!)
         }
     }
+    
+    // Remove certain comment from comments array if contains
+    mutating func removeComment(_ id: Int) {
+        var index: Int? = nil
+        for i in 0..<self.count {
+            if let comment = self[i] as? Comment {
+                if comment.id == id {
+                    index = i
+                }
+            }
+        }
+        if index != nil {
+            self.remove(at: index!)
+        }
+    }
+    
+    // Remove certain like from likes array if contains
+    mutating func removeLike(_ id: Int) {
+        var index: Int? = nil
+        for i in 0..<self.count {
+            if let like = self[i] as? Like {
+                if like.id == id {
+                    index = i
+                }
+            }
+        }
+        if index != nil {
+            self.remove(at: index!)
+        }
+    }
 }

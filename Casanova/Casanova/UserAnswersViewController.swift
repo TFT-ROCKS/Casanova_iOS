@@ -376,7 +376,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             let likeId = Utils.likeIdFromAnswer(answer)
             LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
-                    answer.removeLike(withId: likeId!)
+                    answer.likes.removeLike(likeId!)
                     self.tableView.reloadData()
                 }
             })

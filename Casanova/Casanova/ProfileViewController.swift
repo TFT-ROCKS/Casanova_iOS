@@ -258,6 +258,7 @@ extension ProfileViewController {
         UserManager.shared.logOut() { error in
             if error == nil {
                 // success
+                NotificationCenter.default.removeObserver(self)
                 Environment.shared.currentUser = nil
                 Environment.shared.resetLoginInfoOnDevice()
                 self.showSignInViewController()

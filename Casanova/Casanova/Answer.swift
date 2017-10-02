@@ -151,28 +151,4 @@ class Answer {
         // init
         self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
     }
-    
-    func removeLike(withId likeId: Int) {
-        var index: Int? = nil
-        for i in 0..<likes.count {
-            if likeId == likes[i].id {
-                index = i
-            }
-        }
-        if index != nil {
-            likes.remove(at: index!)
-        }
-    }
-    
-    func removeComment(withId commentId: Int) {
-        var index: Int? = nil
-        for i in 0..<comments.count {
-            if commentId == comments[i].id {
-                index = i
-            }
-        }
-        if index != nil {
-            comments.remove(at: index!)
-        }
-    }
 }
