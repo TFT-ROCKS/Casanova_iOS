@@ -840,7 +840,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         
         do {
             try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
-            try recordingSession.setActive(true)
+            try recordingSession.setActive(false)
         } catch {
             
         }
