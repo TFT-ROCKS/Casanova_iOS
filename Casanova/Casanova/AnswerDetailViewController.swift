@@ -45,8 +45,7 @@ class AnswerDetailViewController: UIViewController {
     var seconds: Int = 60
     let secs: Int = 60
     
-    // record
-    var recordingSession: AVAudioSession!
+    // audio
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     

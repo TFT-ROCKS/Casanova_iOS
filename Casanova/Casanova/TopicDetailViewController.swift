@@ -64,7 +64,7 @@ class TopicDetailViewController: UIViewController {
     let secs: Int = 60
     
     // record
-    var recordingSession: AVAudioSession!
+    var audioSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     
@@ -77,7 +77,7 @@ class TopicDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.topic = topic
-        recordingSession = AVAudioSession.sharedInstance()
+        audioSession = AVAudioSession.sharedInstance()
     }
     
     override func viewDidLoad() {
@@ -820,8 +820,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         rewardImageView.isHidden = true
         
         do {
-            try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-            try recordingSession.setActive(true)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try audioSession.setActive(true)
         } catch {
             
         }
@@ -839,8 +839,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         rewardImageView.isHidden = true
         
         do {
-            try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
-            try recordingSession.setActive(false)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setActive(false)
         } catch {
             
         }
@@ -849,9 +849,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     func recordButtonClicked(_ sender: UIButton) {
         if audioRecorder == nil {
             do {
-                try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-                try recordingSession.setActive(true)
-                recordingSession.requestRecordPermission() { [unowned self] allowed in
+                try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                try audioSession.setActive(true)
+                audioSession.requestRecordPermission() { [unowned self] allowed in
                     DispatchQueue.main.async {
                         if allowed {
                             self.startRecording()
@@ -884,8 +884,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     
     func skipButtonClicked(_ sender: UIButton) {
         do {
-            try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
-            try recordingSession.setActive(false)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setActive(false)
         } catch {
             
         }
@@ -908,8 +908,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     
     func playButtonClicked() {
         // reset player
-        timer.invalidate()
-        
+        if timer != nil {
+            timer.invalidate()
+        }
         seconds = Int(audioPlayer.duration)
         audioTimeLabel.text = TimeManager.shared.timeString(time: TimeInterval(seconds))
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForPlayer), userInfo: nil, repeats: true)
@@ -1094,8 +1095,8 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioRecorder.stop()
         audioRecorder = nil
         do {
-            try recordingSession.setCategory(AVAudioSessionCategoryPlayback)
-            try recordingSession.setActive(false)
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setActive(false)
         } catch {
             
         }
