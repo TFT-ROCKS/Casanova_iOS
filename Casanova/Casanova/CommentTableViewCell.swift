@@ -115,7 +115,7 @@ class CommentTableViewCell: UITableViewCell {
         commentTitleLabel.topAnchor.constraint(equalTo: commenterButton.bottomAnchor, constant: 20).isActive = true
         commentTitleLabel.leadingAnchor.constraint(equalTo: commenterButton.leadingAnchor).isActive = true
         commentTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        commentTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
+        commentTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -17).isActive = true
         
         // menuButton constraint
         if reuseIdentifier! == ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser {
@@ -187,7 +187,7 @@ class CommentTableViewCell: UITableViewCell {
         // avator
         let avator = UIImage(named: "TFTicons_avator_\(comment.user.id % 8)")
         commenterButton.image = avator
-        commentTitleLabel.attributedText = AttrString.answerAttrString(comment.title)
+        commentTitleLabel.attributedText = AttrString.commentAttrString(comment.title)
         
     }
 }

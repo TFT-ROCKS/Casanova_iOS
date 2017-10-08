@@ -295,6 +295,8 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
                 cell.canBeDeleted = true
                 cell.trashButton.tag = indexPath.section
                 cell.trashButton.addTarget(self, action: #selector(self.trashButtonTappedOnAnswerDetailTableViewCell(_:)), for: .touchUpInside)
+            } else {
+                cell.canBeDeleted = false
             }
             cell.isLikedCard = true
             cell.mode = .short

@@ -367,7 +367,6 @@ extension AnswerDetailViewController: PostTextViewDelegate {
     
     func reloadTableView() {
         comments = answer.comments
-        tableView.reloadData()
         tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
     }
     

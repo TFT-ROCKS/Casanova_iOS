@@ -135,6 +135,15 @@ struct AttrString {
         return attrString
     }
     
+    static func commentAttrString(_ string: String) -> NSAttributedString {
+        let attrString = NSMutableAttributedString(string: string)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
     static func titleAttrString(_ string: String, textColor: UIColor) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(alignment: .center), range: NSMakeRange(0, attrString.length))

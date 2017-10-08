@@ -388,6 +388,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
                 cell.canBeDeleted = true
                 cell.trashButton.tag = indexPath.row
                 cell.trashButton.addTarget(self, action: #selector(self.trashButtonTappedOnAnswerDetailTableViewCell(_:)), for: .touchUpInside)
+            } else {
+                cell.canBeDeleted = false
             }
             cell.mode = .short
             cell.answer = answer
