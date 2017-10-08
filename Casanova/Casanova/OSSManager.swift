@@ -6,6 +6,8 @@
 //  Copyright © 2017 Xiaoyu Guo. All rights reserved.
 //
 
+// signature generation reference: https://help.aliyun.com/document_detail/32059.html?spm=5176.doc32046.6.711.ptC717
+
 import Foundation
 import AliyunOSSiOS
 
@@ -41,11 +43,11 @@ class OSSManager {
             if task.error == nil {
                 let urlStr = "http://tftsandbox.oss-cn-shanghai.aliyuncs.com/\(put.objectKey!)"
                 cBlock(nil, urlStr)
-                print("upload object success!")
+                //print("upload object success!")
             } else {
                 let errMsg = ErrorMessage(msg: task.error.debugDescription)
                 cBlock(errMsg, nil)
-                print("upload object failed, error: \(String(describing: task.error))")
+                //print("upload object failed, error: \(String(describing: task.error))")
             }
             return nil
         })

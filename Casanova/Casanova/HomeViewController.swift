@@ -9,6 +9,7 @@
 import UIKit
 import TagListView
 import NVActivityIndicatorView
+import Firebase
 
 class HomeViewController: UIViewController {
     
@@ -130,6 +131,8 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         navigationController?.navigationBar.layer.shadowRadius = 3.0
         navigationController?.navigationBar.layer.shadowOpacity = 1.0
+        
+        Analytics.setScreenName("home", screenClass: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,6 +154,16 @@ class HomeViewController: UIViewController {
         // Start activity indicator animation
         activityIndicatorView.startAnimating()
         // Fetch topics
+        
+        // [BEGIN GOOGLE ANALYTICS]
+        if levels.count > 0 || tags.count > 0 {
+            Analytics.setScreenName("filter/\(levels.joined(separator: "_") + tags.joined(separator: "_"))", screenClass: nil)
+        }
+        if query.characters.count > 0 {
+            Analytics.setScreenName("search/\(query.components(separatedBy: CharacterSet.whitespaces).joined(separator: "_"))", screenClass: nil)
+        }
+        // [END GOOGLE ANALYTICS]
+        
         TopicManager.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
             self.isFetching = false
             self.activityIndicatorView.stopAnimating()

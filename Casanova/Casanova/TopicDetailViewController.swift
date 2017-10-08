@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import NVActivityIndicatorView
+import Firebase
 
 class TopicDetailViewController: UIViewController {
     
@@ -112,6 +113,8 @@ class TopicDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+        
+        Analytics.setScreenName("topic/\(topic.id)", screenClass: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -562,9 +565,9 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
             
         } catch let error as NSError {
             audioPlayer = nil
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
         } catch {
-            print("AVAudioPlayer init failed")
+            //print("AVAudioPlayer init failed")
         }
         
     }
@@ -584,10 +587,14 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        audioPlayer.stop()
-        audioPlayer = nil
+        if audioPlayer != nil {
+            audioPlayer.stop()
+            audioPlayer = nil
+        }
         cellInUse = -1
-        timer.invalidate()
+        if timer != nil {
+            timer.invalidate()
+        }
         tableView.reloadData()
         audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
@@ -610,11 +617,17 @@ extension TopicDetailViewController {
                 Environment.shared.removeAnswer(answerId)
             })
         })
-        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
         
         alert.addAction(confirm)
         alert.addAction(cancel)
         
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+
         present(alert, animated: true, completion: nil)
     }
 }
@@ -902,7 +915,13 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                 UIApplication.shared.openURL(settingsURL)
             }
         })
-        alertVC.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        
+        if let popoverController = alertVC.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         present(alertVC, animated: true, completion: nil)
     }
@@ -972,13 +991,13 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         animateAfterBeforeUploadAudio()
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.topic.id)-speaking.wav")
         OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
-            print(bytesSent, totalByteSent, totalBytesExpectedToSend)
+            //print(bytesSent, totalByteSent, totalBytesExpectedToSend)
             Utils.runOnMainThread {
                 self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
             }
         }, withCompletionBlock: { (error, url) in
             if error == nil {
-                print("upload audio success")
+                //print("upload audio success")
                 Utils.runOnMainThread {
                     self.activityIndicatorView.startAnimating()
                 }
@@ -1142,7 +1161,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
                     } catch {
                         // couldn't load file :(
-                        print("couldn't load file :(")
+                        //print("couldn't load file :(")
                     }
                     self.audioPlayer.prepareToPlay()
                     

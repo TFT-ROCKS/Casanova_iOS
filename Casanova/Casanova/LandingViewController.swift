@@ -16,10 +16,15 @@ class LandingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         label.font = UIFont.pfr(size: 17)
         label.numberOfLines = 0
         label.text = "登陆中，请稍后..."
+        imageView.image = #imageLiteral(resourceName: "tft")
     }
     
     override func viewDidAppear(_ animated: Bool) {

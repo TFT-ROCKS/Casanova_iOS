@@ -17,10 +17,10 @@ struct Notifications {
 }
 
 struct Errors {
-    public static let usernameNotValid = "At least provide a username, ok?"
-    public static let emailNotValid = "Come on, your email is not valid"
-    public static let passwordNotValid = "What's your password, bro?"
-    public static let usernameOrEmailNotValid = "Dude, please enter your username or email!"
+    public static let usernameNotValid = "对不起，您输入的用户名无效"
+    public static let emailNotValid = "不好意思，您输入的邮箱无效"
+    public static let passwordNotValid = "您的密码是啥子？"
+    public static let usernameOrEmailNotValid = "请输入用户名或者邮箱"
 }
 
 struct Tags {

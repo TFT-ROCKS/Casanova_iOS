@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
  
 
 class ProfileViewController: UIViewController {
@@ -38,6 +39,8 @@ class ProfileViewController: UIViewController {
         
         setButtons()
         setTitle(title: "我的主页")
+        
+        Analytics.setScreenName("profile", screenClass: nil)
     }
     
     func layoutSubViews() {
@@ -242,13 +245,19 @@ extension ProfileViewController {
     // Log out logic
     func presentLogOutAlertSheet() {
         let alert = UIAlertController(title: "", message: "确认要退出登录吗", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "登出", style: .default, handler: { [unowned self] _ in
+        let confirm = UIAlertAction(title: "登出", style: .destructive, handler: { [unowned self] _ in
             self.logOut()
         })
-        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
         
         alert.addAction(confirm)
         alert.addAction(cancel)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         present(alert, animated: true, completion: nil)
     }
@@ -261,14 +270,9 @@ extension ProfileViewController {
                 NotificationCenter.default.removeObserver(self)
                 Environment.shared.currentUser = nil
                 Environment.shared.resetLoginInfoOnDevice()
-                self.showSignInViewController()
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
-    }
-    
-    func showSignInViewController() {
-        let signInVC = storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
-        self.navigationController?.setViewControllers([signInVC], animated: false)
     }
 }
 

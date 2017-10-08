@@ -8,6 +8,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Firebase
 
 class SettingsViewController: UIViewController {
     
@@ -50,6 +51,12 @@ class SettingsViewController: UIViewController {
         username = Environment.shared.currentUser?.username
         firstname = Environment.shared.currentUser?.firstname
         lastname = Environment.shared.currentUser?.lastname
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Analytics.setScreenName("settings", screenClass: nil)
     }
     
     func setTitle(title: String) {

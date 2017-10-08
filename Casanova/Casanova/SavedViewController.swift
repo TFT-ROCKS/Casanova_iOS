@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import NVActivityIndicatorView
+import Firebase
 
 class SavedViewController: UIViewController {
     
@@ -67,6 +68,8 @@ class SavedViewController: UIViewController {
         if let answers = Environment.shared.likedAnswers {
             self.answers = answers
         }
+        
+        Analytics.setScreenName("saved", screenClass: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -149,7 +152,7 @@ extension SavedViewController: AudioControlViewDelegate {
     }
     
     func addAudioControlBarConstraints() {
-        audioControlBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        audioControlBar.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
         audioControlBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         audioControlBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         audioControlBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
@@ -198,6 +201,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
         tableView.separatorStyle = .singleLineEtched
         tableView.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
         tableView.backgroundColor = UIColor.bgdColor
+        tableView.tableFooterView = UIView(frame: .zero)
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -444,9 +448,9 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             
         } catch let error as NSError {
             audioPlayer = nil
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
         } catch {
-            print("AVAudioPlayer init failed")
+            //print("AVAudioPlayer init failed")
         }
         
     }
@@ -466,15 +470,16 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
-        audioControlBar.audioBar.value = 0
-        audioControlBar.audioBar.isEnabled = false
-        audioControlBar.playTimeLabel.text = "00:00"
-        
-        audioPlayer.stop()
-        audioPlayer = nil
+        if audioPlayer != nil {
+            audioPlayer.stop()
+            audioPlayer = nil
+        }
         cellInUse = -1
-        timer.invalidate()
+        if timer != nil {
+            timer.invalidate()
+        }
+        tableView.reloadData()
+        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 

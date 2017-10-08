@@ -151,7 +151,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTitleLabel.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
         answerTitleLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
         answerTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        bottomConstraint = answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29)
+        bottomConstraint = answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
         bottomConstraint.isActive = true
         
         answererNameLabel.font = UIFont.mr(size: 14)
@@ -210,7 +210,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         }
         
         if isLikedCard {
-            bottomConstraint.constant = -10
+            bottomConstraint.constant = -2
         }
         
         if canBeDeleted {

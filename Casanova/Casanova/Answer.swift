@@ -50,7 +50,7 @@ class Answer {
             let commentsJSON = json["Comments"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
-                print(errorMessage.msg)
+                //print(errorMessage.msg)
                 return nil
         }
         // ref
@@ -87,7 +87,7 @@ class Answer {
             let commentsJSON = json["Comments"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
-                print(errorMessage.msg)
+                //print(errorMessage.msg)
                 return nil
         }
         // ref
@@ -118,7 +118,7 @@ class Answer {
             let commentsJSON = json["Comments"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
-                print(errorMessage.msg)
+                //print(errorMessage.msg)
                 return nil
         }
         // ref

@@ -28,10 +28,9 @@ class SignInViewController: UIViewController {
                 // Success
                 // Store current user
                 Environment.shared.saveLoginInfoToDevice(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
-                Environment.shared.currentUser = user
                 self.errorLabel.text = " "
-                let tc = self.storyboard?.instantiateViewController(withIdentifier: "MyTabBarController") as! MyTabBarController
-                self.navigationController?.setViewControllers([tc], animated: false)
+                // Show landing view
+                self.dismiss(animated: true, completion: nil)
             } else {
                 self.logInButton.viewWithTag(5)?.removeFromSuperview()
                 self.logInButton.setAttributedTitle(AttrString.titleAttrString("登陆", textColor: UIColor.brandColor), for: .normal)

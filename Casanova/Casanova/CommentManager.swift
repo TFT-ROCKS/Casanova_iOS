@@ -48,24 +48,26 @@ class CommentManager {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage, nil)
+                        Utils.runOnMainThread { block?(errorMessage, nil) }
                     } else {
                         // success
                         if let json = json["g0"] as? [String: Any] {
                             if let dict = json["data"] as? [String: Any] {
                                 if let comment = Comment(fromJSON: dict) {
-                                    block?(nil, comment)
+                                    Utils.runOnMainThread {
+                                        block?(nil, comment)
+                                    }
                                 }
                             }
                         }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post comment")
-                    block?(errorMessage, nil)
+                    Utils.runOnMainThread { block?(errorMessage, nil) }
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when post comment")
-                block?(errorMessage, nil)
+                Utils.runOnMainThread { block?(errorMessage, nil) }
             }
         }
     }
@@ -105,19 +107,19 @@ class CommentManager {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage)
+                        Utils.runOnMainThread { block?(errorMessage) }
                     } else {
                         // success
                         if let json = json["g0"] as? [String: Any] {
                             if let dict = json["data"] as? [String: Any] {
                                 if let flag = dict["deletedComment"] as? Bool {
                                     if flag == true {
-                                        block?(nil)
+                                        Utils.runOnMainThread { block?(nil) }
                                     }
                                     else {
                                         let msg = "delete comment failed, server error"
                                         let errorMessage = ErrorMessage(msg: msg)
-                                        block?(errorMessage)
+                                        Utils.runOnMainThread { block?(errorMessage) }
                                     }
                                 }
                             }
@@ -125,11 +127,11 @@ class CommentManager {
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when delete comment")
-                    block?(errorMessage)
+                    Utils.runOnMainThread { block?(errorMessage) }
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when delete comment")
-                block?(errorMessage)
+                Utils.runOnMainThread { block?(errorMessage) }
             }
         }
     }

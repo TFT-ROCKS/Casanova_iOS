@@ -47,7 +47,7 @@ class Topic {
             let isTrending = json["isTrending"] as? Int
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic")
-                print(errorMessage.msg)
+                //print(errorMessage.msg)
                 return nil
         }
         self.init(answersCount: answersCount,
@@ -69,7 +69,7 @@ class Topic {
             let tags = json["Tags"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from liked answers JSON")
-                print(errorMessage.msg)
+                //print(errorMessage.msg)
                 return nil
         }
         let answersCount = answers.count
@@ -96,7 +96,7 @@ class Topic {
     func fetchDetail(fromJSON json: [String: Any]) -> Bool{
         guard let answersJSON = json["Answers"] as? [Any] else {
             let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic detail")
-            print(errorMessage.msg)
+            //print(errorMessage.msg)
             return false
         }
         answers = []

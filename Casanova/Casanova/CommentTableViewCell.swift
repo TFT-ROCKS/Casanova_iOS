@@ -115,7 +115,7 @@ class CommentTableViewCell: UITableViewCell {
         commentTitleLabel.topAnchor.constraint(equalTo: commenterButton.bottomAnchor, constant: 20).isActive = true
         commentTitleLabel.leadingAnchor.constraint(equalTo: commenterButton.leadingAnchor).isActive = true
         commentTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        commentTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -29).isActive = true
+        commentTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
         
         // menuButton constraint
         if reuseIdentifier! == ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser {

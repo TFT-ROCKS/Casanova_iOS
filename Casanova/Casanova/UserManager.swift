@@ -98,24 +98,24 @@ class UserManager {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage, nil)
+                        Utils.runOnMainThread { block?(errorMessage, nil) }
                     } else {
                         // success
                         if let dict = json["g0"] as? [String: Any] {
                             if let dict = dict["data"] as? [String: Any] {
                                 if let user = User(fromJSON: dict) {
-                                    block?(nil, user)
+                                    Utils.runOnMainThread { block?(nil, user) }
                                 }
                             }
                         }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when sign in")
-                    block?(errorMessage, nil)
+                    Utils.runOnMainThread { block?(errorMessage, nil) }
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when sign in")
-                block?(errorMessage, nil)
+                Utils.runOnMainThread { block?(errorMessage, nil) }
             }
         }
     }
@@ -135,7 +135,7 @@ class UserManager {
             }
             
         } catch let error as NSError {
-            print("invalid regex: \(error.localizedDescription)")
+            //print("invalid regex: \(error.localizedDescription)")
             returnValue = false
         }
         
@@ -156,11 +156,11 @@ class UserManager {
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             if response.result.isSuccess {
-                block?(nil)
+                Utils.runOnMainThread { block?(nil) }
             } else {
                 let errorMsg = ErrorMessage(msg: response.result.error.debugDescription)
-                print(errorMsg.msg)
-                block?(errorMsg)
+                //print(errorMsg.msg)
+                Utils.runOnMainThread { block?(errorMsg) }
             }
         }
     }
@@ -189,24 +189,24 @@ class UserManager {
                     if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
-                        block?(errorMessage, nil)
+                        Utils.runOnMainThread { block?(errorMessage, nil) }
                     } else {
                         // success
                         if let dict = json["g0"] as? [String: Any] {
                             if let dict = dict["data"] as? [String: Any] {
                                 if let user = User(fromJSON: dict) {
-                                    block?(nil, user)
+                                    Utils.runOnMainThread { block?(nil, user) }
                                 }
                             }
                         }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when edit user profile")
-                    block?(errorMessage, nil)
+                    Utils.runOnMainThread { block?(errorMessage, nil) }
                 }
             } else {
                 let errorMessage = ErrorMessage(msg: "json == nil, when edit user profile")
-                block?(errorMessage, nil)
+                Utils.runOnMainThread { block?(errorMessage, nil) }
             }
         }
     }

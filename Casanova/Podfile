@@ -11,4 +11,5 @@ target 'Casanova' do
   pod 'AliyunOSSiOS', '~> 2.6.2'
   pod 'NVActivityIndicatorView'
   pod 'Down'
+  pod 'Firebase/Core'
 end

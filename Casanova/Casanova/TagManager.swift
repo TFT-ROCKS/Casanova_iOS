@@ -17,7 +17,7 @@
 //        Alamofire.request(url, method: .get).responseJSON {
 //            response in
 //            if let json = response.result.value {
-//                print("JSON: \(json)") // serialized json response
+//                //print("JSON: \(json)") // serialized json response
 //                if let topics = json as? NSDictionary {
 //                    if let topics = topics["data"] as? NSArray {
 //                        // success

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import NVActivityIndicatorView
+import Firebase
 
 class UserAnswersViewController: UIViewController {
     
@@ -72,6 +73,8 @@ class UserAnswersViewController: UIViewController {
         if let answers = Environment.shared.answers {
             self.answers = answers
         }
+        
+        Analytics.setScreenName("user_answers", screenClass: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -154,10 +157,16 @@ extension UserAnswersViewController {
                 }
             })
         })
-        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
         
         alert.addAction(confirm)
         alert.addAction(cancel)
+        
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
         
         present(alert, animated: true, completion: nil)
     }
@@ -228,6 +237,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
         tableView.separatorStyle = .singleLineEtched
         tableView.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
         tableView.backgroundColor = UIColor.bgdColor
+        tableView.tableFooterView = UIView(frame: .zero)
         // Hack for table view top space in between with topic view
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -477,9 +487,9 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             
         } catch let error as NSError {
             audioPlayer = nil
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
         } catch {
-            print("AVAudioPlayer init failed")
+            //print("AVAudioPlayer init failed")
         }
         
     }
@@ -497,14 +507,16 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        audioControlBar.audioBar.value = 0
-        audioControlBar.audioBar.isEnabled = false
-        audioControlBar.playTimeLabel.text = "00:00"
-        
-        audioPlayer.stop()
-        audioPlayer = nil
+        if audioPlayer != nil {
+            audioPlayer.stop()
+            audioPlayer = nil
+        }
         cellInUse = -1
-        timer.invalidate()
+        if timer != nil {
+            timer.invalidate()
+        }
+        tableView.reloadData()
+        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
