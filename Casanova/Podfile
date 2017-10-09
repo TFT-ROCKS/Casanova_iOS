@@ -12,4 +12,5 @@ target 'Casanova' do
   pod 'NVActivityIndicatorView'
   pod 'Down'
   pod 'Firebase/Core'
+  pod 'IDZSwiftCommonCrypto', '~> 0.9.1'
 end

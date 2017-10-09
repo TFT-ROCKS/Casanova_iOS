@@ -47,7 +47,8 @@ class Environment {
     
     func saveLoginInfoToDevice(username: String, password: String) {
         userDefault.set(username, forKey: "username")
-        userDefault.set(password, forKey: "password")
+        let encryptedPassword = CryptoManager.shared.bytesFromEncrpyt(string: password)
+        userDefault.set(encryptedPassword, forKey: "password")
     }
     
     func updateUserNameToDevice(username: String) {
@@ -63,8 +64,9 @@ class Environment {
         var info: [String: Any] = [:]
         guard let username = userDefault.string(forKey: "username") else { return nil }
         info["username"] = username
-        guard let password = userDefault.string(forKey: "password") else { return nil }
-        info["password"] = password
+        guard let password = userDefault.array(forKey: "password") else { return nil }
+        let decryptedPassword = CryptoManager.shared.stringFromDecrpyt(bytes: password as! [UInt8])
+        info["password"] = decryptedPassword
         
         return info
     }

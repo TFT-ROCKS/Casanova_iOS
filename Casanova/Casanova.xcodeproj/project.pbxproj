@@ -21,6 +21,7 @@
 		802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802E8E411F34660B00A9345E /* TopicHeaderView.swift */; };
 		802E8E441F34662200A9345E /* TopicHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802E8E431F34662200A9345E /* TopicHeaderView.xib */; };
 		803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803307871F726E9C00BAE470 /* UserAnswersViewController.swift */; };
+		8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8038E3C11F8ADE9A000F041F /* CryptoManager.swift */; };
 		804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91CC1F37C7E800CA6FBE /* FilterView.swift */; };
 		804D91CF1F37C82E00CA6FBE /* FilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804D91CE1F37C82E00CA6FBE /* FilterView.xib */; };
 		804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */; };
@@ -110,6 +111,7 @@
 		802E8E411F34660B00A9345E /* TopicHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderView.swift; sourceTree = "<group>"; };
 		802E8E431F34662200A9345E /* TopicHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicHeaderView.xib; sourceTree = "<group>"; };
 		803307871F726E9C00BAE470 /* UserAnswersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnswersViewController.swift; sourceTree = "<group>"; };
+		8038E3C11F8ADE9A000F041F /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
 		804D91CC1F37C7E800CA6FBE /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		804D91CE1F37C82E00CA6FBE /* FilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterView.xib; sourceTree = "<group>"; };
 		804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				807BF5CD1F29B291000451FA /* AnswerManager.swift */,
 				807BF5CB1F29B275000451FA /* TagManager.swift */,
 				80C2AA0D1F737F98001F298D /* OSSManager.swift */,
+				8038E3C11F8ADE9A000F041F /* CryptoManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				80FB458B1F482B890034D525 /* Environment.swift in Sources */,
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
+				8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
 				80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */,
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
