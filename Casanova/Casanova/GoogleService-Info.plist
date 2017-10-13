@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>794054167071-kqu7fg6kptgp255cuji9n6iag5l7cme3.apps.googleusercontent.com</string>
+	<string>794054167071-gnh0g139hsig5ju2s2c7360euqs798ul.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.794054167071-kqu7fg6kptgp255cuji9n6iag5l7cme3</string>
+	<string>com.googleusercontent.apps.794054167071-gnh0g139hsig5ju2s2c7360euqs798ul</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC24oOLph4vFpXBvormI0ICUl8iYIOUg4k</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tft.rocks.ios.app</string>
+	<string>com.ios.app.tft.rocks</string>
 	<key>PROJECT_ID</key>
 	<string>tft-mobile</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:794054167071:ios:a2683314577af06d</string>
+	<string>1:794054167071:ios:0146d69e013a16c9</string>
 	<key>DATABASE_URL</key>
 	<string>https://tft-mobile.firebaseio.com</string>
 </dict>

@@ -17,7 +17,6 @@
 		800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800FEFE01F24A98500DF5531 /* DifficultyView.swift */; };
 		800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800FEFE81F25691400DF5531 /* LoadMoreTableViewCell.swift */; };
 		800FEFEB1F25691400DF5531 /* LoadMoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800FEFE91F25691400DF5531 /* LoadMoreTableViewCell.xib */; };
-		801885FA1F8985D600EB8127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801885F91F89851D00EB8127 /* GoogleService-Info.plist */; };
 		802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802E8E411F34660B00A9345E /* TopicHeaderView.swift */; };
 		802E8E441F34662200A9345E /* TopicHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802E8E431F34662200A9345E /* TopicHeaderView.xib */; };
 		803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803307871F726E9C00BAE470 /* UserAnswersViewController.swift */; };
@@ -29,6 +28,7 @@
 		804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91D71F37EA0600CA6FBE /* Constants.swift */; };
 		8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */; };
 		8055791C1F70DC94002942A2 /* SeparatorLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */; };
+		8055C5591F90773600743CC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8055C5581F90773000743CC0 /* GoogleService-Info.plist */; };
 		805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8841F416C7E005197DF /* SignInViewController.swift */; };
 		805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8861F416C8A005197DF /* SignUpViewController.swift */; };
 		805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC88C1F41896B005197DF /* MyTabBarController.swift */; };
@@ -107,7 +107,6 @@
 		800FEFE01F24A98500DF5531 /* DifficultyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		800FEFE81F25691400DF5531 /* LoadMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadMoreTableViewCell.swift; sourceTree = "<group>"; };
 		800FEFE91F25691400DF5531 /* LoadMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreTableViewCell.xib; sourceTree = "<group>"; };
-		801885F91F89851D00EB8127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		802E8E411F34660B00A9345E /* TopicHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderView.swift; sourceTree = "<group>"; };
 		802E8E431F34662200A9345E /* TopicHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicHeaderView.xib; sourceTree = "<group>"; };
 		803307871F726E9C00BAE470 /* UserAnswersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnswersViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		804D91D71F37EA0600CA6FBE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLineTableViewCell.swift; sourceTree = "<group>"; };
 		8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeparatorLineTableViewCell.xib; sourceTree = "<group>"; };
+		8055C5581F90773000743CC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		805EC8841F416C7E005197DF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		805EC8861F416C8A005197DF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		805EC88C1F41896B005197DF /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 		800FEFE51F25678200DF5531 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				801885F91F89851D00EB8127 /* GoogleService-Info.plist */,
+				8055C5581F90773000743CC0 /* GoogleService-Info.plist */,
 				80E3390D1F1AE4FD00F539E5 /* Main.storyboard */,
 				80E339121F1AE4FE00F539E5 /* LaunchScreen.storyboard */,
 				80E339091F1AE4FD00F539E5 /* AppDelegate.swift */,
@@ -525,9 +525,9 @@
 				TargetAttributes = {
 					80E339051F1AE4FD00F539E5 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = N74Z9L6N77;
+						DevelopmentTeam = 4KD7R4WWV7;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -569,7 +569,7 @@
 				808B21FB1F71967000ED5526 /* TFTicons_avator_0.png in Resources */,
 				80826CFE1F64EB0000956E03 /* TopicDetailToolBar.xib in Resources */,
 				80FB45871F47894C0034D525 /* Muli.ttf in Resources */,
-				801885FA1F8985D600EB8127 /* GoogleService-Info.plist in Resources */,
+				8055C5591F90773600743CC0 /* GoogleService-Info.plist in Resources */,
 				808B21FE1F71967000ED5526 /* TFTicons_avator_3.png in Resources */,
 				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
 				808B21FD1F71967000ED5526 /* TFTicons_avator_2.png in Resources */,
@@ -826,11 +826,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N74Z9L6N77;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tft.rocks.ios.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -846,15 +847,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = N74Z9L6N77;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4KD7R4WWV7;
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tft.rocks.ios.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "b1f0d419-d22a-492a-a2d9-62612e175aef";
+				PROVISIONING_PROFILE_SPECIFIER = TFTROCKS_Distribution;
 				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
