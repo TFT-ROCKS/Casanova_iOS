@@ -60,6 +60,7 @@
 		808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F81F71967000ED5526 /* TFTicons_avator_5.png */; };
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
+		809FF7801FA721E4003F53DC /* ShareSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
@@ -150,6 +151,7 @@
 		808B21F81F71967000ED5526 /* TFTicons_avator_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_5.png; sourceTree = "<group>"; };
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
+		809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				805EC8901F418A16005197DF /* ActivitiesViewController.swift */,
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
+				809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
+				809FF7801FA721E4003F53DC /* ShareSheetViewController.swift in Sources */,
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */,

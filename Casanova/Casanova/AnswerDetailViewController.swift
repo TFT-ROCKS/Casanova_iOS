@@ -84,6 +84,7 @@ class AnswerDetailViewController: UIViewController {
         layoutSubviews()
         addConstraints()
         setTitle(title: "答案详情")
+        setButtons()
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -153,6 +154,11 @@ class AnswerDetailViewController: UIViewController {
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
+    }
+    
+    func setButtons() {
+        let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .plain, target: self, action: #selector(shareButtonClicked(_:)))
+        self.navigationItem.rightBarButtonItem = shareButton
     }
 }
 
@@ -782,5 +788,21 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
         }
         
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AnswerDetailViewController: ShareSheetViewControllerDelegate {
+    func shareButtonClicked(_ sender: UIBarButtonItem) {
+        let shareSheetVC = ShareSheetViewController.instantiate(with: "分享这个答案", delegate: self, type: .answer, params: [:])
+        present(shareSheetVC, animated: false, completion: nil)
+    }
+    
+    // MARK: - ShareSheetViewControllerDelegate
+    func shareToWechat(with params: [String : Any], type: ShareType) {
+        
+    }
+    
+    func shareToMoment(with params: [String : Any], type: ShareType) {
+        
     }
 }

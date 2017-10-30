@@ -27,6 +27,7 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
   - TagListView (1.2.0)
+  - WechatOpenSDK (1.8.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - IDZSwiftCommonCrypto (~> 0.9.1)
   - NVActivityIndicatorView
   - TagListView (~> 1.0)
+  - WechatOpenSDK
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
@@ -50,7 +52,8 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
+  WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
 
-PODFILE CHECKSUM: 897c5f3174bdd5434a6354dfba4de4b7ae3b5d91
+PODFILE CHECKSUM: 133bb6cd19c109c1cff52b507c1462c2a008f784
 
 COCOAPODS: 1.2.1
