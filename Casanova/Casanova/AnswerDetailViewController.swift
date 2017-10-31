@@ -793,16 +793,34 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
 
 extension AnswerDetailViewController: ShareSheetViewControllerDelegate {
     func shareButtonClicked(_ sender: UIBarButtonItem) {
-        let shareSheetVC = ShareSheetViewController.instantiate(with: "分享这个答案", delegate: self, type: .answer, params: [:])
+        let answerToWeChatEntity = AnswerToWeChatEntity(title: topic.title,
+                                                        description: answer.user.username,
+                                                        image: UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")!,
+//                                                        musicUrl: "https://tft.rocks/topic/\(topic.id)#\(answer.id)",
+            musicUrl: "http://www.cornell.edu/",
+            musicDataUrl: answer.audioURL!)
+        let shareSheetVC = ShareSheetViewController.instantiate(with: "分享这个答案", delegate: self, type: .answer, entity: answerToWeChatEntity)
         present(shareSheetVC, animated: false, completion: nil)
     }
     
     // MARK: - ShareSheetViewControllerDelegate
-    func shareToWechat(with params: [String : Any], type: ShareType) {
-        
+    func shareToWechat(with entity: GeneralShareEntity, type: ShareType) {
+        switch type {
+        case .answer:
+            let wm = WeChatManager.shared
+            wm.scene = WXSceneSession
+            wm.sendMusicContent(entity: entity)
+//            wm.sendLinkContent(entity: entity)
+        }
     }
     
-    func shareToMoment(with params: [String : Any], type: ShareType) {
-        
+    func shareToMoment(with entity: GeneralShareEntity, type: ShareType) {
+        switch type {
+        case .answer:
+            let wm = WeChatManager.shared
+            wm.scene = WXSceneTimeline
+//            wm.sendMusicContent(entity: entity)
+            wm.sendLinkContent(entity: entity)
+        }
     }
 }

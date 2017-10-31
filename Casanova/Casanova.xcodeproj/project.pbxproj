@@ -63,6 +63,9 @@
 		809FF7801FA721E4003F53DC /* ShareSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
+		80AAA3AC1FA84FE8001251E8 /* WeChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */; };
+		80AAA3AE1FA8572E001251E8 /* AnswerToWeChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */; };
+		80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
 		80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313991F1B35B4001CFDC7 /* Comment.swift */; };
 		80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */; };
@@ -154,6 +157,9 @@
 		809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
+		80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatManager.swift; sourceTree = "<group>"; };
+		80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatEntity.swift; sourceTree = "<group>"; };
+		80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralShareEntity.swift; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		80B313991F1B35B4001CFDC7 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 				807BF5CB1F29B275000451FA /* TagManager.swift */,
 				80C2AA0D1F737F98001F298D /* OSSManager.swift */,
 				8038E3C11F8ADE9A000F041F /* CryptoManager.swift */,
+				80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -417,6 +424,15 @@
 			name = AudioControlView;
 			sourceTree = "<group>";
 		};
+		80AAA3AF1FA85735001251E8 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */,
+				80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
 		80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				804D91C01F36C53700CA6FBE /* Resources */,
+				80AAA3AF1FA85735001251E8 /* Entities */,
 				800FEFE31F25675600DF5531 /* Models */,
 				800FEFE41F25677300DF5531 /* Views */,
 				800FEFE21F25674500DF5531 /* Managers */,
@@ -528,9 +545,9 @@
 				TargetAttributes = {
 					80E339051F1AE4FD00F539E5 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 4KD7R4WWV7;
+						DevelopmentTeam = N74Z9L6N77;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -651,6 +668,7 @@
 				80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
+				80AAA3AC1FA84FE8001251E8 /* WeChatManager.swift in Sources */,
 				80826CEC1F6245D600956E03 /* AnswerDetailToolBar.swift in Sources */,
 				805EC8911F418A16005197DF /* ActivitiesViewController.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
@@ -664,6 +682,7 @@
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
 				803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,
+				80AAA3AE1FA8572E001251E8 /* AnswerToWeChatEntity.swift in Sources */,
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
@@ -697,6 +716,7 @@
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
 				80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
+				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,
 				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,
 				805EC88F1F418A0B005197DF /* SavedViewController.swift in Sources */,
@@ -830,8 +850,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N74Z9L6N77;
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -851,16 +871,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4KD7R4WWV7;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N74Z9L6N77;
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b1f0d419-d22a-492a-a2d9-62612e175aef";
-				PROVISIONING_PROFILE_SPECIFIER = TFTROCKS_Distribution;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

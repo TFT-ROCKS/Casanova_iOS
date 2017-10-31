@@ -58,6 +58,76 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return WXApi.handleOpen(url, delegate: self)
     }
+    
+    func onReq(_ req: BaseReq!) {
+        if req.isKind(of: GetMessageFromWXReq.self) {
+            let strTitle = "微信请求App提供内容"
+            let strMsg = "微信请求App提微信请求App提供内容，App要调用sendResp:GetMessageFromWXResp返回给微信"
+            let alertController = UIAlertController(title: strTitle, message: strMsg, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            alertController.addAction(cancel)
+            UIApplication.shared.topMostViewController()?.present(alertController, animated: true, completion: nil)
+        } else if req.isKind(of: ShowMessageFromWXReq.self) {
+            let temp = req as! ShowMessageFromWXReq
+            let msg = temp.message
+            let obj = msg?.mediaObject as! WXAppExtendObject
+            let strTitle = "微信请求App显示内容"
+            let strMsg = String(format: "标题：%@ \n内容：%@ \n附带信息：%@ \n\n\n", (msg?.title)!, (msg?.description)!, obj.extInfo)
+            let alertController = UIAlertController(title: strTitle, message: strMsg, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            alertController.addAction(cancel)
+            UIApplication.shared.topMostViewController()?.present(alertController, animated: true, completion: nil)
+        } else if req.isKind(of: LaunchFromWXReq.self) {
+            let strTitle = "从微信启动"
+            let strMsg = "这是从微信启动的消息"
+            let alertController = UIAlertController(title: strTitle, message: strMsg, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            alertController.addAction(cancel)
+            UIApplication.shared.topMostViewController()?.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func onResp(_ resp: BaseResp!) {
+        if resp.isKind(of: SendMessageToWXResp.self) {
+            let strTitle = "发送媒体消息结果"
+            let strMsg = String(format: "errcode:%d", resp.errCode)
+            let alertController = UIAlertController(title: strTitle, message: strMsg, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            alertController.addAction(cancel)
+            UIApplication.shared.topMostViewController()?.present(alertController, animated: true, completion: nil)
+        }
+    }
+}
 
+extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        if self.presentedViewController == nil {
+            return self
+        }
+        if let navigation = self.presentedViewController as? UINavigationController {
+            return navigation.visibleViewController!.topMostViewController()
+        }
+        if let tab = self.presentedViewController as? UITabBarController {
+            if let selectedTab = tab.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tab.topMostViewController()
+        }
+        return self.presentedViewController!.topMostViewController()
+    }
+}
+
+extension UIApplication {
+    func topMostViewController() -> UIViewController? {
+        return self.keyWindow?.rootViewController?.topMostViewController()
+    }
 }
 

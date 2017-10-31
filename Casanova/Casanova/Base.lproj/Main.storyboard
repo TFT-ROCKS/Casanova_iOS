@@ -451,7 +451,6 @@
         <!--Share Sheet View Controller-->
         <scene sceneID="qmQ-2N-RBZ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ss-b3-Re9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ShareSheetViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hxz-fI-Sx5" customClass="ShareSheetViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bDL-eE-Y8q">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
@@ -534,6 +533,7 @@
                         <outlet property="wechatButton" destination="BLY-mQ-24X" id="REa-HS-Tbl"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ss-b3-Re9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3532" y="-585"/>
         </scene>

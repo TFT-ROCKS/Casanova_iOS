@@ -13,19 +13,19 @@ enum ShareType {
 }
 
 protocol ShareSheetViewControllerDelegate: class {
-    func shareToWechat(with params: [String: Any], type: ShareType)
-    func shareToMoment(with params: [String: Any], type: ShareType)
+    func shareToWechat(with entity: GeneralShareEntity, type: ShareType)
+    func shareToMoment(with entity: GeneralShareEntity, type: ShareType)
 }
 
 class ShareSheetViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    class func instantiate(with title: String, delegate: ShareSheetViewControllerDelegate, type: ShareType, params: [String: Any]) -> ShareSheetViewController {
+    class func instantiate(with title: String, delegate: ShareSheetViewControllerDelegate, type: ShareType, entity: GeneralShareEntity) -> ShareSheetViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ShareSheetViewController") as! ShareSheetViewController
         
         vc.delegate = delegate
         vc.type = type
         vc.titleString = title
-        vc.params = params
+        vc.entity = entity
         vc.modalPresentationStyle = .overCurrentContext
         
         return vc
@@ -34,7 +34,7 @@ class ShareSheetViewController: UIViewController, UIGestureRecognizerDelegate {
     weak var delegate: ShareSheetViewControllerDelegate!
     var titleString: String!
     var type: ShareType!
-    var params: [String: Any]!
+    var entity: GeneralShareEntity!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var wechatButton: UIButton!
@@ -42,11 +42,11 @@ class ShareSheetViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var actionSheetView: UIView!
     @IBAction func wechatButtonDidTapped(_ sender: UIButton) {
         slideOut()
-        delegate.shareToWechat(with: params, type: type)
+        delegate.shareToWechat(with: entity, type: type)
     }
     @IBAction func momentButtonDidTapped(_ sender: UIButton) {
         slideOut()
-        delegate.shareToMoment(with: params, type: type)
+        delegate.shareToMoment(with: entity, type: type)
     }
     @IBOutlet weak var cancelButton: UIButton!
     @IBAction func cancelButtonDidTapped(_ sender: UIButton) {
@@ -93,15 +93,15 @@ class ShareSheetViewController: UIViewController, UIGestureRecognizerDelegate {
         UIView.setAnimationDelegate(self)
         UIView.setAnimationDidStop(#selector(animationDidStop(animationID:finished:context:)))
 
-        actionSheetView.frame.origin = CGPoint(x: 0.0, y: view.bounds.size.height)
-        cancelButton.frame.origin = CGPoint(x: 0.0, y: view.bounds.size.height)
+        actionSheetView.frame.origin = CGPoint(x: 10.0, y: view.bounds.size.height)
+        cancelButton.frame.origin = CGPoint(x: 10.0, y: view.bounds.size.height)
 
         UIView.commitAnimations()
     }
     
     func slideIn() {
-        actionSheetView.frame.origin = CGPoint(x: 0.0, y: view.bounds.size.height)
-        cancelButton.frame.origin = CGPoint(x: 0.0, y: view.bounds.size.height)
+        actionSheetView.frame.origin = CGPoint(x: 10.0, y: view.bounds.size.height)
+        cancelButton.frame.origin = CGPoint(x: 10.0, y: view.bounds.size.height)
 
         let animation = CATransition()
         animation.duration = 0.5
