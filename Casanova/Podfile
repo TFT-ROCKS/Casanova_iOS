@@ -13,5 +13,13 @@ target 'Casanova' do
   pod 'Down'
   pod 'Firebase/Core'
   pod 'IDZSwiftCommonCrypto', '~> 0.9.1'
-  pod 'WechatOpenSDK'
+  
+  # U-Share SDK UI模块（分享面板，建议添加）
+  pod ‘UMengUShare/UI’
+  # 集成微信(精简版0.2M)
+  pod ‘UMengUShare/Social/ReducedWeChat'
+  # 集成邮件
+  pod ‘UMengUShare/Social/Email'
+  # 集成短信
+  pod ‘UMengUShare/Social/SMS'
 end

@@ -8,6 +8,6 @@
 
 import Foundation
 
-class GeneralShareEntity {
+class GeneralShareEntity: NSObject {
     // super class
 }

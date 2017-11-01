@@ -85,6 +85,7 @@ class AnswerDetailViewController: UIViewController {
         addConstraints()
         setTitle(title: "答案详情")
         setButtons()
+        preDefinePlatforms()
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -791,36 +792,60 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     }
 }
 
-extension AnswerDetailViewController: ShareSheetViewControllerDelegate {
+extension AnswerDetailViewController {
+    func preDefinePlatforms() {
+        UMSocialUIManager.setPreDefinePlatforms(
+            [NSNumber(integerLiteral:UMSocialPlatformType.wechatSession.rawValue),
+             NSNumber(integerLiteral:UMSocialPlatformType.wechatTimeLine.rawValue),
+             NSNumber(integerLiteral:UMSocialPlatformType.wechatFavorite.rawValue),
+             NSNumber(integerLiteral:UMSocialPlatformType.sms.rawValue),
+             NSNumber(integerLiteral:UMSocialPlatformType.email.rawValue)]
+        )
+    }
+    
     func shareButtonClicked(_ sender: UIBarButtonItem) {
-        let answerToWeChatEntity = AnswerToWeChatEntity(title: topic.title,
-                                                        description: answer.user.username,
-                                                        image: UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")!,
-//                                                        musicUrl: "https://tft.rocks/topic/\(topic.id)#\(answer.id)",
-            musicUrl: "http://www.cornell.edu/",
-            musicDataUrl: answer.audioURL!)
-        let shareSheetVC = ShareSheetViewController.instantiate(with: "分享这个答案", delegate: self, type: .answer, entity: answerToWeChatEntity)
-        present(shareSheetVC, animated: false, completion: nil)
+        UMSocialSwiftInterface.showShareMenuViewInWindowWithPlatformSelectionBlock(selectionBlock: {(platformType, userinfo) in
+            var entity: GeneralShareEntity!
+            switch platformType {
+            case .wechatTimeLine:
+                entity = AnswerToWeChatTimeLineEntity(topic: self.topic, answer: self.answer)
+            case .wechatSession, .wechatFavorite, .sms, .email:
+                entity = AnswerToWeChatSessionEntity(topic: self.topic, answer: self.answer)
+            default:
+                break
+            }
+            self.shareWebPage(withPlatformType: platformType, withEntity: entity)
+        })
     }
     
-    // MARK: - ShareSheetViewControllerDelegate
-    func shareToWechat(with entity: GeneralShareEntity, type: ShareType) {
-        switch type {
-        case .answer:
-            let wm = WeChatManager.shared
-            wm.scene = WXSceneSession
-            wm.sendMusicContent(entity: entity)
-//            wm.sendLinkContent(entity: entity)
+    // Share webpage
+    func shareWebPage(withPlatformType platformType: UMSocialPlatformType, withEntity entity: GeneralShareEntity) {
+        let messageObject = UMSocialMessageObject()
+        var shareObject: UMShareWebpageObject!
+        if entity.isKind(of: AnswerToWeChatSessionEntity.self) {
+            let entity = entity as! AnswerToWeChatSessionEntity
+            shareObject = UMShareWebpageObject.shareObject(withTitle: entity.title, descr: entity.desc, thumImage: entity.image)
+            shareObject?.webpageUrl = entity.webpageUrl
+        } else if entity.isKind(of: AnswerToWeChatTimeLineEntity.self) {
+            let entity = entity as! AnswerToWeChatTimeLineEntity
+            shareObject = UMShareWebpageObject.shareObject(withTitle: entity.title, descr: entity.desc, thumImage: entity.image)
+            shareObject?.webpageUrl = entity.webpageUrl
         }
+        messageObject.shareObject = shareObject
+        UMSocialSwiftInterface.share(plattype: platformType, messageObject: messageObject, viewController: self, completion: {(resp, error) in
+            if error != nil {
+                self.showAlert(withError: error!)
+            }
+        })
     }
     
-    func shareToMoment(with entity: GeneralShareEntity, type: ShareType) {
-        switch type {
-        case .answer:
-            let wm = WeChatManager.shared
-            wm.scene = WXSceneTimeline
-//            wm.sendMusicContent(entity: entity)
-            wm.sendLinkContent(entity: entity)
-        }
+    func showAlert(withError error: Error) {
+        let alertController = UIAlertController(title: "Error Found", message: "error: \(error.localizedDescription)", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

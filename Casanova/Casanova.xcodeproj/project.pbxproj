@@ -60,12 +60,12 @@
 		808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F81F71967000ED5526 /* TFTicons_avator_5.png */; };
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
-		809FF7801FA721E4003F53DC /* ShareSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
-		80AAA3AC1FA84FE8001251E8 /* WeChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */; };
-		80AAA3AE1FA8572E001251E8 /* AnswerToWeChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */; };
+		80AAA3AE1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */; };
 		80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */; };
+		80AAA3B31FA99528001251E8 /* UMSocialSwiftInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3B21FA99528001251E8 /* UMSocialSwiftInterface.swift */; };
+		80AAA3B51FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3B41FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift */; };
 		80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313981F1B35B4001CFDC7 /* Answer.swift */; };
 		80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B313991F1B35B4001CFDC7 /* Comment.swift */; };
 		80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */; };
@@ -154,12 +154,12 @@
 		808B21F81F71967000ED5526 /* TFTicons_avator_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_5.png; sourceTree = "<group>"; };
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
-		809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
-		80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeChatManager.swift; sourceTree = "<group>"; };
-		80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatEntity.swift; sourceTree = "<group>"; };
+		80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatSessionEntity.swift; sourceTree = "<group>"; };
 		80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralShareEntity.swift; sourceTree = "<group>"; };
+		80AAA3B21FA99528001251E8 /* UMSocialSwiftInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UMSocialSwiftInterface.swift; sourceTree = "<group>"; };
+		80AAA3B41FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatTimeLineEntity.swift; sourceTree = "<group>"; };
 		80B313981F1B35B4001CFDC7 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		80B313991F1B35B4001CFDC7 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		80B3139A1F1B35B4001CFDC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 				807BF5CB1F29B275000451FA /* TagManager.swift */,
 				80C2AA0D1F737F98001F298D /* OSSManager.swift */,
 				8038E3C11F8ADE9A000F041F /* CryptoManager.swift */,
-				80AAA3AB1FA84FE8001251E8 /* WeChatManager.swift */,
+				80AAA3B21FA99528001251E8 /* UMSocialSwiftInterface.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -300,7 +300,6 @@
 				805EC8901F418A16005197DF /* ActivitiesViewController.swift */,
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
-				809FF77F1FA721E4003F53DC /* ShareSheetViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -427,7 +426,8 @@
 		80AAA3AF1FA85735001251E8 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				80AAA3AD1FA8572E001251E8 /* AnswerToWeChatEntity.swift */,
+				80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */,
+				80AAA3B41FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift */,
 				80AAA3B01FA858E5001251E8 /* GeneralShareEntity.swift */,
 			);
 			name = Entities;
@@ -668,7 +668,6 @@
 				80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
-				80AAA3AC1FA84FE8001251E8 /* WeChatManager.swift in Sources */,
 				80826CEC1F6245D600956E03 /* AnswerDetailToolBar.swift in Sources */,
 				805EC8911F418A16005197DF /* ActivitiesViewController.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
@@ -679,14 +678,14 @@
 				80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
+				80AAA3B31FA99528001251E8 /* UMSocialSwiftInterface.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
 				803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,
-				80AAA3AE1FA8572E001251E8 /* AnswerToWeChatEntity.swift in Sources */,
+				80AAA3AE1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift in Sources */,
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
-				809FF7801FA721E4003F53DC /* ShareSheetViewController.swift in Sources */,
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */,
@@ -698,6 +697,7 @@
 				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
+				80AAA3B51FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift in Sources */,
 				80826CF21F62465800956E03 /* AudioControlView.swift in Sources */,
 				80FB457F1F4786D40034D525 /* UIColor+Addition.swift in Sources */,
 				800122C61F1EDCCF00F185AE /* TopicManager.swift in Sources */,

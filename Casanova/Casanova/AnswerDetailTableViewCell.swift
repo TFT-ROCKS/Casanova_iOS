@@ -24,7 +24,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var commentButton: UIButton!
     var commentCountLabel: UILabel!
     var audioButton: UIButton?
-    var answerTitleLabel: UILabel!
+    var answerTitleTextView: UITextView!
     var trashButton: UIButton!
     
     var mode: AnswerMode!
@@ -38,6 +38,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     }
     
     var bottomConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint!
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -55,7 +56,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeButton = UIButton(frame: .zero)
         commentCountLabel = UILabel(frame: .zero)
         commentButton = UIButton(frame: .zero)
-        answerTitleLabel = UILabel(frame: .zero)
+        answerTitleTextView = UITextView(frame: .zero)
         trashButton = UIButton(frame: .zero)
         
         contentView.addSubview(answererButton)
@@ -65,7 +66,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         contentView.addSubview(likeButton)
         contentView.addSubview(commentCountLabel)
         contentView.addSubview(commentButton)
-        contentView.addSubview(answerTitleLabel)
+        contentView.addSubview(answerTitleTextView)
         contentView.addSubview(trashButton)
         
         answererButton.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +76,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
         commentCountLabel.translatesAutoresizingMaskIntoConstraints = false
         commentButton.translatesAutoresizingMaskIntoConstraints = false
-        answerTitleLabel?.translatesAutoresizingMaskIntoConstraints = false
+        answerTitleTextView?.translatesAutoresizingMaskIntoConstraints = false
         trashButton.translatesAutoresizingMaskIntoConstraints = false
         
         // MARK: - Constraints
@@ -148,10 +149,10 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
             likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         }
         
-        answerTitleLabel.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
-        answerTitleLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
-        answerTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        bottomConstraint = answerTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
+        answerTitleTextView.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
+        answerTitleTextView.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
+        answerTitleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
+        bottomConstraint = answerTitleTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
         bottomConstraint.isActive = true
         
         answererNameLabel.font = UIFont.mr(size: 14)
@@ -167,8 +168,9 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
         commentButton.setImage(#imageLiteral(resourceName: "cmt_btn"), for: .normal)
         
-        answerTitleLabel.numberOfLines = 0
-        answerTitleLabel.textAlignment = .left
+        answerTitleTextView.textAlignment = .left
+        answerTitleTextView.isEditable = false
+        answerTitleTextView.isScrollEnabled = false
         
         answererButton.layer.cornerRadius = 15
         answererButton.layer.masksToBounds = true
@@ -198,14 +200,16 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     
         switch mode! {
         case .full:
-            answerTitleLabel.attributedText = AttrString.answerAttrString(answer.title)
+            answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title)
         case .short:
+            answerTitleTextView.isSelectable = false
+            answerTitleTextView.isUserInteractionEnabled = false
             // substring answer to 50 words
             let components = answer.title.components(separatedBy: " ")
             if components.count < 50 {
-                answerTitleLabel.attributedText = AttrString.answerAttrString(answer.title)
+                answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title)
             } else {
-                answerTitleLabel.attributedText = AttrString.answerAttrString(components[0...50].joined(separator: " ") + " ...")
+                answerTitleTextView.attributedText = AttrString.answerAttrString(components[0...50].joined(separator: " ") + " ...")
             }
         }
         
