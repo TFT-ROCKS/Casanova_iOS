@@ -4,4 +4,4 @@
 
 #import <UMSocialCore/UMSocialCore.h>
 #import <UShareUI/UShareUI.h>
-#define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
+#define USHARE_APPKEY @"59fc372db27b0a734f000072"

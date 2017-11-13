@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UMSocialGlobal.shareInstance().isClearCacheWhenGetUserInfo = false
         
         /* 设置友盟appkey */
-        UMSocialManager.default().umSocialAppkey = USHARE_DEMO_APPKEY
+        UMSocialManager.default().umSocialAppkey = USHARE_APPKEY
         
         configUSharePlatforms()
         
