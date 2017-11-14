@@ -60,6 +60,7 @@
 		808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F81F71967000ED5526 /* TFTicons_avator_5.png */; };
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
+		8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
 		80AAA3AE1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */; };
@@ -154,6 +155,7 @@
 		808B21F81F71967000ED5526 /* TFTicons_avator_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_5.png; sourceTree = "<group>"; };
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
+		8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerNoteTableViewCell.swift; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
 		80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatSessionEntity.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */,
 				80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */,
 				80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */,
+				8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */,
 			);
 			name = AnswerTableViewCell;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				807BF5CE1F29B291000451FA /* AnswerManager.swift in Sources */,
 				802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */,
 				805EC8931F418A25005197DF /* ProfileViewController.swift in Sources */,
+				8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */,
 				8063DE0E1F21277E00E22E9B /* TimeManager.swift in Sources */,
 				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,

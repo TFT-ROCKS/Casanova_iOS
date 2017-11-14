@@ -13,6 +13,7 @@ class Answer {
     var title: String
     var ref: String?
     var audioURL: String?
+    var noteURL: String?
     var updatedAt: String
     var user: User
     var likes: [Like]
@@ -22,6 +23,7 @@ class Answer {
     init(id: Int,
          title: String,
          audioURL: String?,
+         noteURL: String?,
          ref: String?,
          updatedAt: String,
          user: User,
@@ -33,6 +35,7 @@ class Answer {
         self.title = title
         self.ref = ref
         self.audioURL = audioURL
+        self.noteURL = noteURL
         self.updatedAt = updatedAt
         
         self.user = user
@@ -57,6 +60,8 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
+        // note url
+        let noteURL = json["note_url"] as? String
         // user
         guard let user = User(json: userJSON) else { return nil }
         // likes
@@ -76,7 +81,7 @@ class Answer {
             }
         }
         // init
-        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil)
     }
     
     convenience init?(fromCreateJSON json: [String: Any]) {
@@ -105,7 +110,7 @@ class Answer {
             }
         }
         // init
-        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil)
     }
     
     // User Answers vs Liked Answers: same schema
@@ -125,6 +130,8 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
+        // note url
+        let noteURL = json["note_url"] as? String
         // topic
         var topic: Topic? = nil
         if let topicJSON = json["Topic"] as? [String: Any] {
@@ -149,6 +156,6 @@ class Answer {
             }
         }
         // init
-        self.init(id: id, title: title, audioURL: audioURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
     }
 }

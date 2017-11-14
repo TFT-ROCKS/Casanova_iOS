@@ -201,6 +201,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         switch mode! {
         case .full:
             answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title)
+            
         case .short:
             answerTitleTextView.isSelectable = false
             answerTitleTextView.isUserInteractionEnabled = false

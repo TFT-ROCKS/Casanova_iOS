@@ -66,6 +66,7 @@ struct ReuseIDs {
         }
     }
     struct AnswerDetailVC {
+        static let answerNoteTableViewCell = "AnswerNoteTableViewCell"
         static let commentTableViewCell = "CommentDefaultCell"
         static let commentTableViewCellForCurrentUser = "CommentTableViewCellForCurrentUser"
     }

@@ -22,7 +22,7 @@ class AnswerDetailViewController: UIViewController {
         }
     }
     
-    var cellInUse = -1
+    var cellInUse: IndexPath!
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
     
@@ -431,6 +431,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     func registerCustomCell() {
         tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell)
         tableView.register(AnswerDetailTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell)
+        tableView.register(AnswerNoteTableViewCell.self, forCellReuseIdentifier: ReuseIDs.AnswerDetailVC.answerNoteTableViewCell)
         tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell)
         tableView.register(CommentTableViewCell.self, forCellReuseIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser)
         let loadMoreTableViewCell = UINib(nibName: ReuseIDs.HomeVC.View.loadMoreTableViewCell, bundle: nil)
@@ -455,7 +456,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 { // Answer section
-            return 1
+            return answer.noteURL == nil ? 1 : 2
         } else { // Comments section
             return comments.count
         }
@@ -477,33 +478,50 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 { // Answer section
-            
-            var cell: AnswerDetailTableViewCell
-            
-            if answer.audioURL == nil {
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
-            }
-            cell.mode = .full
-            cell.answer = answer
-            let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
-            cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
-            cell.likeButton.setImage(img, for: .normal)
-            cell.audioButton?.tag = indexPath.row
-            cell.audioButton?.isEnabled = true
-            cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
-            if indexPath.row != cellInUse {
-                cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
-            } else {
+            if indexPath.row == 0 {
+                var cell: AnswerDetailTableViewCell
+                if answer.audioURL == nil {
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
+                } else {
+                    cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
+                }
+                cell.mode = .full
+                cell.answer = answer
+                let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
+                cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
+                cell.likeButton.setImage(img, for: .normal)
+                cell.audioButton?.isEnabled = true
+                cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
                 if audioPlayer != nil && audioControlBar.isPlaying {
-                    cell.audioButton?.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                    if cellInUse == IndexPath(row: 0, section: 0) {
+                        cell.audioButton?.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                    } else {
+                        cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+                    }
                 } else {
                     cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
                 }
+                
+                return cell
+            } else if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.answerNoteTableViewCell, for: indexPath) as! AnswerNoteTableViewCell
+                cell.answer = answer
+                cell.noteAudioButton.isEnabled = true
+                cell.noteAudioButton.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
+                if audioPlayer != nil && audioControlBar.isPlaying {
+                    if cellInUse == IndexPath(row: 1, section: 0) {
+                        cell.noteAudioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                    } else {
+                        cell.noteAudioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+                    }
+                } else {
+                    cell.noteAudioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+                }
+                
+                return cell
+            } else {
+                return UITableViewCell()
             }
-            return cell
-            
         } else { // Comments section
             let comment = comments[indexPath.row]
             var cell: CommentTableViewCell? = nil
@@ -605,15 +623,18 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func audioButtonTapped(_ sender: UIButton) {
+        let touchPoint = sender.convert(CGPoint.zero, to: tableView)
+        let indexPath = tableView.indexPathForRow(at: touchPoint)
+        
         if isDownloading { return }
         
-        if cellInUse == sender.tag {
+        if cellInUse == indexPath {
             let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
             sender.setImage(img, for: .normal)
             audioButtonTappedOnBar()
             return
         }
-        if cellInUse != -1 {
+        if cellInUse != nil {
             // reset previous cell in use
             
             if audioPlayer != nil {
@@ -626,8 +647,20 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             }
             
         }
-        if let url = URL(string: answer.audioURL ?? "") {
-            cellInUse = sender.tag
+        var url: URL?
+        if indexPath?.section == 0 {
+            if indexPath?.row == 0 {
+                // answer audio
+                url = URL(string: answer.audioURL ?? "")
+            } else if indexPath?.row == 1 {
+                // note audio
+                url = URL(string: answer.noteURL ?? "")
+            }
+        } else if indexPath?.section == 1 {
+            // TODO: comment audio
+        }
+        if let url = url {
+            cellInUse = indexPath
             sender.isEnabled = false
             downloadFileFromURL(url, sender: sender)
         }
@@ -676,14 +709,12 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
                 self.audioControlBar.audioBar.value = 0.0
                 self.audioControlBar.playTimeLabel.text = "00:00"
                 self.audioControlBar.audioBar.isEnabled = true
-                self.audioControlBar.updateUI(withTag: self.cellInUse, answer: self.answer)
-            }
-            
-            if audioControlBar.isHidden {
-                audioControlBar.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-            }
-            
-            Utils.runOnMainThread {
+                self.audioControlBar.updateUI(withIndexPath: self.cellInUse, answer: self.answer)
+                
+                if self.audioControlBar.isHidden {
+                    self.audioControlBar.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
+                }
+                
                 self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
             }
             
@@ -713,7 +744,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             audioPlayer.stop()
             audioPlayer = nil
         }
-        cellInUse = -1
+        cellInUse = nil
         if timer != nil {
             timer.invalidate()
         }

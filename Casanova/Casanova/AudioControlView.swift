@@ -17,6 +17,7 @@ class AudioControlView: UIView, UIWebViewDelegate {
     
     weak var delegate: AudioControlViewDelegate!
     var cellInUse: Int = -1
+    var indexPathInUse: IndexPath!
     var isPlaying: Bool = false
 
     @IBOutlet var contentView: UIView!
@@ -72,4 +73,19 @@ class AudioControlView: UIView, UIWebViewDelegate {
         }
     }
 
+    func updateUI(withIndexPath indexPath: IndexPath?, answer: Answer) {
+        if indexPathInUse != indexPath {
+            indexPathInUse = indexPath
+            // Update UI
+            
+            // avator
+            let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+            profileView.image = avator
+            
+            usernameLabel.text = answer.user.username
+            
+            isPlaying = true
+            audioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+        }
+    }
 }
