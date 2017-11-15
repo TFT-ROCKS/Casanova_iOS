@@ -42,6 +42,10 @@ struct Tags {
     }
 }
 
+struct StoryboadIDs {
+    static let audioRecordViewController = "AudioRecordViewController"
+}
+
 struct ReuseIDs {
     struct HomeVC {
         struct View {

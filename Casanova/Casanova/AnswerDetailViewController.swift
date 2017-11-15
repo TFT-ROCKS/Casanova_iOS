@@ -198,9 +198,22 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
         likeButtonTapped(sender)
     }
     
+    func recordButtonClickedOnToolBar(_ sender: UIButton) {
+        presentCommentRecordViewController()
+    }
+    
     func commentButtonClickedOnToolBar() {
         postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
         postTextView.textView.becomeFirstResponder()
+    }
+}
+
+// MARK: - Comment Audio Record View Controller
+extension AnswerDetailViewController {
+    func presentCommentRecordViewController() {
+        let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: StoryboadIDs.audioRecordViewController) as! AudioRecordViewController
+        vc.answer = answer
+        present(vc, animated: true, completion: nil)
     }
 }
 

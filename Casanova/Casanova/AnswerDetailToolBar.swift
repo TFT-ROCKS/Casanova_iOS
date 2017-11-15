@@ -11,6 +11,7 @@ import UIKit
 protocol AnswerDetailToolBarDelegate: class {
     func questionButtonClickedOnToolBar()
     func likeButtonClickedOnToolBar(_ sender: UIButton)
+    func recordButtonClickedOnToolBar(_ sender: UIButton)
     func commentButtonClickedOnToolBar()
 }
 
@@ -54,6 +55,11 @@ class AnswerDetailToolBar: UIView {
         isLike = !isLike
         delegate.likeButtonClickedOnToolBar(sender)
     }
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var recordLabel: UILabel!
+    @IBAction func recordButtonClicked(_ sender: UIButton) {
+        delegate.recordButtonClickedOnToolBar(sender)
+    }
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var commentLabel: UILabel!
     @IBAction func commentButtonClicked(_ sender: UIButton) {
@@ -79,11 +85,13 @@ class AnswerDetailToolBar: UIView {
         // text color
         questionLabel.textColor = UIColor.tftCoolGrey
         likeLabel.textColor = UIColor.tftCoolGrey
+        recordLabel.textColor = UIColor.tftCoolGrey
         commentLabel.textColor = UIColor.tftCoolGrey
         
         // button image mode
         questionButton.imageView?.contentMode = .scaleAspectFit
         likeButton.imageView?.contentMode = .scaleAspectFit
+        recordButton.imageView?.contentMode = .scaleAspectFit
         commentButton.imageView?.contentMode = .scaleAspectFit
     }
 

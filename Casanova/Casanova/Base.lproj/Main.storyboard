@@ -616,6 +616,72 @@
             </objects>
             <point key="canvasLocation" x="-839.13043478260875" y="-443.47826086956525"/>
         </scene>
+        <!--Audio Record View Controller-->
+        <scene sceneID="tOk-zY-ls0">
+            <objects>
+                <viewController storyboardIdentifier="AudioRecordViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="brY-3P-a6P" customClass="AudioRecordViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6e5-8D-Vnt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fR-JU-fL9">
+                                <rect key="frame" x="20" y="30" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2Ce-Xc-FaJ"/>
+                                    <constraint firstAttribute="width" constant="30" id="jUC-VK-48u"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="nav_back"/>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="brY-3P-a6P" eventType="touchUpInside" id="eRY-Xu-YFk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="录音" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-nn-LCM">
+                                <rect key="frame" x="186" y="34.666666666666664" width="34.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7id-uu-hUj">
+                                <rect key="frame" x="15" y="80" width="384" height="506"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">I disagree. First, TV and video game use correlates with increased obesity. Children who are allowed a device in their bedrooms have 30% increased incidence of obesity. 30% of children with obesity will develop diabetes, and obese individuals are at higher risk for early stroke and heart attack, gravely shortening life expectancy. Largely due to obesity, 21st century children may be the first generation many of whom will not outlive their parents. Second, violent media content can cause child aggression. Young children are increasingly exposed to rising incidence of physical and sexual violence in today’s media. “Grand Theft Auto V” portrays explicit sex, murder, rape, torture and mutilation, as do many movies and TV shows. The U.S. has categorized media violence as a Public Health Risk due to causal impact on child aggression. </mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-mC-orI" customClass="AudioRecordView" customModule="Casanova" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="586" width="414" height="150"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="NXA-iX-ubf"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="p0j-mC-orI" firstAttribute="leading" secondItem="eCe-i9-5jf" secondAttribute="leading" id="9Vb-hx-XGo"/>
+                            <constraint firstItem="8fR-JU-fL9" firstAttribute="centerY" secondItem="xdj-nn-LCM" secondAttribute="centerY" id="9uk-fi-exz"/>
+                            <constraint firstItem="8fR-JU-fL9" firstAttribute="leading" secondItem="eCe-i9-5jf" secondAttribute="leading" constant="20" id="DAG-oJ-wUG"/>
+                            <constraint firstItem="eCe-i9-5jf" firstAttribute="trailing" secondItem="p0j-mC-orI" secondAttribute="trailing" id="Jmq-mA-dN0"/>
+                            <constraint firstItem="8fR-JU-fL9" firstAttribute="top" secondItem="eCe-i9-5jf" secondAttribute="top" constant="10" id="YPR-tg-5ZQ"/>
+                            <constraint firstItem="7id-uu-hUj" firstAttribute="top" secondItem="8fR-JU-fL9" secondAttribute="bottom" constant="20" id="bl3-mX-Ml8"/>
+                            <constraint firstItem="eCe-i9-5jf" firstAttribute="bottom" secondItem="p0j-mC-orI" secondAttribute="bottom" id="lkZ-VW-3Kf"/>
+                            <constraint firstItem="eCe-i9-5jf" firstAttribute="trailing" secondItem="7id-uu-hUj" secondAttribute="trailing" constant="15" id="n8o-Kh-jDD"/>
+                            <constraint firstItem="p0j-mC-orI" firstAttribute="top" secondItem="7id-uu-hUj" secondAttribute="bottom" id="nl7-0x-nqL"/>
+                            <constraint firstItem="7id-uu-hUj" firstAttribute="leading" secondItem="eCe-i9-5jf" secondAttribute="leading" constant="15" id="rzF-Yo-Nmn"/>
+                            <constraint firstItem="xdj-nn-LCM" firstAttribute="leading" secondItem="8fR-JU-fL9" secondAttribute="trailing" constant="136" id="vrb-Pn-J0P"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eCe-i9-5jf"/>
+                    </view>
+                    <connections>
+                        <outlet property="audioRecordView" destination="p0j-mC-orI" id="ojy-W7-nrD"/>
+                        <outlet property="mainTitleLabel" destination="xdj-nn-LCM" id="KoC-7O-5QD"/>
+                        <outlet property="textView" destination="7id-uu-hUj" id="oES-vl-ctV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="klr-9L-UD6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="253.62318840579712" y="-443.47826086956525"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="nQd-CB-M0H">
             <objects>
