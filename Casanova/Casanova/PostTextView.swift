@@ -29,23 +29,44 @@ class PostTextView: UIView {
         }
         // post comment
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
-        CommentManager.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
-            if error == nil {
-                // success
-                self.answer.comments.insert(comment!, at: 0)
-                self.delegate.reloadTableView()
-                
-                // remove text
-                self.textView.text = ""
-                self.placeholderLabel.text = "评论这个答案"
-                self.placeholderLabel.isHidden = false
-                self.textView.resignFirstResponder()
-                self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
-            }
-            self.postButton.setAttributedTitle(AttrString.titleAttrString("发布", textColor: UIColor.brandColor), for: .normal)
-            self.postButton.isEnabled = true
-        })
+        if let audioUrl = audioUrl {
+            // comment with audio url
+            CommentManager.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
+                if error == nil {
+                    self.answer.comments.insert(comment!, at: 0)
+                    self.success()
+                }
+                self.whatever()
+            })
+        } else {
+            // comment without audio url
+            CommentManager.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
+                if error == nil {
+                    self.answer.comments.insert(comment!, at: 0)
+                    self.success()
+                }
+                self.whatever()
+            })
+        }
     }
+    
+    func success() {
+        // success
+        self.delegate.reloadTableView()
+        
+        // remove text
+        self.textView.text = ""
+        self.placeholderLabel.text = "评论这个答案"
+        self.placeholderLabel.isHidden = false
+        self.textView.resignFirstResponder()
+        self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
+    }
+    
+    func whatever() {
+        self.postButton.setAttributedTitle(AttrString.titleAttrString("发布", textColor: UIColor.brandColor), for: .normal)
+        self.postButton.isEnabled = true
+    }
+    
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var toggleButton: UIButton!
     @IBAction func toggleButtonTapped(_ sender: UIButton) {
@@ -61,6 +82,7 @@ class PostTextView: UIView {
     }
     
     weak var answer: Answer!
+    var audioUrl: String?
     weak var delegate: PostTextViewDelegate!
     var isExpanded: Bool = false
     

@@ -21,7 +21,7 @@ class CommentTableViewCell: UITableViewCell {
 //    var likeCountLabel: UILabel!
 //    var audioTimeLabel: UILabel?
 //    var audioSlider: UISlider?
-//    var audioButton: UIButton?
+    var audioButton: UIButton?
     var commentTitleLabel: UILabel!
     var menuButton: UIButton?
     func menuButtonTapped(_ sender: UIButton) {
@@ -189,6 +189,24 @@ class CommentTableViewCell: UITableViewCell {
         commenterButton.image = avator
         commentTitleLabel.attributedText = AttrString.commentAttrString(comment.title)
         
+        // audio button constrains
+        if comment.audioUrl != nil {
+            audioButton = UIButton(frame: .zero)
+            audioButton!.tag = 199
+            contentView.viewWithTag(199)?.removeFromSuperview()
+            contentView.addSubview(audioButton!)
+            audioButton!.translatesAutoresizingMaskIntoConstraints = false
+            audioButton!.heightAnchor.constraint(equalToConstant: 24).isActive = true
+            audioButton!.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            audioButton!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+            if menuButton != nil {
+                audioButton!.trailingAnchor.constraint(equalTo: menuButton!.leadingAnchor, constant: -8).isActive = true
+            } else {
+                audioButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+            }
+        } else {
+            contentView.viewWithTag(199)?.removeFromSuperview()
+        }
     }
 }
 

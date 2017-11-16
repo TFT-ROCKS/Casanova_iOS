@@ -21,13 +21,19 @@ class Math {
     }
 }
 
-class AnimatedCircleView: UIView, CAAnimationDelegate {
+protocol AnimatedCircleViewDelegate: class {
+    func animatedCircleViewDidTapped(_ tap: UITapGestureRecognizer)
+}
+
+class AnimatedCircleView: UIView, CAAnimationDelegate, UIGestureRecognizerDelegate {
     
     let percentComplete: CGFloat = 100
     
     var filledLayer: CAShapeLayer!
     var strokeColor: CGColor!
     var fillColor: CGColor!
+    
+    weak var delegate: AnimatedCircleViewDelegate!
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -38,6 +44,11 @@ class AnimatedCircleView: UIView, CAAnimationDelegate {
         
         self.strokeColor = strokeColor
         self.fillColor = fillColor
+        
+        // tap gesture added to content view
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(self.viewTapped(_:)))
+        tgr.delegate = self
+        addGestureRecognizer(tgr)
     }
     
     override func layoutSubviews() {
@@ -83,6 +94,10 @@ class AnimatedCircleView: UIView, CAAnimationDelegate {
         filledLayer.isHidden = true
     }
     
+    func viewTapped(_ tap: UITapGestureRecognizer) {
+        delegate.animatedCircleViewDidTapped(tap)
+    }
+    
     func animateForRecording(duration: Float, toValue: Float) {
         let endAngle = Math.percentToRadians(percentComplete)
         
@@ -123,7 +138,7 @@ class AnimatedCircleView: UIView, CAAnimationDelegate {
     }
     
     func animateForUploading(with percent: Float) {
-        animateForRecording(duration: 0.00001, toValue: percent)
+        animateForRecording(duration: 0.0001, toValue: percent)
     }
     
 }

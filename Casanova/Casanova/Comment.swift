@@ -13,11 +13,13 @@ class Comment {
     var title: String
     var createdAt: String
     var user: User
+    var audioUrl: String?
     
     init?(id: Int,
           title: String,
           createdAt: String,
-          user: User?) {
+          user: User?,
+          audioUrl: String?) {
         
         guard let user = user else {
             return nil
@@ -27,6 +29,7 @@ class Comment {
         self.title = title
         self.createdAt = createdAt
         self.user = user
+        self.audioUrl = audioUrl
     }
     
     convenience init?(fromJSON json: [String: Any]) {
@@ -37,6 +40,8 @@ class Comment {
             else {
                 return nil
         }
-        self.init(id: id, title: title, createdAt: createdAt, user: User(json: userJSON))
+        // audio url
+        let audioURL = json["audioUrl"] as? String
+        self.init(id: id, title: title, createdAt: createdAt, user: User(json: userJSON), audioUrl: audioURL)
     }
 }

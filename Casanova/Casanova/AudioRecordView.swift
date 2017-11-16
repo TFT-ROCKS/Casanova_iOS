@@ -8,7 +8,13 @@
 
 import UIKit
 
-class AudioRecordView: UIView {
+protocol AudioRecordViewDelegate: class {
+    func startRecord()
+    func stopRecord()
+    func finishRecord(success: Bool)
+}
+
+class AudioRecordView: UIView, AnimatedCircleViewDelegate {
     // sub views
     var recordCircleView: AnimatedCircleView!
     var recordImageView: UIImageView!
@@ -17,8 +23,13 @@ class AudioRecordView: UIView {
     var label: UILabel!
     
     // vars
-    var isRecording: Bool = true
-    var count = 0
+    var isRecording: Bool = false
+    var recordDuration: Int = 0 // in seconds
+    var timeRemained: Int = 0
+    var recordTimer: Timer!
+    
+    // delegate
+    weak var delegate: AudioRecordViewDelegate!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,21 +39,21 @@ class AudioRecordView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func commonInit() {
+    func config() {
         // config
-        label.font = UIFont.pfr(size: 18)
+        label.font = UIFont.pfr(size: 17)
         label.textColor = UIColor.tftCoolGrey
         label.textAlignment = .center
-        
-        // hide upload view
-        uploadCircleView.isHidden = true
-        uploadImageView.isHidden = true
         
         // image
         recordImageView.image = #imageLiteral(resourceName: "speaking_bar_h")
         recordImageView.contentMode = .scaleAspectFit
-        uploadImageView.image = #imageLiteral(resourceName: "check")
+        uploadImageView.image = #imageLiteral(resourceName: "check_green")
         uploadImageView.contentMode = .scaleAspectFit
+        
+        // delegate
+        uploadCircleView.delegate = self
+        recordCircleView.delegate = self
     }
 
     override func layoutSubviews() {
@@ -58,6 +69,8 @@ class AudioRecordView: UIView {
         addSubview(recordCircleView)
         addSubview(recordImageView)
         addSubview(label)
+        uploadCircleView.addSubview(uploadImageView)
+        recordCircleView.addSubview(recordImageView)
         
         recordCircleView.translatesAutoresizingMaskIntoConstraints = false
         recordImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,25 +98,77 @@ class AudioRecordView: UIView {
         recordImageView.topAnchor.constraint(equalTo: recordCircleView.topAnchor, constant: 19).isActive = true
         recordImageView.bottomAnchor.constraint(equalTo: recordCircleView.bottomAnchor, constant: -19).isActive = true
         
-        label.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 100).isActive = true
         label.heightAnchor.constraint(equalToConstant: 20).isActive = true
         label.centerXAnchor.constraint(equalTo: uploadCircleView.centerXAnchor).isActive = true
         label.topAnchor.constraint(equalTo: uploadCircleView.bottomAnchor, constant: 15).isActive = true
         
-        commonInit()
+        config()
     }
     
-    func animate() {
-//        recordCircleView.animateForRecording(duration: 60, toValue: 1)
-        if #available(iOS 10.0, *) {
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-                DispatchQueue.main.async {
-                    self.count += 1
-                    self.recordCircleView.animateForUploading(with: Float(self.count) / 60.0)
-                }
-            })
+    func animatedCircleViewDidTapped(_ tap: UITapGestureRecognizer) {
+        if isRecording {
+            delegate.stopRecord()
         } else {
-            // Fallback on earlier versions
+            delegate.startRecord()
+        }
+    }
+    
+    func setup(with duration: Int) {
+        recordDuration = duration
+        timeRemained = duration
+        isRecording = false
+        if recordTimer != nil {
+            recordTimer.invalidate()
+            recordTimer = nil
+        }
+        // hide upload view
+        uploadCircleView.isHidden = true
+        uploadImageView.isHidden = true
+        // un-hide record view
+        recordCircleView.isHidden = false
+        // setup label text
+        label.text = "点击开始"
+    }
+    
+    func record() {
+        isRecording = true
+        // label reset time
+        label.text = TimeManager.shared.timeString(time: TimeInterval(recordDuration))
+        // set timer
+        recordTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTimerForRecorder), userInfo: nil, repeats: true)
+        // record animation
+        recordCircleView.animateForRecording(duration: Float(recordDuration), toValue: 1)
+    }
+    
+    func endRecord() {
+        isRecording = false
+        uploadCircleView.isUserInteractionEnabled = false
+        // label text
+        label.text = "正在上传"
+        // timer invalidation
+        recordTimer.invalidate()
+        recordTimer = nil
+        // view hide and show
+        recordCircleView.fadeOut()
+        uploadCircleView.fadeIn()
+    }
+    
+    func upload(with progress: Float) {
+        uploadCircleView.animateForUploading(with: progress)
+    }
+    
+    func finishUploading() {
+        uploadImageView.fadeIn()
+        label.text = "成功上传"
+    }
+    
+    func updateTimerForRecorder() {
+        if timeRemained < 1 {
+            delegate.finishRecord(success: true)
+        } else {
+            timeRemained -= 1
+            label.text = TimeManager.shared.timeString(time: TimeInterval(timeRemained))
         }
     }
 }
