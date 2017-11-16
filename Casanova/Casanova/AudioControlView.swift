@@ -73,16 +73,17 @@ class AudioControlView: UIView, UIWebViewDelegate {
         }
     }
 
-    func updateUI(withIndexPath indexPath: IndexPath?, answer: Answer) {
+    func updateUI(withIndexPath indexPath: IndexPath?, answer: Answer, comment: Comment?) {
         if indexPathInUse != indexPath {
             indexPathInUse = indexPath
             // Update UI
             
             // avator
-            let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+            let user = comment == nil ? answer.user : comment!.user
+            let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
             profileView.image = avator
             
-            usernameLabel.text = answer.user.username
+            usernameLabel.text = user.username
             
             isPlaying = true
             audioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)

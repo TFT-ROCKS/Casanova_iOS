@@ -198,9 +198,28 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
         likeButtonTapped(sender)
     }
     
+    func recordButtonClickedOnToolBar(_ sender: UIButton) {
+        presentCommentRecordViewController()
+    }
+    
     func commentButtonClickedOnToolBar() {
         postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
         postTextView.textView.becomeFirstResponder()
+    }
+}
+
+// MARK: - Comment Audio Record View Controller
+extension AnswerDetailViewController: AudioRecordViewControllerDelegate {
+    func presentCommentRecordViewController() {
+        let vc = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: StoryboadIDs.audioRecordViewController) as! AudioRecordViewController
+        vc.answer = answer
+        vc.delegate = self
+        present(vc, animated: true, completion: nil)
+    }
+    
+    func reloadTableView(comments: [Comment]) {
+        self.comments = comments
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
     }
 }
 
@@ -524,23 +543,39 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             }
         } else { // Comments section
             let comment = comments[indexPath.row]
-            var cell: CommentTableViewCell? = nil
+            var cell: CommentTableViewCell
             if comment.user.id == Environment.shared.currentUser?.id {
                 // current user's comment
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser, for: indexPath) as? CommentTableViewCell
-                cell?.delegate = self
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser, for: indexPath) as! CommentTableViewCell
+                cell.delegate = self
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell, for: indexPath) as? CommentTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCell, for: indexPath) as! CommentTableViewCell
             }
-            cell!.comment = comment
+            cell.comment = comment
+            cell.audioButton?.isEnabled = true
+            cell.audioButton?.addTarget(self, action: #selector(self.audioButtonTapped(_:)), for: .touchUpInside)
+            if audioPlayer != nil && audioControlBar.isPlaying {
+                if cellInUse == IndexPath(row: indexPath.row, section: 1) {
+                    cell.audioButton?.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
+                } else {
+                    cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+                }
+            } else {
+                cell.audioButton?.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+            }
             
-            return cell!
+            return cell
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if let cell = cell as? AnswerDetailTableViewCell {
+        if let cell = cell as? LoadMoreTableViewCell {
+            
+            // Visualize the margin surrounding the table view cell
+            cell.contentView.backgroundColor = UIColor.clear
+            cell.backgroundColor = UIColor.clear
+        } else {
             
             // Visualize the margin surrounding the table view cell
             cell.contentView.backgroundColor = UIColor.clear
@@ -560,33 +595,6 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             
             cell.contentView.addSubview(whiteRoundedView)
             cell.contentView.sendSubview(toBack: whiteRoundedView)
-            
-        } else if let cell = cell as? CommentTableViewCell {
-            
-            // Visualize the margin surrounding the table view cell
-            cell.contentView.backgroundColor = UIColor.clear
-            cell.backgroundColor = UIColor.clear
-            
-            // remove small whiteRoundedView before adding new one
-            cell.viewWithTag(100)?.removeFromSuperview()
-            
-            let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: cellVerticalSpace / 2, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height - cellVerticalSpace / 2))
-            whiteRoundedView.tag = 100
-            whiteRoundedView.layer.cornerRadius = 5.0
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-            whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
-            whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
-            whiteRoundedView.layer.shadowOpacity = 1
-            
-            cell.contentView.addSubview(whiteRoundedView)
-            cell.contentView.sendSubview(toBack: whiteRoundedView)
-            
-        } else if let cell = cell as? LoadMoreTableViewCell {
-            
-            // Visualize the margin surrounding the table view cell
-            cell.contentView.backgroundColor = UIColor.clear
-            cell.backgroundColor = UIColor.clear
         }
     }
     
@@ -648,6 +656,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             
         }
         var url: URL?
+        var isComment: Bool = false
         if indexPath?.section == 0 {
             if indexPath?.row == 0 {
                 // answer audio
@@ -657,16 +666,21 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
                 url = URL(string: answer.noteURL ?? "")
             }
         } else if indexPath?.section == 1 {
-            // TODO: comment audio
+            url = URL(string: comments[(indexPath?.row)!].audioUrl ?? "")
+            isComment = true
         }
         if let url = url {
             cellInUse = indexPath
             sender.isEnabled = false
-            downloadFileFromURL(url, sender: sender)
+            if isComment {
+                downloadFileFromURL(url, sender: sender, comment: comments[(indexPath?.row)!])
+            } else {
+                downloadFileFromURL(url, sender: sender, comment: nil)
+            }
         }
     }
     
-    func downloadFileFromURL(_ url: URL, sender: UIButton) {
+    func downloadFileFromURL(_ url: URL, sender: UIButton, comment: Comment?) {
         isDownloading = true
         // activity indicator
         let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
@@ -677,12 +691,12 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         // end of activity indicator
         var downloadTask: URLSessionDownloadTask
         downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { [weak self] (URL, response, error) -> Void in
-            self?.play(url: URL!, sender: sender)
+            self?.play(url: URL!, sender: sender, comment: comment)
         })
         downloadTask.resume()
     }
     
-    func play(url: URL, sender: UIButton) {
+    func play(url: URL, sender: UIButton, comment: Comment?) {
         
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -709,7 +723,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
                 self.audioControlBar.audioBar.value = 0.0
                 self.audioControlBar.playTimeLabel.text = "00:00"
                 self.audioControlBar.audioBar.isEnabled = true
-                self.audioControlBar.updateUI(withIndexPath: self.cellInUse, answer: self.answer)
+                self.audioControlBar.updateUI(withIndexPath: self.cellInUse, answer: self.answer, comment: comment)
                 
                 if self.audioControlBar.isHidden {
                     self.audioControlBar.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)

@@ -168,12 +168,15 @@ class HomeViewController: UIViewController {
             self.isFetching = false
             self.activityIndicatorView.stopAnimating()
             if error == nil {
+                // shuffle topics
+                var topicsVar = topics!
+                topicsVar.shuffle()
                 // success
                 if self.updateFlag {
-                    self.topics = topics!
+                    self.topics = topicsVar
                     self.updateFlag = false
                 } else {
-                    self.topics.append(contentsOf: topics!)
+                    self.topics.append(contentsOf: topicsVar)
                 }
             } else {
                 // error found
@@ -644,5 +647,20 @@ extension HomeViewController: LoadMoreTableViewCellDelegate {
         indicatorView.startAnimating()
         // Do load more function
         fetchTopics(from: topics.count)
+    }
+}
+
+// Shuffle helper for array
+extension MutableCollection {
+    /// Shuffle the elements of `self` in-place.
+    mutating func shuffle() {
+        // empty and single-element collections don't shuffle
+        if count < 2 { return }
+        
+        for i in indices.dropLast() {
+            let diff = distance(from: i, to: endIndex)
+            let j = index(i, offsetBy: numericCast(arc4random_uniform(numericCast(diff))))
+            swapAt(i, j)
+        }
     }
 }

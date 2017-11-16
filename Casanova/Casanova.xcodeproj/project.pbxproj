@@ -61,6 +61,9 @@
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
 		8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */; };
+		80A14D771FBC2EE2004B9D95 /* AudioRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */; };
+		80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */; };
+		80A14D7C1FBC49BD004B9D95 /* AudioRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */; };
 		80A6C9EF1F497964000CE9FB /* PostTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A6C9EE1F497964000CE9FB /* PostTextView.swift */; };
 		80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A6C9F01F497980000CE9FB /* PostTextView.xib */; };
 		80AAA3AE1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */; };
@@ -156,6 +159,9 @@
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
 		8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerNoteTableViewCell.swift; sourceTree = "<group>"; };
+		80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordView.swift; sourceTree = "<group>"; };
+		80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircleView.swift; sourceTree = "<group>"; };
+		80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordViewController.swift; sourceTree = "<group>"; };
 		80A6C9EE1F497964000CE9FB /* PostTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextView.swift; sourceTree = "<group>"; };
 		80A6C9F01F497980000CE9FB /* PostTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextView.xib; sourceTree = "<group>"; };
 		80AAA3AD1FA8572E001251E8 /* AnswerToWeChatSessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerToWeChatSessionEntity.swift; sourceTree = "<group>"; };
@@ -266,6 +272,7 @@
 				800FEFE71F2567E100DF5531 /* TopicBriefTableViewCell */,
 				8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */,
 				80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */,
+				80A14D781FBC2EEE004B9D95 /* Audio Record View */,
 				80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */,
 			);
 			name = Views;
@@ -302,6 +309,7 @@
 				805EC8901F418A16005197DF /* ActivitiesViewController.swift */,
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
+				80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -423,6 +431,15 @@
 				80826CF31F62466500956E03 /* AudioControlView.xib */,
 			);
 			name = AudioControlView;
+			sourceTree = "<group>";
+		};
+		80A14D781FBC2EEE004B9D95 /* Audio Record View */ = {
+			isa = PBXGroup;
+			children = (
+				80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */,
+				80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */,
+			);
+			name = "Audio Record View";
 			sourceTree = "<group>";
 		};
 		80AAA3AF1FA85735001251E8 /* Entities */ = {
@@ -680,6 +697,7 @@
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
 				80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
+				80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
 				80AAA3B31FA99528001251E8 /* UMSocialSwiftInterface.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
@@ -693,11 +711,13 @@
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */,
 				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,
+				80A14D7C1FBC49BD004B9D95 /* AudioRecordViewController.swift in Sources */,
 				807BF5CE1F29B291000451FA /* AnswerManager.swift in Sources */,
 				802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */,
 				805EC8931F418A25005197DF /* ProfileViewController.swift in Sources */,
 				8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */,
 				8063DE0E1F21277E00E22E9B /* TimeManager.swift in Sources */,
+				80A14D771FBC2EE2004B9D95 /* AudioRecordView.swift in Sources */,
 				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,

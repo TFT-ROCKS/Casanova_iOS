@@ -44,14 +44,14 @@ class AnswerNoteTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         noteAudioButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         noteAudioButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
         
-        noteTitleLabel?.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        noteTitleLabel?.trailingAnchor.constraint(equalTo: noteAudioButton.leadingAnchor, constant: -8).isActive = true
+        noteTitleLabel?.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        noteTitleLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         noteTitleLabel?.centerYAnchor.constraint(equalTo: noteAudioButton.centerYAnchor).isActive = true
         
         // config
-        noteTitleLabel.text = "听讲解："
+        noteTitleLabel.text = "语音讲解："
         noteTitleLabel?.font = UIFont.pfl(size: 17)
-        noteTitleLabel?.textAlignment = .right
+        noteTitleLabel?.textAlignment = .left
         noteAudioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
         
         contentView.backgroundColor = UIColor.white
