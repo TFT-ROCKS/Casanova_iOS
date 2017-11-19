@@ -10,6 +10,23 @@ import Foundation
 
 // MARK: - Array extension
 extension Array {
+    
+    func sort() -> [Any] {
+        if self is [Answer] {
+            let answersArray = self as! [Answer]
+            return answersArray.sorted { (answer0, answer1) -> Bool in
+                return answer0.likes.count > answer1.likes.count
+            }
+        } else if self is [Comment] {
+            let commentsArray = self as! [Comment]
+            return commentsArray.sorted { (comment0, comment1) -> Bool in
+                return comment0.createdAt > comment1.createdAt
+            }
+        } else {
+            return self
+        }
+    }
+    
     func toUpperCase() -> [String] {
         var res: [String] = []
         for str in self {

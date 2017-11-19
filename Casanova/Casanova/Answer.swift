@@ -42,6 +42,8 @@ class Answer {
         self.likes = likes
         self.comments = comments
         self.topic = topic
+        
+        self.comments =  self.comments.sort() as! [Comment]
     }
     
     convenience init?(fromJson json: [String: Any]) {

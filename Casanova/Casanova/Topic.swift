@@ -108,9 +108,13 @@ class Topic {
                 }
             }
         }
+        
         if answers.count == 0 {
             isDetailed = false
+        } else {
+            answers = answers.sort() as! [Answer]
         }
+        
         return isDetailed
     }
 }
