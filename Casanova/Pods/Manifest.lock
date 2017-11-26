@@ -2,18 +2,17 @@ PODS:
   - Alamofire (4.5.1)
   - AliyunOSSiOS (2.6.5)
   - Down (0.3.4)
-  - Firebase/Core (4.5.0):
-    - FirebaseAnalytics (= 4.0.4)
-    - FirebaseCore (= 4.0.10)
-  - FirebaseAnalytics (4.0.4):
+  - Firebase/Core (4.6.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.11)
+  - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.10):
+  - FirebaseCore (4.0.11):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.5)
+  - FirebaseInstanceID (2.0.6)
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/NSData+zlib (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
@@ -26,6 +25,7 @@ PODS:
   - NVActivityIndicatorView (4.0.0):
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
+  - Siren (2.0.8)
   - TagListView (1.2.0)
   - UMengUShare/Core (6.4.6):
     - UMengUShare/Network
@@ -46,27 +46,39 @@ DEPENDENCIES:
   - Firebase/Core
   - IDZSwiftCommonCrypto (~> 0.9.1)
   - NVActivityIndicatorView
+  - Siren (from `https://github.com/ArtSabintsev/Siren.git`, branch `swift3.2`)
   - TagListView (~> 1.0)
   - UMengUShare/Social/Email
   - UMengUShare/Social/ReducedWeChat
   - UMengUShare/Social/SMS
   - UMengUShare/UI
 
+EXTERNAL SOURCES:
+  Siren:
+    :branch: swift3.2
+    :git: https://github.com/ArtSabintsev/Siren.git
+
+CHECKOUT OPTIONS:
+  Siren:
+    :commit: f6590001df279b76ac05ea3d06ab347e44559441
+    :git: https://github.com/ArtSabintsev/Siren.git
+
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
   Down: 3f35b61e51a603df3e9e7e0289b15752e72f82e6
-  Firebase: d83d287bdb6b1c78320561482706d1fcfc8ddfc1
-  FirebaseAnalytics: 722b53c7b32bfc7806b06e0093a2f5180d4f2c5a
-  FirebaseCore: da5e8e372cb6046212739a4d81e42d32c22907cc
-  FirebaseInstanceID: f2b688c66b972f30d7fa9f5f9f91455454a03b47
+  Firebase: 27321a925aa85520618255a7c630859e0502ccbd
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 2a946ece8fbe3ce1fdeeb55324f273caade22df9
+  FirebaseInstanceID: 24958382a1011bba5aaff37e334e7a650b9118f5
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   IDZSwiftCommonCrypto: 03ea02798d8cf2c2a08aa31b1b991e779fb163ed
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  Siren: 4269fa935d0d890ba57ca7cce0569cc285456ca9
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
   UMengUShare: fdbbf86353976727af26a66e9a84314ecb59c816
 
-PODFILE CHECKSUM: 7cb2603c3feb36979f47b8bd0852345881082e86
+PODFILE CHECKSUM: 4ecd7a506335877980b2adfb3316481d7e3e208b
 
 COCOAPODS: 1.2.1

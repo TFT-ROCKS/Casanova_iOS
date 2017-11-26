@@ -15,8 +15,42 @@ class AnswerManager {
     
     /// URL for fetch answers of a specific user
     let urlAnswersService = "https://tft.rocks/api/answersService;userId="
+    /// URL for fetch answer with answerId
+    let urlAnswersServiceWithAnswerId = "https://tft.rocks/api/answersService;id="
     /// URL for post answer
     let url = "https://tft.rocks/api"
+    
+    /// Fetch answer with answerId
+    /// - parameter id: answerId
+    /// - parameter block: completion block
+    ///
+    func fetchAnswer(withId id: Int, withCompletion block: ((ErrorMessage?, Answer?) -> Void)? = nil) {
+        // Create URL
+        let url = urlAnswersServiceWithAnswerId + "\(id)"
+        
+        // Make request
+        Alamofire.request(url, method: .get).responseJSON {
+            response in
+            if let json = response.result.value {
+                //print("JSON: \(json)") // serialized json response
+                if let dict = json as? [String: Any] {
+                    // success
+                    if let answer = Answer(fromSingleAnswerJson: dict) {
+                        block?(nil, answer)
+                    } else {
+                        let errorMessage = ErrorMessage(msg: "answer == nil when trying to init")
+                        block?(errorMessage, nil)
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch answer with id")
+                    block?(errorMessage, nil)
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when trying to fetch fetch answer with id")
+                block?(errorMessage, nil)
+            }
+        }
+    }
     
     /// Fetch likedAnswers of a user
     /// - parameter user: user

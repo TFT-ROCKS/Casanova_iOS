@@ -78,6 +78,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         
         // Remove Notifications
         NotificationCenter.default.removeObserver(self)
+        audioRecordView.disableTimer()
     }
     
     override func viewDidAppear(_ animated: Bool) {

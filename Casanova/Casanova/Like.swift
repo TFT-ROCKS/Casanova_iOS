@@ -40,4 +40,14 @@ class Like {
         }
         self.init(id: id, answerId: -1, userId: userId)
     }
+    
+    convenience init?(fromSingleAnswerJSON json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let userIdJSON = json["User"] as? [String: Any],
+            let userId = userIdJSON["id"] as? Int
+            else {
+                return nil
+        }
+        self.init(id: id, answerId: -1, userId: userId)
+    }
 }

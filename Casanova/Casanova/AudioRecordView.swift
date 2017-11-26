@@ -118,10 +118,7 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         recordDuration = duration
         timeRemained = duration
         isRecording = false
-        if recordTimer != nil {
-            recordTimer.invalidate()
-            recordTimer = nil
-        }
+        disableTimer()
         // hide upload view
         uploadCircleView.isHidden = true
         uploadImageView.isHidden = true
@@ -147,8 +144,7 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         // label text
         label.text = "正在上传"
         // timer invalidation
-        recordTimer.invalidate()
-        recordTimer = nil
+        disableTimer()
         // view hide and show
         recordCircleView.fadeOut()
         uploadCircleView.fadeIn()
@@ -169,6 +165,13 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         } else {
             timeRemained -= 1
             label.text = TimeManager.shared.timeString(time: TimeInterval(timeRemained))
+        }
+    }
+    
+    func disableTimer() {
+        if recordTimer != nil {
+            recordTimer.invalidate()
+            recordTimer = nil
         }
     }
 }

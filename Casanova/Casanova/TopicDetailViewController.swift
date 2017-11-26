@@ -14,7 +14,11 @@ import Firebase
 class TopicDetailViewController: UIViewController {
     
     // class vars
-    var topic: Topic!
+    var topic: Topic! {
+        didSet {
+            topicView.topic = topic
+        }
+    }
     var answers: [Answer]? {
         didSet {
             activityIndicatorView.stopAnimating()
@@ -26,6 +30,7 @@ class TopicDetailViewController: UIViewController {
             return !((Environment.shared.answers?.containsTopic(topic.id)) ?? false)
         }
     }
+    var noNeedToRecord: Bool = false
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
@@ -82,6 +87,12 @@ class TopicDetailViewController: UIViewController {
         audioSession = AVAudioSession.sharedInstance()
     }
     
+    init(withTopicId topicId: Int) {
+        super.init(nibName: nil, bundle: nil)
+        
+        audioSession = AVAudioSession.sharedInstance()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
@@ -99,7 +110,7 @@ class TopicDetailViewController: UIViewController {
     }
     
     func setup() {
-        if firstTimeThisTopic {
+        if !noNeedToRecord && firstTimeThisTopic {
             tableView.isHidden = true
             toolBar.isHidden = true
             setTitle(title: "问题")
@@ -170,6 +181,12 @@ class TopicDetailViewController: UIViewController {
                 // success
                 self.topic = topic
                 self.answers = topic?.answers
+                
+                // do next in queue
+                if ViewControllerManager.shared.queue.count > 0 {
+                    let answerId = ViewControllerManager.shared.queue[0]
+                    self.presentAnswerDetailViewController(with: answerId)
+                }
             }
         })
     }
@@ -183,6 +200,30 @@ class TopicDetailViewController: UIViewController {
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
+    }
+    
+    func presentAnswerDetailViewController(with answerId: Int) {
+        if let answer = answers?.answer(with: answerId) {
+            let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answer)
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // answer not found, alert
+            presentAnswerNotFoundAlertController()
+        }
+    }
+    
+    func presentAnswerNotFoundAlertController() {
+        let alertVC = UIAlertController(title: "没有找到对应答案", message: "答案可能已被删除", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "确认", style: .default, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        
+        if let popoverController = alertVC.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(alertVC, animated: true, completion: nil)
     }
 }
 

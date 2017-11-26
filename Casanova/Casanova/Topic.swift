@@ -59,6 +59,25 @@ class Topic {
                   isTrending: isTrending)
     }
     
+    convenience init?(fromSingleAnswerJSON json: [String: Any]) {
+        guard let id = json["id"] as? Int,
+            let title = json["title"] as? String,
+            let level = json["level"] as? Int,
+            let isTrending = json["isTrending"] as? Int
+            else {
+                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from single answer JSON")
+                //print(errorMessage.msg)
+                return nil
+        }
+        self.init(answersCount: 1,
+                  title: title,
+                  id: id,
+                  status: 1,
+                  level: level,
+                  tags: "",
+                  isTrending: isTrending)
+    }
+    
     convenience init?(fromLikedAnswersJSON json: [String: Any]) {
         guard let id = json["id"] as? Int,
             let title = json["title"] as? String,

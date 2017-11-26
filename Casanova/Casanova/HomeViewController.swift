@@ -147,6 +147,8 @@ class HomeViewController: UIViewController {
         if isFetching {
             activityIndicatorView.startAnimating()
         }
+        
+        ViewControllerManager.shared.work()
     }
     
     func fetchTopics(from: Int) {

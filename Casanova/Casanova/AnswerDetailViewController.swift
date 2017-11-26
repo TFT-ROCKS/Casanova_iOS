@@ -79,6 +79,10 @@ class AnswerDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(withAnswer answer: Answer) {
+        self.init(withTopic: answer.topic!, withAnswer: answer)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
@@ -784,6 +788,7 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
             hideTopicView()
+            self.view.endEditing(true)
             postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {
             

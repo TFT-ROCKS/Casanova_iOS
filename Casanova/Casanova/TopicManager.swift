@@ -71,7 +71,7 @@ class TopicManager {
     func fetchTopicDetail(for topic: Topic, withCompletion block: ((ErrorMessage?, Topic?) -> Void)? = nil) {
         // Create URL
         let url = urlTopicDetail + "\(topic.id)"
-        
+
         // Make request
         Alamofire.request(url, method: .get).responseJSON {
             response in

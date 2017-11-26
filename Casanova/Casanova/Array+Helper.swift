@@ -101,4 +101,15 @@ extension Array {
             self.remove(at: index!)
         }
     }
+    
+    // fetch certain answer with answer id
+    func answer(with id: Int) -> Answer? {
+        guard let answers = self as? [Answer] else { return nil }
+        for answer in answers {
+            if answer.id == id {
+                return answer
+            }
+        }
+        return nil
+    }
 }
