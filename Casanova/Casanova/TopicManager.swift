@@ -38,7 +38,7 @@ class TopicManager {
         let url = urlPre + levelFilter(levelsString) + searchQuery(query) + tagFilter(tagsString) + startFilter(start) + urlPost
         
         // Make request
-        Alamofire.request(url, method: .get).responseJSON {
+        AlamofireManager.shared.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response
@@ -73,7 +73,7 @@ class TopicManager {
         let url = urlTopicDetail + "\(topic.id)"
 
         // Make request
-        Alamofire.request(url, method: .get).responseJSON {
+        AlamofireManager.shared.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response
