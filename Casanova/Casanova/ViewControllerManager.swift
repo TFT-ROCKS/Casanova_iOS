@@ -30,6 +30,10 @@ class ViewControllerManager: NSObject {
                 if self.navigationController != nil {
                     self.navigationController.pushViewController(answerDetailVC, animated: true)
                 }
+            } else {
+                let alertController = AlertManager.alertController(title: "错误", msg: "答案可能已被删除", style: .alert, actionT1: "哦", style1: .default, handler1: nil, actionT2: "what the heck?", style2: .default
+                    , handler2: nil, viewForPopover: self.navigationController.view)
+                self.navigationController.present(alertController, animated: true, completion: nil)
             }
         })
     }

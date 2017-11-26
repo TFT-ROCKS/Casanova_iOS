@@ -164,22 +164,14 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     }
     
     func handleMicNotEnabled() {
-        let alertVC = UIAlertController(title: "TFT无法获取麦克风权限", message: "请在隐私中打开麦克风允许", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "打开隐私设置", style: .default) { value in
+        let alertController = AlertManager.alertController(title: "TFT无法获取麦克风权限", msg: "请在隐私中打开麦克风允许", style: .alert, actionT1: "打开隐私设置", style1: .default, handler1: { value in
             let path = UIApplicationOpenSettingsURLString
             if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
                 UIApplication.shared.openURL(settingsURL)
             }
-        })
-        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        if let popoverController = alertVC.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alertVC, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func startRecording() {

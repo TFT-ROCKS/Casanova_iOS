@@ -213,17 +213,9 @@ class TopicDetailViewController: UIViewController {
     }
     
     func presentAnswerNotFoundAlertController() {
-        let alertVC = UIAlertController(title: "没有找到对应答案", message: "答案可能已被删除", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "确认", style: .default, handler: nil))
-        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        let alertController = AlertManager.alertController(title: "没有找到对应答案", msg: "答案可能已被删除", style: .alert, actionT1: "确认", style1: .default, handler1: nil, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        if let popoverController = alertVC.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alertVC, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -653,25 +645,15 @@ extension TopicDetailViewController {
     func presentDeleteAnswerAlertSheet(answerIdx: Int) {
         let answerId = answers![answerIdx].id
         let topicId = topic.id
-        let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+        
+        let alertController = AlertManager.alertController(title: "", msg: "删除回答", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
                 self.answers!.remove(at: answerIdx)
                 Environment.shared.removeAnswer(answerId)
             })
-        })
-        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
+            }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        alert.addAction(confirm)
-        alert.addAction(cancel)
-        
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -951,22 +933,14 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func handleMicNotEnabled() {
-        let alertVC = UIAlertController(title: "TFT无法获取麦克风权限", message: "请在隐私中打开麦克风允许", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "打开隐私设置", style: .default) { value in
+        let alertController = AlertManager.alertController(title: "TFT无法获取麦克风权限", msg: "请在隐私中打开麦克风允许", style: .alert, actionT1: "打开隐私设置", style1: .default, handler1: { value in
             let path = UIApplicationOpenSettingsURLString
             if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
                 UIApplication.shared.openURL(settingsURL)
             }
-        })
-        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        if let popoverController = alertVC.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alertVC, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func skipButtonClicked(_ sender: UIButton) {

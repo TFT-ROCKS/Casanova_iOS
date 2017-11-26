@@ -89,6 +89,7 @@
 		80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */; };
 		80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSManager.swift */; };
 		80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */; };
+		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -190,6 +191,7 @@
 		80C2AA0D1F737F98001F298D /* OSSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSManager.swift; sourceTree = "<group>"; };
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+Helper.swift"; sourceTree = "<group>"; };
+		80C361C61FCAE06E00D6AB53 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */,
+				80C361C61FCAE06E00D6AB53 /* AlertManager.swift */,
 				80B313A81F1B4DE8001CFDC7 /* UserManager.swift */,
 				800122C51F1EDCCF00F185AE /* TopicManager.swift */,
 				8063DE0D1F21277E00E22E9B /* TimeManager.swift */,
@@ -753,6 +756,7 @@
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
+				80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */,
 				80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
