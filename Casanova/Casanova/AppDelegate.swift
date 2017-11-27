@@ -109,9 +109,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if host == "tft.rocks" {
                 // sample url: https://tft.rocks/topic/314?from=singlemessage&isappinstalled=0#686
                 let params = url.description.components(separatedBy: CharacterSet.init(charactersIn: "/#?"))
-                let answerId = Int(params[6])
-                ViewControllerManager.shared.queue.append(answerId!)
-                ViewControllerManager.shared.work()
+                if params.count >= 7 {
+                    let answerId = Int(params[6])
+                    ViewControllerManager.shared.queue.append(answerId!)
+                    ViewControllerManager.shared.work()
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
             } else {
                 UIApplication.shared.openURL(url)
             }
