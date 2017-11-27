@@ -90,6 +90,7 @@
 		80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSManager.swift */; };
 		80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */; };
 		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
+		80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -192,6 +193,7 @@
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+Helper.swift"; sourceTree = "<group>"; };
 		80C361C61FCAE06E00D6AB53 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
 				80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */,
+				80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -724,6 +727,7 @@
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
+				80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */,
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
 				80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
