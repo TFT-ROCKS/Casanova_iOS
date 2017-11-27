@@ -61,6 +61,7 @@
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
 		8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */; };
+		80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */; };
 		80A14D771FBC2EE2004B9D95 /* AudioRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */; };
 		80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */; };
 		80A14D7C1FBC49BD004B9D95 /* AudioRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */; };
@@ -87,6 +88,9 @@
 		80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */; };
 		80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */; };
 		80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSManager.swift */; };
+		80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */; };
+		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
+		80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -159,6 +163,7 @@
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
 		8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerNoteTableViewCell.swift; sourceTree = "<group>"; };
+		80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerManager.swift; sourceTree = "<group>"; };
 		80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordView.swift; sourceTree = "<group>"; };
 		80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircleView.swift; sourceTree = "<group>"; };
 		80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +191,9 @@
 		80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
 		80C2AA0D1F737F98001F298D /* OSSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSManager.swift; sourceTree = "<group>"; };
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
+		80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+Helper.swift"; sourceTree = "<group>"; };
+		80C361C61FCAE06E00D6AB53 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -193,6 +201,7 @@
 		80E339101F1AE4FE00F539E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		80E339131F1AE4FE00F539E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		80E339151F1AE4FE00F539E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80EF11051FC2321A0009BF2B /* Casanova.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Casanova.entitlements; sourceTree = "<group>"; };
 		80F730B51F3C398600907F61 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		80FB45791F46C1290034D525 /* AnswerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailViewController.swift; sourceTree = "<group>"; };
 		80FB457E1F4786D40034D525 /* UIColor+Addition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Addition.swift"; sourceTree = "<group>"; };
@@ -228,6 +237,8 @@
 		800FEFE21F25674500DF5531 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */,
+				80C361C61FCAE06E00D6AB53 /* AlertManager.swift */,
 				80B313A81F1B4DE8001CFDC7 /* UserManager.swift */,
 				800122C51F1EDCCF00F185AE /* TopicManager.swift */,
 				8063DE0D1F21277E00E22E9B /* TimeManager.swift */,
@@ -310,6 +321,7 @@
 				805EC8921F418A25005197DF /* ProfileViewController.swift */,
 				80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */,
 				80A14D7B1FBC49BD004B9D95 /* AudioRecordViewController.swift */,
+				80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -393,6 +405,7 @@
 		806179801F3E69D500B696FB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */,
 				8061797E1F3E69BD00B696FB /* UIView+Animation.swift */,
 				80FB457E1F4786D40034D525 /* UIColor+Addition.swift */,
 				80FB45881F4797B00034D525 /* UIFont+Addition.swift */,
@@ -493,6 +506,7 @@
 		80E339081F1AE4FD00F539E5 /* Casanova */ = {
 			isa = PBXGroup;
 			children = (
+				80EF11051FC2321A0009BF2B /* Casanova.entitlements */,
 				804D91C01F36C53700CA6FBE /* Resources */,
 				80AAA3AF1FA85735001251E8 /* Entities */,
 				800FEFE31F25675600DF5531 /* Models */,
@@ -565,9 +579,14 @@
 				TargetAttributes = {
 					80E339051F1AE4FD00F539E5 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = N74Z9L6N77;
+						DevelopmentTeam = 4KD7R4WWV7;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -695,6 +714,7 @@
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
+				80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */,
 				80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */,
@@ -707,7 +727,9 @@
 				807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */,
 				805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */,
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
+				80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */,
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
+				80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */,
 				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,
@@ -738,6 +760,7 @@
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
+				80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */,
 				80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
@@ -873,16 +896,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Casanova/Casanova.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N74Z9L6N77;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4KD7R4WWV7;
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4a4a7fd8-b351-4e01-95dd-97caef94de8b";
+				PROVISIONING_PROFILE_SPECIFIER = TFTROCKS_Dev;
 				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -895,16 +919,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N74Z9L6N77;
+				CODE_SIGN_ENTITLEMENTS = Casanova/Casanova.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 4KD7R4WWV7;
 				INFOPLIST_FILE = Casanova/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "6fc54378-f485-4cd7-bca4-cec6a9545867";
+				PROVISIONING_PROFILE_SPECIFIER = TFTROCKS_Distribution;
 				SWIFT_OBJC_BRIDGING_HEADER = "Casanova/Casanova-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

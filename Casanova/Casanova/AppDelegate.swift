@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Siren
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // UMeng Setup
         /* 打开日志 */
-        UMSocialManager.default().openLog(true)
+        UMSocialManager.default().openLog(false)
         // 打开图片水印
         //[UMSocialGlobal shareInstance].isUsingWaterMark = YES;
         UMSocialGlobal.shareInstance().isClearCacheWhenGetUserInfo = false
@@ -34,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UMSocialManager.default().umSocialAppkey = USHARE_APPKEY
         
         configUSharePlatforms()
+        
+        // For more info about Siren, refer to https://github.com/ArtSabintsev/Siren
+        Siren.shared.alertType = .option
         
         return true
     }
@@ -58,10 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Siren.shared.checkVersion(checkType: .immediately)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Siren.shared.checkVersion(checkType: .daily)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -80,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
         let result = UMSocialManager.default().handleOpen(url, sourceApplication: sourceApplication, annotation: annotation)
         if !result {
-            // 其他如支付等SDK的回调
+
         }
         return result
     }
@@ -89,8 +95,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响。
         let result = UMSocialManager.default().handleOpen(url, options: options)
         if !result {
-            // 其他如支付等SDK的回调
+
         }
         return result
+    }
+    
+    // Respond to Universal Links
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        // pass the url to the handle deep link call
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            guard let url = userActivity.webpageURL else { return true }
+            let host = url.host
+            if host == "tft.rocks" {
+                // sample url: https://tft.rocks/topic/314?from=singlemessage&isappinstalled=0#686
+                let params = url.description.components(separatedBy: CharacterSet.init(charactersIn: "/#?"))
+                let answerId = Int(params[6])
+                ViewControllerManager.shared.queue.append(answerId!)
+                ViewControllerManager.shared.work()
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+        return true
     }
 }

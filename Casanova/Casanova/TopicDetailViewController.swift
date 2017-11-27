@@ -14,7 +14,11 @@ import Firebase
 class TopicDetailViewController: UIViewController {
     
     // class vars
-    var topic: Topic!
+    var topic: Topic! {
+        didSet {
+            topicView.topic = topic
+        }
+    }
     var answers: [Answer]? {
         didSet {
             activityIndicatorView.stopAnimating()
@@ -26,6 +30,7 @@ class TopicDetailViewController: UIViewController {
             return !((Environment.shared.answers?.containsTopic(topic.id)) ?? false)
         }
     }
+    var noNeedToRecord: Bool = false
     var cellInUse = -1
     let cellVerticalSpace: CGFloat = 10.0
     let cellHorizontalSpace: CGFloat = 12.0
@@ -82,6 +87,12 @@ class TopicDetailViewController: UIViewController {
         audioSession = AVAudioSession.sharedInstance()
     }
     
+    init(withTopicId topicId: Int) {
+        super.init(nibName: nil, bundle: nil)
+        
+        audioSession = AVAudioSession.sharedInstance()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
@@ -99,7 +110,7 @@ class TopicDetailViewController: UIViewController {
     }
     
     func setup() {
-        if firstTimeThisTopic {
+        if !noNeedToRecord && firstTimeThisTopic {
             tableView.isHidden = true
             toolBar.isHidden = true
             setTitle(title: "问题")
@@ -170,6 +181,12 @@ class TopicDetailViewController: UIViewController {
                 // success
                 self.topic = topic
                 self.answers = topic?.answers
+                
+                // do next in queue
+                if ViewControllerManager.shared.queue.count > 0 {
+                    let answerId = ViewControllerManager.shared.queue[0]
+                    self.presentAnswerDetailViewController(with: answerId)
+                }
             }
         })
     }
@@ -183,6 +200,22 @@ class TopicDetailViewController: UIViewController {
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
+    }
+    
+    func presentAnswerDetailViewController(with answerId: Int) {
+        if let answer = answers?.answer(with: answerId) {
+            let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answer)
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // answer not found, alert
+            presentAnswerNotFoundAlertController()
+        }
+    }
+    
+    func presentAnswerNotFoundAlertController() {
+        let alertController = AlertManager.alertController(title: "没有找到对应答案", msg: "答案可能已被删除", style: .alert, actionT1: "确认", style1: .default, handler1: nil, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -612,25 +645,15 @@ extension TopicDetailViewController {
     func presentDeleteAnswerAlertSheet(answerIdx: Int) {
         let answerId = answers![answerIdx].id
         let topicId = topic.id
-        let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+        
+        let alertController = AlertManager.alertController(title: "", msg: "删除回答", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
                 self.answers!.remove(at: answerIdx)
                 Environment.shared.removeAnswer(answerId)
             })
-        })
-        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
+            }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        alert.addAction(confirm)
-        alert.addAction(cancel)
-        
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -910,22 +933,14 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     }
     
     func handleMicNotEnabled() {
-        let alertVC = UIAlertController(title: "TFT无法获取麦克风权限", message: "请在隐私中打开麦克风允许", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "打开隐私设置", style: .default) { value in
+        let alertController = AlertManager.alertController(title: "TFT无法获取麦克风权限", msg: "请在隐私中打开麦克风允许", style: .alert, actionT1: "打开隐私设置", style1: .default, handler1: { value in
             let path = UIApplicationOpenSettingsURLString
             if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
                 UIApplication.shared.openURL(settingsURL)
             }
-        })
-        alertVC.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+        }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        if let popoverController = alertVC.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alertVC, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func skipButtonClicked(_ sender: UIButton) {
@@ -1097,9 +1112,9 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         
         let settings = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
-            AVSampleRateKey: 12000,
+            AVSampleRateKey: 16000,
             AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.low.rawValue
+            AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
         ]
         
         do {

@@ -102,6 +102,10 @@ class SignInViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     // Deal with keyboard notification
     func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {

@@ -19,7 +19,6 @@ class PostTextView: UIView {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var postButton: UIButton!
     @IBAction func postButtonClicked(_ sender: UIButton) {
-        postButton.isEnabled = false
         // check comment text
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             textView.text = ""
@@ -28,6 +27,7 @@ class PostTextView: UIView {
             return
         }
         // post comment
+        postButton.isEnabled = false
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
         if let audioUrl = audioUrl {
             // comment with audio url

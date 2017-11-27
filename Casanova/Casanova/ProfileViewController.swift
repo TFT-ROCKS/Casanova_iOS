@@ -34,6 +34,10 @@ class ProfileViewController: UIViewController {
         registerNotifications()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -244,22 +248,11 @@ extension ProfileViewController {
     
     // Log out logic
     func presentLogOutAlertSheet() {
-        let alert = UIAlertController(title: "", message: "确认要退出登录吗", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "登出", style: .destructive, handler: { [unowned self] _ in
+        let alertController = AlertManager.alertController(title: "", msg: "确认要退出登录吗", style: .actionSheet, actionT1: "登出", style1: .destructive, handler1: { [unowned self] _ in
             self.logOut()
-        })
-        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
+            }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        alert.addAction(confirm)
-        alert.addAction(cancel)
-        
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func logOut() {

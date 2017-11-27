@@ -53,6 +53,10 @@ class SettingsViewController: UIViewController {
         lastname = Environment.shared.currentUser?.lastname
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

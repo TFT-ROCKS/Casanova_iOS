@@ -79,6 +79,10 @@ class AnswerDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(withAnswer answer: Answer) {
+        self.init(withTopic: answer.topic!, withAnswer: answer)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
@@ -784,6 +788,7 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
             hideTopicView()
+            self.view.endEditing(true)
             postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {
             
@@ -807,8 +812,7 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     
     // Delete answer alert sheet
     func presentDeleteCommentAlertSheet(commentId: Int) {
-        let alert = UIAlertController(title: "", message: "删除评论", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+        let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
             CommentManager.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
                 Utils.runOnMainThread {
@@ -821,19 +825,9 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
                     self.answer.comments.removeComment(commentId)
                 }
             })
-        })
-        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
+            }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        alert.addAction(confirm)
-        alert.addAction(cancel)
-        
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -879,7 +873,8 @@ extension AnswerDetailViewController {
         messageObject.shareObject = shareObject
         UMSocialSwiftInterface.share(plattype: platformType, messageObject: messageObject, viewController: self, completion: {(resp, error) in
             if error != nil {
-                self.showAlert(withError: error!)
+                // uncomment below if need alert for debug
+                // self.showAlert(withError: error!)
             }
         })
     }

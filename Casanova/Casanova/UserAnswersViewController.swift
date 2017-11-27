@@ -144,8 +144,8 @@ extension UserAnswersViewController {
     func presentDeleteAnswerAlertSheet(answerIdx: Int) {
         let answerId = answers[answerIdx].id
         let topicId = answers[answerIdx].topic?.id
-        let alert = UIAlertController(title: "", message: "删除回答", preferredStyle: .actionSheet)
-        let confirm = UIAlertAction(title: "删除", style: .destructive, handler: { [unowned self] _ in
+        
+        let alertController = AlertManager.alertController(title: "", msg: "删除回答", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
             AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
                 Utils.runOnMainThread {
@@ -156,19 +156,9 @@ extension UserAnswersViewController {
                     Environment.shared.removeAnswer(answerId)
                 }
             })
-        })
-        let cancel = UIAlertAction(title: "取消", style: .default, handler: nil)
+            }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
-        alert.addAction(confirm)
-        alert.addAction(cancel)
-        
-        if let popoverController = alert.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
