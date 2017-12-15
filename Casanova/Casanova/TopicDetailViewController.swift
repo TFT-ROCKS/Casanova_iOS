@@ -1012,7 +1012,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
             Utils.runOnMainThread {
                 self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
             }
-        }, withCompletionBlock: { (error, url) in
+        }, withCompletionBlock: { (error, url, uuid) in
             if error == nil {
                 //print("upload audio success")
                 Utils.runOnMainThread {

@@ -87,6 +87,10 @@
 		80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */; };
 		80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */; };
 		80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */; };
+		80BBD5C21FDDEEF200B9A0EE /* AudioCommentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BBD5C11FDDEEF200B9A0EE /* AudioCommentPostView.swift */; };
+		80BBD5C41FDDEF0B00B9A0EE /* AudioCommentPostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80BBD5C31FDDEF0B00B9A0EE /* AudioCommentPostView.xib */; };
+		80BBD5C61FDDEF4E00B9A0EE /* AudioPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BBD5C51FDDEF4E00B9A0EE /* AudioPlayView.swift */; };
+		80BBD5C81FDDEF6300B9A0EE /* AudioPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */; };
 		80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSManager.swift */; };
 		80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */; };
 		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
@@ -189,6 +193,10 @@
 		80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerBriefTableViewCell.xib; sourceTree = "<group>"; };
 		80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailTableViewCell.swift; sourceTree = "<group>"; };
 		80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
+		80BBD5C11FDDEEF200B9A0EE /* AudioCommentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentPostView.swift; sourceTree = "<group>"; };
+		80BBD5C31FDDEF0B00B9A0EE /* AudioCommentPostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioCommentPostView.xib; sourceTree = "<group>"; };
+		80BBD5C51FDDEF4E00B9A0EE /* AudioPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayView.swift; sourceTree = "<group>"; };
+		80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPlayView.xib; sourceTree = "<group>"; };
 		80C2AA0D1F737F98001F298D /* OSSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSManager.swift; sourceTree = "<group>"; };
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+Helper.swift"; sourceTree = "<group>"; };
@@ -273,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				80826CF51F62466B00956E03 /* AudioControlView */,
+				80BBD5C91FDDEF7700B9A0EE /* AudioPlayView */,
 				80826CF01F62463B00956E03 /* PostTextView */,
 				80826CEF1F62460E00956E03 /* ToolBar */,
 				80FB457C1F46D1D10034D525 /* Others */,
@@ -433,6 +442,8 @@
 			children = (
 				80A6C9EE1F497964000CE9FB /* PostTextView.swift */,
 				80A6C9F01F497980000CE9FB /* PostTextView.xib */,
+				80BBD5C11FDDEEF200B9A0EE /* AudioCommentPostView.swift */,
+				80BBD5C31FDDEF0B00B9A0EE /* AudioCommentPostView.xib */,
 			);
 			name = PostTextView;
 			sourceTree = "<group>";
@@ -483,6 +494,15 @@
 				8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */,
 			);
 			name = AnswerTableViewCell;
+			sourceTree = "<group>";
+		};
+		80BBD5C91FDDEF7700B9A0EE /* AudioPlayView */ = {
+			isa = PBXGroup;
+			children = (
+				80BBD5C51FDDEF4E00B9A0EE /* AudioPlayView.swift */,
+				80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */,
+			);
+			name = AudioPlayView;
 			sourceTree = "<group>";
 		};
 		80E338FD1F1AE4FD00F539E5 = {
@@ -620,6 +640,7 @@
 				80B5B3171F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib in Resources */,
 				80826D011F651F5900956E03 /* PingFang Light.ttf in Resources */,
 				80826D021F651F5900956E03 /* PingFang SC Regular.ttf in Resources */,
+				80BBD5C81FDDEF6300B9A0EE /* AudioPlayView.xib in Resources */,
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
 				808B21FF1F71967000ED5526 /* TFTicons_avator_4.png in Resources */,
 				80E339111F1AE4FE00F539E5 /* Assets.xcassets in Resources */,
@@ -628,6 +649,7 @@
 				808B21FB1F71967000ED5526 /* TFTicons_avator_0.png in Resources */,
 				80826CFE1F64EB0000956E03 /* TopicDetailToolBar.xib in Resources */,
 				80FB45871F47894C0034D525 /* Muli.ttf in Resources */,
+				80BBD5C41FDDEF0B00B9A0EE /* AudioCommentPostView.xib in Resources */,
 				8055C5591F90773600743CC0 /* GoogleService-Info.plist in Resources */,
 				808B21FE1F71967000ED5526 /* TFTicons_avator_3.png in Resources */,
 				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
@@ -707,6 +729,7 @@
 				80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
+				80BBD5C61FDDEF4E00B9A0EE /* AudioPlayView.swift in Sources */,
 				80826CEC1F6245D600956E03 /* AnswerDetailToolBar.swift in Sources */,
 				805EC8911F418A16005197DF /* ActivitiesViewController.swift in Sources */,
 				80B313A01F1B35B4001CFDC7 /* Answer.swift in Sources */,
@@ -720,6 +743,7 @@
 				80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */,
 				804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */,
 				80AAA3B31FA99528001251E8 /* UMSocialSwiftInterface.swift in Sources */,
+				80BBD5C21FDDEEF200B9A0EE /* AudioCommentPostView.swift in Sources */,
 				800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */,
 				803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */,
 				80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */,

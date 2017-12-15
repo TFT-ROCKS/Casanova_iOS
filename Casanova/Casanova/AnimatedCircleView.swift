@@ -32,6 +32,7 @@ class AnimatedCircleView: UIView, CAAnimationDelegate, UIGestureRecognizerDelega
     var filledLayer: CAShapeLayer!
     var strokeColor: CGColor!
     var fillColor: CGColor!
+    var maskLayer: CAShapeLayer!
     
     weak var delegate: AnimatedCircleViewDelegate!
     
@@ -88,6 +89,7 @@ class AnimatedCircleView: UIView, CAAnimationDelegate, UIGestureRecognizerDelega
         // ----
         backgroundColor = UIColor.white
         filledLayer.frame = bounds
+        
         layer.addSublayer(outterCircleStrokeLayer)
         layer.addSublayer(circleStrokeLayer)
         layer.addSublayer(filledLayer)
@@ -101,7 +103,7 @@ class AnimatedCircleView: UIView, CAAnimationDelegate, UIGestureRecognizerDelega
     func animateForRecording(duration: Float, toValue: Float) {
         let endAngle = Math.percentToRadians(percentComplete)
         
-        let maskLayer = CAShapeLayer()
+        maskLayer = CAShapeLayer()
         
         let maskWidth: CGFloat = filledLayer.frame.size.width
         let maskHeight: CGFloat = filledLayer.frame.size.height
@@ -139,6 +141,11 @@ class AnimatedCircleView: UIView, CAAnimationDelegate, UIGestureRecognizerDelega
     
     func animateForUploading(with percent: Float) {
         animateForRecording(duration: 0.0001, toValue: percent)
+    }
+    
+    func reset() {
+        if maskLayer == nil { return }
+        maskLayer.removeAnimation(forKey: "strokeEnd")
     }
     
 }

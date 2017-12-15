@@ -22,7 +22,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     @IBOutlet weak var mainTitleLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var audioRecordView: AudioRecordView!
-    let postTextView: PostTextView = PostTextView(frame: .zero)
+    let postTextView: AudioCommentPostView = AudioCommentPostView(frame: .zero)
     
     // constraints
     var bottomConstraint: NSLayoutConstraint!
@@ -39,6 +39,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     var audioPlayer: AVAudioPlayer!
     // comment
     var cmtAudioUrl: String!
+    var cmtAudioUUID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +92,8 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         audioRecordView.setup(with: 60)
     }
     
+    // MARK: - AudioRecordViewDelegate
+    
     func startRecord() {
         record()
     }
@@ -117,6 +120,8 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         }
     }
     
+    // MARK: - Utils
+    
     func uploadAudio() {
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(answer.id)-speaking-answer.wav")
         OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
@@ -125,14 +130,16 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
                 let progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
                 self.audioRecordView.upload(with: progress)
             }
-        }, withCompletionBlock: { (error, url) in
+        }, withCompletionBlock: { (error, url, uuid) in
             if error == nil {
                 //print("upload audio success")
                 Utils.runOnMainThread {
                     self.audioRecordView.finishUploading()
                     self.cmtAudioUrl = url!
+                    self.cmtAudioUUID = uuid!
                     self.postTextView.fadeIn()
                     self.postTextView.audioUrl = url!
+                    self.postTextView.audioFile = audioFile
                 }
             } else {
                 // upload error
@@ -219,7 +226,9 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     
 }
 
-extension AudioRecordViewController: PostTextViewDelegate {
+// MARK: - AudioCommentPostViewDelegate
+
+extension AudioRecordViewController: AudioCommentPostViewDelegate {
     func layoutPostTextView() {
         view.addSubview(postTextView)
         postTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -274,20 +283,11 @@ extension AudioRecordViewController: PostTextViewDelegate {
         })
     }
     
-    func toggleButtonTapped(_ sender: UIButton) {
-        if postTextView.isExpanded {
-            // collapse
-            topConstraint.isActive = false
-            heightConstraint.isActive = true
-        } else {
-            // expand
-            topConstraint.isActive = true
-            heightConstraint.isActive = false
+    func reset() {
+        // delete audio file on OSS
+        if let cmtAudioUUID = cmtAudioUUID {
+            OSSManager.shared.deleteAudioFile(uuid: cmtAudioUUID)
         }
-        UIView.animate(withDuration: 0.3,
-                       delay: 0.0,
-                       options: .curveLinear,
-                       animations: { self.view.layoutIfNeeded() },
-                       completion: nil)
+        prepareRecord()
     }
 }
