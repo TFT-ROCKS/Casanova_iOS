@@ -29,6 +29,8 @@
 		8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */; };
 		8055791C1F70DC94002942A2 /* SeparatorLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */; };
 		8055C5591F90773600743CC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8055C5581F90773000743CC0 /* GoogleService-Info.plist */; };
+		8056F4101FE758A100529CF4 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F40F1FE758A100529CF4 /* DeepLinkManager.swift */; };
+		8056F4121FE75ABA00529CF4 /* DeepLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4111FE75ABA00529CF4 /* DeepLinkAction.swift */; };
 		805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8841F416C7E005197DF /* SignInViewController.swift */; };
 		805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8861F416C8A005197DF /* SignUpViewController.swift */; };
 		805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC88C1F41896B005197DF /* MyTabBarController.swift */; };
@@ -135,6 +137,8 @@
 		805579191F70DC94002942A2 /* SeparatorLineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLineTableViewCell.swift; sourceTree = "<group>"; };
 		8055791A1F70DC94002942A2 /* SeparatorLineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeparatorLineTableViewCell.xib; sourceTree = "<group>"; };
 		8055C5581F90773000743CC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8056F40F1FE758A100529CF4 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
+		8056F4111FE75ABA00529CF4 /* DeepLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkAction.swift; sourceTree = "<group>"; };
 		805EC8841F416C7E005197DF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		805EC8861F416C8A005197DF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		805EC88C1F41896B005197DF /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 		800FEFE21F25674500DF5531 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				8056F40F1FE758A100529CF4 /* DeepLinkManager.swift */,
 				80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */,
 				80C361C61FCAE06E00D6AB53 /* AlertManager.swift */,
 				80B313A81F1B4DE8001CFDC7 /* UserManager.swift */,
@@ -273,6 +278,7 @@
 				80B3139E1F1B35B4001CFDC7 /* TopicTag.swift */,
 				80B3139F1F1B35B4001CFDC7 /* User.swift */,
 				80FB458A1F482B890034D525 /* Environment.swift */,
+				8056F4111FE75ABA00529CF4 /* DeepLinkAction.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 				80B313A21F1B35B4001CFDC7 /* ErrorMessage.swift in Sources */,
 				80B313A51F1B35B4001CFDC7 /* Topic.swift in Sources */,
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
+				8056F4121FE75ABA00529CF4 /* DeepLinkAction.swift in Sources */,
 				80AAA3B51FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift in Sources */,
 				80826CF21F62465800956E03 /* AudioControlView.swift in Sources */,
 				80FB457F1F4786D40034D525 /* UIColor+Addition.swift in Sources */,
@@ -786,6 +793,7 @@
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
 				80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */,
 				80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */,
+				8056F4101FE758A100529CF4 /* DeepLinkManager.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,

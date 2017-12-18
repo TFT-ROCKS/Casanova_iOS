@@ -181,12 +181,6 @@ class TopicDetailViewController: UIViewController {
                 // success
                 self.topic = topic
                 self.answers = topic?.answers
-                
-                // do next in queue
-                if ViewControllerManager.shared.queue.count > 0 {
-                    let answerId = ViewControllerManager.shared.queue[0]
-                    self.presentAnswerDetailViewController(with: answerId)
-                }
             }
         })
     }
