@@ -148,7 +148,7 @@ class HomeViewController: UIViewController {
             activityIndicatorView.startAnimating()
         }
         
-        ViewControllerManager.shared.work()
+        ViewControllerManager.shared.performActions()
     }
     
     func fetchTopics(from: Int) {

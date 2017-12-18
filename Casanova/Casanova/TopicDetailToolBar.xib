@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,41 +23,53 @@
             <rect key="frame" x="0.0" y="0.0" width="486" height="54"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-qQ-ge6">
-                    <rect key="frame" x="50" y="3" width="33" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="pdc-qQ-ge6" secondAttribute="height" multiplier="1:1" id="XJ0-UJ-PDc"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <state key="normal" image="question_bar">
-                        <color key="titleColor" red="0.0012492068529999999" green="0.0012492068529999999" blue="0.0012492068529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="questionButtonClicked:" destination="-1" eventType="touchUpInside" id="Rgr-ot-95w"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaM-hT-maz">
-                    <rect key="frame" x="403" y="3" width="33" height="33"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <state key="normal" image="speaking">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="answerButtonClicked:" destination="-1" eventType="touchUpInside" id="jVQ-5d-jbA"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看问题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrL-mr-JMp">
-                    <rect key="frame" x="46.5" y="38" width="41" height="14"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="回答问题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw4-nk-sTQ">
-                    <rect key="frame" x="399" y="38" width="41" height="14"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8Lk-iX-jYt">
+                    <rect key="frame" x="0.0" y="0.0" width="486" height="54"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6Cb-9U-MUx">
+                            <rect key="frame" x="0.0" y="0.0" width="243" height="54"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-qQ-ge6">
+                                    <rect key="frame" x="0.0" y="0.0" width="243" height="35.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <state key="normal" image="question_bar">
+                                        <color key="titleColor" red="0.0012492068529999999" green="0.0012492068529999999" blue="0.0012492068529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="questionButtonClicked:" destination="-1" eventType="touchUpInside" id="Rgr-ot-95w"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看问题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrL-mr-JMp">
+                                    <rect key="frame" x="0.0" y="35.5" width="243" height="18.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="yx9-Ts-A8F">
+                            <rect key="frame" x="243" y="0.0" width="243" height="54"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaM-hT-maz">
+                                    <rect key="frame" x="0.0" y="0.0" width="243" height="36"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <state key="normal" image="speaking">
+                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="answerButtonClicked:" destination="-1" eventType="touchUpInside" id="jVQ-5d-jbA"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="回答问题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw4-nk-sTQ">
+                                    <rect key="frame" x="0.0" y="36" width="243" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fG0-Sq-mbH">
                     <rect key="frame" x="0.0" y="0.0" width="486" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,22 +80,13 @@
             </subviews>
             <color key="backgroundColor" white="0.96832617123921716" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="hw4-nk-sTQ" firstAttribute="centerX" secondItem="qaM-hT-maz" secondAttribute="centerX" id="0qY-aB-zIq"/>
                 <constraint firstItem="fG0-Sq-mbH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1rb-cQ-9CW"/>
-                <constraint firstItem="pdc-qQ-ge6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="3Dy-2Q-7qJ"/>
-                <constraint firstAttribute="bottom" secondItem="hw4-nk-sTQ" secondAttribute="bottom" constant="2" id="6KZ-Np-cTk"/>
                 <constraint firstAttribute="trailing" secondItem="fG0-Sq-mbH" secondAttribute="trailing" id="84a-tm-OCc"/>
-                <constraint firstItem="qaM-hT-maz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-8" id="8R3-Lm-4Ln"/>
                 <constraint firstItem="fG0-Sq-mbH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Bce-vv-Ah4"/>
-                <constraint firstItem="qaM-hT-maz" firstAttribute="width" secondItem="pdc-qQ-ge6" secondAttribute="width" id="F9B-lc-iH6"/>
-                <constraint firstAttribute="trailing" secondItem="qaM-hT-maz" secondAttribute="trailing" constant="50" id="ILj-EP-PZd"/>
-                <constraint firstItem="hw4-nk-sTQ" firstAttribute="top" secondItem="qaM-hT-maz" secondAttribute="bottom" constant="2" id="Zt6-wk-Amc"/>
-                <constraint firstItem="qaM-hT-maz" firstAttribute="height" secondItem="pdc-qQ-ge6" secondAttribute="height" id="fsV-yd-yn1"/>
-                <constraint firstItem="PrL-mr-JMp" firstAttribute="centerX" secondItem="pdc-qQ-ge6" secondAttribute="centerX" id="p7q-pe-CNf"/>
-                <constraint firstItem="pdc-qQ-ge6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-8" id="rjT-Pg-LTr"/>
-                <constraint firstItem="pdc-qQ-ge6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="udc-Yc-K7A"/>
-                <constraint firstItem="PrL-mr-JMp" firstAttribute="top" secondItem="pdc-qQ-ge6" secondAttribute="bottom" constant="2" id="wMA-DG-ehr"/>
-                <constraint firstAttribute="bottom" secondItem="PrL-mr-JMp" secondAttribute="bottom" constant="2" id="zJn-9f-wM0"/>
+                <constraint firstItem="8Lk-iX-jYt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IkQ-oE-CBq"/>
+                <constraint firstItem="8Lk-iX-jYt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ivc-hp-cWB"/>
+                <constraint firstItem="8Lk-iX-jYt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RmZ-SZ-Flf"/>
+                <constraint firstItem="8Lk-iX-jYt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="d4c-FS-wOO"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

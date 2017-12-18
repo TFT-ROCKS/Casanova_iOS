@@ -181,12 +181,6 @@ class TopicDetailViewController: UIViewController {
                 // success
                 self.topic = topic
                 self.answers = topic?.answers
-                
-                // do next in queue
-                if ViewControllerManager.shared.queue.count > 0 {
-                    let answerId = ViewControllerManager.shared.queue[0]
-                    self.presentAnswerDetailViewController(with: answerId)
-                }
             }
         })
     }
@@ -1012,7 +1006,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
             Utils.runOnMainThread {
                 self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
             }
-        }, withCompletionBlock: { (error, url) in
+        }, withCompletionBlock: { (error, url, uuid) in
             if error == nil {
                 //print("upload audio success")
                 Utils.runOnMainThread {

@@ -20,8 +20,8 @@ class OSSManager {
     let accessKeyId = "LTAIusdNpq7wCQKX"
     let accessKeySecret = "TkPl85Pm0rGvXv171Lk6utrbhhBwl2"
     
-    func uploadAudioFile(url: URL, withProgressBlock pBlock: @escaping (Int64, Int64, Int64) -> Swift.Void, withCompletionBlock cBlock: @escaping (ErrorMessage?, String?) -> Swift.Void) {
-        let endpoint = "https://\(region).aliyuncs.com"
+    lazy var client: OSSClient = {
+        let endpoint = "https://\(self.region).aliyuncs.com"
         let credential = OSSCustomSignerCredentialProvider(implementedSigner: { (contentToSign, error) -> String? in
             let signature = OSSUtil.calBase64Sha1(withData: contentToSign, withSecret: self.accessKeySecret)
             return String(format: "OSS %@:%@", self.accessKeyId, signature!)
@@ -32,9 +32,15 @@ class OSSManager {
         config.timeoutIntervalForResource = 24 * 60 * 60
         let client = OSSClient(endpoint: endpoint, credentialProvider: credential!, clientConfiguration: config)
         
+        return client
+    }()
+    
+    func uploadAudioFile(url: URL, withProgressBlock pBlock: @escaping (Int64, Int64, Int64) -> Swift.Void, withCompletionBlock cBlock: @escaping (ErrorMessage?, String?, String?) -> Swift.Void) {
+        
         let put = OSSPutObjectRequest()
+        let uuid = UUID().uuidString
         put.bucketName = bucket
-        put.objectKey = "recordings/\(UUID().uuidString).wav"
+        put.objectKey = "recordings/\(uuid).wav"
         put.uploadingFileURL = url
         put.uploadProgress = pBlock
         
@@ -42,12 +48,29 @@ class OSSManager {
         putTask.continue({ task in
             if task.error == nil {
                 let urlStr = "http://tftsandbox.oss-cn-shanghai.aliyuncs.com/\(put.objectKey!)"
-                cBlock(nil, urlStr)
+                cBlock(nil, urlStr, uuid)
                 //print("upload object success!")
             } else {
                 let errMsg = ErrorMessage(msg: task.error.debugDescription)
-                cBlock(errMsg, nil)
+                cBlock(errMsg, nil, nil)
                 //print("upload object failed, error: \(String(describing: task.error))")
+            }
+            return nil
+        })
+    }
+    
+    func deleteAudioFile(uuid: String) {
+        let delete = OSSDeleteObjectRequest()
+        let uuid = uuid
+        delete.bucketName = bucket
+        delete.objectKey = "recordings/\(uuid).wav"
+        
+        let deleteTask = client.deleteObject(delete)
+        deleteTask.continue({ task in
+            if task.error == nil {
+                
+            } else {
+                
             }
             return nil
         })

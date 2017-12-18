@@ -55,7 +55,7 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         uploadCircleView.delegate = self
         recordCircleView.delegate = self
     }
-
+    
     override func layoutSubviews() {
         // subviews contraints
         recordCircleView = AnimatedCircleView(frame: .zero, strokeColor: UIColor(red: 15/255.0, green: 181/255.0, blue: 228/255.0, alpha: 1).cgColor, fillColor: UIColor(red: 15/255.0, green: 181/255.0, blue: 228/255.0, alpha: 0.2).cgColor)
@@ -106,14 +106,6 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         config()
     }
     
-    func animatedCircleViewDidTapped(_ tap: UITapGestureRecognizer) {
-        if isRecording {
-            delegate.stopRecord()
-        } else {
-            delegate.startRecord()
-        }
-    }
-    
     func setup(with duration: Int) {
         recordDuration = duration
         timeRemained = duration
@@ -121,11 +113,17 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         disableTimer()
         // hide upload view
         uploadCircleView.isHidden = true
+        uploadCircleView.alpha = 1
         uploadImageView.isHidden = true
+        uploadImageView.alpha = 1
         // un-hide record view
         recordCircleView.isHidden = false
+        recordCircleView.alpha = 1
         // setup label text
         label.text = "点击开始"
+        // remove anims if have
+        uploadCircleView.reset()
+        recordCircleView.reset()
     }
     
     func record() {
@@ -172,6 +170,16 @@ class AudioRecordView: UIView, AnimatedCircleViewDelegate {
         if recordTimer != nil {
             recordTimer.invalidate()
             recordTimer = nil
+        }
+    }
+    
+    // MARK: - AnimatedCircleViewDelegate
+    
+    func animatedCircleViewDidTapped(_ tap: UITapGestureRecognizer) {
+        if isRecording {
+            delegate.stopRecord()
+        } else {
+            delegate.startRecord()
         }
     }
 }

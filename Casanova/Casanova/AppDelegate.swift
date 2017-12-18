@@ -107,12 +107,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let url = userActivity.webpageURL else { return true }
             let host = url.host
             if host == "tft.rocks" {
-                // sample url: https://tft.rocks/topic/314?from=singlemessage&isappinstalled=0#686
-                let params = url.description.components(separatedBy: CharacterSet.init(charactersIn: "/#?"))
-                if params.count >= 7 {
-                    let answerId = Int(params[6])
-                    ViewControllerManager.shared.queue.append(answerId!)
-                    ViewControllerManager.shared.work()
+                if let deepLinkManager = DeepLinkManager(withUniversalLink: url) {
+                    ViewControllerManager.shared.deepLinkManager = deepLinkManager
+                    ViewControllerManager.shared.performedActions = []
+                    ViewControllerManager.shared.performActions()
                 } else {
                     UIApplication.shared.openURL(url)
                 }
