@@ -31,6 +31,11 @@
 		8055C5591F90773600743CC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8055C5581F90773000743CC0 /* GoogleService-Info.plist */; };
 		8056F4101FE758A100529CF4 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F40F1FE758A100529CF4 /* DeepLinkManager.swift */; };
 		8056F4121FE75ABA00529CF4 /* DeepLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4111FE75ABA00529CF4 /* DeepLinkAction.swift */; };
+		8056F4151FE8D24500529CF4 /* TopicHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4131FE8D24500529CF4 /* TopicHeaderTableViewCell.swift */; };
+		8056F4161FE8D24500529CF4 /* TopicHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8056F4141FE8D24500529CF4 /* TopicHeaderTableViewCell.xib */; };
+		8056F41A1FE8D61C00529CF4 /* CellRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4181FE8D61B00529CF4 /* CellRepresentable.swift */; };
+		8056F41B1FE8D61C00529CF4 /* CellIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4191FE8D61C00529CF4 /* CellIdentifiable.swift */; };
+		8056F41F1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */; };
 		805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8841F416C7E005197DF /* SignInViewController.swift */; };
 		805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8861F416C8A005197DF /* SignUpViewController.swift */; };
 		805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC88C1F41896B005197DF /* MyTabBarController.swift */; };
@@ -139,6 +144,11 @@
 		8055C5581F90773000743CC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8056F40F1FE758A100529CF4 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
 		8056F4111FE75ABA00529CF4 /* DeepLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkAction.swift; sourceTree = "<group>"; };
+		8056F4131FE8D24500529CF4 /* TopicHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		8056F4141FE8D24500529CF4 /* TopicHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		8056F4181FE8D61B00529CF4 /* CellRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRepresentable.swift; sourceTree = "<group>"; };
+		8056F4191FE8D61C00529CF4 /* CellIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellIdentifiable.swift; sourceTree = "<group>"; };
+		8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHeaderTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		805EC8841F416C7E005197DF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		805EC8861F416C8A005197DF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		805EC88C1F41896B005197DF /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -295,6 +305,7 @@
 				804D91D01F37C83500CA6FBE /* FilterView */,
 				804D91CB1F37C75900CA6FBE /* TopicHeaderView */,
 				800FEFEC1F2571B300DF5531 /* LoadMoreTableViewCell */,
+				8056F4171FE8D24B00529CF4 /* TopicHeaderTableViewCell */,
 				800FEFE71F2567E100DF5531 /* TopicBriefTableViewCell */,
 				8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */,
 				80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */,
@@ -417,6 +428,32 @@
 			name = SeparatorLineTableViewCell;
 			sourceTree = "<group>";
 		};
+		8056F4171FE8D24B00529CF4 /* TopicHeaderTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8056F4131FE8D24500529CF4 /* TopicHeaderTableViewCell.swift */,
+				8056F4141FE8D24500529CF4 /* TopicHeaderTableViewCell.xib */,
+			);
+			name = TopicHeaderTableViewCell;
+			sourceTree = "<group>";
+		};
+		8056F41C1FE8D62300529CF4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				8056F4191FE8D61C00529CF4 /* CellIdentifiable.swift */,
+				8056F4181FE8D61B00529CF4 /* CellRepresentable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		8056F41D1FE8D68300529CF4 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */,
+			);
+			name = "View Models";
+			sourceTree = "<group>";
+		};
 		806179801F3E69D500B696FB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,7 +572,9 @@
 				80EF11051FC2321A0009BF2B /* Casanova.entitlements */,
 				804D91C01F36C53700CA6FBE /* Resources */,
 				80AAA3AF1FA85735001251E8 /* Entities */,
+				8056F41C1FE8D62300529CF4 /* Protocols */,
 				800FEFE31F25675600DF5531 /* Models */,
+				8056F41D1FE8D68300529CF4 /* View Models */,
 				800FEFE41F25677300DF5531 /* Views */,
 				800FEFE21F25674500DF5531 /* Managers */,
 				806179801F3E69D500B696FB /* Helpers */,
@@ -667,6 +706,7 @@
 				80FB45861F47894C0034D525 /* Muli-Light.ttf in Resources */,
 				80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */,
 				80FB45831F4788E80034D525 /* Merriweather-Regular.ttf in Resources */,
+				8056F4161FE8D24500529CF4 /* TopicHeaderTableViewCell.xib in Resources */,
 				802E8E441F34662200A9345E /* TopicHeaderView.xib in Resources */,
 				808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */,
 				808B21FC1F71967000ED5526 /* TFTicons_avator_1.png in Resources */,
@@ -743,6 +783,7 @@
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
+				8056F4151FE8D24500529CF4 /* TopicHeaderTableViewCell.swift in Sources */,
 				80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */,
 				80C2AA0E1F737F98001F298D /* OSSManager.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
@@ -775,15 +816,18 @@
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
 				8056F4121FE75ABA00529CF4 /* DeepLinkAction.swift in Sources */,
 				80AAA3B51FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift in Sources */,
+				8056F41A1FE8D61C00529CF4 /* CellRepresentable.swift in Sources */,
 				80826CF21F62465800956E03 /* AudioControlView.swift in Sources */,
 				80FB457F1F4786D40034D525 /* UIColor+Addition.swift in Sources */,
 				800122C61F1EDCCF00F185AE /* TopicManager.swift in Sources */,
+				8056F41B1FE8D61C00529CF4 /* CellIdentifiable.swift in Sources */,
 				805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */,
 				806179821F3E69F500B696FB /* Array+Helper.swift in Sources */,
 				800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */,
 				80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */,
 				80FB458B1F482B890034D525 /* Environment.swift in Sources */,
 				80FB457A1F46C1290034D525 /* AnswerDetailViewController.swift in Sources */,
+				8056F41F1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift in Sources */,
 				807BF5CC1F29B275000451FA /* TagManager.swift in Sources */,
 				8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
