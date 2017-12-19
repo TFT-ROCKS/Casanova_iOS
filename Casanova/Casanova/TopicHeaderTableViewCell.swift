@@ -9,6 +9,10 @@
 import UIKit
 import TagListView
 
+protocol TopicHeaderTableViewCellDelegate {
+    func answerTopicButtonTapped(_ sender: UIButton)
+}
+
 class TopicHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!

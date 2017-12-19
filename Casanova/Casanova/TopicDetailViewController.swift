@@ -42,7 +42,6 @@ class TopicDetailViewController: UIViewController {
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
-    let toolBar: TopicDetailToolBar = TopicDetailToolBar(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
@@ -110,14 +109,7 @@ class TopicDetailViewController: UIViewController {
     }
     
     func setup() {
-        if !noNeedToRecord && firstTimeThisTopic {
-            tableView.isHidden = true
-            toolBar.isHidden = true
-            setTitle(title: "问题")
-        } else {
-            topicView.isHidden = true
-            setTitle(title: "优秀答案")
-        }
+        setTitle(title: "问题")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -157,7 +149,6 @@ class TopicDetailViewController: UIViewController {
     
     func layoutSubviews() {
         layoutTableView()
-        layoutToolBar()
         layoutAudioControlBar()
         layoutTopicView()
         layoutRecordViews()
@@ -166,7 +157,6 @@ class TopicDetailViewController: UIViewController {
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
-        addToolBarConstraints()
         addAudioControlBarConstraints()
         addRecordConstraints()
     }
@@ -210,40 +200,8 @@ class TopicDetailViewController: UIViewController {
 }
 
 // MARK: - Tool Bar
-extension TopicDetailViewController: TopicDetailToolBarDelegate {
-    func layoutToolBar() {
-        view.addSubview(toolBar)
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        view.bringSubview(toFront: toolBar)
-        configToolBar()
-    }
-    
-    func configToolBar() {
-        toolBar.delegate = self
-    }
-    
-    func addToolBarConstraints() {
-        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        toolBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
-    }
-    
-    // MARK: - TopicDetailToolBarDelegate
-    
-    func questionButtonClickedOnToolBar() {
-        if toolBar.isQuestion {
-            showTopicView()
-        } else {
-            hideTopicView()
-        }
-    }
-    
-    func saveButtonClickedOnToolBar() {
-        
-    }
-    
-    func answerButtonClickedOnToolBar() {
+extension TopicDetailViewController: TopicHeaderTableViewCellDelegate {
+    func answerTopicButtonTapped(_ sender: UIButton) {
         if audioPlayer != nil {
             audioPlayer.stop()
             audioPlayer = nil
@@ -255,7 +213,6 @@ extension TopicDetailViewController: TopicDetailToolBarDelegate {
         showTopicView()
         audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-        toolBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         initRecordViews()
         setTitle(title: "问题")
     }
@@ -277,7 +234,7 @@ extension TopicDetailViewController: AudioControlViewDelegate {
     }
     
     func addAudioControlBarConstraints() {
-        audioControlBar.bottomAnchor.constraint(equalTo: toolBar.topAnchor).isActive = true
+        audioControlBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         audioControlBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         audioControlBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         audioControlBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
@@ -337,13 +294,11 @@ extension TopicDetailViewController {
     
     func hideTopicView() {
         if topicView.isHidden == true { return }
-        toolBar.isQuestion = false
         topicView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
     }
     
     func showTopicView() {
         if topicView.isHidden == false { return }
-        toolBar.isQuestion = true
         topicView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
@@ -380,8 +335,8 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func addTableViewConstraints() {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
         
         activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
         activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
@@ -946,7 +901,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                 self.skipButton.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration) { success in
                     if success {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-                        self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
                         if self.needsToShowIndicatorView {
@@ -1046,7 +1000,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                 self.rewardLabel.fadeOut(withDuration: Duration.TopicDetailVC.View.rewardFadeOutDuration, withCompletionBlock: { success in
                     if success {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-                        self.toolBar.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
                         if self.needsToShowIndicatorView {
