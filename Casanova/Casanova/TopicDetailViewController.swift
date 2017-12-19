@@ -13,6 +13,9 @@ import Firebase
 
 class TopicDetailViewController: UIViewController {
     
+    // MARK: - Private
+    fileprivate var viewModel: TopicDetailViewControllerViewModel
+    
     // class vars
     var topic: Topic! {
         didSet {
@@ -74,21 +77,15 @@ class TopicDetailViewController: UIViewController {
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     
-    // init
+    // MARK: - Lifecycle
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withTopic topic: Topic) {
-        super.init(nibName: nil, bundle: nil)
+    required convenience init(viewModel: TopicDetailViewControllerViewModel) {
+        self.init(nibName: nil, bundle: nil)
         
-        self.topic = topic
-        audioSession = AVAudioSession.sharedInstance()
-    }
-    
-    init(withTopicId topicId: Int) {
-        super.init(nibName: nil, bundle: nil)
-        
+        self.viewModel = viewModel
         audioSession = AVAudioSession.sharedInstance()
     }
     
@@ -105,10 +102,6 @@ class TopicDetailViewController: UIViewController {
         
         view.backgroundColor = UIColor.bgdColor
         
-        setup()
-    }
-    
-    func setup() {
         setTitle(title: "问题")
     }
     
@@ -159,6 +152,45 @@ class TopicDetailViewController: UIViewController {
         addTableViewConstraints()
         addAudioControlBarConstraints()
         addRecordConstraints()
+    }
+    
+    // MARK: - ViewModel
+    fileprivate func bindToViewModel() {
+        self.viewModel.didUpdate = { [unowned self] _ in
+            self.viewModelDidUpdate()
+        }
+        self.viewModel.didError = { [unowned self] (error) in
+            self.viewModelDidError(error)
+        }
+        self.viewModel.didSelectAnswer = { [unowned self] (topic, answer) in
+            self.viewModelDidSelect(topic, answer: answer)
+        }
+    }
+    
+    fileprivate func viewModelDidUpdate() {
+        // activity indicator
+        if viewModel.isUpdating {
+            activityIndicatorView.startAnimating()
+        }
+        else {
+            activityIndicatorView.stopAnimating()
+        }
+        // tableview
+        self.tableView.reloadData()
+    }
+    
+    fileprivate func viewModelDidError(_ error: Error) {
+        
+    }
+    
+    fileprivate func viewModelDidSelect(_ topic: Topic, answer: Answer) {
+        let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answer)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // MARK: - Actions
+    @objc private func reloadData() {
+        self.viewModel.reloadData()
     }
     
     func fetchTopicDetail() {
@@ -425,8 +457,7 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answers![indexPath.row])
-        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     func likeButtonTapped(_ sender: UIButton) {

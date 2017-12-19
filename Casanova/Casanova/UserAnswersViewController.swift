@@ -359,7 +359,8 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             let vc = AnswerDetailViewController(withTopic: answer.topic!, withAnswer: answer)
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 1 {
-            let vc = TopicDetailViewController(withTopic: answer.topic!)
+            let vm = TopicDetailViewControllerViewModel(topic: answer.topic!)
+            let vc = TopicDetailViewController(viewModel: vm)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

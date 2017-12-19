@@ -31,29 +31,19 @@ class TopicHeaderTableViewCellViewModel {
     
     // MARK: - Properties
     var answersCountText: String {
-        get {
-            return "\(topic.answersCount)个回答"
-        }
+        return "\(topic.answersCount)个回答"
     }
     var titleText: NSAttributedString {
-        get {
-            return AttrString.topicAttrString(topic.title)
-        }
+        return AttrString.topicAttrString(topic.title)
     }
     var level: Int {
-        get {
-            return topic.level
-        }
+        return topic.level
     }
     var difficultyText: String {
-        get {
-            return difficulties[topic.level - 1]
-        }
+        return difficulties[topic.level - 1]
     }
     var tags: [String] {
-        get {
-            return topic.tags.components(separatedBy: ",")
-        }
+        return topic.tags.components(separatedBy: ",")
     }
     
     // MARK: - Actions

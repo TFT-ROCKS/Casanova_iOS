@@ -598,7 +598,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            let vc = TopicDetailViewController(withTopic: topics[indexPath.row])
+            let vm = TopicDetailViewControllerViewModel(topic: topics[indexPath.row])
+            let vc = TopicDetailViewController(viewModel: vm)
             self.navigationController?.pushViewController(vc, animated: true)
         case Tags.HomeVC.tpoTableViewTag:
             break

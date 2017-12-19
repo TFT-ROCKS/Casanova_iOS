@@ -36,6 +36,9 @@
 		8056F41A1FE8D61C00529CF4 /* CellRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4181FE8D61B00529CF4 /* CellRepresentable.swift */; };
 		8056F41B1FE8D61C00529CF4 /* CellIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4191FE8D61C00529CF4 /* CellIdentifiable.swift */; };
 		8056F41F1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */; };
+		8056F4211FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4201FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift */; };
+		8056F4231FE90A8700529CF4 /* AnswerBriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4221FE90A8700529CF4 /* AnswerBriefTableViewCell.swift */; };
+		8056F4251FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8056F4241FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift */; };
 		805EC8851F416C7E005197DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8841F416C7E005197DF /* SignInViewController.swift */; };
 		805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC8861F416C8A005197DF /* SignUpViewController.swift */; };
 		805EC88D1F41896B005197DF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EC88C1F41896B005197DF /* MyTabBarController.swift */; };
@@ -90,8 +93,6 @@
 		80B5B3161F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B5B3141F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift */; };
 		80B5B3171F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B5B3151F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib */; };
 		80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */; };
-		80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */; };
-		80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */; };
 		80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */; };
 		80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */; };
 		80BBD5C21FDDEEF200B9A0EE /* AudioCommentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BBD5C11FDDEEF200B9A0EE /* AudioCommentPostView.swift */; };
@@ -149,6 +150,9 @@
 		8056F4181FE8D61B00529CF4 /* CellRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRepresentable.swift; sourceTree = "<group>"; };
 		8056F4191FE8D61C00529CF4 /* CellIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellIdentifiable.swift; sourceTree = "<group>"; };
 		8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicHeaderTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		8056F4201FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailViewControllerViewModel.swift; sourceTree = "<group>"; };
+		8056F4221FE90A8700529CF4 /* AnswerBriefTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerBriefTableViewCell.swift; sourceTree = "<group>"; };
+		8056F4241FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerBriefTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		805EC8841F416C7E005197DF /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		805EC8861F416C8A005197DF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		805EC88C1F41896B005197DF /* MyTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -203,8 +207,6 @@
 		80B5B3141F7E16C2004A2794 /* ProfileSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		80B5B3151F7E16C2004A2794 /* ProfileSettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSettingsTableViewCell.xib; sourceTree = "<group>"; };
 		80B5B3191F7E1A07004A2794 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerBriefTableViewCell.swift; sourceTree = "<group>"; };
-		80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerBriefTableViewCell.xib; sourceTree = "<group>"; };
 		80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailTableViewCell.swift; sourceTree = "<group>"; };
 		80B756B21F2FA17000285FB4 /* TopicDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailViewController.swift; sourceTree = "<group>"; };
 		80BBD5C11FDDEEF200B9A0EE /* AudioCommentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentPostView.swift; sourceTree = "<group>"; };
@@ -450,6 +452,8 @@
 			isa = PBXGroup;
 			children = (
 				8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */,
+				8056F4201FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift */,
+				8056F4241FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -531,8 +535,7 @@
 		80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				80B756A71F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift */,
-				80B756A81F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib */,
+				8056F4221FE90A8700529CF4 /* AnswerBriefTableViewCell.swift */,
 				80B756B01F2F323400285FB4 /* AnswerDetailTableViewCell.swift */,
 				8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */,
 			);
@@ -699,7 +702,6 @@
 				808B21FE1F71967000ED5526 /* TFTicons_avator_3.png in Resources */,
 				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
 				808B21FD1F71967000ED5526 /* TFTicons_avator_2.png in Resources */,
-				80B756AA1F2EBD8700285FB4 /* AnswerBriefTableViewCell.xib in Resources */,
 				800122C21F1E903200F185AE /* TopicBriefTableViewCell.xib in Resources */,
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
 				80826CEE1F6245EC00956E03 /* AnswerDetailToolBar.xib in Resources */,
@@ -802,7 +804,6 @@
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
 				80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
-				80B756A91F2EBD8700285FB4 /* AnswerBriefTableViewCell.swift in Sources */,
 				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,
 				80A14D7C1FBC49BD004B9D95 /* AudioRecordViewController.swift in Sources */,
 				807BF5CE1F29B291000451FA /* AnswerManager.swift in Sources */,
@@ -832,6 +833,7 @@
 				8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
 				80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */,
+				8056F4251FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift in Sources */,
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,
 				8061797F1F3E69BD00B696FB /* UIView+Animation.swift in Sources */,
@@ -841,6 +843,8 @@
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserManager.swift in Sources */,
+				8056F4231FE90A8700529CF4 /* AnswerBriefTableViewCell.swift in Sources */,
+				8056F4211FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift in Sources */,
 				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,
 				805EC88F1F418A0B005197DF /* SavedViewController.swift in Sources */,
 				807BF5C81F29B24D000451FA /* LikeManager.swift in Sources */,
