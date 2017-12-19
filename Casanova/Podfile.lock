@@ -22,6 +22,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Nuke (5.2)
   - NVActivityIndicatorView (4.0.0):
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - Down
   - Firebase/Core
   - IDZSwiftCommonCrypto (~> 0.9.1)
+  - Nuke (~> 5.0)
   - NVActivityIndicatorView
   - Siren (from `https://github.com/ArtSabintsev/Siren.git`, branch `swift3.2`)
   - TagListView (~> 1.0)
@@ -74,11 +76,12 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   IDZSwiftCommonCrypto: 03ea02798d8cf2c2a08aa31b1b991e779fb163ed
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Nuke: 5f420c4637415f979c83afb35e73176dd03232d9
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   Siren: 4269fa935d0d890ba57ca7cce0569cc285456ca9
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
   UMengUShare: fdbbf86353976727af26a66e9a84314ecb59c816
 
-PODFILE CHECKSUM: 4ecd7a506335877980b2adfb3316481d7e3e208b
+PODFILE CHECKSUM: 4934e82c62873b6c76fd4a42ca5354a0750c56ae
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1
