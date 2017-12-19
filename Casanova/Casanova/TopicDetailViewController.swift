@@ -171,10 +171,6 @@ class TopicDetailViewController: UIViewController {
         addRecordConstraints()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     func fetchTopicDetail() {
         TopicManager.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
             if error == nil {

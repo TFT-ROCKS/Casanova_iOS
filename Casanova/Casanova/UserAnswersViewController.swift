@@ -107,10 +107,6 @@ class UserAnswersViewController: UIViewController {
         addAudioControlBarConstraints()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
 //    func fetchUserAnswers() {
 //        AnswerManager.shared.fetchUserAnswers(forUser: Environment.shared.currentUser!, withCompletion: { (error, answers) in
 //            if error == nil {

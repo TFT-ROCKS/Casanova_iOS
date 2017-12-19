@@ -63,10 +63,6 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         postTextView.answer = answer
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
