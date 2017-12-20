@@ -11,7 +11,7 @@ import Foundation
 class TopicHeaderTableViewCellViewModel {
     
     // MARK: - Private
-    fileprivate let topic: Topic
+    let topic: Topic
     fileprivate var restrictedTo: IndexPath?
     fileprivate let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -28,13 +28,14 @@ class TopicHeaderTableViewCellViewModel {
     var didError: ((Error) -> Void)?
     var didUpdate: ((TopicHeaderTableViewCellViewModel) -> Void)?
     var didSelect: ((Topic) -> Void)?
+    var didWannaAnswer: (() -> Void)?
     
     // MARK: - Properties
     var answersCountText: String {
         return "\(topic.answersCount)个回答"
     }
-    var titleText: NSAttributedString {
-        return AttrString.topicAttrString(topic.title)
+    var titleText: String {
+        return topic.title
     }
     var level: Int {
         return topic.level
@@ -54,6 +55,10 @@ class TopicHeaderTableViewCellViewModel {
             else { return true }
         
         return uniqueId == restrictedTo
+    }
+    
+    @objc func wannaAnswer() {
+        self.didWannaAnswer?()
     }
 }
 

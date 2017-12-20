@@ -8,6 +8,7 @@
 
 import UIKit
 import TagListView
+import Nuke
 
 class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -15,9 +16,9 @@ class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var starButton: UIButton!
-    @IBOutlet weak var numOfStarsLabel: UILabel!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var answerImageView: UIImageView!
+    @IBOutlet weak var chineseTitleLabel: UILabel!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -32,16 +33,10 @@ class TopicBriefTableViewCell: UITableViewCell {
     func updateUI() {
         // Update UI
         
-        if reuseIdentifier == ReuseIDs.HomeVC.View.topicBriefTableViewCell {
-            titleLabel.attributedText = AttrString.topicAttrString(topic.title)
-        } else if reuseIdentifier == ReuseIDs.SavedVC.View.topicBriefAppendTableViewCell {
-            titleLabel.attributedText = AttrString.smallTopicAttrString(topic.title)
-        }
-        
-        difficultyLabel.font = UIFont.mr(size: 12)
+        titleLabel.text = topic.title
+        chineseTitleLabel.text = topic.chineseTitle ?? Placeholder.chineseTopicTitlePlaceholderStr
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount)个回答"
-        numOfAnswersLabel.font = UIFont.pfr(size: 12)
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
         diffView.tag = 101
         diffView.backgroundColor = UIColor.clear
@@ -65,21 +60,26 @@ class TopicBriefTableViewCell: UITableViewCell {
         if isLikedCard {
             topConstraint.constant = 0
         }
+        
+        // image
+        var request = Request(url: URL(string: topic.answerPictureUrl ?? Placeholder.answerImagePlaceholderURLStr)!)
+        request.memoryCacheOptions.writeAllowed = false
+        request.memoryCacheOptions.readAllowed = false
+        Manager.shared.loadImage(with: request, into: answerImageView)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.backgroundColor = UIColor.white
-        selectionStyle = .none
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
         
-        difficultyLabel.font = UIFont.mr(size: 14)
-        numOfAnswersLabel.font = UIFont.mr(size: 14)
-        numOfStarsLabel.font = UIFont.mr(size: 14)
-        
-        // hide for now
-        starButton.isHidden = true
-        numOfStarsLabel.isHidden = true
+        difficultyLabel.font = UIFont.mr(size: 12)
+        numOfAnswersLabel.font = UIFont.pfr(size: 12)
+        titleLabel.font = UIFont.mr(size: 13)
+        titleLabel.textColor = UIColor.bodyTextColor
+        chineseTitleLabel.font = UIFont.pfr(size: 13)
+        chineseTitleLabel.textColor = UIColor.bodyTextColor
+        answerImageView.contentMode = .scaleAspectFill
+        answerImageView.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

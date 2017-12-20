@@ -451,9 +451,8 @@
 		8056F41D1FE8D68300529CF4 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */,
-				8056F4201FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift */,
-				8056F4241FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift */,
+				80D9A7671FEA57F1000BD030 /* TableViewCell ViewModels */,
+				80D9A7681FEA5803000BD030 /* ViewController ViewModels */,
 			);
 			name = "View Models";
 			sourceTree = "<group>";
@@ -549,6 +548,23 @@
 				80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */,
 			);
 			name = AudioPlayView;
+			sourceTree = "<group>";
+		};
+		80D9A7671FEA57F1000BD030 /* TableViewCell ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8056F41E1FE8D6A900529CF4 /* TopicHeaderTableViewCellViewModel.swift */,
+				8056F4241FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift */,
+			);
+			name = "TableViewCell ViewModels";
+			sourceTree = "<group>";
+		};
+		80D9A7681FEA5803000BD030 /* ViewController ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8056F4201FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift */,
+			);
+			name = "ViewController ViewModels";
 			sourceTree = "<group>";
 		};
 		80E338FD1F1AE4FD00F539E5 = {

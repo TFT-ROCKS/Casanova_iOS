@@ -20,22 +20,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="210" id="KGk-i7-Jjw" customClass="TopicBriefTableViewCell" customModule="Casanova" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="396" height="210"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="385" id="KGk-i7-Jjw" customClass="TopicBriefTableViewCell" customModule="Casanova" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="385"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="396" height="209.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="396" height="384.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
-                        <rect key="frame" x="30" y="26" width="336" height="100.5"/>
-                        <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
-                        <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
-                        <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
-                        <rect key="frame" x="30" y="132" width="336" height="31"/>
+                        <rect key="frame" x="30" y="110" width="336" height="56.5"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                 <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,71 +51,79 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgU-V7-nQX">
-                        <rect key="frame" x="70" y="173" width="29.5" height="16.5"/>
+                        <rect key="frame" x="70" y="348" width="29.5" height="16.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# answers" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK1-X5-gjE">
-                        <rect key="frame" x="109.5" y="173" width="54" height="16.5"/>
+                        <rect key="frame" x="109.5" y="348" width="54" height="16.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVL-6W-GdB">
-                        <rect key="frame" x="324" y="173" width="16" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="16" id="eU1-zc-lqh"/>
-                            <constraint firstAttribute="height" constant="16" id="qzu-UD-uUk"/>
-                        </constraints>
-                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-rW-mBG">
-                        <rect key="frame" x="30" y="173" width="30" height="16"/>
+                        <rect key="frame" x="30" y="348" width="30" height="16"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="Dze-lp-ujV"/>
                             <constraint firstAttribute="width" constant="30" id="Eid-15-HQy"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="52" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sje-rT-Rf0">
-                        <rect key="frame" x="350" y="171.5" width="16" height="19.5"/>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学生是否应该花更多的时间在教室以外的课堂上学习。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="io4-O1-zZi">
+                        <rect key="frame" x="30" y="287" width="336" height="41"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
+                        <rect key="frame" x="30" y="176.5" width="336" height="100.5"/>
+                        <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
+                        <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htz-om-g73">
+                        <rect key="frame" x="0.0" y="0.0" width="396" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="PKT-Hv-4Gn"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sje-rT-Rf0" firstAttribute="leading" secondItem="vVL-6W-GdB" secondAttribute="trailing" constant="10" id="2Ye-6w-98O"/>
                     <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="4DS-yc-XfJ"/>
-                    <constraint firstItem="vVL-6W-GdB" firstAttribute="centerY" secondItem="gK1-X5-gjE" secondAttribute="centerY" id="9ov-nt-HwO"/>
-                    <constraint firstItem="vVL-6W-GdB" firstAttribute="centerY" secondItem="sje-rT-Rf0" secondAttribute="centerY" id="DFh-zN-wnL"/>
+                    <constraint firstAttribute="trailing" secondItem="htz-om-g73" secondAttribute="trailing" id="4RE-N4-D8y"/>
+                    <constraint firstItem="io4-O1-zZi" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="8zg-yS-kHe"/>
+                    <constraint firstItem="io4-O1-zZi" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="9Gy-Id-eYM"/>
                     <constraint firstItem="gK1-X5-gjE" firstAttribute="bottom" secondItem="XgU-V7-nQX" secondAttribute="bottom" id="DV6-1G-6aR"/>
                     <constraint firstItem="inB-G3-hzE" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="IhT-gM-S8y"/>
                     <constraint firstAttribute="trailingMargin" secondItem="s2L-5p-bKQ" secondAttribute="trailing" constant="10" id="Jyk-Kx-9Ri"/>
                     <constraint firstItem="gK1-X5-gjE" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="Nan-1T-IvF"/>
+                    <constraint firstItem="htz-om-g73" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="SYQ-3i-3Cw"/>
                     <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="JE0-rW-mBG" secondAttribute="trailing" constant="10" id="Wpw-Wg-mr5"/>
+                    <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="htz-om-g73" secondAttribute="bottom" constant="10" id="bAJ-WU-Bpl"/>
                     <constraint firstAttribute="bottomMargin" secondItem="JE0-rW-mBG" secondAttribute="bottom" constant="10" id="cW5-Gk-4hI"/>
-                    <constraint firstItem="sje-rT-Rf0" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="dJd-u1-04R"/>
-                    <constraint firstAttribute="topMargin" secondItem="s2L-5p-bKQ" secondAttribute="top" constant="-15" id="hq2-ql-jTE"/>
+                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="jsK-VN-9Rs"/>
                     <constraint firstItem="JE0-rW-mBG" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="puR-Sj-DPa"/>
                     <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="r2g-jn-yyS"/>
                     <constraint firstItem="gK1-X5-gjE" firstAttribute="leading" secondItem="XgU-V7-nQX" secondAttribute="trailing" constant="10" id="rAa-HZ-G5t"/>
-                    <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="5.7000000000000002" id="vfA-7v-8tU"/>
+                    <constraint firstItem="htz-om-g73" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="raM-Kl-Q6o"/>
+                    <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="io4-O1-zZi" secondAttribute="bottom" constant="20" id="vWR-DC-3Sa"/>
                     <constraint firstItem="JE0-rW-mBG" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="wZj-fe-GHF"/>
-                    <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="z70-QR-EaS"/>
+                    <constraint firstItem="io4-O1-zZi" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="10" id="xTU-xS-TcG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="answerImageView" destination="htz-om-g73" id="cKe-4C-F6r"/>
+                <outlet property="chineseTitleLabel" destination="io4-O1-zZi" id="mkt-oh-gYK"/>
                 <outlet property="difficultyLabel" destination="XgU-V7-nQX" id="JE9-wQ-xZ5"/>
                 <outlet property="difficultyView" destination="JE0-rW-mBG" id="skY-Mh-tCO"/>
                 <outlet property="numOfAnswersLabel" destination="gK1-X5-gjE" id="0dp-fT-tqG"/>
-                <outlet property="numOfStarsLabel" destination="sje-rT-Rf0" id="nMH-ze-vkT"/>
-                <outlet property="starButton" destination="vVL-6W-GdB" id="vzg-ll-F8V"/>
                 <outlet property="tagListView" destination="inB-G3-hzE" id="UKE-eU-Iab"/>
                 <outlet property="titleLabel" destination="s2L-5p-bKQ" id="v0H-wm-PZw"/>
-                <outlet property="topConstraint" destination="hq2-ql-jTE" id="okO-4L-DGU"/>
+                <outlet property="topConstraint" destination="raM-Kl-Q6o" id="pw9-uB-bPg"/>
             </connections>
-            <point key="canvasLocation" x="-88" y="-94"/>
+            <point key="canvasLocation" x="-398" y="-86.5"/>
         </tableViewCell>
     </objects>
 </document>

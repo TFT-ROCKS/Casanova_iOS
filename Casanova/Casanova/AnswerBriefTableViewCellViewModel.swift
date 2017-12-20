@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Nuke
 
 class AnswerBriefTableViewCellViewModel {
     
@@ -27,6 +28,7 @@ class AnswerBriefTableViewCellViewModel {
     var didError: ((Error) -> Void)?
     var didUpdate: ((AnswerBriefTableViewCellViewModel) -> Void)?
     var didSelect: ((Answer) -> Void)?
+    var didDeleteAnswer: ((Answer) -> Void)?
     
     // MARK: - Properties
     var answererNameText: String {
@@ -41,11 +43,24 @@ class AnswerBriefTableViewCellViewModel {
         return UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
     }
     
-    var answerTitleText: NSAttributedString {
-        return AttrString.answerAttrString(answer.title)
+    var answerTitleText: String {
+        return answer.title != "" ? answer.title : Placeholder.answerTitlePlaceholderStr
     }
     
     var answerImage: UIImage?
+    
+    var trashButtonHidden: Bool {
+        return !(answer.user.id == Environment.shared.currentUser?.id)
+    }
+    
+    var clapsText: String {
+        // TODO: Use count of likes for now, replace with num of claps later
+        return "\(answer.likes.count) 鼓掌"
+    }
+    
+    var commentsText: String {
+        return "\(answer.comments.count) 跟读"
+    }
     
     // MARK: - Actions
     func allowedAccess(_ object: CellIdentifiable) -> Bool {
@@ -56,6 +71,19 @@ class AnswerBriefTableViewCellViewModel {
         
         return uniqueId == restrictedTo
     }
+    
+    func loadAnswerImage() {
+        if answer.audioURL != nil {
+            Manager.shared.loadImage(with: (URL(string: answer.imageURL ?? Placeholder.answerImagePlaceholderURLStr))!) { image in
+                self.answerImage = image.value
+                self.didUpdate?(self)
+            }
+        }
+    }
+    
+    @objc func deleteAnswer() {
+        self.didDeleteAnswer?(answer)
+    }
 }
 
 extension AnswerBriefTableViewCellViewModel: CellRepresentable {
@@ -65,7 +93,14 @@ extension AnswerBriefTableViewCellViewModel: CellRepresentable {
     }
     
     func dequeueCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AnswerBriefTableViewCell.self), for: indexPath) as! AnswerBriefTableViewCell
+        var cell: AnswerBriefTableViewCell
+        
+        if answer.audioURL == nil {
+            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerBriefTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerBriefTableViewCell
+        }
+        
         cell.uniqueId = indexPath
         restrictedTo = indexPath
         cell.bind(viewModel: self)

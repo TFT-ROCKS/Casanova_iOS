@@ -12,27 +12,33 @@ class Topic {
     // MARK: - Home Page
     var answersCount: Int
     var title: String
+    var chineseTitle: String?
     var id: Int
     var status: Int
     var level: Int
     var tags: String
     var isTrending: Int
+    var answerPictureUrl: String?
     var isDetailed: Bool
     
     init(answersCount: Int,
          title: String,
+         chineseTitle: String?,
          id: Int,
          status: Int,
          level: Int,
          tags: String,
+         answerPictureUrl: String?,
          isTrending: Int) {
         
         self.answersCount = answersCount
         self.title = title
+        self.chineseTitle = chineseTitle
         self.id = id
         self.status = status
         self.level = level
         self.tags = tags
+        self.answerPictureUrl = answerPictureUrl
         self.isTrending = isTrending
         self.isDetailed = false
     }
@@ -50,12 +56,18 @@ class Topic {
                 //print(errorMessage.msg)
                 return nil
         }
+        
+        let chineseTitle = json["topicChineseTitle"] as? String
+        let answerPictureUrl = json["answerPictureUrl"] as? String
+        
         self.init(answersCount: answersCount,
                   title: title,
+                  chineseTitle: chineseTitle,
                   id: id,
                   status: status,
                   level: level,
                   tags: tags,
+                  answerPictureUrl: answerPictureUrl,
                   isTrending: isTrending)
     }
     
@@ -69,12 +81,18 @@ class Topic {
                 //print(errorMessage.msg)
                 return nil
         }
+        
+        let chineseTitle = json["topicChineseTitle"] as? String
+        let answerPictureUrl = json["answerPictureUrl"] as? String
+        
         self.init(answersCount: 1,
                   title: title,
+                  chineseTitle: chineseTitle,
                   id: id,
                   status: 1,
                   level: level,
                   tags: "",
+                  answerPictureUrl: answerPictureUrl,
                   isTrending: isTrending)
     }
     
@@ -100,12 +118,16 @@ class Topic {
             }
         }
         let tagsStr = tagsArr.joined(separator: ",")
+        let chineseTitle = json["topicChineseTitle"] as? String
+        let answerPictureUrl = json["answerPictureUrl"] as? String
         self.init(answersCount: answersCount,
                   title: title,
+                  chineseTitle: chineseTitle,
                   id: id,
                   status: status,
                   level: level,
                   tags: tagsStr,
+                  answerPictureUrl: answerPictureUrl,
                   isTrending: isTrending)
     }
     

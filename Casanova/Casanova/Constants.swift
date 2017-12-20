@@ -114,7 +114,7 @@ struct AttrString {
     static func topicAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 1.5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli-Light", size: 17)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli-Light", size: 14)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
@@ -134,7 +134,7 @@ struct AttrString {
         let temp = try? down.toAttributedString()
         let attrString = NSMutableAttributedString(attributedString: temp!)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
@@ -143,7 +143,7 @@ struct AttrString {
     static func commentAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
@@ -171,5 +171,11 @@ struct AttrString {
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.nonBodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
+}
+
+struct Placeholder {
+    static let answerImagePlaceholderURLStr = "https://placeimg.com/414/200/any"
+    static let chineseTopicTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
+    static let answerTitlePlaceholderStr = "这个人很懒，什么也没说..."
 }
 

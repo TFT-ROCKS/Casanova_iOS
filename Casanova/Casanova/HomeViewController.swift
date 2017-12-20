@@ -466,14 +466,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            switch section {
-            case 0:
-                return topics.count
-            case 1:
-                return 1
-            default:
-                return 0
-            }
+            return 1
         case Tags.HomeVC.tpoTableViewTag:
             return tpoArray.count
         case Tags.HomeVC.levelTableViewTag:
@@ -490,9 +483,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case Tags.HomeVC.homeTableViewTag:
             // Hide "Load More" Button if there is no topics present
             if topics.count > 0 {
-                return 2
+                return topics.count + 1
             } else {
-                return 1
+                return topics.count
             }
         case Tags.HomeVC.tpoTableViewTag:
             return 1
@@ -508,18 +501,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            switch indexPath.section {
-            case 0:
+            if indexPath.section < topics.count {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.topicBriefTableViewCell, for: indexPath) as! TopicBriefTableViewCell
-                cell.topic = topics[indexPath.row]
+                cell.topic = topics[indexPath.section]
                 return cell
-            case 1:
+            } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell, for: indexPath) as! LoadMoreTableViewCell
                 cell.delegate = self
                 cell.loadMoreButton.setTitle("LOAD MORE", for: .normal)
                 return cell
-            default:
-                return UITableViewCell()
             }
         case Tags.HomeVC.tpoTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
@@ -555,31 +545,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case Tags.HomeVC.homeTableViewTag:
             if let cell = cell as? TopicBriefTableViewCell {
                 
-                // Visualize the margin surrounding the table view cell
-                cell.contentView.backgroundColor = UIColor.clear
-                cell.backgroundColor = UIColor.clear
-                
-                // remove small whiteRoundedView before adding new one
-                for view in cell.contentView.subviews {
-                    if view.tag == 100 {
-                        view.removeFromSuperview()
-                    }
-                }
-                
-                let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
-                whiteRoundedView.tag = 100
-                whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-                whiteRoundedView.layer.masksToBounds = false
-                whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
-                whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
-                whiteRoundedView.layer.shadowOpacity = 1
-                
-                cell.contentView.addSubview(whiteRoundedView)
-                cell.contentView.sendSubview(toBack: whiteRoundedView)
+                cell.contentView.layer.shadowColor = UIColor.shadowColor.cgColor
+                cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+                cell.contentView.layer.shadowOpacity = 1
                 
             } else if let cell = cell as? LoadMoreTableViewCell {
                 
-                // Visualize the margin surrounding the table view cell
                 cell.contentView.backgroundColor = UIColor.clear
                 cell.backgroundColor = UIColor.clear
                 
@@ -595,12 +566,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 12))
+        return footer
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 12
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
             let vm = TopicDetailViewControllerViewModel(topic: topics[indexPath.row])
             let vc = TopicDetailViewController(viewModel: vm)
             self.navigationController?.pushViewController(vc, animated: true)
+            tableView.deselectRow(at: indexPath, animated: false)
         case Tags.HomeVC.tpoTableViewTag:
             break
         case Tags.HomeVC.levelTableViewTag:

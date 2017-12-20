@@ -22,8 +22,6 @@ class TopicHeaderView: UIView {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var starButton: UIButton!
-    @IBOutlet weak var numOfStarsLabel: UILabel!
     
     var mode: TopicHeaderViewMode!
     
@@ -52,29 +50,29 @@ class TopicHeaderView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         mode = .plain
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
-        difficultyLabel.font = UIFont.mr(size: 14)
-        numOfAnswersLabel.font = UIFont.mr(size: 14)
-        numOfStarsLabel.font = UIFont.mr(size: 14)
-        
-        // hide for now
-        starButton.isHidden = true
-        numOfStarsLabel.isHidden = true
+        difficultyLabel.font = UIFont.mr(size: 12)
+        numOfAnswersLabel.font = UIFont.mr(size: 12)
     }
     
     func updateUI() {
         // Update UI
-        titleLabel.attributedText = AttrString.topicAttrString(topic.title)
+        titleLabel.text = topic.title
+        titleLabel.font = UIFont.mr(size: 14)
+        titleLabel.textColor = UIColor.bodyTextColor
+        
         difficultyLabel.font = UIFont.mr(size: 12)
         difficultyLabel.text = difficulties[topic.level - 1]
+        
         numOfAnswersLabel.text = "\(topic.answersCount)个回答"
         numOfAnswersLabel.font = UIFont.pfr(size: 12)
+        numOfAnswersLabel.textColor = UIColor.nonBodyTextColor
         
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
         diffView.tag = 101
         diffView.backgroundColor = UIColor.clear
         difficultyView.backgroundColor = UIColor.clear
         difficultyView.addSubview(diffView)
+        difficultyLabel.textColor = UIColor.nonBodyTextColor
         
         // tag list view config
         tagListView.removeAllTags()
@@ -85,11 +83,6 @@ class TopicHeaderView: UIView {
         tagListView.textFont = UIFont.mr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
-        
-        difficultyLabel.textColor = UIColor.nonBodyTextColor
-        numOfAnswersLabel.textColor = UIColor.nonBodyTextColor
-        titleLabel.textColor = UIColor.nonBodyTextColor
-        numOfStarsLabel.textColor = UIColor.nonBodyTextColor
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
     }
@@ -118,10 +111,8 @@ class TopicHeaderView: UIView {
             difficultyLabel.textColor = UIColor.white
             numOfAnswersLabel.textColor = UIColor.white
             titleLabel.textColor = UIColor.white
-            numOfStarsLabel.textColor = UIColor.white
             tagListView.textColor = UIColor.white
             tagListView.borderColor = UIColor.white
-            starButton.setImage(#imageLiteral(resourceName: "star-w"), for: .normal)
         }
     }
     
@@ -149,10 +140,8 @@ class TopicHeaderView: UIView {
             difficultyLabel.textColor = UIColor.nonBodyTextColor
             numOfAnswersLabel.textColor = UIColor.nonBodyTextColor
             titleLabel.textColor = UIColor.nonBodyTextColor
-            numOfStarsLabel.textColor = UIColor.nonBodyTextColor
             tagListView.textColor = UIColor.brandColor
             tagListView.borderColor = UIColor.brandColor
-            starButton.setImage(#imageLiteral(resourceName: "star-h"), for: .normal)
         }
         
     }

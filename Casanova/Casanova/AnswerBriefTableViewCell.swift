@@ -20,14 +20,6 @@ class AnswerBriefTableViewCell: UITableViewCell {
     var trashButton: UIButton!
     var answerImageView: UIImageView?
     
-    var canBeDeleted: Bool = false
-    
-    var answer: Answer! {
-        didSet {
-            updateUI()
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,23 +27,29 @@ class AnswerBriefTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        selectionStyle = .none
+        selectionStyle = .blue
         
         answererButton = UIImageView(frame: .zero)
         answererNameLabel = UILabel(frame: .zero)
         answerTimeLabel = UILabel(frame: .zero)
+        clapsLabel = UILabel(frame: .zero)
+        commentLabel = UILabel(frame: .zero)
         answerTitleTextView = UITextView(frame: .zero)
         trashButton = UIButton(frame: .zero)
         
         contentView.addSubview(answererButton)
         contentView.addSubview(answererNameLabel)
         contentView.addSubview(answerTimeLabel)
+        contentView.addSubview(clapsLabel)
+        contentView.addSubview(commentLabel)
         contentView.addSubview(answerTitleTextView)
         contentView.addSubview(trashButton)
         
         answererButton.translatesAutoresizingMaskIntoConstraints = false
         answererNameLabel.translatesAutoresizingMaskIntoConstraints = false
         answerTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        clapsLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentLabel.translatesAutoresizingMaskIntoConstraints = false
         answerTitleTextView?.translatesAutoresizingMaskIntoConstraints = false
         trashButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -60,18 +58,14 @@ class AnswerBriefTableViewCell: UITableViewCell {
         // answererButton constraints
         answererButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         answererButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        answererButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
+        answererButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
         answererButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         
         // answererNameLabel constraints
-        answererNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        answererNameLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        answererNameLabel.leadingAnchor.constraint(equalTo: answererButton.trailingAnchor, constant: 20).isActive = true
+        answererNameLabel.leadingAnchor.constraint(equalTo: answererButton.trailingAnchor, constant: 10).isActive = true
         answererNameLabel.topAnchor.constraint(equalTo: answererButton.topAnchor).isActive = true
         
         // answerTimeLabel constraints
-        answerTimeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        answerTimeLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
         answerTimeLabel.leadingAnchor.constraint(equalTo: answererNameLabel.leadingAnchor).isActive = true
         answerTimeLabel.topAnchor.constraint(equalTo: answererNameLabel.bottomAnchor, constant: 5).isActive = true
         
@@ -82,10 +76,9 @@ class AnswerBriefTableViewCell: UITableViewCell {
         trashButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // answerTitle constraints
-        answerTitleTextView.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
+        answerTitleTextView.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 14).isActive = true
         answerTitleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        answerTitleTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
-        answerTitleTextView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        answerTitleTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         if reuseIdentifier! != ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell {
             audioButton = UIButton(frame: .zero)
@@ -101,30 +94,42 @@ class AnswerBriefTableViewCell: UITableViewCell {
             answerImageView!.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
             answerImageView!.widthAnchor.constraint(equalToConstant: 90).isActive = true
             answerImageView!.heightAnchor.constraint(equalToConstant: 90).isActive = true
-            answerImageView!.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 20).isActive = true
+            answerImageView!.centerYAnchor.constraint(equalTo: answerTitleTextView.centerYAnchor).isActive = true
+            
             // audioButton constraints
             audioButton!.widthAnchor.constraint(equalToConstant: 40).isActive = true
             audioButton!.heightAnchor.constraint(equalToConstant: 40).isActive = true
             audioButton!.centerYAnchor.constraint(equalTo: answerImageView!.centerYAnchor).isActive = true
             audioButton!.centerXAnchor.constraint(equalTo: answerImageView!.centerXAnchor).isActive = true
+            
             // answerTitle constraints
             answerTitleTextView.leadingAnchor.constraint(equalTo: answerImageView!.trailingAnchor, constant: 17).isActive = true
             
             // config
-            audioButton!.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+            audioButton!.setImage(#imageLiteral(resourceName: "play_btn"), for: .normal)
+            audioButton?.imageView?.contentMode = .scaleToFill
         } else {
             // answerTitle constraints
             answerTitleTextView.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
         }
         
-        answererNameLabel.font = UIFont.mr(size: 14)
+        // claps label constraints
+        clapsLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
+        clapsLabel.topAnchor.constraint(equalTo: answerTitleTextView.bottomAnchor, constant: 12).isActive = true
+        clapsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+        
+        // comments label constraints
+        commentLabel.leadingAnchor.constraint(equalTo: clapsLabel.trailingAnchor, constant: 10).isActive = true
+        commentLabel.topAnchor.constraint(equalTo: clapsLabel.topAnchor).isActive = true
+        
+        answererNameLabel.font = UIFont.mr(size: 12)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
-        answerTimeLabel.font = UIFont.pfr(size: 12)
+        answerTimeLabel.font = UIFont.pfr(size: 10)
         answerTimeLabel.textColor = UIColor.nonBodyTextColor
         
-        clapsLabel.font = UIFont.mr(size: 14)
+        clapsLabel.font = UIFont.mr(size: 10)
         clapsLabel.textColor = UIColor.nonBodyTextColor
-        commentLabel.font = UIFont.mr(size: 14)
+        commentLabel.font = UIFont.mr(size: 10)
         commentLabel.textColor = UIColor.nonBodyTextColor
         
         answererButton.layer.cornerRadius = 15
@@ -134,6 +139,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
         
         trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
         
+        answerTitleTextView.font = UIFont.mr(size: 13)
+        answerTitleTextView.textColor = UIColor.bodyTextColor
         answerTitleTextView.textAlignment = .left
         answerTitleTextView.isEditable = false
         answerTitleTextView.isScrollEnabled = false
@@ -141,6 +148,12 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answerTitleTextView.isUserInteractionEnabled = false
         
         contentView.backgroundColor = UIColor.white
+        contentView.layer.shadowColor = UIColor.shadowColor.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        contentView.layer.shadowOpacity = 1
+        
+        answerImageView?.contentMode = .scaleAspectFill
+        answerImageView?.clipsToBounds = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -149,25 +162,27 @@ class AnswerBriefTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bind(with viewModel: AnswerBriefTableViewCellViewModel) {
+    func bind(viewModel: AnswerBriefTableViewCellViewModel) {
         guard viewModel.allowedAccess(self) else { return }
         
         updateUI(with: viewModel)
         
         // bind
         viewModel.didUpdate = self.updateUI
+        
+        // actions
+        viewModel.loadAnswerImage()
+        trashButton.addTarget(viewModel, action: #selector(viewModel.deleteAnswer), for: .touchUpInside)
     }
 
     func updateUI(with viewModel: AnswerBriefTableViewCellViewModel) {
         answererNameLabel.text = viewModel.answererNameText
         answerTimeLabel.text = viewModel.answerTimeText
         answererButton.image = viewModel.avator
-        answerTitleTextView.attributedText = viewModel.answerTitleText
-        
-        if canBeDeleted {
-            trashButton.isHidden = false
-        } else {
-            trashButton.isHidden = true
-        }
+        answerTitleTextView.text = viewModel.answerTitleText
+        trashButton.isHidden = viewModel.trashButtonHidden
+        clapsLabel.text = viewModel.clapsText
+        commentLabel.text = viewModel.commentsText
+        answerImageView?.image = viewModel.answerImage
     }
 }

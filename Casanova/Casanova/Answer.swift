@@ -19,6 +19,7 @@ class Answer {
     var likes: [Like]
     var comments: [Comment]
     var topic: Topic? // may not have topic
+    var imageURL: String?
     
     init(id: Int,
          title: String,
@@ -29,7 +30,8 @@ class Answer {
          user: User,
          likes: [Like],
          comments: [Comment],
-         topic: Topic?) {
+         topic: Topic?,
+         imageURL: String?) {
         
         self.id = id
         self.title = title
@@ -42,6 +44,8 @@ class Answer {
         self.likes = likes
         self.comments = comments
         self.topic = topic
+        
+        self.imageURL = imageURL
         
         self.comments =  self.comments.sort() as! [Comment]
     }
@@ -82,8 +86,11 @@ class Answer {
                 comments.append(comment)
             }
         }
+        // imageURL
+        let imageURL = json["picture_url"] as? String
+        
         // init
-        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil, imageURL: imageURL)
     }
     
     convenience init?(fromCreateJSON json: [String: Any]) {
@@ -111,8 +118,10 @@ class Answer {
                 comments.append(comment)
             }
         }
+        // imageURL
+        let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, audioURL: audioURL, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil, imageURL: imageURL)
     }
     
     // User Answers vs Liked Answers: same schema
@@ -138,6 +147,7 @@ class Answer {
         var topic: Topic? = nil
         if let topicJSON = json["Topic"] as? [String: Any] {
             topic = Topic(fromLikedAnswersJSON: topicJSON)
+            if topic == nil { return nil } // liked answer should have a valid topic
         }
         // user
         guard let user = User(json: userJSON) else { return nil }
@@ -157,8 +167,10 @@ class Answer {
                 comments.append(comment)
             }
         }
+        // imageURL
+        let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
     }
     
     // Single Answer: parse single answer JSON
@@ -203,7 +215,9 @@ class Answer {
                 comments.append(comment)
             }
         }
+        // imageURL
+        let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic)
+        self.init(id: id, title: title, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
     }
 }

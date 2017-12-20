@@ -19,6 +19,7 @@ class TopicHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
+    @IBOutlet weak var answerButton: UIButton!
     
     func bind(viewModel: TopicHeaderTableViewCellViewModel) {
         guard viewModel.allowedAccess(self) else { return }
@@ -27,11 +28,14 @@ class TopicHeaderTableViewCell: UITableViewCell {
         
         // bind
         viewModel.didUpdate = self.updateUI
+        
+        // actions
+        answerButton.addTarget(viewModel, action: #selector(viewModel.wannaAnswer), for: .touchUpInside)
     }
     
     func updateUI(with viewModel: TopicHeaderTableViewCellViewModel) {
         // Update UI
-        titleLabel.attributedText = viewModel.titleText
+        titleLabel.text = viewModel.titleText
         difficultyLabel.text = viewModel.difficultyText
         numOfAnswersLabel.text = viewModel.answersCountText
         
@@ -60,9 +64,19 @@ class TopicHeaderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.backgroundColor = UIColor.white
+        titleLabel.font = UIFont.mr(size: 14)
+        titleLabel.textColor = UIColor.bodyTextColor
         selectionStyle = .none
         difficultyLabel.font = UIFont.mr(size: 12)
         numOfAnswersLabel.font = UIFont.mr(size: 12)
+        answerButton.setTitleColor(UIColor.white, for: .normal)
+        answerButton.backgroundColor = UIColor.brandColor
+        answerButton.layer.cornerRadius = 3
+        answerButton.layer.masksToBounds = true
+        
+        contentView.layer.shadowColor = UIColor.shadowColor.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        contentView.layer.shadowOpacity = 1
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

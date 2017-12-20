@@ -285,43 +285,9 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            // Visualize the margin surrounding the table view cell
-            cell.contentView.backgroundColor = UIColor.clear
-            cell.backgroundColor = UIColor.clear
-            
-            // remove small whiteRoundedView before adding new one
-            cell.viewWithTag(100)?.removeFromSuperview()
-            
-            let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: 0, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height))
-            whiteRoundedView.tag = 100
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-            whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
-            whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: -1)
-            whiteRoundedView.layer.shadowOpacity = 1
-            
-            cell.contentView.addSubview(whiteRoundedView)
-            cell.contentView.sendSubview(toBack: whiteRoundedView)
-        } else if indexPath.row == 1 {
-            // Visualize the margin surrounding the table view cell
-            cell.contentView.backgroundColor = UIColor.clear
-            cell.backgroundColor = UIColor.clear
-            
-            // remove small whiteRoundedView before adding new one
-            cell.viewWithTag(100)?.removeFromSuperview()
-            
-            let whiteRoundedView : UIView = UIView(frame: CGRect(x: cellHorizontalSpace, y: 0, width: self.view.bounds.width - (2 * cellHorizontalSpace), height: cell.bounds.height))
-            whiteRoundedView.tag = 100
-            whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-            whiteRoundedView.layer.masksToBounds = false
-            whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
-            whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
-            whiteRoundedView.layer.shadowOpacity = 1
-            
-            cell.contentView.addSubview(whiteRoundedView)
-            cell.contentView.sendSubview(toBack: whiteRoundedView)
-        }
+        cell.contentView.layer.shadowColor = UIColor.shadowColor.cgColor
+        cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        cell.contentView.layer.shadowOpacity = 1
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
