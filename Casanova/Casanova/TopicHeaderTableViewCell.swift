@@ -63,10 +63,10 @@ class TopicHeaderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = UIColor.white
-        titleLabel.font = UIFont.mr(size: 14)
-        titleLabel.textColor = UIColor.bodyTextColor
+        
         selectionStyle = .none
+        titleLabel.font = UIFont.mb(size: 14)
+        titleLabel.textColor = UIColor.bodyTextColor
         difficultyLabel.font = UIFont.mr(size: 12)
         numOfAnswersLabel.font = UIFont.mr(size: 12)
         answerButton.setTitleColor(UIColor.white, for: .normal)
@@ -74,6 +74,7 @@ class TopicHeaderTableViewCell: UITableViewCell {
         answerButton.layer.cornerRadius = 3
         answerButton.layer.masksToBounds = true
         
+        contentView.backgroundColor = UIColor.white
         contentView.layer.shadowColor = UIColor.shadowColor.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
         contentView.layer.shadowOpacity = 1

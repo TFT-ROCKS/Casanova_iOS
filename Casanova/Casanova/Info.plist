@@ -60,6 +60,12 @@
 		<string>Merriweather-Regular.ttf</string>
 		<string>Muli-Light.ttf</string>
 		<string>Muli.ttf</string>
+		<string>Muli-Bold.ttf</string>
+		<string>Muli-SemiBold.ttf</string>
+		<string>Montserrat-Bold.otf</string>
+		<string>Montserrat-Light.otf</string>
+		<string>Montserrat-Regular.otf</string>
+		<string>Montserrat-SemiBold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

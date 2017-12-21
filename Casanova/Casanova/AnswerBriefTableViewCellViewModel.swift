@@ -74,8 +74,13 @@ class AnswerBriefTableViewCellViewModel {
     
     func loadAnswerImage() {
         if answer.audioURL != nil {
-            Manager.shared.loadImage(with: (URL(string: answer.imageURL ?? Placeholder.answerImagePlaceholderURLStr))!) { image in
-                self.answerImage = image.value
+            if let imageURL = URL(string: answer.imageURL ?? "") {
+                Manager.shared.loadImage(with: imageURL) { image in
+                    self.answerImage = image.value
+                    self.didUpdate?(self)
+                }
+            } else {
+                self.answerImage = UIImage(named: answer.topic?.tags.components(separatedBy: ",").first?.lowercased() ?? "others")!
                 self.didUpdate?(self)
             }
         }

@@ -82,8 +82,6 @@ class HomeViewController: UIViewController {
         homeTableView.dataSource = self
         homeTableView.tag = Tags.HomeVC.homeTableViewTag
         homeTableView.contentInset = UIEdgeInsets.zero
-        
-        //        homeTableView.allowsSelection = false
         homeTableView.backgroundColor = UIColor.bgdColor
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
@@ -127,10 +125,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
         navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.layer.shadowColor = UIColor.shadowColor.cgColor
-        navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        navigationController?.navigationBar.layer.shadowRadius = 3.0
-        navigationController?.navigationBar.layer.shadowOpacity = 1.0
         
         Analytics.setScreenName("home", screenClass: nil)
     }
@@ -257,7 +251,7 @@ extension HomeViewController: TagListViewDelegate {
 // MARK: - Navigation Bar Items
 extension HomeViewController {
     func setTitle() {
-        let attributedString = AttrString.titleAttrString("TFTROCKS", textColor: UIColor.brandColor)
+        let attributedString = AttrString.logoAttrString("TFTROCKS")
         titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
@@ -543,17 +537,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            if let cell = cell as? TopicBriefTableViewCell {
-                
-                cell.contentView.layer.shadowColor = UIColor.shadowColor.cgColor
-                cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
-                cell.contentView.layer.shadowOpacity = 1
-                
-            } else if let cell = cell as? LoadMoreTableViewCell {
-                
-                cell.contentView.backgroundColor = UIColor.clear
+            if let cell = cell as? LoadMoreTableViewCell {
                 cell.backgroundColor = UIColor.clear
-                
             }
         case Tags.HomeVC.tpoTableViewTag:
             break
@@ -566,12 +551,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 12))
-        return footer
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 12))
+        return header
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 12
     }
     

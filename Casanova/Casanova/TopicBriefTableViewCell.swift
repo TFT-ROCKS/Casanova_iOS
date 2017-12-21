@@ -16,9 +16,9 @@ class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var answerImageView: UIImageView!
     @IBOutlet weak var chineseTitleLabel: UILabel!
+    @IBOutlet weak var actualContentView: UIView!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -27,8 +27,6 @@ class TopicBriefTableViewCell: UITableViewCell {
             updateUI()
         }
     }
-    
-    var isLikedCard: Bool = false
     
     func updateUI() {
         // Update UI
@@ -57,29 +55,30 @@ class TopicBriefTableViewCell: UITableViewCell {
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
         
-        if isLikedCard {
-            topConstraint.constant = 0
-        }
-        
-        // image
-        var request = Request(url: URL(string: topic.answerPictureUrl ?? Placeholder.answerImagePlaceholderURLStr)!)
-        request.memoryCacheOptions.writeAllowed = false
-        request.memoryCacheOptions.readAllowed = false
-        Manager.shared.loadImage(with: request, into: answerImageView)
+        answerImageView.image = UIImage(named: topic.tags.components(separatedBy: ",").first?.lowercased() ?? "others")!
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = UIColor.white
         
-        difficultyLabel.font = UIFont.mr(size: 12)
-        numOfAnswersLabel.font = UIFont.pfr(size: 12)
-        titleLabel.font = UIFont.mr(size: 13)
+        self.backgroundColor = UIColor.clear
+
+        actualContentView.backgroundColor = UIColor.white
+        actualContentView.layer.cornerRadius = 2
+        actualContentView.layer.masksToBounds = false
+        actualContentView.layer.shadowColor = UIColor.shadowColor.cgColor
+        actualContentView.layer.shadowOpacity = 1
+        actualContentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        
+        answerImageView.contentMode = .scaleAspectFill
+        answerImageView.clipsToBounds = true
+        answerImageView.layer.cornerRadius = 2
+        titleLabel.font = UIFont.mb(size: 13)
         titleLabel.textColor = UIColor.bodyTextColor
         chineseTitleLabel.font = UIFont.pfr(size: 13)
         chineseTitleLabel.textColor = UIColor.bodyTextColor
-        answerImageView.contentMode = .scaleAspectFill
-        answerImageView.clipsToBounds = true
+        difficultyLabel.font = UIFont.mr(size: 12)
+        numOfAnswersLabel.font = UIFont.pfr(size: 12)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

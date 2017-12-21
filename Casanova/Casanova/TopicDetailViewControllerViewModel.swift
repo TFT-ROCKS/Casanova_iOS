@@ -42,6 +42,8 @@ class TopicDetailViewControllerViewModel {
             self.didUpdate?(self)
         }
     }
+    var needsUpdate: Bool = true
+    var binded: Bool = false
     
     // MARK: - Actions
     func reloadData() {
@@ -50,6 +52,7 @@ class TopicDetailViewControllerViewModel {
             if error == nil {
                 // success
                 // body answers cells
+                self.needsUpdate = false
                 self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0) }
             }
             self.isUpdating = false

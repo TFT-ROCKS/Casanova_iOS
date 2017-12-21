@@ -306,7 +306,6 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.SavedVC.View.topicBriefAppendTableViewCell, for: indexPath) as! TopicBriefTableViewCell
-            cell.isLikedCard = true
             cell.topic = answer.topic
             return cell
         }

@@ -20,6 +20,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
     var trashButton: UIButton!
     var answerImageView: UIImageView?
     
+    var viewModel: AnswerBriefTableViewCellViewModel!
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -165,6 +167,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
     func bind(viewModel: AnswerBriefTableViewCellViewModel) {
         guard viewModel.allowedAccess(self) else { return }
         
+        self.viewModel = viewModel
+        
         updateUI(with: viewModel)
         
         // bind
@@ -172,7 +176,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
         
         // actions
         viewModel.loadAnswerImage()
-        trashButton.addTarget(viewModel, action: #selector(viewModel.deleteAnswer), for: .touchUpInside)
+        trashButton.addTarget(self, action: #selector(trashButtonTapped(_:)), for: .touchUpInside)
     }
 
     func updateUI(with viewModel: AnswerBriefTableViewCellViewModel) {
@@ -184,5 +188,9 @@ class AnswerBriefTableViewCell: UITableViewCell {
         clapsLabel.text = viewModel.clapsText
         commentLabel.text = viewModel.commentsText
         answerImageView?.image = viewModel.answerImage
+    }
+    
+    func trashButtonTapped(_ sender: UIButton) {
+        self.viewModel.deleteAnswer()
     }
 }

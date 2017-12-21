@@ -57,7 +57,7 @@ class TopicHeaderView: UIView {
     func updateUI() {
         // Update UI
         titleLabel.text = topic.title
-        titleLabel.font = UIFont.mr(size: 14)
+        titleLabel.font = UIFont.mb(size: 14)
         titleLabel.textColor = UIColor.bodyTextColor
         
         difficultyLabel.font = UIFont.mr(size: 12)

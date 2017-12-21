@@ -72,8 +72,6 @@ class TopicDetailViewController: UIViewController {
         layoutSubviews()
         addConstraints()
         viewModel.cellViewModelsTypes.forEach { $0.registerCell(tableView: tableView) }
-        bindToViewModel()
-        reloadData()
         hideTopicView()
         
         // Other configs
@@ -83,13 +81,11 @@ class TopicDetailViewController: UIViewController {
         
         view.backgroundColor = UIColor.bgdColor
         
-        setTitle(title: "问题")
+        setTitle(title: "优秀答案")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        reloadData()
         
         Analytics.setScreenName("topic/\(viewModel.topicHeaderTableViewCellViewModel.topic.id)", screenClass: nil)
     }
@@ -115,6 +111,9 @@ class TopicDetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        bindToViewModel()
+        reloadData()
     }
     
     func layoutSubviews() {
@@ -133,6 +132,9 @@ class TopicDetailViewController: UIViewController {
     
     // MARK: - ViewModel
     fileprivate func bindToViewModel() {
+        // bind once
+        if self.viewModel.binded { return }
+        // bind
         self.viewModel.didUpdate = { [weak self] _ in
             guard let `self` = self else { return }
             self.viewModelDidUpdate()
@@ -153,6 +155,8 @@ class TopicDetailViewController: UIViewController {
             guard let `self` = self else { return }
             self.viewModelDidWannaAnswer()
         }
+        // set binded
+        self.viewModel.binded = true
     }
     
     fileprivate func viewModelDidUpdate() {
@@ -193,7 +197,9 @@ class TopicDetailViewController: UIViewController {
     
     // MARK: - Actions
     fileprivate func reloadData() {
-        self.viewModel.reloadData()
+        if self.viewModel.needsUpdate {
+            self.viewModel.reloadData()
+        }
     }
     
     fileprivate func deleteAnswer(_ answer: Answer) {

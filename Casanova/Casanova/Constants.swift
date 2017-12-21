@@ -111,6 +111,16 @@ struct AttrString {
         return paragraphStyle
     }
     
+    static func logoAttrString(_ string: String) -> NSAttributedString {
+        let attrString = NSMutableAttributedString(string: string, attributes: [
+            NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 18.0)!,
+            NSForegroundColorAttributeName: UIColor.brandColor,
+            NSKernAttributeName: -1.6
+            ])
+        attrString.addAttribute(NSKernAttributeName, value: 0.0, range: NSRange(location: 7, length: 1))
+        return attrString
+    }
+    
     static func topicAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 1.5), range: NSMakeRange(0, attrString.length))
@@ -174,7 +184,6 @@ struct AttrString {
 }
 
 struct Placeholder {
-    static let answerImagePlaceholderURLStr = "https://placeimg.com/414/200/any"
     static let chineseTopicTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
     static let answerTitlePlaceholderStr = "这个人很懒，什么也没说..."
 }
