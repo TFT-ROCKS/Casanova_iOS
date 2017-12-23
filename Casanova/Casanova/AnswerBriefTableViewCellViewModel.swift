@@ -43,11 +43,16 @@ class AnswerBriefTableViewCellViewModel {
         return UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
     }
     
-    var answerTitleText: String {
-        return answer.title != "" ? answer.title : Placeholder.answerTitlePlaceholderStr
+    var answerTitleText: NSAttributedString {
+        let title = answer.title != "" ? answer.title : Placeholder.answerTitlePlaceholderStr
+        return AttrString.answerBriefAttrString(title)
     }
     
     var answerImage: UIImage?
+    
+    var markImageViewHidden: Bool {
+        return !(answer.user.username == "TFT")
+    }
     
     var trashButtonHidden: Bool {
         return !(answer.user.id == Environment.shared.currentUser?.id)

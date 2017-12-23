@@ -17,6 +17,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
     var commentLabel: UILabel!
     var audioButton: UIButton?
     var answerTitleTextView: UITextView!
+    var markImageView: UIImageView!
     var trashButton: UIButton!
     var answerImageView: UIImageView?
     
@@ -37,14 +38,16 @@ class AnswerBriefTableViewCell: UITableViewCell {
         clapsLabel = UILabel(frame: .zero)
         commentLabel = UILabel(frame: .zero)
         answerTitleTextView = UITextView(frame: .zero)
+        markImageView = UIImageView(frame: .zero)
         trashButton = UIButton(frame: .zero)
         
         contentView.addSubview(answererButton)
         contentView.addSubview(answererNameLabel)
         contentView.addSubview(answerTimeLabel)
+        contentView.addSubview(answerTitleTextView)
         contentView.addSubview(clapsLabel)
         contentView.addSubview(commentLabel)
-        contentView.addSubview(answerTitleTextView)
+        contentView.addSubview(markImageView)
         contentView.addSubview(trashButton)
         
         answererButton.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +55,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answerTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         clapsLabel.translatesAutoresizingMaskIntoConstraints = false
         commentLabel.translatesAutoresizingMaskIntoConstraints = false
-        answerTitleTextView?.translatesAutoresizingMaskIntoConstraints = false
+        answerTitleTextView.translatesAutoresizingMaskIntoConstraints = false
+        markImageView.translatesAutoresizingMaskIntoConstraints = false
         trashButton.translatesAutoresizingMaskIntoConstraints = false
         
         // MARK: - Constraints
@@ -71,6 +75,12 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answerTimeLabel.leadingAnchor.constraint(equalTo: answererNameLabel.leadingAnchor).isActive = true
         answerTimeLabel.topAnchor.constraint(equalTo: answererNameLabel.bottomAnchor, constant: 5).isActive = true
         
+        // markImageView constraints
+        markImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        markImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        markImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        markImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        
         // trashButton constraints
         trashButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         trashButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
@@ -80,7 +90,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
         // answerTitle constraints
         answerTitleTextView.topAnchor.constraint(equalTo: answererButton.bottomAnchor, constant: 14).isActive = true
         answerTitleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
-        answerTitleTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        answerTitleTextView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
         if reuseIdentifier! != ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell {
             audioButton = UIButton(frame: .zero)
@@ -96,7 +106,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
             answerImageView!.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
             answerImageView!.widthAnchor.constraint(equalToConstant: 90).isActive = true
             answerImageView!.heightAnchor.constraint(equalToConstant: 90).isActive = true
-            answerImageView!.centerYAnchor.constraint(equalTo: answerTitleTextView.centerYAnchor).isActive = true
+            answerImageView!.topAnchor.constraint(equalTo: answerTitleTextView.topAnchor, constant: 10).isActive = true
             
             // audioButton constraints
             audioButton!.widthAnchor.constraint(equalToConstant: 40).isActive = true
@@ -108,8 +118,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
             answerTitleTextView.leadingAnchor.constraint(equalTo: answerImageView!.trailingAnchor, constant: 17).isActive = true
             
             // config
-            audioButton!.setImage(#imageLiteral(resourceName: "play_btn"), for: .normal)
-            audioButton?.imageView?.contentMode = .scaleToFill
+            audioButton!.setBackgroundImage(#imageLiteral(resourceName: "play_btn"), for: .normal)
+            audioButton!.isUserInteractionEnabled = false
         } else {
             // answerTitle constraints
             answerTitleTextView.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
@@ -117,7 +127,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
         
         // claps label constraints
         clapsLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
-        clapsLabel.topAnchor.constraint(equalTo: answerTitleTextView.bottomAnchor, constant: 12).isActive = true
+        clapsLabel.topAnchor.constraint(equalTo: answerTitleTextView.bottomAnchor, constant: -8).isActive = true
         clapsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
         
         // comments label constraints
@@ -139,6 +149,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answererButton.layer.borderColor = UIColor.clear.cgColor
         answererButton.layer.borderWidth = 0
         
+        markImageView.image = #imageLiteral(resourceName: "answer_corner_tag")
+        markImageView.contentMode = .scaleAspectFill
         trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
         
         answerTitleTextView.font = UIFont.mr(size: 13)
@@ -183,7 +195,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answererNameLabel.text = viewModel.answererNameText
         answerTimeLabel.text = viewModel.answerTimeText
         answererButton.image = viewModel.avator
-        answerTitleTextView.text = viewModel.answerTitleText
+        answerTitleTextView.attributedText = viewModel.answerTitleText
+        markImageView.isHidden = viewModel.markImageViewHidden
         trashButton.isHidden = viewModel.trashButtonHidden
         clapsLabel.text = viewModel.clapsText
         commentLabel.text = viewModel.commentsText

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4085310E3228776BF9EBF3CA /* Pods_Casanova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */; };
 		800122BC1F1DC98200F185AE /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */; };
-		800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 800122BD1F1DCB3B00F185AE /* test.mp3 */; };
 		800122C11F1E903200F185AE /* TopicBriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122BF1F1E903200F185AE /* TopicBriefTableViewCell.swift */; };
 		800122C21F1E903200F185AE /* TopicBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800122C01F1E903200F185AE /* TopicBriefTableViewCell.xib */; };
 		800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800122C31F1EDBC400F185AE /* HomeViewController.swift */; };
@@ -49,6 +48,7 @@
 		806179821F3E69F500B696FB /* Array+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806179811F3E69F500B696FB /* Array+Helper.swift */; };
 		806179841F3E6A2300B696FB /* NavigationBar+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */; };
 		8063DE0E1F21277E00E22E9B /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8063DE0D1F21277E00E22E9B /* TimeManager.swift */; };
+		8071BDA51FEE3A87008BC3AA /* DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8071BDA41FEE3A87008BC3AA /* DynamicType.swift */; };
 		807BF5C81F29B24D000451FA /* LikeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5C71F29B24D000451FA /* LikeManager.swift */; };
 		807BF5CA1F29B25D000451FA /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5C91F29B25D000451FA /* CommentManager.swift */; };
 		807BF5CC1F29B275000451FA /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF5CB1F29B275000451FA /* TagManager.swift */; };
@@ -129,7 +129,6 @@
 		0399F96151D76BCD84FF86D3 /* Pods_Casanova.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Casanova.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74980EC9C3B994CCD1FE337C /* Pods-Casanova.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.release.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.release.xcconfig"; sourceTree = "<group>"; };
 		800122BB1F1DC98200F185AE /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
-		800122BD1F1DCB3B00F185AE /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		800122BF1F1E903200F185AE /* TopicBriefTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicBriefTableViewCell.swift; sourceTree = "<group>"; };
 		800122C01F1E903200F185AE /* TopicBriefTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicBriefTableViewCell.xib; sourceTree = "<group>"; };
 		800122C31F1EDBC400F185AE /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +168,7 @@
 		806179811F3E69F500B696FB /* Array+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Helper.swift"; sourceTree = "<group>"; };
 		806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NavigationBar+Helper.swift"; sourceTree = "<group>"; };
 		8063DE0D1F21277E00E22E9B /* TimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		8071BDA41FEE3A87008BC3AA /* DynamicType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicType.swift; sourceTree = "<group>"; };
 		807BF5C71F29B24D000451FA /* LikeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeManager.swift; sourceTree = "<group>"; };
 		807BF5C91F29B25D000451FA /* CommentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
 		807BF5CB1F29B275000451FA /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
@@ -339,7 +339,6 @@
 				80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */,
 				80E339101F1AE4FE00F539E5 /* Assets.xcassets */,
 				80E339151F1AE4FE00F539E5 /* Info.plist */,
-				800122BD1F1DCB3B00F185AE /* test.mp3 */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
@@ -469,6 +468,7 @@
 		8056F41D1FE8D68300529CF4 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				8071BDA41FEE3A87008BC3AA /* DynamicType.swift */,
 				80D9A7671FEA57F1000BD030 /* TableViewCell ViewModels */,
 				80D9A7681FEA5803000BD030 /* ViewController ViewModels */,
 			);
@@ -738,7 +738,6 @@
 				808B21FE1F71967000ED5526 /* TFTicons_avator_3.png in Resources */,
 				80883ECB1FEBE651000A7A06 /* Muli-SemiBold.ttf in Resources */,
 				80883EC41FEBE48C000A7A06 /* Montserrat-Light.otf in Resources */,
-				800122BE1F1DCB3B00F185AE /* test.mp3 in Resources */,
 				808B21FD1F71967000ED5526 /* TFTicons_avator_2.png in Resources */,
 				800122C21F1E903200F185AE /* TopicBriefTableViewCell.xib in Resources */,
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
@@ -885,6 +884,7 @@
 				80B313A61F1B35B4001CFDC7 /* TopicTag.swift in Sources */,
 				8056F4121FE75ABA00529CF4 /* DeepLinkAction.swift in Sources */,
 				80AAA3B51FA99948001251E8 /* AnswerToWeChatTimeLineEntity.swift in Sources */,
+				8071BDA51FEE3A87008BC3AA /* DynamicType.swift in Sources */,
 				8056F41A1FE8D61C00529CF4 /* CellRepresentable.swift in Sources */,
 				80826CF21F62465800956E03 /* AudioControlView.swift in Sources */,
 				80FB457F1F4786D40034D525 /* UIColor+Addition.swift in Sources */,

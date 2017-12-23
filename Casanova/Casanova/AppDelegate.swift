@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Print fonts
-        printFonts()
+        // printFonts()
         
         // Tab bar config
         UITabBar.appearance().tintColor = UIColor.brandColor

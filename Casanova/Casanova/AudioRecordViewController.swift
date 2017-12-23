@@ -193,7 +193,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: 16000,
             AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
+            AVEncoderAudioQualityKey: AVAudioQuality.low.rawValue
         ]
         
         do {

@@ -563,7 +563,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            let vm = TopicDetailViewControllerViewModel(topic: topics[indexPath.row])
+            let vm = TopicDetailViewControllerViewModel(topic: topics[indexPath.section])
             let vc = TopicDetailViewController(viewModel: vm)
             self.navigationController?.pushViewController(vc, animated: true)
             tableView.deselectRow(at: indexPath, animated: false)

@@ -139,6 +139,17 @@ struct AttrString {
         return attrString
     }
     
+    static func answerBriefAttrString(_ string: String) -> NSAttributedString {
+        let down = Down(markdownString: string)
+        let temp = try? down.toAttributedString()
+        let attrString = NSMutableAttributedString(attributedString: temp!)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 2), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
     static func answerAttrString(_ string: String) -> NSAttributedString {
         let down = Down(markdownString: string)
         let temp = try? down.toAttributedString()
