@@ -10,6 +10,7 @@ import UIKit
 
 class AnswerBriefTableViewCell: UITableViewCell {
     
+    // MARK: - Subviews
     var answererButton: UIImageView!
     var answererNameLabel: UILabel!
     var answerTimeLabel: UILabel!
@@ -21,8 +22,10 @@ class AnswerBriefTableViewCell: UITableViewCell {
     var trashButton: UIButton!
     var answerImageView: UIImageView?
     
+    // MARK: - View Model
     var viewModel: AnswerBriefTableViewCellViewModel!
     
+    // MARK: - Lifecycle
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -127,12 +130,14 @@ class AnswerBriefTableViewCell: UITableViewCell {
         
         // claps label constraints
         clapsLabel.leadingAnchor.constraint(equalTo: answererButton.leadingAnchor).isActive = true
-        clapsLabel.topAnchor.constraint(equalTo: answerTitleTextView.bottomAnchor, constant: -8).isActive = true
+        clapsLabel.topAnchor.constraint(equalTo: answerTitleTextView.bottomAnchor, constant: 0).isActive = true
         clapsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
         
         // comments label constraints
         commentLabel.leadingAnchor.constraint(equalTo: clapsLabel.trailingAnchor, constant: 10).isActive = true
         commentLabel.topAnchor.constraint(equalTo: clapsLabel.topAnchor).isActive = true
+        
+        // MARK: - Setup
         
         answererNameLabel.font = UIFont.mr(size: 12)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
@@ -153,13 +158,13 @@ class AnswerBriefTableViewCell: UITableViewCell {
         markImageView.contentMode = .scaleAspectFill
         trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
         
-        answerTitleTextView.font = UIFont.mr(size: 13)
-        answerTitleTextView.textColor = UIColor.bodyTextColor
         answerTitleTextView.textAlignment = .left
         answerTitleTextView.isEditable = false
         answerTitleTextView.isScrollEnabled = false
         answerTitleTextView.isSelectable = false
         answerTitleTextView.isUserInteractionEnabled = false
+        answerTitleTextView.textContainer.lineFragmentPadding = 0 // left padding
+        answerTitleTextView.textContainerInset = .zero // top, left, bottom, right
         
         contentView.backgroundColor = UIColor.white
         contentView.layer.shadowColor = UIColor.shadowColor.cgColor
@@ -170,11 +175,7 @@ class AnswerBriefTableViewCell: UITableViewCell {
         answerImageView?.clipsToBounds = true
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
+    // MARK: - Bind
     
     func bind(viewModel: AnswerBriefTableViewCellViewModel) {
         guard viewModel.allowedAccess(self) else { return }
@@ -202,6 +203,8 @@ class AnswerBriefTableViewCell: UITableViewCell {
         commentLabel.text = viewModel.commentsText
         answerImageView?.image = viewModel.answerImage
     }
+    
+    // MARK: - Actions
     
     func trashButtonTapped(_ sender: UIButton) {
         self.viewModel.deleteAnswer()

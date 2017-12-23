@@ -12,12 +12,14 @@ import Nuke
 class AnswerBriefTableViewCellViewModel {
     
     // MARK: - Private
+    fileprivate let topic: Topic
     fileprivate let answer: Answer
     fileprivate var restrictedTo: IndexPath?
     
     // MARK: - Lifecycle
-    init(answer: Answer) {
+    init(answer: Answer, topic: Topic) {
         self.answer = answer
+        self.topic = topic
     }
     
     deinit {
@@ -85,7 +87,7 @@ class AnswerBriefTableViewCellViewModel {
                     self.didUpdate?(self)
                 }
             } else {
-                self.answerImage = UIImage(named: answer.topic?.tags.components(separatedBy: ",").first?.lowercased() ?? "others")!
+                self.answerImage = imageForAnswer
                 self.didUpdate?(self)
             }
         }
@@ -93,6 +95,16 @@ class AnswerBriefTableViewCellViewModel {
     
     @objc func deleteAnswer() {
         self.didDeleteAnswer?(answer)
+    }
+    
+    // MARK: - Utils
+    private var imageForAnswer: UIImage {
+        let id = answer.id
+        let tags = topic.tags.components(separatedBy: ",")
+        let tagToUse = tags[id % tags.count].lowercased()
+        let imageName = tagToUse + "\(id % 3 + 1)" // 1, 2, 3
+        
+        return UIImage(named: imageName) ?? UIImage(named: "others")!
     }
 }
 

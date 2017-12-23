@@ -55,7 +55,11 @@ class TopicBriefTableViewCell: UITableViewCell {
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
         
-        answerImageView.image = UIImage(named: topic.tags.components(separatedBy: ",").first?.lowercased() ?? "others")!
+        if let imageURL = topic.answerPictureUrl {
+            Manager.shared.loadImage(with: URL(string: imageURL)!, into: answerImageView)
+        } else {
+            answerImageView.image = imageForTopic
+        }
     }
 
     override func awakeFromNib() {
@@ -80,11 +84,14 @@ class TopicBriefTableViewCell: UITableViewCell {
         difficultyLabel.font = UIFont.mr(size: 12)
         numOfAnswersLabel.font = UIFont.pfr(size: 12)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
+    // MARK: - Utils
+    private var imageForTopic: UIImage {
+        let id = topic.id
+        let tags = topic.tags.components(separatedBy: ",")
+        let tagToUse = tags[id % tags.count].lowercased()
+        let imageName = tagToUse + "\(id % 3 + 1)" // 1, 2, 3
+        
+        return UIImage(named: imageName) ?? UIImage(named: "others")!
+    }
 }

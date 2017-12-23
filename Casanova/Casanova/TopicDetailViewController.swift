@@ -186,6 +186,7 @@ class TopicDetailViewController: UIViewController {
             timer.invalidate()
             timer = nil
         }
+        activityIndicatorView.stopAnimating()
         showTopicView()
         audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)

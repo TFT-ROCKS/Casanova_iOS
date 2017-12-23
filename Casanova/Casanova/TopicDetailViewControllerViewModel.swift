@@ -53,7 +53,7 @@ class TopicDetailViewControllerViewModel {
                 // success
                 // body answers cells
                 self.needsUpdate = false
-                self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0) }
+                self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
             }
             self.isUpdating = false
         })
@@ -63,22 +63,22 @@ class TopicDetailViewControllerViewModel {
         AnswerManager.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
             self.topic.answers.removeAnswer(answer.id)
             Environment.shared.removeAnswer(answer.id)
-            self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0) }
+            self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
             self.didUpdate?(self)
         })
     }
     
     func addAnswer(_ answer: Answer) {
         topic.answers.append(answer)
-        answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0) }
+        answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
         didUpdate?(self)
     }
     
     //MARK: - Helpers
-    private func viewModelFor(answer: Answer) -> CellRepresentable {
-        let viewModel = AnswerBriefTableViewCellViewModel(answer: answer)
+    private func viewModelFor(answer: Answer, topic: Topic) -> CellRepresentable {
+        let viewModel = AnswerBriefTableViewCellViewModel(answer: answer, topic: topic)
         viewModel.didSelect = { [unowned self] answer in
-            self.didSelectAnswer?(self.topic, answer)
+            self.didSelectAnswer?(topic, answer)
         }
         viewModel.didError = { [unowned self] error in
             self.didError?(error)
