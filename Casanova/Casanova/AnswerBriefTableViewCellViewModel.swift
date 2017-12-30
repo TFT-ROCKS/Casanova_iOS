@@ -110,17 +110,23 @@ class AnswerBriefTableViewCellViewModel {
 
 extension AnswerBriefTableViewCellViewModel: CellRepresentable {
     static func registerCell(tableView: UITableView) {
-        tableView.register(AnswerBriefTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell)
-        tableView.register(AnswerBriefTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell)
+        tableView.register(AnswerBriefTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerTextAudioCell)
+        tableView.register(AnswerBriefTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyTextCell)
+        tableView.register(AnswerBriefTableViewCell.self, forCellReuseIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyAudioCell)
     }
     
     func dequeueCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         var cell: AnswerBriefTableViewCell
         
-        if answer.audioURL == nil {
-            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerBriefTableViewCell
+        if answer.audioURL != nil && answer.title != "" {
+            // Answer with text and audio
+            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerTextAudioCell, for: indexPath) as! AnswerBriefTableViewCell
+        } else if answer.audioURL == nil {
+            // Answer with only text
+            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyTextCell, for: indexPath) as! AnswerBriefTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerBriefTableViewCell
+            // Answer with only audio
+            cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyAudioCell, for: indexPath) as! AnswerBriefTableViewCell
         }
         
         cell.uniqueId = indexPath

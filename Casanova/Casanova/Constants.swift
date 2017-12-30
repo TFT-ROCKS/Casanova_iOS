@@ -67,6 +67,11 @@ struct ReuseIDs {
             static let answerDefaultCell = "AnswerDefaultCell"
             static let answerWithoutTextCell = "AnswerWithoutTextCell"
             static let answerWithoutAudioCell = "AnswerWithoutAudioCell"
+            
+            // new UI
+            static let answerOnlyTextCell = "AnswerOnlyTextCell"
+            static let answerOnlyAudioCell = "AnswerOnlyAudioCell"
+            static let answerTextAudioCell = "AnswerTextAudioCell"
         }
     }
     struct AnswerDetailVC {
