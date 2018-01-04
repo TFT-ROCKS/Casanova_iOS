@@ -100,11 +100,11 @@ extension ProfileViewController {
         avatorView.layer.cornerRadius = avatorView.bounds.width / 2
         avatorView.layer.masksToBounds = true
         
-        usernameLabel.font = UIFont.mr(size: 20)
+        usernameLabel.font = UIFont.sfps(size: 20)
         usernameLabel.textColor = UIColor.tftFadedBlue
         usernameLabel.textAlignment = .center
         
-        emailLabel.font = UIFont.mr(size: 14)
+        emailLabel.font = UIFont.sfps(size: 14)
         emailLabel.textColor = UIColor.tftCoolGrey
         emailLabel.textAlignment = .center
         

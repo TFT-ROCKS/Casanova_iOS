@@ -100,7 +100,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTimeLabel.topAnchor.constraint(equalTo: answererNameLabel.bottomAnchor, constant: 5).isActive = true
         
         // likeCountLabel constraints
-        likeCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
+//        likeCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         likeCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
 //        likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         likeCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
@@ -112,7 +112,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // commentCount constraints
-        commentCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
+//        commentCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         commentCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
         commentCountLabel.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -8).isActive = true
         commentCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
@@ -155,14 +155,14 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         bottomConstraint = answerTitleTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2)
         bottomConstraint.isActive = true
         
-        answererNameLabel.font = UIFont.mr(size: 14)
+        answererNameLabel.font = UIFont.sfps(size: 14)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
         answerTimeLabel.font = UIFont.pfr(size: 12)
         answerTimeLabel.textColor = UIColor.nonBodyTextColor
         
-        likeCountLabel.font = UIFont.mr(size: 14)
+        likeCountLabel.font = UIFont.sfps(size: 14)
         likeCountLabel.textColor = UIColor.nonBodyTextColor
-        commentCountLabel.font = UIFont.mr(size: 14)
+        commentCountLabel.font = UIFont.sfps(size: 14)
         commentCountLabel.textColor = UIColor.nonBodyTextColor
         
         likeButton.setImage(#imageLiteral(resourceName: "like_btn"), for: .normal)
@@ -198,9 +198,10 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
         answererButton.image = avator
     
+        let note = answer.noteTitle == nil ? "" : answer.noteTitle!
         switch mode! {
         case .full:
-            answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title)
+            answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title + "\n***\n" + note)
             
         case .short:
             answerTitleTextView.isSelectable = false

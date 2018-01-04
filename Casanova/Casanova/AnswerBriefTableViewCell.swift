@@ -178,14 +178,14 @@ class AnswerBriefTableViewCell: UITableViewCell {
         
         // MARK: - Setup
         
-        answererNameLabel.font = UIFont.mr(size: 12)
+        answererNameLabel.font = UIFont.sfpb(size: 12)
         answererNameLabel.textColor = UIColor.nonBodyTextColor
-        answerTimeLabel.font = UIFont.pfr(size: 10)
+        answerTimeLabel.font = UIFont.sfpr(size: 10)
         answerTimeLabel.textColor = UIColor.nonBodyTextColor
         
-        clapsLabel.font = UIFont.mr(size: 12)
+        clapsLabel.font = UIFont.sfpr(size: 12)
         clapsLabel.textColor = UIColor.nonBodyTextColor
-        commentLabel.font = UIFont.mr(size: 12)
+        commentLabel.font = UIFont.sfpr(size: 12)
         commentLabel.textColor = UIColor.nonBodyTextColor
         
         answererButton.layer.cornerRadius = 15

@@ -55,7 +55,7 @@ class SignInViewController: UIViewController {
         
         // Padding textfield
         let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: usernameTextField.frame.height))
-        usernameTextField.font = UIFont.mr(size: 17)
+        usernameTextField.font = UIFont.sfps(size: 17)
         usernameTextField.textColor = UIColor.nonBodyTextColor
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
@@ -64,7 +64,7 @@ class SignInViewController: UIViewController {
         usernameTextField.layer.masksToBounds = true
         
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: passwordTextField.frame.height))
-        passwordTextField.font = UIFont.mr(size: 17)
+        passwordTextField.font = UIFont.sfps(size: 17)
         passwordTextField.textColor = UIColor.nonBodyTextColor
         passwordTextField.leftView = paddingView2
         passwordTextField.leftViewMode = .always

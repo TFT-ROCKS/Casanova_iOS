@@ -18,6 +18,7 @@ class TopicHeaderView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var chineseTitleLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
@@ -31,6 +32,10 @@ class TopicHeaderView: UIView {
         didSet {
             updateUI()
         }
+    }
+    
+    var chineseTitleText: String {
+        return topic.chineseTitle == nil ? Placeholder.chineseTopicTitlePlaceholderStr : topic.chineseTitle!
     }
     
     override init(frame: CGRect) { // For using custom view in code
@@ -50,17 +55,21 @@ class TopicHeaderView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         mode = .plain
-        difficultyLabel.font = UIFont.mr(size: 12)
-        numOfAnswersLabel.font = UIFont.mr(size: 12)
+        difficultyLabel.font = UIFont.sfps(size: 12)
+        numOfAnswersLabel.font = UIFont.sfps(size: 12)
     }
     
     func updateUI() {
         // Update UI
         titleLabel.text = topic.title
-        titleLabel.font = UIFont.mb(size: 14)
+        titleLabel.font = UIFont.sfps(size: 16)
         titleLabel.textColor = UIColor.bodyTextColor
         
-        difficultyLabel.font = UIFont.mr(size: 12)
+        chineseTitleLabel.text = chineseTitleText
+        chineseTitleLabel.font = UIFont.pfr(size: 14)
+        chineseTitleLabel.textColor = UIColor.bodyTextColor
+        
+        difficultyLabel.font = UIFont.pfr(size: 12)
         difficultyLabel.text = difficulties[topic.level - 1]
         
         numOfAnswersLabel.text = "\(topic.answersCount)个回答"
@@ -80,7 +89,7 @@ class TopicHeaderView: UIView {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textFont = UIFont.sfpr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
         tagListView.textColor = UIColor.brandColor

@@ -58,7 +58,7 @@ class SignUpViewController: UIViewController {
         
         // Padding textfield
         let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: usernameTextField.frame.height))
-        usernameTextField.font = UIFont.mr(size: 17)
+        usernameTextField.font = UIFont.sfps(size: 17)
         usernameTextField.textColor = UIColor.nonBodyTextColor
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
@@ -67,7 +67,7 @@ class SignUpViewController: UIViewController {
         usernameTextField.layer.masksToBounds = true
         
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: emailTextField.frame.height))
-        emailTextField.font = UIFont.mr(size: 17)
+        emailTextField.font = UIFont.sfps(size: 17)
         emailTextField.textColor = UIColor.nonBodyTextColor
         emailTextField.leftView = paddingView2
         emailTextField.leftViewMode = .always
@@ -76,7 +76,7 @@ class SignUpViewController: UIViewController {
         emailTextField.layer.masksToBounds = true
         
         let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: passwordTextField.frame.height))
-        passwordTextField.font = UIFont.mr(size: 17)
+        passwordTextField.font = UIFont.sfps(size: 17)
         passwordTextField.textColor = UIColor.nonBodyTextColor
         passwordTextField.leftView = paddingView3
         passwordTextField.leftViewMode = .always

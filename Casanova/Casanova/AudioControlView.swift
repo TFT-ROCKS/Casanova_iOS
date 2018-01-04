@@ -53,7 +53,7 @@ class AudioControlView: UIView, UIWebViewDelegate {
         
         usernameLabel.font = UIFont.pfl(size: 14)
         usernameLabel.textColor = UIColor.nonBodyTextColor
-        playTimeLabel.font = UIFont.mr(size: 12)
+        playTimeLabel.font = UIFont.sfps(size: 12)
         playTimeLabel.textColor = UIColor.tftCoolGrey
     }
     

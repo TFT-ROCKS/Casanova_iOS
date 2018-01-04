@@ -150,9 +150,9 @@ class CommentTableViewCell: UITableViewCell {
 //        audioTimeLabel!.font = Fonts.AnswerDetailVC.Labels.audioTimeLabelFont()
 //        audioTimeLabel!.textColor = Colors.AnswerDetailVC.Labels.audioTimeLabelTextColor()
         
-        commenterNameLabel.font = UIFont.mr(size: 14)
+        commenterNameLabel.font = UIFont.sfps(size: 14)
         commenterNameLabel.textColor = UIColor.nonBodyTextColor
-        commentTimeLabel.font = UIFont.mr(size: 12)
+        commentTimeLabel.font = UIFont.sfps(size: 12)
         commentTimeLabel.textColor = UIColor.tftCoolGrey
         
 //        likeCountLabel.font = Fonts.AnswerDetailVC.Labels.likeCountLabelFont()

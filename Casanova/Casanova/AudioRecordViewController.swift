@@ -19,6 +19,17 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var titleSwitch: UISwitch!
+    @IBAction func onSwitchTitle(_ sender: UISwitch) {
+        if sender.isOn {
+            // show chinese title
+            showChiTitle()
+        } else {
+            // show english title
+            showEngTitle()
+        }
+    }
     @IBOutlet weak var mainTitleLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var audioRecordView: AudioRecordView!
@@ -41,6 +52,23 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     var cmtAudioUrl: String!
     var cmtAudioUUID: String?
     
+    // lazy vars
+    lazy var noteTitle: String = {
+        let note = self.answer.noteTitle == nil ? "" : self.answer.noteTitle!
+        return note
+    }()
+    
+    lazy var engTitle: String = {
+        let res = self.answer.title
+        return res
+    }()
+    
+    lazy var chiTitle: String = {
+        if self.answer.chineseTitle == nil { return Placeholder.chineseAnswerTitlePlaceholderStr }
+        let res = self.answer.chineseTitle!
+        return res
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,12 +78,20 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         mainTitleLabel.textAlignment = .center
         mainTitleLabel.text = "录音"
         
-        textView.attributedText = AttrString.answerAttrString(answer.title)
         textView.isEditable = false
+        showEngTitle()
         
         audioRecordView.delegate = self
         
         audioSession = AVAudioSession.sharedInstance()
+        
+        switchLabel.textAlignment = .right
+        switchLabel.text = "翻译"
+        switchLabel.font = UIFont.pfr(size: 15)
+        switchLabel.textColor = UIColor.tftCoolGrey
+        
+        titleSwitch.setOn(false, animated: false)
+        titleSwitch.onTintColor = UIColor.brandColor
         
         // Post Text View
         layoutPostTextView()
@@ -117,7 +153,15 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     }
     
     // MARK: - Utils
+    func showEngTitle() {
+        textView.attributedText = AttrString.answerAttrString(engTitle)
+    }
     
+    func showChiTitle() {
+        textView.attributedText = AttrString.answerAttrStringChinese(chiTitle)
+    }
+    
+    // MARK: - Record Utils
     func uploadAudio() {
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(answer.id)-speaking-answer.wav")
         OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
@@ -136,6 +180,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
                     self.postTextView.fadeIn()
                     self.postTextView.audioUrl = url!
                     self.postTextView.audioFile = audioFile
+                    self.postTextView.textView.becomeFirstResponder()
                 }
             } else {
                 // upload error

@@ -236,7 +236,7 @@ extension HomeViewController: TagListViewDelegate {
         filterListView.addTags(levelsName(fromNumber: levels).toUpperCase())
         filterListView.addTags(tags.toUpperCase())
         
-        filterListView.textFont = UIFont.mr(size: 14)
+        filterListView.textFont = UIFont.sfps(size: 14)
     }
     
     func levelsName(fromNumber levels: [String]) -> [String] {

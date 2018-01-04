@@ -20,7 +20,7 @@ class ProfileSettingsTableViewCell: UITableViewCell {
         titleLabel.textColor = UIColor.tftFadedBlue
         titleLabel.font = UIFont.pfr(size: 16)
         textField.textColor = UIColor.tftCharcoalGrey
-        textField.font = UIFont.mr(size: 17)
+        textField.font = UIFont.sfps(size: 17)
         textField.borderStyle = .none
     }
 }

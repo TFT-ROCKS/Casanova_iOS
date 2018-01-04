@@ -149,8 +149,8 @@ struct AttrString {
         let temp = try? down.toAttributedString()
         let attrString = NSMutableAttributedString(attributedString: temp!)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 2), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.sfpr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
@@ -160,8 +160,19 @@ struct AttrString {
         let temp = try? down.toAttributedString()
         let attrString = NSMutableAttributedString(attributedString: temp!)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.sfpr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
+    static func answerAttrStringChinese(_ string: String) -> NSAttributedString {
+        let down = Down(markdownString: string)
+        let temp = try? down.toAttributedString()
+        let attrString = NSMutableAttributedString(attributedString: temp!)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.pfr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
@@ -201,6 +212,7 @@ struct AttrString {
 
 struct Placeholder {
     static let chineseTopicTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
+    static let chineseAnswerTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
     static let answerTitlePlaceholderStr = "这个人很懒，什么也没说..."
 }
 

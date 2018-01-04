@@ -15,6 +15,7 @@ protocol TopicHeaderTableViewCellDelegate {
 
 class TopicHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var chineseTitleLabel: UILabel!
     @IBOutlet weak var tagListView: TagListView!
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
@@ -36,6 +37,7 @@ class TopicHeaderTableViewCell: UITableViewCell {
     func updateUI(with viewModel: TopicHeaderTableViewCellViewModel) {
         // Update UI
         titleLabel.text = viewModel.titleText
+        chineseTitleLabel.text = viewModel.chineseTitleText
         difficultyLabel.text = viewModel.difficultyText
         numOfAnswersLabel.text = viewModel.answersCountText
         
@@ -56,7 +58,7 @@ class TopicHeaderTableViewCell: UITableViewCell {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textFont = UIFont.sfpr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
     }
@@ -65,10 +67,12 @@ class TopicHeaderTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         selectionStyle = .none
-        titleLabel.font = UIFont.mb(size: 14)
+        titleLabel.font = UIFont.sfps(size: 16)
         titleLabel.textColor = UIColor.bodyTextColor
-        difficultyLabel.font = UIFont.mr(size: 12)
-        numOfAnswersLabel.font = UIFont.mr(size: 12)
+        chineseTitleLabel.font = UIFont.pfr(size: 14)
+        chineseTitleLabel.textColor = UIColor.bodyTextColor
+        difficultyLabel.font = UIFont.pfr(size: 12)
+        numOfAnswersLabel.font = UIFont.pfr(size: 12)
         answerButton.setTitleColor(UIColor.white, for: .normal)
         answerButton.backgroundColor = UIColor.brandColor
         answerButton.layer.cornerRadius = 3

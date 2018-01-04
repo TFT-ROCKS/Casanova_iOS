@@ -26,4 +26,20 @@ extension UIFont {
         return UIFont(name: "PingFangSC-Regular", size: size)!
     }
     
+    // Font Names = [["SFProText-Bold", "SFProText-Light", "SFProText-Regular", "SFProText-Semibold"]]
+    class func sfpb(size: CGFloat) -> UIFont {
+        return UIFont(name: "SFProText-Bold", size: size)!
+    }
+    
+    class func sfpl(size: CGFloat) -> UIFont {
+        return UIFont(name: "SFProText-Light", size: size)!
+    }
+    
+    class func sfpr(size: CGFloat) -> UIFont {
+        return UIFont(name: "SFProText-Regular", size: size)!
+    }
+    
+    class func sfps(size: CGFloat) -> UIFont {
+        return UIFont(name: "SFProText-Semibold", size: size)!
+    }
 }

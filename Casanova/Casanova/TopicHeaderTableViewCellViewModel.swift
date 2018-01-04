@@ -14,7 +14,6 @@ class TopicHeaderTableViewCellViewModel {
     let topic: Topic
     fileprivate var restrictedTo: IndexPath?
     fileprivate let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
-    
     // MARK: - Lifecycle
     init(topic: Topic) {
         self.topic = topic
@@ -36,6 +35,9 @@ class TopicHeaderTableViewCellViewModel {
     }
     var titleText: String {
         return topic.title
+    }
+    var chineseTitleText: String {
+        return topic.chineseTitle == nil ? Placeholder.chineseTopicTitlePlaceholderStr : topic.chineseTitle!
     }
     var level: Int {
         return topic.level

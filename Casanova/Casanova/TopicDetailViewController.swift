@@ -445,7 +445,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.contentMode = .scaleAspectFit
         
         timeLabel.backgroundColor = UIColor.clear
-        timeLabel.font = UIFont.mr(size: 14)
+        timeLabel.font = UIFont.sfps(size: 14)
         timeLabel.textColor = UIColor.nonBodyTextColor
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         timeLabel.text = TimeManager.shared.timeString(time: TimeInterval(secs))
@@ -460,7 +460,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioBarButton.imageView?.contentMode = .scaleAspectFit
         audioTimeLabel.frame = CGRect(x: 60.5, y: 11.5, width: 59, height: 22)
         audioTimeLabel.textColor = UIColor.white
-        audioTimeLabel.font = UIFont.mr(size: 16)
+        audioTimeLabel.font = UIFont.sfps(size: 16)
         audioTimeLabel.textAlignment = .center
         audioBarButton.addSubview(audioTimeLabel)
         

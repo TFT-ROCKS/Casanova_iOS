@@ -51,7 +51,7 @@ class TopicBriefTableViewCell: UITableViewCell {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textFont = UIFont.sfpr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
         
@@ -77,11 +77,11 @@ class TopicBriefTableViewCell: UITableViewCell {
         answerImageView.contentMode = .scaleAspectFill
         answerImageView.clipsToBounds = true
         answerImageView.layer.cornerRadius = 2
-        titleLabel.font = UIFont.mb(size: 13)
+        titleLabel.font = UIFont.sfps(size: 16)
         titleLabel.textColor = UIColor.bodyTextColor
-        chineseTitleLabel.font = UIFont.pfr(size: 13)
+        chineseTitleLabel.font = UIFont.pfr(size: 14)
         chineseTitleLabel.textColor = UIColor.bodyTextColor
-        difficultyLabel.font = UIFont.mr(size: 12)
+        difficultyLabel.font = UIFont.pfr(size: 12)
         numOfAnswersLabel.font = UIFont.pfr(size: 12)
     }
     
