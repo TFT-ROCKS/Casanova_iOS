@@ -8,6 +8,7 @@
 
 import UIKit
 import TagListView
+import Nuke
 
 class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -15,9 +16,9 @@ class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var starButton: UIButton!
-    @IBOutlet weak var numOfStarsLabel: UILabel!
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var answerImageView: UIImageView!
+    @IBOutlet weak var chineseTitleLabel: UILabel!
+    @IBOutlet weak var actualContentView: UIView!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -27,21 +28,13 @@ class TopicBriefTableViewCell: UITableViewCell {
         }
     }
     
-    var isLikedCard: Bool = false
-    
     func updateUI() {
         // Update UI
         
-        if reuseIdentifier == ReuseIDs.HomeVC.View.topicBriefTableViewCell {
-            titleLabel.attributedText = AttrString.topicAttrString(topic.title)
-        } else if reuseIdentifier == ReuseIDs.SavedVC.View.topicBriefAppendTableViewCell {
-            titleLabel.attributedText = AttrString.smallTopicAttrString(topic.title)
-        }
-        
-        difficultyLabel.font = UIFont.mr(size: 12)
+        titleLabel.text = topic.title
+        chineseTitleLabel.text = topic.chineseTitle ?? Placeholder.chineseTopicTitlePlaceholderStr
         difficultyLabel.text = difficulties[topic.level - 1]
         numOfAnswersLabel.text = "\(topic.answersCount)个回答"
-        numOfAnswersLabel.font = UIFont.pfr(size: 12)
         let diffView = DifficultyView(frame: difficultyView.bounds, level: topic.level)
         diffView.tag = 101
         diffView.backgroundColor = UIColor.clear
@@ -58,34 +51,47 @@ class TopicBriefTableViewCell: UITableViewCell {
             let newTag = "#\(tag.uppercased())"
             tagListView.addTag(newTag)
         }
-        tagListView.textFont = UIFont.mr(size: 12)
+        tagListView.textFont = UIFont.sfpr(size: 12)
         tagListView.textColor = UIColor.brandColor
         tagListView.borderColor = UIColor.brandColor
         
-        if isLikedCard {
-            topConstraint.constant = 0
+        if let imageURL = topic.answerPictureUrl {
+            Manager.shared.loadImage(with: URL(string: imageURL)!, into: answerImageView)
+        } else {
+            answerImageView.image = imageForTopic
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.backgroundColor = UIColor.white
-        selectionStyle = .none
-        starButton.setBackgroundImage(#imageLiteral(resourceName: "star-h"), for: .normal)
         
-        difficultyLabel.font = UIFont.mr(size: 14)
-        numOfAnswersLabel.font = UIFont.mr(size: 14)
-        numOfStarsLabel.font = UIFont.mr(size: 14)
+        self.backgroundColor = UIColor.clear
+
+        actualContentView.backgroundColor = UIColor.white
+        actualContentView.layer.cornerRadius = 2
+        actualContentView.layer.masksToBounds = false
+        actualContentView.layer.shadowColor = UIColor.shadowColor.cgColor
+        actualContentView.layer.shadowOpacity = 1
+        actualContentView.layer.shadowOffset = CGSize(width: 0, height: 1)
         
-        // hide for now
-        starButton.isHidden = true
-        numOfStarsLabel.isHidden = true
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        answerImageView.contentMode = .scaleAspectFill
+        answerImageView.clipsToBounds = true
+        answerImageView.layer.cornerRadius = 2
+        titleLabel.font = UIFont.sfps(size: 16)
+        titleLabel.textColor = UIColor.bodyTextColor
+        chineseTitleLabel.font = UIFont.pfr(size: 14)
+        chineseTitleLabel.textColor = UIColor.bodyTextColor
+        difficultyLabel.font = UIFont.pfr(size: 12)
+        numOfAnswersLabel.font = UIFont.pfr(size: 12)
     }
     
+    // MARK: - Utils
+    private var imageForTopic: UIImage {
+        let id = topic.id
+        let tags = topic.tags.components(separatedBy: ",")
+        let tagToUse = tags[id % tags.count].lowercased()
+        let imageName = tagToUse + "\(id % 3 + 1)" // 1, 2, 3
+        
+        return UIImage(named: imageName) ?? UIImage(named: "others")!
+    }
 }

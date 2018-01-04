@@ -67,6 +67,11 @@ struct ReuseIDs {
             static let answerDefaultCell = "AnswerDefaultCell"
             static let answerWithoutTextCell = "AnswerWithoutTextCell"
             static let answerWithoutAudioCell = "AnswerWithoutAudioCell"
+            
+            // new UI
+            static let answerOnlyTextCell = "AnswerOnlyTextCell"
+            static let answerOnlyAudioCell = "AnswerOnlyAudioCell"
+            static let answerTextAudioCell = "AnswerTextAudioCell"
         }
     }
     struct AnswerDetailVC {
@@ -111,10 +116,20 @@ struct AttrString {
         return paragraphStyle
     }
     
+    static func logoAttrString(_ string: String) -> NSAttributedString {
+        let attrString = NSMutableAttributedString(string: string, attributes: [
+            NSFontAttributeName: UIFont(name: "Montserrat-SemiBold", size: 18.0)!,
+            NSForegroundColorAttributeName: UIColor.brandColor,
+            NSKernAttributeName: -1.6
+            ])
+        attrString.addAttribute(NSKernAttributeName, value: 0.0, range: NSRange(location: 7, length: 1))
+        return attrString
+    }
+    
     static func topicAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 1.5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli-Light", size: 17)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "Muli-Light", size: 14)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
@@ -129,13 +144,35 @@ struct AttrString {
         return attrString
     }
     
+    static func answerBriefAttrString(_ string: String) -> NSAttributedString {
+        let down = Down(markdownString: string)
+        let temp = try? down.toAttributedString()
+        let attrString = NSMutableAttributedString(attributedString: temp!)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 2), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.sfpr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
     static func answerAttrString(_ string: String) -> NSAttributedString {
         let down = Down(markdownString: string)
         let temp = try? down.toAttributedString()
         let attrString = NSMutableAttributedString(attributedString: temp!)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.sfpr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
+    static func answerAttrStringChinese(_ string: String) -> NSAttributedString {
+        let down = Down(markdownString: string)
+        let temp = try? down.toAttributedString()
+        let attrString = NSMutableAttributedString(attributedString: temp!)
+        attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.pfr(size: 14), range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSKernAttributeName, value: -0.2, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
@@ -143,7 +180,7 @@ struct AttrString {
     static func commentAttrString(_ string: String) -> NSAttributedString {
         let attrString = NSMutableAttributedString(string: string)
         attrString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle(lineSpacing: 5), range: NSMakeRange(0, attrString.length))
-        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 16)!, range: NSMakeRange(0, attrString.length))
+        attrString.addAttribute(NSFontAttributeName, value: UIFont(name: "MerriweatherLight", size: 13)!, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSKernAttributeName, value: -0.4, range: NSMakeRange(0, attrString.length))
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.bodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
@@ -171,5 +208,11 @@ struct AttrString {
         attrString.addAttribute(NSForegroundColorAttributeName, value: UIColor.nonBodyTextColor, range: NSMakeRange(0, attrString.length))
         return attrString
     }
+}
+
+struct Placeholder {
+    static let chineseTopicTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
+    static let chineseAnswerTitlePlaceholderStr = "中文翻译正在火速赶来，敬请期待..."
+    static let answerTitlePlaceholderStr = "这个人很懒，什么也没说..."
 }
 

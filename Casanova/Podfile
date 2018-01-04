@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'Casanova' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -14,6 +14,7 @@ target 'Casanova' do
   pod 'Firebase/Core'
   pod 'IDZSwiftCommonCrypto', '~> 0.9.1'
   pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift3.2'
+  pod 'Nuke', '~> 5.0'
   
   # U-Share SDK UI模块（分享面板，建议添加）
   pod 'UMengUShare/UI'

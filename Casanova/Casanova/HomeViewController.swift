@@ -82,8 +82,6 @@ class HomeViewController: UIViewController {
         homeTableView.dataSource = self
         homeTableView.tag = Tags.HomeVC.homeTableViewTag
         homeTableView.contentInset = UIEdgeInsets.zero
-        
-        //        homeTableView.allowsSelection = false
         homeTableView.backgroundColor = UIColor.bgdColor
         homeTableView.rowHeight = UITableViewAutomaticDimension
         homeTableView.estimatedRowHeight = 399
@@ -127,10 +125,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
         navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.layer.shadowColor = UIColor.shadowColor.cgColor
-        navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        navigationController?.navigationBar.layer.shadowRadius = 3.0
-        navigationController?.navigationBar.layer.shadowOpacity = 1.0
         
         Analytics.setScreenName("home", screenClass: nil)
     }
@@ -242,7 +236,7 @@ extension HomeViewController: TagListViewDelegate {
         filterListView.addTags(levelsName(fromNumber: levels).toUpperCase())
         filterListView.addTags(tags.toUpperCase())
         
-        filterListView.textFont = UIFont.mr(size: 14)
+        filterListView.textFont = UIFont.sfps(size: 14)
     }
     
     func levelsName(fromNumber levels: [String]) -> [String] {
@@ -257,7 +251,7 @@ extension HomeViewController: TagListViewDelegate {
 // MARK: - Navigation Bar Items
 extension HomeViewController {
     func setTitle() {
-        let attributedString = AttrString.titleAttrString("TFTROCKS", textColor: UIColor.brandColor)
+        let attributedString = AttrString.logoAttrString("TFTROCKS")
         titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
@@ -466,14 +460,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            switch section {
-            case 0:
-                return topics.count
-            case 1:
-                return 1
-            default:
-                return 0
-            }
+            return 1
         case Tags.HomeVC.tpoTableViewTag:
             return tpoArray.count
         case Tags.HomeVC.levelTableViewTag:
@@ -490,9 +477,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         case Tags.HomeVC.homeTableViewTag:
             // Hide "Load More" Button if there is no topics present
             if topics.count > 0 {
-                return 2
+                return topics.count + 1
             } else {
-                return 1
+                return topics.count
             }
         case Tags.HomeVC.tpoTableViewTag:
             return 1
@@ -508,18 +495,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            switch indexPath.section {
-            case 0:
+            if indexPath.section < topics.count {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.topicBriefTableViewCell, for: indexPath) as! TopicBriefTableViewCell
-                cell.topic = topics[indexPath.row]
+                cell.topic = topics[indexPath.section]
                 return cell
-            case 1:
+            } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.View.loadMoreTableViewCell, for: indexPath) as! LoadMoreTableViewCell
                 cell.delegate = self
                 cell.loadMoreButton.setTitle("LOAD MORE", for: .normal)
                 return cell
-            default:
-                return UITableViewCell()
             }
         case Tags.HomeVC.tpoTableViewTag:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.HomeVC.FilterView.filterTableViewCell, for: indexPath) as! FilterTableViewCell
@@ -553,36 +537,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            if let cell = cell as? TopicBriefTableViewCell {
-                
-                // Visualize the margin surrounding the table view cell
-                cell.contentView.backgroundColor = UIColor.clear
+            if let cell = cell as? LoadMoreTableViewCell {
                 cell.backgroundColor = UIColor.clear
-                
-                // remove small whiteRoundedView before adding new one
-                for view in cell.contentView.subviews {
-                    if view.tag == 100 {
-                        view.removeFromSuperview()
-                    }
-                }
-                
-                let whiteRoundedView : UIView = UIView(frame: CGRect(x: 0, y: cellVerticalSpace / 2, width: self.view.bounds.width, height: cell.bounds.height - cellVerticalSpace / 2))
-                whiteRoundedView.tag = 100
-                whiteRoundedView.layer.backgroundColor = UIColor.white.cgColor
-                whiteRoundedView.layer.masksToBounds = false
-                whiteRoundedView.layer.shadowColor = UIColor.shadowColor.cgColor
-                whiteRoundedView.layer.shadowOffset = CGSize(width: 0, height: 1)
-                whiteRoundedView.layer.shadowOpacity = 1
-                
-                cell.contentView.addSubview(whiteRoundedView)
-                cell.contentView.sendSubview(toBack: whiteRoundedView)
-                
-            } else if let cell = cell as? LoadMoreTableViewCell {
-                
-                // Visualize the margin surrounding the table view cell
-                cell.contentView.backgroundColor = UIColor.clear
-                cell.backgroundColor = UIColor.clear
-                
             }
         case Tags.HomeVC.tpoTableViewTag:
             break
@@ -595,11 +551,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 12))
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 12
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView.tag {
         case Tags.HomeVC.homeTableViewTag:
-            let vc = TopicDetailViewController(withTopic: topics[indexPath.row])
+            let vm = TopicDetailViewControllerViewModel(topic: topics[indexPath.section])
+            let vc = TopicDetailViewController(viewModel: vm)
             self.navigationController?.pushViewController(vc, animated: true)
+            tableView.deselectRow(at: indexPath, animated: false)
         case Tags.HomeVC.tpoTableViewTag:
             break
         case Tags.HomeVC.levelTableViewTag:

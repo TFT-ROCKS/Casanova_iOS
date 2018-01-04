@@ -104,10 +104,6 @@ class AnswerDetailViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

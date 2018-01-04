@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Print fonts
+        // printFonts()
         
         // Tab bar config
         UITabBar.appearance().tintColor = UIColor.brandColor
@@ -119,5 +121,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         return true
+    }
+    
+    func printFonts() {
+        let fontFamilyNames = UIFont.familyNames
+        for familyName in fontFamilyNames {
+            print("------------------------------")
+            print("Font Family Name = [\(familyName)]")
+            let names = UIFont.fontNames(forFamilyName: familyName)
+            print("Font Names = [\(names)]")
+        }
     }
 }
