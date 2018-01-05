@@ -76,6 +76,8 @@
 		808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F81F71967000ED5526 /* TFTicons_avator_5.png */; };
 		808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21F91F71967000ED5526 /* TFTicons_avator_6.png */; };
 		808B22021F71967000ED5526 /* TFTicons_avator_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */; };
+		808F07DC1FFF83A00014A561 /* JTMaterialSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F07DB1FFF83A00014A561 /* JTMaterialSwitch.m */; };
+		808F07DF1FFF8CD80014A561 /* PingFang Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 808F07DE1FFF8CD80014A561 /* PingFang Medium.ttf */; };
 		8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */; };
 		80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */; };
 		80A14D771FBC2EE2004B9D95 /* AudioRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */; };
@@ -200,6 +202,9 @@
 		808B21F81F71967000ED5526 /* TFTicons_avator_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_5.png; sourceTree = "<group>"; };
 		808B21F91F71967000ED5526 /* TFTicons_avator_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_6.png; sourceTree = "<group>"; };
 		808B21FA1F71967000ED5526 /* TFTicons_avator_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TFTicons_avator_7.png; sourceTree = "<group>"; };
+		808F07DA1FFF83A00014A561 /* JTMaterialSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTMaterialSwitch.h; sourceTree = "<group>"; };
+		808F07DB1FFF83A00014A561 /* JTMaterialSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTMaterialSwitch.m; sourceTree = "<group>"; };
+		808F07DE1FFF8CD80014A561 /* PingFang Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PingFang Medium.ttf"; sourceTree = "<group>"; };
 		8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerNoteTableViewCell.swift; sourceTree = "<group>"; };
 		80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerManager.swift; sourceTree = "<group>"; };
 		80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordView.swift; sourceTree = "<group>"; };
@@ -318,6 +323,7 @@
 		800FEFE41F25677300DF5531 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				808F07DD1FFF83AB0014A561 /* Custom Switch */,
 				80826CF51F62466B00956E03 /* AudioControlView */,
 				80BBD5C91FDDEF7700B9A0EE /* AudioPlayView */,
 				80826CF01F62463B00956E03 /* PostTextView */,
@@ -401,6 +407,7 @@
 				80883EC81FEBE650000A7A06 /* Muli-Bold.ttf */,
 				80883EC91FEBE651000A7A06 /* Muli-SemiBold.ttf */,
 				80826CFF1F651F5900956E03 /* PingFang Light.ttf */,
+				808F07DE1FFF8CD80014A561 /* PingFang Medium.ttf */,
 				80826D001F651F5900956E03 /* PingFang SC Regular.ttf */,
 				80883EC21FEBE48C000A7A06 /* Montserrat-Bold.otf */,
 				80883EC01FEBE48C000A7A06 /* Montserrat-Light.otf */,
@@ -531,6 +538,15 @@
 				80826CF31F62466500956E03 /* AudioControlView.xib */,
 			);
 			name = AudioControlView;
+			sourceTree = "<group>";
+		};
+		808F07DD1FFF83AB0014A561 /* Custom Switch */ = {
+			isa = PBXGroup;
+			children = (
+				808F07DA1FFF83A00014A561 /* JTMaterialSwitch.h */,
+				808F07DB1FFF83A00014A561 /* JTMaterialSwitch.m */,
+			);
+			name = "Custom Switch";
 			sourceTree = "<group>";
 		};
 		80A14D781FBC2EEE004B9D95 /* Audio Record View */ = {
@@ -737,6 +753,7 @@
 				80F58AED1FFE0F34007F3DF9 /* SF-Pro-Text-Regular.otf in Resources */,
 				80883ECA1FEBE651000A7A06 /* Muli-Bold.ttf in Resources */,
 				80883EC71FEBE48C000A7A06 /* Montserrat-SemiBold.otf in Resources */,
+				808F07DF1FFF8CD80014A561 /* PingFang Medium.ttf in Resources */,
 				80826D021F651F5900956E03 /* PingFang SC Regular.ttf in Resources */,
 				80BBD5C81FDDEF6300B9A0EE /* AudioPlayView.xib in Resources */,
 				80E339141F1AE4FE00F539E5 /* LaunchScreen.storyboard in Resources */,
@@ -889,6 +906,7 @@
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,
 				80A14D7C1FBC49BD004B9D95 /* AudioRecordViewController.swift in Sources */,
+				808F07DC1FFF83A00014A561 /* JTMaterialSwitch.m in Sources */,
 				807BF5CE1F29B291000451FA /* AnswerManager.swift in Sources */,
 				802E8E421F34660B00A9345E /* TopicHeaderView.swift in Sources */,
 				805EC8931F418A25005197DF /* ProfileViewController.swift in Sources */,
