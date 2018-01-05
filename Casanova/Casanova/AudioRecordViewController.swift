@@ -19,21 +19,11 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    @IBOutlet weak var switchLabel: UILabel!
-    @IBOutlet weak var titleSwitch: UISwitch!
-    @IBAction func onSwitchTitle(_ sender: UISwitch) {
-        if sender.isOn {
-            // show chinese title
-            showChiTitle()
-        } else {
-            // show english title
-            showEngTitle()
-        }
-    }
     @IBOutlet weak var mainTitleLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var audioRecordView: AudioRecordView!
     let postTextView: AudioCommentPostView = AudioCommentPostView(frame: .zero)
+    var toggle: JTMaterialSwitch!
     
     // constraints
     var bottomConstraint: NSLayoutConstraint!
@@ -73,10 +63,10 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         super.viewDidLoad()
         
         // config
-        mainTitleLabel.font = UIFont.pfr(size: 20)
+        mainTitleLabel.font = UIFont.pfs(size: 18)
         mainTitleLabel.textColor = UIColor.tftCoolGrey
         mainTitleLabel.textAlignment = .center
-        mainTitleLabel.text = "录音"
+        mainTitleLabel.text = "跟读"
         
         textView.isEditable = false
         showEngTitle()
@@ -84,14 +74,6 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         audioRecordView.delegate = self
         
         audioSession = AVAudioSession.sharedInstance()
-        
-        switchLabel.textAlignment = .right
-        switchLabel.text = "翻译"
-        switchLabel.font = UIFont.pfr(size: 15)
-        switchLabel.textColor = UIColor.tftCoolGrey
-        
-        titleSwitch.setOn(false, animated: false)
-        titleSwitch.onTintColor = UIColor.brandColor
         
         // Post Text View
         layoutPostTextView()
@@ -101,6 +83,24 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Customized toggle view
+        toggle = JTMaterialSwitch(size: JTMaterialSwitchSizeSmall, state: JTMaterialSwitchStateOff)!
+        toggle.thumbOnTintColor = UIColor.white
+        toggle.thumbOffTintColor = UIColor.white
+        toggle.trackOnTintColor = UIColor.brandColor
+        toggle.trackOffTintColor = UIColor.tftCoolGrey
+        toggle.rippleFillColor = UIColor.brandColor
+        toggle.font = UIFont.pfm(size: 8)
+        toggle.onText = "中"
+        toggle.offText = "中"
+        toggle.onTextColor = UIColor.brandColor
+        toggle.offTextColor = UIColor.tftCoolGrey
+        // Calculate center
+        let centerX = view.bounds.width - 30.0
+        let centerY = mainTitleLabel.center.y
+        toggle.center = CGPoint(x: centerX, y: centerY)
+        toggle.addTarget(self, action: #selector(toggleStateChanged), for: .valueChanged)
+        view.addSubview(toggle)
         
         // Add Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -149,6 +149,14 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         } else {
             // reset audio record view
             prepareRecord()
+        }
+    }
+    
+    func toggleStateChanged() {
+        if toggle.isOn {
+            showChiTitle()
+        } else {
+            showEngTitle()
         }
     }
     

@@ -22,6 +22,14 @@ extension UIFont {
         return UIFont(name: "PingFangSC-Light", size: size)!
     }
     
+    class func pfm(size: CGFloat) -> UIFont {
+        return UIFont(name: "PingFangSC-Medium", size: size)!
+    }
+    
+    class func pfs(size: CGFloat) -> UIFont {
+        return UIFont(name: "PingFangSC-Semibold", size: size)!
+    }
+    
     class func pfr(size: CGFloat) -> UIFont {
         return UIFont(name: "PingFangSC-Regular", size: size)!
     }
