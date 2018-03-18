@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0PP-hW-uyj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0PP-hW-uyj">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -48,7 +48,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYo-Rf-ETm">
-                                <rect key="frame" x="30" y="292" width="354" height="20"/>
+                                <rect key="frame" x="30" y="292" width="354" height="21.666666666666686"/>
                                 <fontDescription key="fontDescription" name="Merriweather-Regular" family="Merriweather" pointSize="17"/>
                                 <color key="textColor" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -101,7 +101,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RyI-pw-TBf">
-                                <rect key="frame" x="59" y="415" width="296" height="28"/>
+                                <rect key="frame" x="59" y="415" width="54" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="忘记密码">
                                     <color key="titleColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
@@ -199,6 +199,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ua-wY-6OZ">
+                                <rect key="frame" x="143" y="415.33333333333331" width="30" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="跳过">
+                                    <color key="titleColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipButtonClicked:" destination="xzL-1F-2Ij" eventType="touchUpInside" id="9kE-8P-IpH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.98039215686274506" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -215,7 +225,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="v1t-jT-aou" secondAttribute="trailing" constant="20" id="GpE-wu-fgg"/>
                             <constraint firstItem="h4n-ZM-zRp" firstAttribute="leading" secondItem="0Pk-EJ-Da2" secondAttribute="trailing" constant="21" id="HNu-dV-73c"/>
                             <constraint firstItem="0Pk-EJ-Da2" firstAttribute="centerX" secondItem="rsY-4U-ZF1" secondAttribute="centerX" id="LNs-Q0-Qgd"/>
-                            <constraint firstItem="RyI-pw-TBf" firstAttribute="centerX" secondItem="rsY-4U-ZF1" secondAttribute="centerX" id="Nlh-CH-yH3"/>
+                            <constraint firstItem="2ua-wY-6OZ" firstAttribute="centerY" secondItem="RyI-pw-TBf" secondAttribute="centerY" id="MsR-QQ-PJ5"/>
                             <constraint firstItem="h4n-ZM-zRp" firstAttribute="top" secondItem="0Pk-EJ-Da2" secondAttribute="bottom" constant="23" id="OOM-jN-Ijl"/>
                             <constraint firstItem="tTU-1H-P8F" firstAttribute="centerY" secondItem="TqI-hi-16v" secondAttribute="centerY" id="OYY-nF-O5e"/>
                             <constraint firstItem="neM-L4-mkx" firstAttribute="leading" secondItem="4nH-LT-uur" secondAttribute="leadingMargin" constant="20" id="ReL-xY-Lxy"/>
@@ -228,6 +238,7 @@
                             <constraint firstItem="neM-L4-mkx" firstAttribute="centerY" secondItem="0Pk-EJ-Da2" secondAttribute="centerY" id="eQb-xJ-H4Z"/>
                             <constraint firstItem="Vit-Ng-uUO" firstAttribute="centerY" secondItem="Rw1-cg-k9f" secondAttribute="centerY" id="gse-JB-vDJ"/>
                             <constraint firstItem="Rw1-cg-k9f" firstAttribute="centerX" secondItem="rsY-4U-ZF1" secondAttribute="centerX" id="hcc-3l-uy7"/>
+                            <constraint firstItem="2ua-wY-6OZ" firstAttribute="leading" secondItem="RyI-pw-TBf" secondAttribute="trailing" constant="30" id="jbZ-7l-kR7"/>
                             <constraint firstItem="TqI-hi-16v" firstAttribute="centerX" secondItem="rsY-4U-ZF1" secondAttribute="centerX" id="lky-Qt-Ni7"/>
                             <constraint firstItem="0Pk-EJ-Da2" firstAttribute="leading" secondItem="Nop-uM-tmd" secondAttribute="trailing" constant="21" id="nIZ-hc-KEf"/>
                             <constraint firstItem="TqI-hi-16v" firstAttribute="top" secondItem="BEn-0P-nq6" secondAttribute="bottom" constant="8" id="nIv-aG-K9p"/>
@@ -249,6 +260,7 @@
                         <outlet property="logInButton" destination="nak-yK-crZ" id="Tmp-c6-W5I"/>
                         <outlet property="passwordTextField" destination="Rw1-cg-k9f" id="jfF-Sl-QiN"/>
                         <outlet property="signUpButton" destination="OBZ-Oz-y67" id="3T1-ox-mGm"/>
+                        <outlet property="skipButton" destination="2ua-wY-6OZ" id="Kbr-Vb-dUG"/>
                         <outlet property="usernameTextField" destination="TqI-hi-16v" id="ezz-iF-2DS"/>
                     </connections>
                 </viewController>

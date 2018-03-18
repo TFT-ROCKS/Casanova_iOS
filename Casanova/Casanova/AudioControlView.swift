@@ -89,4 +89,8 @@ class AudioControlView: UIView, UIWebViewDelegate {
             audioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
         }
     }
+    
+    func reset() {
+        indexPathInUse = IndexPath(row: -100, section: -100)
+    }
 }
