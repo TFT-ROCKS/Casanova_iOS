@@ -19,6 +19,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var answererButton: UIImageView!
     var answererNameLabel: UILabel!
     var answerTimeLabel: UILabel!
+    var audioToggle: JTMaterialSwitch!
     var likeButton: UIButton!
     var likeCountLabel: UILabel!
     var commentButton: UIButton!
@@ -30,6 +31,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     var mode: AnswerMode!
     var isLikedCard: Bool = false
     var canBeDeleted: Bool = false
+    var canAudioToggle: Bool = false
     
     var answer: Answer! {
         didSet {
@@ -179,6 +181,20 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         trashButton.setImage(#imageLiteral(resourceName: "trash"), for: .normal)
         
+        audioToggle = JTMaterialSwitch(size: JTMaterialSwitchSizeSmall, state: JTMaterialSwitchStateOff)!
+        audioToggle.thumbOnTintColor = UIColor.white
+        audioToggle.thumbOffTintColor = UIColor.white
+        audioToggle.trackOnTintColor = UIColor.brandColor
+        audioToggle.trackOffTintColor = UIColor.tftCoolGrey
+        audioToggle.rippleFillColor = UIColor.brandColor
+        audioToggle.font = UIFont.pfm(size: 8)
+        audioToggle.onText = "美"
+        audioToggle.offText = "美"
+        audioToggle.onTextColor = UIColor.brandColor
+        audioToggle.offTextColor = UIColor.tftCoolGrey
+        audioToggle.center = CGPoint(x: 180, y: 32)
+        contentView.addSubview(audioToggle)
+        
         contentView.backgroundColor = UIColor.white
     }
     
@@ -217,12 +233,20 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         if isLikedCard {
             bottomConstraint.constant = -2
+            // force canAudioToggle false
+            canAudioToggle = false
         }
         
         if canBeDeleted {
             trashButton.isHidden = false
         } else {
             trashButton.isHidden = true
+        }
+        
+        if canAudioToggle {
+            audioToggle.isHidden = false
+        } else {
+            audioToggle.isHidden = true
         }
     }
 }

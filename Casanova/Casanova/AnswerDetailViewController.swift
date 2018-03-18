@@ -29,6 +29,10 @@ class AnswerDetailViewController: UIViewController {
     // audio downloading flag
     var isDownloading: Bool = false
     
+    // U.S and U.K english flag
+    var isUSAudioEnabled: Bool = false
+    var audioChanged: Bool = false
+    
     // sub views
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
@@ -505,7 +509,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
                 }
                 cell.mode = .full
+                cell.canAudioToggle = answer.usAudioURL != nil
                 cell.answer = answer
+                cell.audioToggle.addTarget(self, action: #selector(self.audioToggleValueChanged(_:)), for: .valueChanged)
                 let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
                 cell.likeButton.addTarget(self, action: #selector(self.likeButtonTapped(_:)), for: .touchUpInside)
                 cell.likeButton.setImage(img, for: .normal)
@@ -598,6 +604,19 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    func audioToggleValueChanged(_ sender: JTMaterialSwitch) {
+        if sender.isOn {
+            isUSAudioEnabled = true
+        } else {
+            isUSAudioEnabled = false
+        }
+        audioChanged = true
+        if audioControlBar.isPlaying {
+            audioButtonTappedOnBar()
+            audioControlBar.reset()
+        }
+    }
+    
     func likeButtonTapped(_ sender: UIButton) {
         sender.isEnabled = false
         let answerId = answer.id
@@ -636,7 +655,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         
         if isDownloading { return }
         
-        if cellInUse == indexPath {
+        if cellInUse == indexPath && !audioChanged {
             let img = audioControlBar.isPlaying ? #imageLiteral(resourceName: "play_btn-h") : #imageLiteral(resourceName: "pause_btn-h")
             sender.setImage(img, for: .normal)
             audioButtonTappedOnBar()
@@ -659,8 +678,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         var isComment: Bool = false
         if indexPath?.section == 0 {
             if indexPath?.row == 0 {
+                audioChanged = false
                 // answer audio
-                url = URL(string: answer.audioURL ?? "")
+                url = isUSAudioEnabled ? URL(string: answer.usAudioURL ?? "") : URL(string: answer.audioURL ?? "")
             } else if indexPath?.row == 1 {
                 // note audio
                 url = URL(string: answer.noteURL ?? "")

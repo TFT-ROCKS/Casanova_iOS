@@ -15,6 +15,7 @@ class Answer {
     var noteTitle: String?
     var ref: String?
     var audioURL: String?
+    var usAudioURL: String?
     var noteURL: String?
     var updatedAt: String
     var user: User
@@ -28,6 +29,7 @@ class Answer {
          chineseTitle: String?,
          noteTitle: String?,
          audioURL: String?,
+         usAudioURL: String?,
          noteURL: String?,
          ref: String?,
          updatedAt: String,
@@ -43,6 +45,7 @@ class Answer {
         self.noteTitle = noteTitle
         self.ref = ref
         self.audioURL = audioURL
+        self.usAudioURL = usAudioURL
         self.noteURL = noteURL
         self.updatedAt = updatedAt
         
@@ -76,6 +79,8 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
+        // us audio url
+        let usAudioURL = json["us_audio_url"] as? String
         // note url
         let noteURL = json["note_url"] as? String
         // user
@@ -100,7 +105,7 @@ class Answer {
         let imageURL = json["picture_url"] as? String
         
         // init
-        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil, imageURL: imageURL)
+        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: usAudioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil, imageURL: imageURL)
     }
     
     convenience init?(fromCreateJSON json: [String: Any]) {
@@ -135,7 +140,7 @@ class Answer {
         // imageURL
         let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil, imageURL: imageURL)
+        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: nil, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil, imageURL: imageURL)
     }
     
     // User Answers vs Liked Answers: same schema
@@ -188,7 +193,7 @@ class Answer {
         // imageURL
         let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
+        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: nil, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
     }
     
     // Single Answer: parse single answer JSON
@@ -212,6 +217,8 @@ class Answer {
         let ref = json["references"] as? String
         // audio url
         let audioURL = json["audio_url"] as? String
+        // us audio url
+        let usAudioURL = json["us_audio_url"] as? String
         // note url
         let noteURL = json["note_url"] as? String
         // topic
@@ -240,6 +247,6 @@ class Answer {
         // imageURL
         let imageURL = json["picture_url"] as? String
         // init
-        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
+        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: usAudioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: topic, imageURL: imageURL)
     }
 }
