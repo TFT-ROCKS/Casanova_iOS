@@ -13,7 +13,13 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var forgetPasswordButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     @IBAction func forgetPasswordButtonClicked(_ sender: UIButton) {
+    }
+    @IBAction func skipButtonClicked(_ sender: UIButton) {
+        usernameTextField.text = "游客123"
+        passwordTextField.text = "guest123"
+        logInButtonClicked(sender)
     }
     @IBOutlet weak var logInButton: UIButton!
     @IBAction func logInButtonClicked(_ sender: UIButton) {
