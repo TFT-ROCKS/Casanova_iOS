@@ -1,21 +1,48 @@
 PODS:
-  - Alamofire (4.5.1)
+  - Alamofire (4.7.3)
   - AliyunOSSiOS (2.6.5)
   - Down (0.3.4)
-  - Firebase/Core (4.6.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.11)
-  - FirebaseAnalytics (4.0.5):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - Firebase/Core (5.6.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.1.1)
+  - Firebase/CoreOnly (5.6.0):
+    - FirebaseCore (= 5.1.1)
+  - FirebaseAnalytics (5.1.1):
+    - FirebaseCore (~> 5.1)
+    - FirebaseInstanceID (~> 3.2)
+    - GoogleAppMeasurement (~> 5.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.11):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.6)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - FirebaseCore (5.1.1):
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseInstanceID (3.2.1):
+    - FirebaseCore (~> 5.1)
+    - GoogleUtilities/Environment (~> 5.2)
+  - GoogleAppMeasurement (5.1.1):
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - nanopb (~> 0.3)
+  - GoogleUtilities/AppDelegateSwizzler (5.2.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (5.2.2)
+  - GoogleUtilities/Logger (5.2.2):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (5.2.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (5.2.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (5.2.2)"
+  - GoogleUtilities/Reachability (5.2.2):
+    - GoogleUtilities/Logger
   - IDZSwiftCommonCrypto (0.9.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -23,37 +50,55 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Nuke (5.2)
-  - NVActivityIndicatorView (4.0.0):
-    - NVActivityIndicatorView/Presenter (= 4.0.0)
-  - NVActivityIndicatorView/Presenter (4.0.0)
+  - NVActivityIndicatorView (4.3.0):
+    - NVActivityIndicatorView/Presenter (= 4.3.0)
+  - NVActivityIndicatorView/Presenter (4.3.0)
   - Siren (2.0.8)
   - TagListView (1.2.0)
-  - UMengUShare/Core (6.4.6):
+  - UMengUShare/Core (6.4.8.2):
     - UMengUShare/Network
-  - UMengUShare/Network (6.4.6)
-  - UMengUShare/Social/Email (6.4.6):
+  - UMengUShare/Network (6.4.8.2)
+  - UMengUShare/Social/Email (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedWeChat (6.4.6):
+  - UMengUShare/Social/ReducedWeChat (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/Social/SMS (6.4.6):
+  - UMengUShare/Social/SMS (6.4.8.2):
     - UMengUShare/Core
-  - UMengUShare/UI (6.4.6):
+  - UMengUShare/UI (6.4.8.2):
     - UMengUShare/Core
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
   - AliyunOSSiOS (~> 2.6.2)
-  - Down
+  - Down (= 0.3.4)
   - Firebase/Core
   - IDZSwiftCommonCrypto (~> 0.9.1)
   - Nuke (~> 5.0)
   - NVActivityIndicatorView
   - Siren (from `https://github.com/ArtSabintsev/Siren.git`, branch `swift3.2`)
-  - TagListView (~> 1.0)
+  - TagListView (= 1.2.0)
   - UMengUShare/Social/Email
   - UMengUShare/Social/ReducedWeChat
   - UMengUShare/Social/SMS
   - UMengUShare/UI
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AliyunOSSiOS
+    - Down
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleAppMeasurement
+    - GoogleUtilities
+    - IDZSwiftCommonCrypto
+    - nanopb
+    - Nuke
+    - NVActivityIndicatorView
+    - TagListView
+    - UMengUShare
 
 EXTERNAL SOURCES:
   Siren:
@@ -66,22 +111,23 @@ CHECKOUT OPTIONS:
     :git: https://github.com/ArtSabintsev/Siren.git
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
   Down: 3f35b61e51a603df3e9e7e0289b15752e72f82e6
-  Firebase: 27321a925aa85520618255a7c630859e0502ccbd
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 2a946ece8fbe3ce1fdeeb55324f273caade22df9
-  FirebaseInstanceID: 24958382a1011bba5aaff37e334e7a650b9118f5
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  Firebase: 75ea9e232eefa158c1049028030b8f661a2ccb62
+  FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
+  FirebaseCore: cb9ee75e0894def766167c95a4d5a14b1c138269
+  FirebaseInstanceID: ea5af6920d0a4a29b40459d055bebe4a6c1333c4
+  GoogleAppMeasurement: f7507b39b70ad0bd80b3d81518b2f43868974307
+  GoogleUtilities: 06b66f9567769a7958db20a92f0128b2843e49d5
   IDZSwiftCommonCrypto: 03ea02798d8cf2c2a08aa31b1b991e779fb163ed
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Nuke: 5f420c4637415f979c83afb35e73176dd03232d9
-  NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  NVActivityIndicatorView: 963f62bf9f993fcf23218e55958e5b1761b9504c
   Siren: 4269fa935d0d890ba57ca7cce0569cc285456ca9
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
-  UMengUShare: fdbbf86353976727af26a66e9a84314ecb59c816
+  UMengUShare: 370d180101e13ee0227ae657ab119ba97243d2b3
 
-PODFILE CHECKSUM: 4934e82c62873b6c76fd4a42ca5354a0750c56ae
+PODFILE CHECKSUM: 673b9c0876dc9dab5ac5c2a96898ee37d9706dce
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3
