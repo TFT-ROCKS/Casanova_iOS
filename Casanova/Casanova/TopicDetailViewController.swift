@@ -707,7 +707,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         seconds = secs
         animateAfterBeforeUploadAudio()
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.viewModel.topic.id)-speaking.wav")
-        OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
+        OSSAPIService.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
             //print(bytesSent, totalByteSent, totalBytesExpectedToSend)
             Utils.runOnMainThread {
                 self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
@@ -719,7 +719,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     self.activityIndicatorView.startAnimating()
                 }
                 // Upload answer
-                AnswerManager.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
+                AnswerAPIService.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
                     Utils.runOnMainThread {
                         self.activityIndicatorView.stopAnimating()
                     }

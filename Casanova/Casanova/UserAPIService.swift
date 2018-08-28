@@ -1,5 +1,5 @@
 //
-//  UserManager.swift
+//  UserAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/16/17.
@@ -9,8 +9,8 @@
 import Foundation
 import Alamofire
 
-class UserManager {
-    static let shared = UserManager()
+class UserAPIService {
+    static let shared = UserAPIService()
     let userDefault = UserDefaults.standard
     let url = "https://tft.rocks/api"
     func signUp(username: String, email: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {

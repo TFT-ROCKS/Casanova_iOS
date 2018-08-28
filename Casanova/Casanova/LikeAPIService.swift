@@ -1,5 +1,5 @@
 //
-//  LikeManager.swift
+//  LikeAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/26/17.
@@ -9,8 +9,8 @@
 import Foundation
 import Alamofire
 
-class LikeManager {
-    static let shared = LikeManager()
+class LikeAPIService {
+    static let shared = LikeAPIService()
     let url = "https://tft.rocks/api"
     func postLike(answerId: Int?, userId: Int?, topicId: Int, withCompletion block: ((ErrorMessage?, Like?) -> Void)? = nil) {
         guard let answerId = answerId else {

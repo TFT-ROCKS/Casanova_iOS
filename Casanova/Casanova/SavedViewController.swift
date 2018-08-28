@@ -309,7 +309,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
         if Utils.doesCurrentUserLikeThisAnswer(answer) {
             // un-like it
             let likeId = Utils.likeIdFromAnswer(answer)
-            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     answer.likes.removeLike(likeId!)
                     Environment.shared.likedAnswers?.removeAnswer(answer.id)
@@ -318,7 +318,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             })
         } else {
             // like it
-            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     answer.likes.append(like!)
                     Environment.shared.needsUpdateUserInfoFromServer = true

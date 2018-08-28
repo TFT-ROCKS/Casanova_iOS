@@ -172,7 +172,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     // MARK: - Record Utils
     func uploadAudio() {
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(answer.id)-speaking-answer.wav")
-        OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
+        OSSAPIService.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
             //print(bytesSent, totalByteSent, totalBytesExpectedToSend)
             Utils.runOnMainThread {
                 let progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
@@ -335,7 +335,7 @@ extension AudioRecordViewController: AudioCommentPostViewDelegate {
     func reset() {
         // delete audio file on OSS
         if let cmtAudioUUID = cmtAudioUUID {
-            OSSManager.shared.deleteAudioFile(uuid: cmtAudioUUID)
+            OSSAPIService.shared.deleteAudioFile(uuid: cmtAudioUUID)
         }
         prepareRecord()
     }

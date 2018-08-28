@@ -1,5 +1,5 @@
 //
-//  OSSManager.swift
+//  OSSAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 9/20/17.
@@ -11,9 +11,9 @@
 import Foundation
 import AliyunOSSiOS
 
-class OSSManager {
+class OSSAPIService {
     /// Singleton
-    static let shared = OSSManager()
+    static let shared = OSSAPIService()
     
     let region = "oss-cn-shanghai"
     let bucket = "tftsandbox"

@@ -1,5 +1,5 @@
 //
-//  AnswerManager.swift
+//  AnswerAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/26/17.
@@ -9,9 +9,9 @@
 import Foundation
 import Alamofire
 
-class AnswerManager {
+class AnswerAPIService {
     /// Singleton
-    static let shared = AnswerManager()
+    static let shared = AnswerAPIService()
     
     /// URL for fetch answers of a specific user
     let urlAnswersService = "https://tft.rocks/api/answersService;userId="

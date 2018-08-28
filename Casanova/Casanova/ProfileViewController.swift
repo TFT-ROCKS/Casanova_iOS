@@ -257,7 +257,7 @@ extension ProfileViewController {
     
     func logOut() {
         // logout
-        UserManager.shared.logOut() { error in
+        UserAPIService.shared.logOut() { error in
             if error == nil {
                 // success
                 NotificationCenter.default.removeObserver(self)

@@ -75,7 +75,7 @@ class Environment {
         guard let user = currentUser else {
             return
         }
-        AnswerManager.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
+        AnswerAPIService.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
             self.answers = answers
             self.likedAnswers = likedAnswers
             self.postUserInfoPreparedNotification()
@@ -87,7 +87,7 @@ class Environment {
             block?(ErrorMessage(msg: "User Not Found"))
             return
         }
-        AnswerManager.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
+        AnswerAPIService.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
             if error == nil {
                 self.answers = answers
                 self.likedAnswers = likedAnswers

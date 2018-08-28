@@ -625,7 +625,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         if Utils.doesCurrentUserLikeThisAnswer(answer) {
             // un-like it
             let likeId = Utils.likeIdFromAnswer(answer)
-            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     self.answer.likes.removeLike(likeId!)
                     Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
@@ -636,7 +636,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             })
         } else {
             // like it
-            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     self.answer.likes.append(like!)
                     Environment.shared.needsUpdateUserInfoFromServer = true
@@ -830,7 +830,7 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
-            CommentManager.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
+            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
                 Utils.runOnMainThread {
                     self.activityIndicatorView.stopAnimating()
                 }

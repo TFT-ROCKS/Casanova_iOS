@@ -160,7 +160,7 @@ class HomeViewController: UIViewController {
         }
         // [END GOOGLE ANALYTICS]
         
-        TopicManager.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
+        TopicAPIService.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
             self.isFetching = false
             self.activityIndicatorView.stopAnimating()
             if error == nil {

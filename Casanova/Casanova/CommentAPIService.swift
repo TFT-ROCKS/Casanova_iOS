@@ -1,5 +1,5 @@
 //
-//  CommentManager.swift
+//  CommentAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/26/17.
@@ -9,8 +9,8 @@
 import Foundation
 import Alamofire
 
-class CommentManager {
-    static let shared = CommentManager()
+class CommentAPIService {
+    static let shared = CommentAPIService()
     let url = "https://tft.rocks/api"
     func postComment(answerId: Int?, userId: Int?, title: String, withCompletion block: ((ErrorMessage?, Comment?) -> Void)? = nil) {
         guard let answerId = answerId else {

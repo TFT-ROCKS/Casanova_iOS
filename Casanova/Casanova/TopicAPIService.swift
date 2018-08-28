@@ -1,5 +1,5 @@
 //
-//  TopicManager.swift
+//  TopicAPIService.swift
 //  Casanova
 //
 //  Created by Xiaoyu Guo on 7/18/17.
@@ -9,9 +9,9 @@
 import Foundation
 import Alamofire
 
-class TopicManager {
+class TopicAPIService {
     /// Singleton
-    static let shared = TopicManager()
+    static let shared = TopicAPIService()
     
     /// URL for fetch topics
     let urlPre = "https://tft.rocks/api/topicsService;"

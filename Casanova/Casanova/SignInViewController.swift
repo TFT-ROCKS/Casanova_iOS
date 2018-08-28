@@ -29,7 +29,7 @@ class SignInViewController: UIViewController {
         logInButton.addSubview(indicatorView)
         logInButton.setAttributedTitle(AttrString.titleAttrString("", textColor: UIColor.brandColor), for: .normal)
         indicatorView.startAnimating()
-        UserManager.shared.signIn(usernameOrEmail: usernameTextField.text!, password: passwordTextField.text!, withCompletion: { (error, user) in
+        UserAPIService.shared.signIn(usernameOrEmail: usernameTextField.text!, password: passwordTextField.text!, withCompletion: { (error, user) in
             if error == nil {
                 // Success
                 // Store current user
