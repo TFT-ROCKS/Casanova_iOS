@@ -527,7 +527,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.topAnchor.constraint(equalTo: recordButton.bottomAnchor, constant: 35).isActive = true
         
         // time label constraints
-        timeLabel.widthAnchor.constraint(equalToConstant: 41).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 42).isActive = true
         timeLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
         timeLabel.leadingAnchor.constraint(equalTo: clockIcon.trailingAnchor, constant: 6).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: clockIcon.centerYAnchor).isActive = true
