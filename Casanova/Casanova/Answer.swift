@@ -64,8 +64,8 @@ class Answer {
             let title = json["title"] as? String,
             let updatedAt = json["updatedAt"] as? String,
             let userJSON = json["User"] as? [String: Any],
-            let likesJSON = json["Likes"] as? [Any],
-            let commentsJSON = json["Comments"] as? [Any]
+            let likesJSON = json["Likes"] as? [Any]
+//            let commentsJSON = json["Comments"] as? [Any]
             else {
                 let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
                 //print(errorMessage.msg)
@@ -94,18 +94,19 @@ class Answer {
             }
         }
         // comments
-        var comments: [Comment] = []
-        for commentJSON in commentsJSON {
-            guard let comment = commentJSON as? [String: Any] else { return nil }
-            if let comment = Comment(fromJSON: comment) {
-                comments.append(comment)
-            }
-        }
+// no comments now
+//        var comments: [Comment] = []
+//        for commentJSON in commentsJSON {
+//            guard let comment = commentJSON as? [String: Any] else { return nil }
+//            if let comment = Comment(fromJSON: comment) {
+//                comments.append(comment)
+//            }
+//        }
         // imageURL
         let imageURL = json["picture_url"] as? String
         
         // init
-        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: usAudioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: comments, topic: nil, imageURL: imageURL)
+        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: usAudioURL, noteURL: noteURL, ref: ref, updatedAt: updatedAt, user: user, likes: likes, comments: [], topic: nil, imageURL: imageURL)
     }
     
     convenience init?(fromCreateJSON json: [String: Any]) {
