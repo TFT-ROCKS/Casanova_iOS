@@ -876,6 +876,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         // couldn't load file :(
                         //print("couldn't load file :(")
                     }
+                    self.audioPlayer.enableRate = true
                     self.audioPlayer.prepareToPlay()
                     
                     self.audioTimeLabel.text = TimeManager.shared.timeString(time: self.audioPlayer.duration)

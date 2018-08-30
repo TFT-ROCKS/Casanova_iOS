@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +17,9 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="nOq-k7-pCM"/>
                 <outlet property="playTimeLabel" destination="SEG-9V-RAf" id="jzI-f2-giN"/>
                 <outlet property="profileView" destination="5kh-ZE-AIb" id="izC-lH-soU"/>
+                <outlet property="slowDownButton" destination="XVH-A4-xOC" id="gXi-S6-0Wn"/>
+                <outlet property="speedLabel" destination="O1x-G5-ott" id="2V5-ul-M3n"/>
+                <outlet property="speedUpButton" destination="ajp-nm-glp" id="d5a-HE-bmI"/>
                 <outlet property="usernameLabel" destination="0KT-1k-fkW" id="jAw-oA-6BR"/>
             </connections>
         </placeholder>
@@ -40,18 +44,45 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="U4U-6r-umc">
-                    <rect key="frame" x="150" y="12" width="324" height="31"/>
+                    <rect key="frame" x="150" y="12" width="256" height="31"/>
                     <color key="tintColor" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </slider>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDT-On-6bK">
-                    <rect key="frame" x="487" y="10" width="34" height="34"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LpX-u8-qoZ">
+                    <rect key="frame" x="414" y="10" width="112" height="34"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVH-A4-xOC">
+                            <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="XVH-A4-xOC" secondAttribute="height" multiplier="1:1" id="ULi-FE-wd3"/>
+                            </constraints>
+                            <connections>
+                                <action selector="slowDownButtonTapped:" destination="-1" eventType="touchUpInside" id="GmR-Fx-vfr"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BDT-On-6bK">
+                            <rect key="frame" x="39" y="0.0" width="34" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="BDT-On-6bK" secondAttribute="height" multiplier="1:1" id="ecq-do-k6A"/>
+                            </constraints>
+                            <connections>
+                                <action selector="audioButtonTapped:" destination="-1" eventType="touchUpInside" id="41d-py-nzI"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajp-nm-glp">
+                            <rect key="frame" x="78" y="0.0" width="34" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ajp-nm-glp" secondAttribute="height" multiplier="1:1" id="Qaa-Ze-dZg"/>
+                            </constraints>
+                            <connections>
+                                <action selector="speedUpButtonTapped:" destination="-1" eventType="touchUpInside" id="fHK-7J-x1P"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="BDT-On-6bK" secondAttribute="height" multiplier="1:1" id="ecq-do-k6A"/>
+                        <constraint firstItem="XVH-A4-xOC" firstAttribute="width" secondItem="XVH-A4-xOC" secondAttribute="height" multiplier="1:1" id="2pp-D2-caM"/>
+                        <constraint firstItem="ajp-nm-glp" firstAttribute="width" secondItem="ajp-nm-glp" secondAttribute="height" multiplier="1:1" id="Am0-0E-Qs3"/>
                     </constraints>
-                    <connections>
-                        <action selector="audioButtonTapped:" destination="-1" eventType="touchUpInside" id="41d-py-nzI"/>
-                    </connections>
-                </button>
+                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-ZE-AIb" customClass="UIImageView">
                     <rect key="frame" x="10" y="8" width="37" height="37"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,6 +97,12 @@
                         <constraint firstAttribute="height" constant="0.5" id="77E-wr-jTQ"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1x-G5-ott">
+                    <rect key="frame" x="152" y="2" width="47.5" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -73,21 +110,23 @@
                 <constraint firstItem="SEG-9V-RAf" firstAttribute="height" secondItem="0KT-1k-fkW" secondAttribute="height" id="7RG-mE-v2P"/>
                 <constraint firstItem="5kh-ZE-AIb" firstAttribute="bottom" secondItem="SEG-9V-RAf" secondAttribute="bottom" id="9CE-WC-mwa"/>
                 <constraint firstItem="U4U-6r-umc" firstAttribute="leading" secondItem="SEG-9V-RAf" secondAttribute="trailing" constant="15" id="KFe-2h-hlv"/>
-                <constraint firstItem="BDT-On-6bK" firstAttribute="leading" secondItem="U4U-6r-umc" secondAttribute="trailing" constant="15" id="MBY-2j-CAs"/>
                 <constraint firstItem="5kh-ZE-AIb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mzn-pe-hWJ"/>
-                <constraint firstAttribute="trailing" secondItem="BDT-On-6bK" secondAttribute="trailing" constant="10" id="PKD-tt-oLP"/>
                 <constraint firstItem="SEG-9V-RAf" firstAttribute="leading" secondItem="5kh-ZE-AIb" secondAttribute="trailing" constant="10" id="Pi1-EP-Uoh"/>
                 <constraint firstItem="5kh-ZE-AIb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="PxB-xm-Dqz"/>
-                <constraint firstItem="BDT-On-6bK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="T4l-Gc-UUs"/>
+                <constraint firstItem="O1x-G5-ott" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="Seb-LA-89v"/>
                 <constraint firstItem="5kh-ZE-AIb" firstAttribute="top" secondItem="0KT-1k-fkW" secondAttribute="top" id="Tt7-c1-CtA"/>
                 <constraint firstItem="U4U-6r-umc" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WhN-xt-vex"/>
+                <constraint firstItem="LpX-u8-qoZ" firstAttribute="leading" secondItem="U4U-6r-umc" secondAttribute="trailing" constant="10" id="by5-s8-fqT"/>
                 <constraint firstItem="Ccu-fY-i7p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fIx-Zp-BOM"/>
+                <constraint firstAttribute="trailing" secondItem="LpX-u8-qoZ" secondAttribute="trailing" constant="5" id="fTD-Kd-gX2"/>
                 <constraint firstItem="U4U-6r-umc" firstAttribute="leading" secondItem="0KT-1k-fkW" secondAttribute="trailing" constant="15" id="lSq-Me-8Y2"/>
                 <constraint firstItem="SEG-9V-RAf" firstAttribute="top" secondItem="0KT-1k-fkW" secondAttribute="bottom" constant="5" id="o8M-mu-Spm"/>
                 <constraint firstAttribute="trailing" secondItem="Ccu-fY-i7p" secondAttribute="trailing" id="oR0-tF-6xT"/>
+                <constraint firstItem="O1x-G5-ott" firstAttribute="leading" secondItem="U4U-6r-umc" secondAttribute="leading" id="p7k-VC-v8e"/>
                 <constraint firstItem="0KT-1k-fkW" firstAttribute="leading" secondItem="5kh-ZE-AIb" secondAttribute="trailing" constant="10" id="qgF-Kz-CNA"/>
                 <constraint firstItem="5kh-ZE-AIb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="vl2-Nr-fBa"/>
-                <constraint firstItem="BDT-On-6bK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="zn1-KT-qJF"/>
+                <constraint firstItem="LpX-u8-qoZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="wu0-f3-twE"/>
+                <constraint firstItem="LpX-u8-qoZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yQQ-nP-P5b"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-61.5" y="57"/>

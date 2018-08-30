@@ -27,6 +27,7 @@ class AudioPlayView: UIView {
                 // couldn't load file :(
                 //print("couldn't load file :(")
             }
+            audioPlayer.enableRate = true
             audioPlayer.prepareToPlay()
             seconds = Int(audioPlayer.duration)
             timeLabel.text = TimeManager.shared.timeString(time: audioPlayer.duration)

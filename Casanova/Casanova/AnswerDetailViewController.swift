@@ -275,6 +275,22 @@ extension AnswerDetailViewController: AudioControlViewDelegate {
         }
         tableView.reloadData()
     }
+    
+    func slowDownButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate > 0.599999 {
+            audioPlayer.rate -= 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
+    }
+    
+    func speedUpButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate < 1.900001 {
+            audioPlayer.rate += 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
+    }
 }
 
 // MARK: - TopicView
@@ -721,6 +737,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.delegate = self
+            audioPlayer.enableRate = true
             audioPlayer.prepareToPlay()
             audioPlayer.volume = 1.0
             audioPlayer.play()
