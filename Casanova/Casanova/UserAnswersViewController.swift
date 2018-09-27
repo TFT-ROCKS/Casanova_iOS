@@ -143,7 +143,7 @@ extension UserAnswersViewController {
         
         let alertController = AlertManager.alertController(title: "", msg: "删除回答", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
-            AnswerManager.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
+            AnswerAPIService.shared.deleteAnswer(topicId: topicId, answerId: answerId, withCompletion: { error in
                 Utils.runOnMainThread {
                     self.activityIndicatorView.stopAnimating()
                 }
@@ -205,6 +205,22 @@ extension UserAnswersViewController: AudioControlViewDelegate {
             }
         }
         tableView.reloadData()
+    }
+    
+    func slowDownButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate > 0.599999 {
+            audioPlayer.rate -= 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
+    }
+    
+    func speedUpButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate < 1.900001 {
+            audioPlayer.rate += 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
     }
 }
 
@@ -338,7 +354,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
         if Utils.doesCurrentUserLikeThisAnswer(answer) {
             // un-like it
             let likeId = Utils.likeIdFromAnswer(answer)
-            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     answer.likes.removeLike(likeId!)
                     self.tableView.reloadData()
@@ -346,7 +362,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
             })
         } else {
             // like it
-            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     answer.likes.append(like!)
                     self.tableView.reloadData()
@@ -406,6 +422,7 @@ extension UserAnswersViewController: UITableViewDelegate, UITableViewDataSource,
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.delegate = self
+            audioPlayer.enableRate = true
             audioPlayer.prepareToPlay()
             audioPlayer.volume = 1.0
             audioPlayer.play()

@@ -27,7 +27,7 @@ class SignUpViewController: UIViewController {
         signUpButton.addSubview(indicatorView)
         signUpButton.setAttributedTitle(AttrString.titleAttrString("", textColor: UIColor.brandColor), for: .normal)
         indicatorView.startAnimating()
-        UserManager.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, withCompletion: { error in
+        UserAPIService.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, withCompletion: { error in
             if let error = error {
                 self.signUpButton.viewWithTag(5)?.removeFromSuperview()
                 self.signUpButton.setAttributedTitle(AttrString.titleAttrString("注册", textColor: UIColor.white), for: .normal)

@@ -48,7 +48,7 @@ class TopicDetailViewControllerViewModel {
     // MARK: - Actions
     func reloadData() {
         self.isUpdating = true
-        TopicManager.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
+        TopicAPIService.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
             if error == nil {
                 // success
                 // body answers cells
@@ -60,7 +60,7 @@ class TopicDetailViewControllerViewModel {
     }
     
     func deleteAnswer(_ answer: Answer) {
-        AnswerManager.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
+        AnswerAPIService.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
             self.topic.answers.removeAnswer(answer.id)
             Environment.shared.removeAnswer(answer.id)
             self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }

@@ -527,7 +527,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         clockIcon.topAnchor.constraint(equalTo: recordButton.bottomAnchor, constant: 35).isActive = true
         
         // time label constraints
-        timeLabel.widthAnchor.constraint(equalToConstant: 41).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 42).isActive = true
         timeLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
         timeLabel.leadingAnchor.constraint(equalTo: clockIcon.trailingAnchor, constant: 6).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: clockIcon.centerYAnchor).isActive = true
@@ -707,7 +707,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         seconds = secs
         animateAfterBeforeUploadAudio()
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(self.viewModel.topic.id)-speaking.wav")
-        OSSManager.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
+        OSSAPIService.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
             //print(bytesSent, totalByteSent, totalBytesExpectedToSend)
             Utils.runOnMainThread {
                 self.progressView.progress = Float(totalByteSent) / Float(totalBytesExpectedToSend)
@@ -719,7 +719,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     self.activityIndicatorView.startAnimating()
                 }
                 // Upload answer
-                AnswerManager.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
+                AnswerAPIService.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
                     Utils.runOnMainThread {
                         self.activityIndicatorView.stopAnimating()
                     }
@@ -876,6 +876,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         // couldn't load file :(
                         //print("couldn't load file :(")
                     }
+                    self.audioPlayer.enableRate = true
                     self.audioPlayer.prepareToPlay()
                     
                     self.audioTimeLabel.text = TimeManager.shared.timeString(time: self.audioPlayer.duration)

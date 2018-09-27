@@ -184,6 +184,22 @@ extension SavedViewController: AudioControlViewDelegate {
         }
         tableView.reloadData()
     }
+    
+    func slowDownButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate > 0.599999 {
+            audioPlayer.rate -= 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
+    }
+    
+    func speedUpButtonTappedOnBar() {
+        if !audioControlBar.isPlaying { return; }
+        if audioPlayer.rate < 1.900001 {
+            audioPlayer.rate += 0.1
+            audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -309,7 +325,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
         if Utils.doesCurrentUserLikeThisAnswer(answer) {
             // un-like it
             let likeId = Utils.likeIdFromAnswer(answer)
-            LikeManager.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
                 if error == nil {
                     answer.likes.removeLike(likeId!)
                     Environment.shared.likedAnswers?.removeAnswer(answer.id)
@@ -318,7 +334,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
             })
         } else {
             // like it
-            LikeManager.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
                 if error == nil {
                     answer.likes.append(like!)
                     Environment.shared.needsUpdateUserInfoFromServer = true
@@ -379,6 +395,7 @@ extension SavedViewController: UITableViewDelegate, UITableViewDataSource, AVAud
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer.delegate = self
+            audioPlayer.enableRate = true
             audioPlayer.prepareToPlay()
             audioPlayer.volume = 1.0
             audioPlayer.play()

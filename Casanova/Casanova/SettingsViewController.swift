@@ -73,7 +73,7 @@ class SettingsViewController: UIViewController {
     func saveSettings() {
         self.view.endEditing(true)
         activityIndicatorView.startAnimating()
-        UserManager.shared.update(userId: (Environment.shared.currentUser?.id)!, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
+        UserAPIService.shared.update(userId: (Environment.shared.currentUser?.id)!, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
             Utils.runOnMainThread {
                 self.activityIndicatorView.stopAnimating()
                 if error == nil {

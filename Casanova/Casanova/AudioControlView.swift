@@ -11,6 +11,8 @@ import UIKit
 
 protocol AudioControlViewDelegate: class {
     func audioButtonTappedOnBar()
+    func slowDownButtonTappedOnBar()
+    func speedUpButtonTappedOnBar()
 }
 
 class AudioControlView: UIView, UIWebViewDelegate {
@@ -24,10 +26,19 @@ class AudioControlView: UIView, UIWebViewDelegate {
     @IBOutlet weak var profileView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var playTimeLabel: UILabel!
+    @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var audioBar: UISlider!
+    @IBOutlet weak var slowDownButton: UIButton!
     @IBOutlet weak var audioButton: UIButton!
+    @IBOutlet weak var speedUpButton: UIButton!
+    @IBAction func slowDownButtonTapped(_ sender: UIButton) {
+        delegate.slowDownButtonTappedOnBar()
+    }
     @IBAction func audioButtonTapped(_ sender: UIButton) {
         delegate.audioButtonTappedOnBar()
+    }
+    @IBAction func speedUpButtonTapped(_ sender: UIButton) {
+        delegate.speedUpButtonTappedOnBar()
     }
     
     override init(frame: CGRect) { // For using custom view in code
@@ -55,6 +66,12 @@ class AudioControlView: UIView, UIWebViewDelegate {
         usernameLabel.textColor = UIColor.nonBodyTextColor
         playTimeLabel.font = UIFont.sfps(size: 12)
         playTimeLabel.textColor = UIColor.tftCoolGrey
+        speedLabel.font = UIFont.pfl(size: 12)
+        speedLabel.textColor = UIColor.nonBodyTextColor
+        
+        slowDownButton.setImage(#imageLiteral(resourceName: "icon-slow-down"), for: .normal)
+        speedUpButton.setImage(#imageLiteral(resourceName: "icon-speed-up"), for: .normal)
+        updateSpeedLabel(withSpeed: 1.0)
     }
     
     func updateUI(withTag tag: Int, answer: Answer) {
@@ -92,5 +109,9 @@ class AudioControlView: UIView, UIWebViewDelegate {
     
     func reset() {
         indexPathInUse = IndexPath(row: -100, section: -100)
+    }
+    
+    func updateSpeedLabel(withSpeed speed: Float) {
+        speedLabel.text = String(format: "%.1f x", speed)
     }
 }

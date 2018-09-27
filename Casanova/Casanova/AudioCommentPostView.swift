@@ -81,7 +81,7 @@ class AudioCommentPostView: UIView {
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.white), for: .normal)
         if let audioUrl = audioUrl {
             // comment with audio url
-            CommentManager.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
+            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
                 if error == nil {
                     self.answer.comments.insert(comment!, at: 0)
                     self.success()

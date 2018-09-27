@@ -35,7 +35,7 @@ class ViewControllerManager: NSObject {
         activityIndicatorVC.modalTransitionStyle = .crossDissolve
         activityIndicatorVC.modalPresentationStyle = .overCurrentContext
         self.navigationController.present(activityIndicatorVC, animated: true, completion: nil)
-        AnswerManager.shared.fetchAnswer(withId: answerId, withCompletion: { (error, answer) in
+        AnswerAPIService.shared.fetchAnswer(withId: answerId, withCompletion: { (error, answer) in
             activityIndicatorVC.dismiss(animated: false, completion: {
                 if error == nil {
                     let answerDetailVC = AnswerDetailViewController(withAnswer: answer!)
