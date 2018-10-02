@@ -16,10 +16,13 @@ protocol SignUpViewControllerDelegate: class {
 class SignUpViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var firstnameTextField: UITextField!
+    @IBOutlet weak var lastnameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
+    
     @IBAction func signUpButtonClicked(_ sender: UIButton) {
         let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicatorView.frame = signUpButton.bounds
@@ -27,7 +30,7 @@ class SignUpViewController: UIViewController {
         signUpButton.addSubview(indicatorView)
         signUpButton.setAttributedTitle(AttrString.titleAttrString("", textColor: UIColor.brandColor), for: .normal)
         indicatorView.startAnimating()
-        UserAPIService.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, withCompletion: { error in
+        UserAPIService.shared.signUp(username: usernameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!, firstname: firstnameTextField.text!, lastname: lastnameTextField.text!, withCompletion: { error in
             if let error = error {
                 self.signUpButton.viewWithTag(5)?.removeFromSuperview()
                 self.signUpButton.setAttributedTitle(AttrString.titleAttrString("注册", textColor: UIColor.white), for: .normal)
@@ -65,6 +68,24 @@ class SignUpViewController: UIViewController {
         usernameTextField.placeholder = "用户名"
         usernameTextField.layer.cornerRadius = 22.5
         usernameTextField.layer.masksToBounds = true
+        
+        let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: firstnameTextField.frame.height))
+        firstnameTextField.font = UIFont.sfps(size: 17)
+        firstnameTextField.textColor = UIColor.nonBodyTextColor
+        firstnameTextField.leftView = paddingView4
+        firstnameTextField.leftViewMode = .always
+        firstnameTextField.placeholder = "名"
+        firstnameTextField.layer.cornerRadius = 22.5
+        firstnameTextField.layer.masksToBounds = true
+        
+        let paddingView5 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: lastnameTextField.frame.height))
+        lastnameTextField.font = UIFont.sfps(size: 17)
+        lastnameTextField.textColor = UIColor.nonBodyTextColor
+        lastnameTextField.leftView = paddingView5
+        lastnameTextField.leftViewMode = .always
+        lastnameTextField.placeholder = "姓"
+        lastnameTextField.layer.cornerRadius = 22.5
+        lastnameTextField.layer.masksToBounds = true
         
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: emailTextField.frame.height))
         emailTextField.font = UIFont.sfps(size: 17)
