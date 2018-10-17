@@ -92,7 +92,7 @@ class UserAPIService {
                     if let code = json["code"] as? Int, code == 200 {
                         // success
                         // TODO: Used to have a valid user returned here
-                        let user = User(id: 1, username: "username", password: "password", email: "email", createdAt: "111", updatedAt: "111", userRole: "1", firstname: "firstname", lastname: "lastname")
+                        let user = User(fromJSON: json)
                         Utils.runOnMainThread { block?(nil, user) }
                     } else if let msg = json["message"] as? String {
                         // failure

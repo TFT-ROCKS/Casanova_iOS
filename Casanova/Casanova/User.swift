@@ -33,51 +33,20 @@ class User {
           firstname: String?,
           lastname: String?) {
         
-        guard let id = id else {
-            let msg = ErrorMessage(msg: "id == nil, when init user")
-            //print(msg.msg)
-            return nil
+        guard
+            let id = id,
+            let username = username,
+            let email = email
+            else {
+                return nil
         }
-        guard let username = username else {
-            let msg = ErrorMessage(msg: "username == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let password = password else {
-            let msg = ErrorMessage(msg: "password == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let email = email else {
-            let msg = ErrorMessage(msg: "email == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let createdAt = createdAt else {
-            let msg = ErrorMessage(msg: "createdAt == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let updatedAt = updatedAt else {
-            let msg = ErrorMessage(msg: "updatedAt == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let userRole = userRole else {
-            let msg = ErrorMessage(msg: "userRole == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let firstname = firstname else {
-            let msg = ErrorMessage(msg: "firstname == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
-        guard let lastname = lastname else {
-            let msg = ErrorMessage(msg: "lastname == nil, when init user")
-            //print(msg.msg)
-            return nil
-        }
+        
+        let password = password ?? "null"
+        let createdAt = createdAt ?? "null"
+        let updatedAt = updatedAt ?? "null"
+        let userRole = userRole ?? "null"
+        let firstname = firstname ?? "null"
+        let lastname = lastname ?? "null"
         
         self.id = id
         self.username = username
@@ -88,55 +57,18 @@ class User {
         self.userRole = userRole
         self.firstname = firstname
         self.lastname = lastname
-        
     }
     
     convenience init?(fromJSON json: [String: Any]) {
-        guard let id = json["id"] as? Int else {
-            let msg = ErrorMessage(msg: "id == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let username = json["username"] as? String else {
-            let msg = ErrorMessage(msg: "username == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let password = json["password"] as? String else {
-            let msg = ErrorMessage(msg: "password == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let email = json["email"] as? String else {
-            let msg = ErrorMessage(msg: "email == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let createdAt = json["createdAt"] as? String else {
-            let msg = ErrorMessage(msg: "createdAt == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let updatedAt = json["updatedAt"] as? String else {
-            let msg = ErrorMessage(msg: "updatedAt == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let userRole = json["user_role"] as? String else {
-            let msg = ErrorMessage(msg: "userRole == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let firstname = json["firstname"] as? String else {
-            let msg = ErrorMessage(msg: "firstname == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
-        guard let lastname = json["lastname"] as? String else {
-            let msg = ErrorMessage(msg: "lastname == nil, when init user from JSON")
-            //print(msg.msg)
-            return nil
-        }
+        let id = json["id"] as? Int
+        let username = json["username"] as? String
+        let password = json["password"] as? String
+        let email = json["email"] as? String
+        let createdAt = json["createdAt"] as? String
+        let updatedAt = json["updatedAt"] as? String
+        let userRole = json["user_role"] as? String
+        let firstname = json["firstname"] as? String
+        let lastname = json["lastname"] as? String
         
         self.init(id: id,
                   username: username,
@@ -159,11 +91,8 @@ class User {
     }
     
     convenience init?(json: [String: Any]) {
-        guard let id = json["id"] as? Int,
-            let username = json["username"] as? String
-            else {
-                return nil
-        }
+        let id = json["id"] as! Int
+        let username = json["username"] as! String
         let userRole = json["userRole"] as? String ?? "none"
         self.init(id: id, username: username, userRole: userRole)
     }
