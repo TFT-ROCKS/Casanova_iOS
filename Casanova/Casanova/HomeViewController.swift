@@ -146,21 +146,41 @@ class HomeViewController: UIViewController {
     }
     
     func fetchTopics(from: Int) {
+        if levels.count > 0 || query.count > 0 || tags.count > 0 {
+            searchTopics()
+        } else {
+            isFetching = true
+            // Start activity indicator animation
+            activityIndicatorView.startAnimating()
+            // Fetch topics
+            TopicAPIService.shared.fetchTopics(num: 20, offset: from, id: nil, withCompletion:
+                { (error, topics) in
+                    self.isFetching = false
+                    self.activityIndicatorView.stopAnimating()
+                    if error == nil {
+                        // shuffle topics
+                        var topicsVar = topics!
+                        topicsVar.shuffle()
+                        // success
+                        if self.updateFlag {
+                            self.topics = topicsVar
+                            self.updateFlag = false
+                        } else {
+                            self.topics.append(contentsOf: topicsVar)
+                        }
+                    } else {
+                        // error found
+                    }
+            })
+        }
+    }
+    
+    func searchTopics() {
         isFetching = true
         // Start activity indicator animation
         activityIndicatorView.startAnimating()
         // Fetch topics
-        
-        // [BEGIN GOOGLE ANALYTICS]
-        if levels.count > 0 || tags.count > 0 {
-            Analytics.setScreenName("filter/\(levels.joined(separator: "_") + tags.joined(separator: "_"))", screenClass: nil)
-        }
-        if query.characters.count > 0 {
-            Analytics.setScreenName("search/\(query.components(separatedBy: CharacterSet.whitespaces).joined(separator: "_"))", screenClass: nil)
-        }
-        // [END GOOGLE ANALYTICS]
-        
-        TopicAPIService.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
+        TopicAPIService.shared.fetchTopics(levels: levels, query: query, tags: tags, withCompletion: { (error, topics) in
             self.isFetching = false
             self.activityIndicatorView.stopAnimating()
             if error == nil {
@@ -326,7 +346,7 @@ extension HomeViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
-        query = (textField.text?.replacingOccurrences(of: "\\s+", with: "_", options: .regularExpression))!
+        query = (textField.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression))!
         updateFlag = true
         fetchTopics(from: 0)
         return true

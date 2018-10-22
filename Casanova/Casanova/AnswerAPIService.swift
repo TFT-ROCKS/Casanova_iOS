@@ -29,7 +29,7 @@ class AnswerAPIService {
         let url = urlAnswersServiceWithAnswerId + "\(id)"
         
         // Make request
-        AlamofireManager.shared.request(url, method: .get).responseJSON {
+        Alamofire.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response
@@ -61,7 +61,7 @@ class AnswerAPIService {
         let url = urlAnswersService + "\(user.id!)"
         
         // Make request
-        AlamofireManager.shared.request(url, method: .get).responseJSON {
+        Alamofire.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response
@@ -98,7 +98,7 @@ class AnswerAPIService {
         let url = urlAnswersService + "\(user.id!)"
         
         // Make request
-        AlamofireManager.shared.request(url, method: .get).responseJSON {
+        Alamofire.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response
@@ -135,7 +135,7 @@ class AnswerAPIService {
         let url = urlAnswersService + "\(user.id!)"
         
         // Make request
-        AlamofireManager.shared.request(url, method: .get).responseJSON {
+        Alamofire.request(url, method: .get).responseJSON {
             response in
             if let json = response.result.value {
                 //print("JSON: \(json)") // serialized json response

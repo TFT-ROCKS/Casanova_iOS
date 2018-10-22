@@ -65,7 +65,7 @@ class SignInViewController: UIViewController {
         usernameTextField.textColor = UIColor.nonBodyTextColor
         usernameTextField.leftView = paddingView1
         usernameTextField.leftViewMode = .always
-        usernameTextField.placeholder = "用户名／邮箱"
+        usernameTextField.placeholder = "邮箱"
         usernameTextField.layer.cornerRadius = 22.5
         usernameTextField.layer.masksToBounds = true
         

@@ -48,15 +48,15 @@ class TopicDetailViewControllerViewModel {
     // MARK: - Actions
     func reloadData() {
         self.isUpdating = true
-        TopicAPIService.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
-            if error == nil {
-                // success
-                // body answers cells
-                self.needsUpdate = false
-                self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
-            }
-            self.isUpdating = false
-        })
+//        TopicAPIService.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
+//            if error == nil {
+//                // success
+//                // body answers cells
+//                self.needsUpdate = false
+//                self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
+//            }
+//            self.isUpdating = false
+//        })
     }
     
     func deleteAnswer(_ answer: Answer) {

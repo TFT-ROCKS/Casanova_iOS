@@ -9,13 +9,37 @@
 import Foundation
 
 class Topic {
+//    ▿ 0 : 2 elements
+//    - key : topic_id
+//    - value : 11
+//    ▿ 1 : 2 elements
+//    - key : answer_count
+//    - value : 1
+//    ▿ 2 : 2 elements
+//    - key : topic_title
+//    - value : Usually, novels, magazines and poetry are considered the three major forms of literature. Which one do you prefer and why?
+//    ▿ 3 : 2 elements
+//    - key : topic_level
+//    - value : 2
+//    ▿ 4 : 2 elements
+//    - key : topic_status
+//    - value : 1
+//    ▿ 5 : 2 elements
+//    - key : topic_chinese_title
+//    - value : 通常，小说、杂志和诗歌被认为是文学的三种主要形式。你喜欢哪一个，解释你为什么喜欢这种文学形式？。
+//    ▿ 6 : 2 elements
+//    - key : topic_tags
+//    - value : others
+//    ▿ 7 : 2 elements
+//    - key : topic_isTrending
+//    - value : 0
     // MARK: - Home Page
+    var id: Int
     var answersCount: Int
     var title: String
     var chineseTitle: String?
-    var id: Int
-    var status: Int
     var level: Int
+    var status: Int
     var tags: String
     var isTrending: Int
     var answerPictureUrl: String?
@@ -44,20 +68,19 @@ class Topic {
     }
     
     convenience init?(fromJson json: [String: Any]) {
-        guard let answersCount = json["answersCount"] as? Int,
-            let title = json["topicTitle"] as? String,
-            let id = json["topicId"] as? Int,
-            let status = json["status"] as? Int,
-            let level = json["level"] as? Int,
-            let tags = json["tags"] as? String,
-            let isTrending = json["isTrending"] as? Int
+        guard
+            let title = json["topic_title"] as? String,
+            let id = json["topic_id"] as? Int
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic")
-                //print(errorMessage.msg)
                 return nil
         }
         
-        let chineseTitle = json["topicChineseTitle"] as? String
+        let answersCount = json["answer_count"] as? Int ?? 0
+        let level = json["topic_level"] as? Int ?? 0
+        let tags = json["topic_tags"] as? String ?? ""
+        let isTrending = json["topic_isTrending"] as? Int ?? 0
+        let status = json["topic_status"] as? Int ?? 0
+        let chineseTitle = json["topic_chinese_title"] as? String
         let answerPictureUrl = json["answerPictureUrl"] as? String
         
         self.init(answersCount: answersCount,
@@ -77,8 +100,6 @@ class Topic {
             let level = json["level"] as? Int,
             let isTrending = json["isTrending"] as? Int
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from single answer JSON")
-                //print(errorMessage.msg)
                 return nil
         }
         
@@ -105,8 +126,6 @@ class Topic {
             let answers = json["Answers"] as? [Any],
             let tags = json["Tags"] as? [Any]
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from liked answers JSON")
-                //print(errorMessage.msg)
                 return nil
         }
         let answersCount = answers.count
@@ -136,8 +155,6 @@ class Topic {
     
     func fetchDetail(fromJSON json: [String: Any]) -> Bool{
         guard let answersJSON = json["Answers"] as? [Any] else {
-            let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic detail")
-            //print(errorMessage.msg)
             return false
         }
         answers = []

@@ -87,13 +87,17 @@ class UserAPIService {
             response in
             
             if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
                     if let code = json["code"] as? Int, code == 200 {
                         // success
-                        // TODO: Used to have a valid user returned here
-                        let user = User(id: 1, username: "username", password: "password", email: "email", createdAt: "111", updatedAt: "111", userRole: "1", firstname: "firstname", lastname: "lastname")
-                        Utils.runOnMainThread { block?(nil, user) }
+                        // save cookie
+                        CookieManager.shared.fetchCookiesFromHeaders(headers: response.response?.allHeaderFields, url: response.request?.url)
+                        
+                        // save user & exec block
+                        if let userJSON = json["user"] as? [String: Any] {
+                            let user = User(fromJSON: userJSON)
+                            Utils.runOnMainThread { block?(nil, user) }
+                        }
                     } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
