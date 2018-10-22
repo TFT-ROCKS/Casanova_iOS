@@ -98,34 +98,4 @@ class TopicAPIService {
             }
         }
     }
-    
-    //    /// Fetch single topic detail for topic detail view
-    //    /// - parameter for: topic that needs detail info
-    //    /// - parameter block: completion block
-    //    func fetchTopicDetail(for topic: Topic, withCompletion block: ((ErrorMessage?, Topic?) -> Void)? = nil) {
-    //        // Create URL
-    //        let url = urlTopicDetail + "\(topic.id)"
-    //
-    //        // Make request
-    //        Alamofire.request(url, method: .get).responseJSON {
-    //            response in
-    //            if let json = response.result.value {
-    //                //print("JSON: \(json)") // serialized json response
-    //                if let dict = json as? [String: Any] {
-    //                    if let topicJSON = dict["topic"] as? [String: Any] {
-    //                        // success
-    //                        if topic.fetchDetail(fromJSON: topicJSON) {
-    //                            block?(nil, topic)
-    //                        }
-    //                    }
-    //                } else {
-    //                    let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch single topic detail")
-    //                    block?(errorMessage, nil)
-    //                }
-    //            } else {
-    //                let errorMessage = ErrorMessage(msg: "json == nil, when trying to fetch single topic detail")
-    //                block?(errorMessage, nil)
-    //            }
-    //        }
-    //    }
 }

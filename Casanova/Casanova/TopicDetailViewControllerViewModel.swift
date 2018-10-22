@@ -12,10 +12,12 @@ class TopicDetailViewControllerViewModel {
     // MARK: - Private
     // TODO: Make topic public for now, private once MVVM architecture migration is done
     let topic: Topic
+    private var answers: [Answer]
     
     // MARK: - Lifecycle
     init(topic: Topic) {
         self.topic = topic
+        self.answers = []
     }
     
     // MARK: - Events
@@ -48,30 +50,30 @@ class TopicDetailViewControllerViewModel {
     // MARK: - Actions
     func reloadData() {
         self.isUpdating = true
-//        TopicAPIService.shared.fetchTopicDetail(for: topic, withCompletion: { (error, topic) in
-//            if error == nil {
-//                // success
-//                // body answers cells
-//                self.needsUpdate = false
-//                self.answersTableViewCellModels = topic!.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
-//            }
-//            self.isUpdating = false
-//        })
+        AnswerAPIService.shared.fetchAnswers(num: 1000, offset: 0, topicID: topic.id) { (error, answers) in
+            if error == nil {
+                // success
+                self.needsUpdate = false
+                self.answers = answers!
+                self.answersTableViewCellModels = self.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
+            }
+            self.isUpdating = false
+        }
     }
     
     func deleteAnswer(_ answer: Answer) {
-        AnswerAPIService.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
-            self.topic.answers.removeAnswer(answer.id)
-            Environment.shared.removeAnswer(answer.id)
-            self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
-            self.didUpdate?(self)
-        })
+//        AnswerAPIService.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
+//            self.topic.answers.removeAnswer(answer.id)
+//            Environment.shared.removeAnswer(answer.id)
+//            self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
+//            self.didUpdate?(self)
+//        })
     }
     
     func addAnswer(_ answer: Answer) {
-        topic.answers.append(answer)
-        answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
-        didUpdate?(self)
+//        topic.answers.append(answer)
+//        answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
+//        didUpdate?(self)
     }
     
     //MARK: - Helpers

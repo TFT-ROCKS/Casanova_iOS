@@ -9,6 +9,21 @@
 import Foundation
 
 class Answer {
+    // MARK: - Keys
+    static let ID = "id"
+    static let TITLE = "title"
+    static let LEVEL = "level"
+    static let CREATED_AT = "createdAt"
+    static let UPDATED_AT = "updatedAt"
+    static let USER_ID = "UserId"
+    static let IS_TRENDING = "isTrending"
+    static let TASK = "task"
+    static let STATUS = "status"
+    static let CHINESE_TITLE = "chineseTitle"
+    static let TAGS = "tags"
+    static let ANSWER_COUNT = "answer_count"
+    
+    // MARK: - Vars
     var id: Int
     var title: String
     var chineseTitle: String?
@@ -67,8 +82,6 @@ class Answer {
             let likesJSON = json["Likes"] as? [Any]
 //            let commentsJSON = json["Comments"] as? [Any]
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
-                //print(errorMessage.msg)
                 return nil
         }
         // chinese title

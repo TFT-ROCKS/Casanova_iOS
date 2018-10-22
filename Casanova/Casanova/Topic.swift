@@ -33,7 +33,6 @@ class Topic {
     var tags: String
     var isTrending: Int
     var answerPictureUrl: String?
-    var isDetailed: Bool
     
     init(answersCount: Int,
          title: String,
@@ -54,7 +53,6 @@ class Topic {
         self.tags = tags
         self.answerPictureUrl = answerPictureUrl
         self.isTrending = isTrending
-        self.isDetailed = false
     }
     
     convenience init?(fromJson json: [String: Any]) {
@@ -138,31 +136,5 @@ class Topic {
                   tags: tagsStr,
                   answerPictureUrl: answerPictureUrl,
                   isTrending: isTrending)
-    }
-    
-    // MARK: - Detail Page
-    var answers: [Answer]!
-    
-    func fetchDetail(fromJSON json: [String: Any]) -> Bool{
-        guard let answersJSON = json["Answers"] as? [Any] else {
-            return false
-        }
-        answers = []
-        isDetailed = true
-        for answerJSON in answersJSON {
-            if let answerJSON = answerJSON as? [String: Any] {
-                if let answer = Answer(fromJson: answerJSON) {
-                    answers.append(answer)
-                }
-            }
-        }
-        
-        if answers.count == 0 {
-            isDetailed = false
-        } else {
-            answers = answers.sort() as! [Answer]
-        }
-        
-        return isDetailed
     }
 }

@@ -18,7 +18,41 @@ class AnswerAPIService {
     /// URL for fetch answer with answerId
     let urlAnswersServiceWithAnswerId = "https://tft.rocks/api/answersService;id="
     /// URL for post answer
-    let url = "https://tft.rocks/api"
+    let url = "https://tft.rocks/api2.0"
+    
+    /// Fetch answers for a single topic
+    /// - parameter block: completion block
+    ///
+    func fetchAnswers(num: Int, offset: Int, topicID: Int, withCompletion block: ((ErrorMessage?, [Answer]?) -> Void)? = nil) {
+        
+        // Create URL
+        let url = "\(self.url)answer/get?n=\(num)&offset=\(offset)&topicId=\(topicID)"
+        
+        // Make request
+        Alamofire.request(url, method: .get).responseJSON {
+            response in
+            if response.result.isSuccess {
+                if let arr = response.result.value as? [Any] {
+                    var newAnswers: [Answer] = []
+                    for answer in arr {
+                        if let answer = answer as? [String: Any] {
+                            let newAnswer = Answer(fromJson: answer)
+                            newAnswers.append(newAnswer!)
+                        }
+                    }
+                    block?(nil, newAnswers)
+                }
+                else {
+                    let errorMessage = ErrorMessage(msg: "response cannot convert to array, when trying to fetch amswers")
+                    block?(errorMessage, nil)
+                }
+            }
+            else {
+                let errorMessage = ErrorMessage(msg: "failed to fetch answers")
+                block?(errorMessage, nil)
+            }
+        }
+    }
     
     /// Fetch answer with answerId
     /// - parameter id: answerId
