@@ -16,12 +16,6 @@ class TopicAPIService {
     /// URL for fetch topics
     let url = "https://tft.rocks/api2.0/"
     
-    // Filters
-    func levelFilter(_ levels: String) -> String { return "levelFilter=\(levels);" }
-    func searchQuery(_ query: String) -> String { return "searchQuery=\(query);" }
-    func tagFilter(_ tags: String) -> String { return "tagFilter=\(tags);" }
-    func startFilter(_ from: Int) -> String { return "start=\(from)" }
-    
     /// URL for fetch single topic
     let urlTopicDetail = "https://tft.rocks/api/topicsService;id="
     

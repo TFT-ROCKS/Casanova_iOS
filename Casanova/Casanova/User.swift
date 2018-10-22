@@ -9,6 +9,15 @@
 import Foundation
 
 class User {
+    // MARK: - Keys
+    static let ID = "id"
+    static let FIRSTNAME = "firstname"
+    static let LASTNAME = "lastname"
+    static let EMAIL = "email"
+    static let USER_ROLE = "user_role"
+    static let USERNAME = "username"
+    
+    // MARK: - Vars
     var id: Int!
     var username: String!
     var userRole: String!
@@ -33,12 +42,12 @@ class User {
     }
     
     convenience init?(fromJSON json: [String: Any]) {
-        guard let id = json["user_id"] as? Int,
-            let username = json["username"] as? String,
-            let email = json["email"] as? String,
-            let userRole = json["user_role"] as? String,
-            let firstname = json["firstname"] as? String,
-            let lastname = json["lastname"] as? String
+        guard let id = json[User.ID] as? Int,
+            let username = json[User.USERNAME] as? String,
+            let email = json[User.EMAIL] as? String,
+            let userRole = json[User.USER_ROLE] as? String,
+            let firstname = json[User.FIRSTNAME] as? String,
+            let lastname = json[User.LASTNAME] as? String
             else {
                 return nil
         }
@@ -61,9 +70,9 @@ class User {
     }
     
     convenience init?(json: [String: Any]) {
-        let id = json["id"] as! Int
-        let username = json["username"] as! String
-        let userRole = json["userRole"] as? String ?? "none"
+        let id = json[User.ID] as! Int
+        let username = json[User.USERNAME] as! String
+        let userRole = json[User.USER_ROLE] as? String ?? "none"
         self.init(id: id, username: username, userRole: userRole)
     }
 }

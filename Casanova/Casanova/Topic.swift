@@ -9,30 +9,20 @@
 import Foundation
 
 class Topic {
-//    ▿ 0 : 2 elements
-//    - key : topic_id
-//    - value : 11
-//    ▿ 1 : 2 elements
-//    - key : answer_count
-//    - value : 1
-//    ▿ 2 : 2 elements
-//    - key : topic_title
-//    - value : Usually, novels, magazines and poetry are considered the three major forms of literature. Which one do you prefer and why?
-//    ▿ 3 : 2 elements
-//    - key : topic_level
-//    - value : 2
-//    ▿ 4 : 2 elements
-//    - key : topic_status
-//    - value : 1
-//    ▿ 5 : 2 elements
-//    - key : topic_chinese_title
-//    - value : 通常，小说、杂志和诗歌被认为是文学的三种主要形式。你喜欢哪一个，解释你为什么喜欢这种文学形式？。
-//    ▿ 6 : 2 elements
-//    - key : topic_tags
-//    - value : others
-//    ▿ 7 : 2 elements
-//    - key : topic_isTrending
-//    - value : 0
+    // MARK: - Keys
+    static let ID = "id"
+    static let TITLE = "title"
+    static let LEVEL = "level"
+    static let CREATED_AT = "createdAt"
+    static let UPDATED_AT = "updatedAt"
+    static let USER_ID = "UserId"
+    static let IS_TRENDING = "isTrending"
+    static let TASK = "task"
+    static let STATUS = "status"
+    static let CHINESE_TITLE = "chineseTitle"
+    static let TAGS = "tags"
+    static let ANSWER_COUNT = "answer_count"
+    
     // MARK: - Home Page
     var id: Int
     var answersCount: Int
@@ -69,19 +59,19 @@ class Topic {
     
     convenience init?(fromJson json: [String: Any]) {
         guard
-            let title = json["topic_title"] as? String,
-            let id = json["topic_id"] as? Int
+            let title = json[Topic.TITLE] as? String,
+            let id = json[Topic.ID] as? Int
             else {
                 return nil
         }
         
-        let answersCount = json["answer_count"] as? Int ?? 0
-        let level = json["topic_level"] as? Int ?? 0
-        let tags = json["topic_tags"] as? String ?? ""
-        let isTrending = json["topic_isTrending"] as? Int ?? 0
-        let status = json["topic_status"] as? Int ?? 0
-        let chineseTitle = json["topic_chinese_title"] as? String
-        let answerPictureUrl = json["answerPictureUrl"] as? String
+        let answersCount = json[Topic.ANSWER_COUNT] as? Int ?? 0
+        let level = json[Topic.LEVEL] as? Int ?? 0
+        let tags = json[Topic.TAGS] as? String ?? "others"
+        let isTrending = json[Topic.IS_TRENDING] as? Int ?? 0
+        let status = json[Topic.STATUS] as? Int ?? 0
+        let chineseTitle = json[Topic.CHINESE_TITLE] as? String
+        let answerPictureUrl: String? = nil // nil for now
         
         self.init(answersCount: answersCount,
                   title: title,
