@@ -23,7 +23,7 @@ class User {
          userRole: String,
          firstname: String,
          lastname: String) {
-        
+    
         self.id = id
         self.username = username
         self.email = email
@@ -61,11 +61,8 @@ class User {
     }
     
     convenience init?(json: [String: Any]) {
-        guard let id = json["id"] as? Int,
-            let username = json["username"] as? String
-            else {
-                return nil
-        }
+        let id = json["id"] as! Int
+        let username = json["username"] as! String
         let userRole = json["userRole"] as? String ?? "none"
         self.init(id: id, username: username, userRole: userRole)
     }
