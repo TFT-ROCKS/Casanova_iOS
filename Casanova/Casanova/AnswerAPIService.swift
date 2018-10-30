@@ -26,7 +26,7 @@ class AnswerAPIService {
     func fetchAnswers(num: Int, offset: Int, topicID: Int, withCompletion block: ((ErrorMessage?, [Answer]?) -> Void)? = nil) {
         
         // Create URL
-        let url = "\(self.url)answer/get?n=\(num)&offset=\(offset)&topicId=\(topicID)"
+        let url = "\(self.url)/answer/get?n=\(num)&offset=\(offset)&topicId=\(topicID)"
         
         // Make request
         Alamofire.request(url, method: .get).responseJSON {
