@@ -9,17 +9,18 @@
 import Foundation
 
 class Topic {
+    
     // MARK: - Keys
     static let ID = "id"
     static let TITLE = "title"
     static let LEVEL = "level"
-    static let CREATED_AT = "createdAt"
-    static let UPDATED_AT = "updatedAt"
-    static let USER_ID = "UserId"
-    static let IS_TRENDING = "isTrending"
+    static let CREATED_AT = "created_at"
+    static let UPDATED_AT = "updated_at"
+    static let USER_ID = "user_id"
+    static let IS_TRENDING = "is_trending"
     static let TASK = "task"
     static let STATUS = "status"
-    static let CHINESE_TITLE = "chineseTitle"
+    static let CHINESE_TITLE = "chinese_title"
     static let TAGS = "tags"
     static let ANSWER_COUNT = "answer_count"
     
