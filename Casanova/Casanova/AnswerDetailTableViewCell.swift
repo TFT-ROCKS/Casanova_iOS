@@ -205,16 +205,16 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     }
     
     func updateUI() {
-        answererNameLabel.text = answer.user.username
-        answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: answer.updatedAt)
-        likeCountLabel.text = "\(answer.likes.count)"
-        commentCountLabel.text = "\(answer.comments.count)"
+        answererNameLabel.text = answer.username
+        answerTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: answer.updateTime)
+        likeCountLabel.text = "\(answer.likesNum)"
+        commentCountLabel.text = "\(answer.commentsNum)"
         
         // avator
-        let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+        let avator = UIImage(named: "TFTicons_avator_\(answer.userID % 8)")
         answererButton.image = avator
     
-        let note = answer.noteTitle == nil ? "" : answer.noteTitle!
+        let note = answer.note
         switch mode! {
         case .full:
             answerTitleTextView.attributedText = AttrString.answerAttrString(answer.title + "\n***\n" + note)

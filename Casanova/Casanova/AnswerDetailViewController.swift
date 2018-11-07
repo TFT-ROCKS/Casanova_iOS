@@ -74,17 +74,12 @@ class AnswerDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withTopic topic: Topic, withAnswer answer: Answer) {
-        self.topic = topic
+    init(withAnswer answer: Answer) {
         self.answer = answer
-        self.comments = answer.comments
+//        self.comments = answer.comments
         self.postTextView.answer = answer
         
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    convenience init(withAnswer answer: Answer) {
-        self.init(withTopic: answer.topic!, withAnswer: answer)
     }
     
     override func viewDidLoad() {
@@ -412,7 +407,7 @@ extension AnswerDetailViewController: PostTextViewDelegate {
     }
     
     func reloadTableView() {
-        comments = answer.comments
+//        comments = answer.comments
         tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
     }
     
@@ -519,13 +514,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == 0 { // Answer section
             if indexPath.row == 0 {
                 var cell: AnswerDetailTableViewCell
-                if answer.audioURL == nil {
+                if answer.audio == nil {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
                 }
                 cell.mode = .full
-                cell.canAudioToggle = answer.usAudioURL != nil
+                cell.canAudioToggle = answer.usAudio != nil
                 cell.answer = answer
                 cell.audioToggle.addTarget(self, action: #selector(self.audioToggleValueChanged(_:)), for: .valueChanged)
                 let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -638,31 +633,31 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         let answerId = answer.id
         let topicId = topic.id
         let userId = Environment.shared.currentUser?.id
-        if Utils.doesCurrentUserLikeThisAnswer(answer) {
-            // un-like it
-            let likeId = Utils.likeIdFromAnswer(answer)
-            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
-                if error == nil {
-                    self.answer.likes.removeLike(likeId!)
-                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
-                    self.tableView.reloadData()
-                    self.toolBar.isLike = false
-                }
-                sender.isEnabled = true
-            })
-        } else {
-            // like it
-            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
-                if error == nil {
-                    self.answer.likes.append(like!)
-                    Environment.shared.needsUpdateUserInfoFromServer = true
-                    self.tableView.reloadData()
-                    self.toolBar.isLike = true
-                    
-                }
-                sender.isEnabled = true
-            })
-        }
+//        if Utils.doesCurrentUserLikeThisAnswer(answer) {
+//            // un-like it
+//            let likeId = Utils.likeIdFromAnswer(answer)
+//            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+//                if error == nil {
+//                    self.answer.likes.removeLike(likeId!)
+//                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
+//                    self.tableView.reloadData()
+//                    self.toolBar.isLike = false
+//                }
+//                sender.isEnabled = true
+//            })
+//        } else {
+//            // like it
+//            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+//                if error == nil {
+//                    self.answer.likes.append(like!)
+//                    Environment.shared.needsUpdateUserInfoFromServer = true
+//                    self.tableView.reloadData()
+//                    self.toolBar.isLike = true
+//
+//                }
+//                sender.isEnabled = true
+//            })
+//        }
     }
     
     func audioButtonTapped(_ sender: UIButton) {
@@ -696,7 +691,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             if indexPath?.row == 0 {
                 audioChanged = false
                 // answer audio
-                url = isUSAudioEnabled ? URL(string: answer.usAudioURL ?? "") : URL(string: answer.audioURL ?? "")
+                url = isUSAudioEnabled ? URL(string: answer.usAudio ?? "") : URL(string: answer.audio ?? "")
             } else if indexPath?.row == 1 {
                 // note audio
                 url = URL(string: answer.noteURL ?? "")
@@ -847,17 +842,17 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
-            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
-                Utils.runOnMainThread {
-                    self.activityIndicatorView.stopAnimating()
-                }
-                if error == nil {
-                    // delete comment successfully
-                    // remove comment from this answer locally
-                    self.comments.removeComment(commentId)
-                    self.answer.comments.removeComment(commentId)
-                }
-            })
+//            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
+//                Utils.runOnMainThread {
+//                    self.activityIndicatorView.stopAnimating()
+//                }
+//                if error == nil {
+//                    // delete comment successfully
+//                    // remove comment from this answer locally
+//                    self.comments.removeComment(commentId)
+//                    self.answer.comments.removeComment(commentId)
+//                }
+//            })
             }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
         present(alertController, animated: true, completion: nil)

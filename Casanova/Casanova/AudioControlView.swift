@@ -80,10 +80,10 @@ class AudioControlView: UIView, UIWebViewDelegate {
             // Update UI
             
             // avator
-            let avator = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+            let avator = UIImage(named: "TFTicons_avator_\(answer.userID % 8)")
             profileView.image = avator
             
-            usernameLabel.text = answer.user.username
+            usernameLabel.text = answer.username
             
             isPlaying = true
             audioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)
@@ -96,11 +96,12 @@ class AudioControlView: UIView, UIWebViewDelegate {
             // Update UI
             
             // avator
-            let user = comment == nil ? answer.user : comment!.user
-            let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
+            let userID = comment == nil ? answer.userID : comment!.user.id
+            let username = comment == nil ? answer.username : comment!.user.username
+            let avator = UIImage(named: "TFTicons_avator_\(userID ?? 0 % 8)")
             profileView.image = avator
             
-            usernameLabel.text = user.username
+            usernameLabel.text = username
             
             isPlaying = true
             audioButton.setImage(#imageLiteral(resourceName: "pause_btn-h"), for: .normal)

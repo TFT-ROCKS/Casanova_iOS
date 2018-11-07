@@ -35,17 +35,17 @@ class Answer {
     var updateTime: String
     var references: String
     var status: Int
-    var audio: String
+    var audio: String?
     var pic: String
     var note: String
+    var noteURL: String?
     var chineseTitle: String
-    var usAudio: String
+    var usAudio: String?
     var likesNum: Int
     var commentsNum: Int
     var userID: Int
     var username: String
     var userRole: String
-    
     
     init(id: Int,
          title: String,
@@ -53,11 +53,11 @@ class Answer {
          updateTime: String,
          references: String,
          status: Int,
-         audio: String,
+         audio: String?,
          pic: String,
          note: String,
          chineseTitle: String,
-         usAudio: String,
+         usAudio: String?,
          likesNum: Int,
          commentsNum: Int,
          userID: Int,
@@ -73,6 +73,7 @@ class Answer {
         self.audio = audio
         self.pic = pic
         self.note = note
+        self.noteURL = nil
         self.chineseTitle = chineseTitle
         self.usAudio = usAudio
         self.likesNum = likesNum
@@ -94,11 +95,11 @@ class Answer {
         let updateTime = json[Answer.ANSWER_UPDATETIME] as? String ?? ""
         let references = json[Answer.ANSWER_REFERENCES] as? String ?? ""
         let status = json[Answer.ANSWER_STATUS] as? Int ?? 0
-        let audio = json[Answer.ANSWER_AUDIO] as? String ?? ""
+        let audio = json[Answer.ANSWER_AUDIO] as? String
         let pic = json[Answer.ANSWER_PIC] as? String ?? ""
         let note = json[Answer.ANSWER_NOTE] as? String ?? ""
         let chineseTitle = json[Answer.ANSWER_CHINESETITLE] as? String ?? ""
-        let usAudio = json[Answer.ANSWER_USAUDIO] as? String ?? ""
+        let usAudio = json[Answer.ANSWER_USAUDIO] as? String
         let likesNum = json[Answer.LIKES_NUM] as? Int ?? 0
         let commentsNum = json[Answer.COMMENTS_NUM] as? Int ?? 0
         let username = json[Answer.USER_NAME] as? String ?? ""

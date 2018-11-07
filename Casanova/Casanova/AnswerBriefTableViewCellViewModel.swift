@@ -34,15 +34,15 @@ class AnswerBriefTableViewCellViewModel {
     
     // MARK: - Properties
     var answererNameText: String {
-        return answer.user.username
+        return answer.username
     }
     
     var answerTimeText: String {
-        return TimeManager.shared.elapsedDateString(fromString: answer.updatedAt)
+        return TimeManager.shared.elapsedDateString(fromString: answer.updateTime)
     }
     
     var avator: UIImage? {
-        return UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")
+        return UIImage(named: "TFTicons_avator_\(answer.userID % 8)")
     }
     
     var answerTitleText: NSAttributedString {
@@ -53,20 +53,20 @@ class AnswerBriefTableViewCellViewModel {
     var answerImage: UIImage?
     
     var markImageViewHidden: Bool {
-        return !(answer.user.username == "TFT")
+        return !(answer.username == "TFT")
     }
     
     var trashButtonHidden: Bool {
-        return !(answer.user.id == Environment.shared.currentUser?.id)
+        return !(answer.userID == Environment.shared.currentUser?.id)
     }
     
     var clapsText: String {
         // TODO: Use count of likes for now, replace with num of claps later
-        return "\(answer.likes.count) 鼓掌"
+        return "\(answer.likesNum) 鼓掌"
     }
     
     var commentsText: String {
-        return "\(answer.comments.count) 跟读"
+        return "\(answer.commentsNum) 跟读"
     }
     
     // MARK: - Actions
@@ -80,8 +80,8 @@ class AnswerBriefTableViewCellViewModel {
     }
     
     func loadAnswerImage() {
-        if answer.audioURL != nil {
-            if let imageURL = URL(string: answer.imageURL ?? "") {
+        if answer.audio != nil {
+            if let imageURL = URL(string: answer.pic) {
                 Manager.shared.loadImage(with: imageURL) { image in
                     self.answerImage = image.value
                     self.didUpdate?(self)
@@ -118,10 +118,10 @@ extension AnswerBriefTableViewCellViewModel: CellRepresentable {
     func dequeueCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         var cell: AnswerBriefTableViewCell
         
-        if answer.audioURL != nil && answer.title != "" {
+        if answer.audio != nil && answer.title != "" {
             // Answer with text and audio
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerTextAudioCell, for: indexPath) as! AnswerBriefTableViewCell
-        } else if answer.audioURL == nil {
+        } else if answer.audio == nil {
             // Answer with only text
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyTextCell, for: indexPath) as! AnswerBriefTableViewCell
         } else {

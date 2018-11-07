@@ -26,7 +26,7 @@ class AnswerAPIService {
     func fetchAnswers(num: Int, offset: Int, topicID: Int, withCompletion block: ((ErrorMessage?, [Answer]?) -> Void)? = nil) {
         
         // Create URL
-        let url = "\(self.url)/answer/get?n=\(num)&offset=\(offset)&topicId=\(topicID)"
+        let url = "\(self.url)/answer/load?topicId=\(topicID)&n=\(num)&offset=\(offset)"
         
         // Make request
         Alamofire.request(url, method: .get).responseJSON {
@@ -69,12 +69,12 @@ class AnswerAPIService {
                 //print("JSON: \(json)") // serialized json response
                 if let dict = json as? [String: Any] {
                     // success
-                    if let answer = Answer(fromSingleAnswerJson: dict) {
-                        block?(nil, answer)
-                    } else {
-                        let errorMessage = ErrorMessage(msg: "answer == nil when trying to init")
-                        block?(errorMessage, nil)
-                    }
+//                    if let answer = Answer(fromSingleAnswerJson: dict) {
+//                        block?(nil, answer)
+//                    } else {
+//                        let errorMessage = ErrorMessage(msg: "answer == nil when trying to init")
+//                        block?(errorMessage, nil)
+//                    }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch answer with id")
                     block?(errorMessage, nil)
@@ -102,15 +102,15 @@ class AnswerAPIService {
                 if let dict = json as? [String: Any] {
                     if let answersArr = dict["likedAnswers"] as? [Any] {
                         // success
-                        var answers: [Answer] = []
-                        for answerJSON in answersArr {
-                            if let answerJSON = answerJSON as? [String: Any] {
-                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
-                                    answers.append(answer)
-                                }
-                            }
-                        }
-                        block?(nil, answers)
+//                        var answers: [Answer] = []
+//                        for answerJSON in answersArr {
+//                            if let answerJSON = answerJSON as? [String: Any] {
+//                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+//                                    answers.append(answer)
+//                                }
+//                            }
+//                        }
+//                        block?(nil, answers)
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch liked answers")
@@ -139,15 +139,15 @@ class AnswerAPIService {
                 if let dict = json as? [String: Any] {
                     if let answersArr = dict["answers"] as? [Any] {
                         // success
-                        var answers: [Answer] = []
-                        for answerJSON in answersArr {
-                            if let answerJSON = answerJSON as? [String: Any] {
-                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
-                                    answers.append(answer)
-                                }
-                            }
-                        }
-                        block?(nil, answers)
+//                        var answers: [Answer] = []
+//                        for answerJSON in answersArr {
+//                            if let answerJSON = answerJSON as? [String: Any] {
+//                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+//                                    answers.append(answer)
+//                                }
+//                            }
+//                        }
+//                        block?(nil, answers)
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch user answers")
@@ -176,23 +176,23 @@ class AnswerAPIService {
                 if let dict = json as? [String: Any] {
                     if let answersArr = dict["answers"] as? [Any], let likedAnswersArr = dict["likedAnswers"] as? [Any] {
                         // success
-                        var answers: [Answer] = []
-                        for answerJSON in answersArr {
-                            if let answerJSON = answerJSON as? [String: Any] {
-                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
-                                    answers.append(answer)
-                                }
-                            }
-                        }
-                        var likedAnswers: [Answer] = []
-                        for answerJSON in likedAnswersArr {
-                            if let answerJSON = answerJSON as? [String: Any] {
-                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
-                                    likedAnswers.append(answer)
-                                }
-                            }
-                        }
-                        block?(nil, answers, likedAnswers)
+//                        var answers: [Answer] = []
+//                        for answerJSON in answersArr {
+//                            if let answerJSON = answerJSON as? [String: Any] {
+//                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+//                                    answers.append(answer)
+//                                }
+//                            }
+//                        }
+//                        var likedAnswers: [Answer] = []
+//                        for answerJSON in likedAnswersArr {
+//                            if let answerJSON = answerJSON as? [String: Any] {
+//                                if let answer = Answer(fromLikedAnswersJson: answerJSON) {
+//                                    likedAnswers.append(answer)
+//                                }
+//                            }
+//                        }
+//                        block?(nil, answers, likedAnswers)
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot convert to [String: Any], when trying to fetch user info")
@@ -255,13 +255,13 @@ class AnswerAPIService {
                         block?(errorMessage, nil)
                     } else {
                         // success
-                        if let json = json["g0"] as? [String: Any] {
-                            if let dict = json["data"] as? [String: Any] {
-                                if let answer = Answer(fromCreateJSON: dict) {
-                                    block?(nil, answer)
-                                }
-                            }
-                        }
+//                        if let json = json["g0"] as? [String: Any] {
+//                            if let dict = json["data"] as? [String: Any] {
+//                                if let answer = Answer(fromCreateJSON: dict) {
+//                                    block?(nil, answer)
+//                                }
+//                            }
+//                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post answer")
