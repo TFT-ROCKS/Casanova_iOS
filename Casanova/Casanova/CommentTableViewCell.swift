@@ -180,17 +180,17 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     func updateUI() {
-        commenterNameLabel.text = comment.user.username
+        commenterNameLabel.text = comment.username
         commentTimeLabel.text = TimeManager.shared.elapsedDateString(fromString: comment.createdAt)
 //        likeCountLabel.text = "\(comment.likes.count)"
         
         // avator
-        let avator = UIImage(named: "TFTicons_avator_\(comment.user.id % 8)")
+        let avator = UIImage(named: "TFTicons_avator_\(comment.userID % 8)")
         commenterButton.image = avator
         commentTitleLabel.attributedText = AttrString.commentAttrString(comment.title)
         
         // audio button constrains
-        if comment.audioUrl != nil {
+        if comment.audioURL != nil {
             audioButton = UIButton(frame: .zero)
             audioButton!.tag = 199
             contentView.viewWithTag(199)?.removeFromSuperview()

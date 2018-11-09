@@ -96,8 +96,8 @@ class AudioControlView: UIView, UIWebViewDelegate {
             // Update UI
             
             // avator
-            let userID = comment == nil ? answer.userID : comment!.user.id
-            let username = comment == nil ? answer.username : comment!.user.username
+            let userID = comment == nil ? answer.userID : comment!.userID
+            let username = comment == nil ? answer.username : comment!.username
             let avator = UIImage(named: "TFTicons_avator_\(userID ?? 0 % 8)")
             profileView.image = avator
             

@@ -11,7 +11,43 @@ import Alamofire
 
 class CommentAPIService {
     static let shared = CommentAPIService()
-    let url = "https://tft.rocks/api"
+    
+    let url = "https://tft.rocks/api2.0"
+    
+    /// Fetch answers for a single topic
+    /// - parameter block: completion block
+    ///
+    func fetchComments(num: Int, offset: Int, answerID: Int, withCompletion block: ((ErrorMessage?, [Comment]?) -> Void)? = nil) {
+        
+        // Create URL
+        let url = "\(self.url)/comment/get?answerId=\(answerID)&n=\(num)&offset=\(offset)"
+        
+        // Make request
+        Alamofire.request(url, method: .get).responseJSON {
+            response in
+            if response.result.isSuccess {
+                if let arr = response.result.value as? [Any] {
+                    var newComments: [Comment] = []
+                    for comment in arr {
+                        if let comment = comment as? [String: Any] {
+                            let newComment = Comment(fromJSON: comment)
+                            newComments.append(newComment!)
+                        }
+                    }
+                    block?(nil, newComments)
+                }
+                else {
+                    let errorMessage = ErrorMessage(msg: "response cannot convert to array, when trying to fetch comments")
+                    block?(errorMessage, nil)
+                }
+            }
+            else {
+                let errorMessage = ErrorMessage(msg: "failed to fetch comments")
+                block?(errorMessage, nil)
+            }
+        }
+    }
+    
     func postComment(answerId: Int?, userId: Int?, title: String, withCompletion block: ((ErrorMessage?, Comment?) -> Void)? = nil) {
         guard let answerId = answerId else {
             let msg = "answerId == nil, when comment answer"

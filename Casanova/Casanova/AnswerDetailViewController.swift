@@ -34,7 +34,6 @@ class AnswerDetailViewController: UIViewController {
     var audioChanged: Bool = false
     
     // sub views
-    let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let postTextView: PostTextView = PostTextView(frame: .zero)
     let toolBar: AnswerDetailToolBar = AnswerDetailToolBar(frame: .zero)
@@ -74,9 +73,10 @@ class AnswerDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withAnswer answer: Answer) {
+    init(withTopic topic: Topic, withAnswer answer: Answer) {
+        self.topic = topic
         self.answer = answer
-//        self.comments = answer.comments
+        self.comments = []
         self.postTextView.answer = answer
         
         super.init(nibName: nil, bundle: nil)
@@ -133,12 +133,10 @@ class AnswerDetailViewController: UIViewController {
         layoutTableView()
         layoutToolBar()
         layoutAudioControlBar()
-        layoutTopicView()
         layoutPostTextView()
     }
     
     func addConstraints() {
-        addTopicViewConstraints()
         addTableViewConstraints()
         addToolBarConstraints()
         addAudioControlBarConstraints()
@@ -159,6 +157,16 @@ class AnswerDetailViewController: UIViewController {
     func setButtons() {
         let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .plain, target: self, action: #selector(shareButtonClicked(_:)))
         self.navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    // Fetch comments
+    func fetchComments() {
+        CommentAPIService.shared.fetchComments(num: 1000, offset: 0, answerID: answer.id) { (error, comments) in
+            if error == nil {
+                self.comments = comments!
+                self.tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -186,11 +194,6 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
     // MARK: - AnswerDetailToolBarDelegate
     
     func questionButtonClickedOnToolBar() {
-        if toolBar.isQuestion {
-            showTopicView()
-        } else {
-            hideTopicView()
-        }
     }
     
     func likeButtonClickedOnToolBar(_ sender: UIButton) {
@@ -285,46 +288,6 @@ extension AnswerDetailViewController: AudioControlViewDelegate {
             audioPlayer.rate += 0.1
             audioControlBar.updateSpeedLabel(withSpeed: audioPlayer.rate)
         }
-    }
-}
-
-// MARK: - TopicView
-extension AnswerDetailViewController {
-    func layoutTopicView() {
-        view.addSubview(topicView)
-        topicView.translatesAutoresizingMaskIntoConstraints = false
-        view.bringSubview(toFront: topicView)
-        topicView.topic = topic
-        configTopicView()
-    }
-    
-    func configTopicView() {
-        // Add shadow layer to topic header view
-        topicView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        topicView.layer.shadowColor = UIColor.shadowColor.cgColor
-        topicView.layer.shadowRadius = 3.0
-        topicView.layer.shadowOpacity = 1.0
-        
-        // Hide topic view
-        topicView.isHidden = true
-    }
-    
-    func addTopicViewConstraints() {
-        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
-        topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
-    
-    func hideTopicView() {
-        if topicView.isHidden == true { return }
-        toolBar.isQuestion = false
-        topicView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-    }
-    
-    func showTopicView() {
-        if topicView.isHidden == false { return }
-        toolBar.isQuestion = true
-        topicView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
     }
 }
 
@@ -561,7 +524,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         } else { // Comments section
             let comment = comments[indexPath.row]
             var cell: CommentTableViewCell
-            if comment.user.id == Environment.shared.currentUser?.id {
+            if comment.userID == Environment.shared.currentUser?.id {
                 // current user's comment
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser, for: indexPath) as! CommentTableViewCell
                 cell.delegate = self
@@ -697,7 +660,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
                 url = URL(string: answer.noteURL ?? "")
             }
         } else if indexPath?.section == 1 {
-            url = URL(string: comments[(indexPath?.row)!].audioUrl ?? "")
+            url = URL(string: comments[(indexPath?.row)!].audioURL ?? "")
             isComment = true
         }
         if let url = url {
@@ -815,7 +778,6 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
-            hideTopicView()
             self.view.endEditing(true)
             postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {

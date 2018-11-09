@@ -173,7 +173,7 @@ class TopicDetailViewController: UIViewController {
     }
     
     fileprivate func viewModelDidSelect(_ topic: Topic, answer: Answer) {
-        let vc = AnswerDetailViewController(withAnswer: answer)
+        let vc = AnswerDetailViewController(withTopic: topic, withAnswer: answer)
         navigationController?.pushViewController(vc, animated: true)
     }
     

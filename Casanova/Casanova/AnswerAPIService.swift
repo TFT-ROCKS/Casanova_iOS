@@ -17,7 +17,7 @@ class AnswerAPIService {
     let urlAnswersService = "https://tft.rocks/api/answersService;userId="
     /// URL for fetch answer with answerId
     let urlAnswersServiceWithAnswerId = "https://tft.rocks/api/answersService;id="
-    /// URL for post answer
+    /// URL for answer
     let url = "https://tft.rocks/api2.0"
     
     /// Fetch answers for a single topic

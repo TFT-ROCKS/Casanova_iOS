@@ -27,6 +27,7 @@ class Answer {
     static let ANSWER_NOTE = "answer_note"
     static let ANSWER_CHINESETITLE = "answer_chinesetitle"
     static let ANSWER_USAUDIO = "answer_USaudio"
+    static let ANSWER_NOTE_URL = "answer_note_url"
     
     // MARK: - Vars
     var id: Int
@@ -56,6 +57,7 @@ class Answer {
          audio: String?,
          pic: String,
          note: String,
+         noteURL: String?,
          chineseTitle: String,
          usAudio: String?,
          likesNum: Int,
@@ -73,7 +75,7 @@ class Answer {
         self.audio = audio
         self.pic = pic
         self.note = note
-        self.noteURL = nil
+        self.noteURL = noteURL
         self.chineseTitle = chineseTitle
         self.usAudio = usAudio
         self.likesNum = likesNum
@@ -98,6 +100,7 @@ class Answer {
         let audio = json[Answer.ANSWER_AUDIO] as? String
         let pic = json[Answer.ANSWER_PIC] as? String ?? ""
         let note = json[Answer.ANSWER_NOTE] as? String ?? ""
+        let noteURL = json[Answer.ANSWER_NOTE_URL] as? String
         let chineseTitle = json[Answer.ANSWER_CHINESETITLE] as? String ?? ""
         let usAudio = json[Answer.ANSWER_USAUDIO] as? String
         let likesNum = json[Answer.LIKES_NUM] as? Int ?? 0
@@ -114,6 +117,7 @@ class Answer {
                   audio: audio,
                   pic: pic,
                   note: note,
+                  noteURL: noteURL,
                   chineseTitle: chineseTitle,
                   usAudio: usAudio,
                   likesNum: likesNum,
