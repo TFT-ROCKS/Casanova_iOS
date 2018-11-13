@@ -15,6 +15,9 @@ class CommentAPIService {
     let url = "https://tft.rocks/api2.0"
     
     /// Fetch answers for a single topic
+    /// - parameter num: num of comments
+    /// - parameter offset: offset
+    /// - parameter answerID: answer id
     /// - parameter block: completion block
     ///
     func fetchComments(num: Int, offset: Int, answerID: Int, withCompletion block: ((ErrorMessage?, [Comment]?) -> Void)? = nil) {

@@ -89,6 +89,7 @@ class AnswerDetailViewController: UIViewController {
         setTitle(title: "答案详情")
         setButtons()
         preDefinePlatforms()
+        fetchComments()
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
