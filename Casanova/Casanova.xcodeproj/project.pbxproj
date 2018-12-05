@@ -79,6 +79,9 @@
 		808F07DC1FFF83A00014A561 /* JTMaterialSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 808F07DB1FFF83A00014A561 /* JTMaterialSwitch.m */; };
 		808F07DF1FFF8CD80014A561 /* PingFang Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 808F07DE1FFF8CD80014A561 /* PingFang Medium.ttf */; };
 		8091D3CE1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */; };
+		80949D2921640C8600701813 /* CookieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80949D2821640C8600701813 /* CookieManager.swift */; };
+		80949D2B21640F1E00701813 /* Dictionary+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80949D2A21640F1E00701813 /* Dictionary+Helper.swift */; };
+		80949D2D21640F6500701813 /* String+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80949D2C21640F6500701813 /* String+Helper.swift */; };
 		80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */; };
 		80A14D771FBC2EE2004B9D95 /* AudioRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */; };
 		80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */; };
@@ -108,7 +111,6 @@
 		80BBD5C61FDDEF4E00B9A0EE /* AudioPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BBD5C51FDDEF4E00B9A0EE /* AudioPlayView.swift */; };
 		80BBD5C81FDDEF6300B9A0EE /* AudioPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */; };
 		80C2AA0E1F737F98001F298D /* OSSAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSAPIService.swift */; };
-		80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */; };
 		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
 		80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
@@ -206,6 +208,9 @@
 		808F07DB1FFF83A00014A561 /* JTMaterialSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTMaterialSwitch.m; sourceTree = "<group>"; };
 		808F07DE1FFF8CD80014A561 /* PingFang Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PingFang Medium.ttf"; sourceTree = "<group>"; };
 		8091D3CD1FBA38D4000231D5 /* AnswerNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerNoteTableViewCell.swift; sourceTree = "<group>"; };
+		80949D2821640C8600701813 /* CookieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieManager.swift; sourceTree = "<group>"; };
+		80949D2A21640F1E00701813 /* Dictionary+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Helper.swift"; sourceTree = "<group>"; };
+		80949D2C21640F6500701813 /* String+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helper.swift"; sourceTree = "<group>"; };
 		80A11EEB1FC42757003EB4E0 /* ViewControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerManager.swift; sourceTree = "<group>"; };
 		80A14D761FBC2EE2004B9D95 /* AudioRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordView.swift; sourceTree = "<group>"; };
 		80A14D791FBC3652004B9D95 /* AnimatedCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircleView.swift; sourceTree = "<group>"; };
@@ -236,7 +241,6 @@
 		80BBD5C71FDDEF6300B9A0EE /* AudioPlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPlayView.xib; sourceTree = "<group>"; };
 		80C2AA0D1F737F98001F298D /* OSSAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSAPIService.swift; sourceTree = "<group>"; };
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
-		80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+Helper.swift"; sourceTree = "<group>"; };
 		80C361C61FCAE06E00D6AB53 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,11 +292,12 @@
 			children = (
 				80B313A81F1B4DE8001CFDC7 /* UserAPIService.swift */,
 				800122C51F1EDCCF00F185AE /* TopicAPIService.swift */,
+				807BF5CD1F29B291000451FA /* AnswerAPIService.swift */,
 				807BF5C71F29B24D000451FA /* LikeAPIService.swift */,
 				807BF5C91F29B25D000451FA /* CommentAPIService.swift */,
-				807BF5CD1F29B291000451FA /* AnswerAPIService.swift */,
 				807BF5CB1F29B275000451FA /* TagManager.swift */,
 				80C2AA0D1F737F98001F298D /* OSSAPIService.swift */,
+				80949D2821640C8600701813 /* CookieManager.swift */,
 			);
 			name = APIServices;
 			sourceTree = "<group>";
@@ -491,7 +496,8 @@
 		806179801F3E69D500B696FB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				80C361C41FCAD65D00D6AB53 /* Alamofire+Helper.swift */,
+				80949D2A21640F1E00701813 /* Dictionary+Helper.swift */,
+				80949D2C21640F6500701813 /* String+Helper.swift */,
 				8061797E1F3E69BD00B696FB /* UIView+Animation.swift */,
 				80FB457E1F4786D40034D525 /* UIColor+Addition.swift */,
 				80FB45881F4797B00034D525 /* UIFont+Addition.swift */,
@@ -884,6 +890,7 @@
 				80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */,
 				806179841F3E6A2300B696FB /* NavigationBar+Helper.swift in Sources */,
 				80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */,
+				80949D2B21640F1E00701813 /* Dictionary+Helper.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
 				800FEFE11F24A98500DF5531 /* DifficultyView.swift in Sources */,
 				80BBD5C61FDDEF4E00B9A0EE /* AudioPlayView.swift in Sources */,
@@ -895,7 +902,6 @@
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
 				8056F4151FE8D24500529CF4 /* TopicHeaderTableViewCell.swift in Sources */,
-				80C361C51FCAD65D00D6AB53 /* Alamofire+Helper.swift in Sources */,
 				80C2AA0E1F737F98001F298D /* OSSAPIService.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
 				80A14D7A1FBC3652004B9D95 /* AnimatedCircleView.swift in Sources */,
@@ -953,11 +959,13 @@
 				8056F4101FE758A100529CF4 /* DeepLinkManager.swift in Sources */,
 				80B313A71F1B35B4001CFDC7 /* User.swift in Sources */,
 				80AAA3B11FA858E5001251E8 /* GeneralShareEntity.swift in Sources */,
+				80949D2921640C8600701813 /* CookieManager.swift in Sources */,
 				80B313A91F1B4DE8001CFDC7 /* UserAPIService.swift in Sources */,
 				8056F4231FE90A8700529CF4 /* AnswerBriefTableViewCell.swift in Sources */,
 				8056F4211FE8F79000529CF4 /* TopicDetailViewControllerViewModel.swift in Sources */,
 				80B313A11F1B35B4001CFDC7 /* Comment.swift in Sources */,
 				805EC88F1F418A0B005197DF /* SavedViewController.swift in Sources */,
+				80949D2D21640F6500701813 /* String+Helper.swift in Sources */,
 				807BF5C81F29B24D000451FA /* LikeAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1108,7 +1116,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 4KD7R4WWV7;
 				INFOPLIST_FILE = Casanova/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1131,7 +1139,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 4KD7R4WWV7;
 				INFOPLIST_FILE = Casanova/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.app.tft.rocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -78,6 +78,7 @@ class TopicDetailViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
         

@@ -12,8 +12,15 @@ import Alamofire
 class UserAPIService {
     static let shared = UserAPIService()
     let userDefault = UserDefaults.standard
-    let url = "https://tft.rocks/api"
-    func signUp(username: String, email: String, password: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+    let url = "https://tft.rocks/api2.0"
+    
+    func signUp(username: String,
+                email: String,
+                password: String,
+                firstname: String,
+                lastname: String,
+                withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+        
         if username == "" {
             let errorMessage = ErrorMessage(msg: Errors.usernameNotValid)
             block?(errorMessage)
@@ -28,31 +35,27 @@ class UserAPIService {
             return
         }
         
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "userService",
-                                                      "operation": "create",
-                                                      "params": [:],
-                                                      "body": ["username": username,
-                                                               "email": email,
-                                                               "password": password]]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        let headers: HTTPHeaders = [:]
+        let params: Parameters = ["username": username,
+                                  "email": email,
+                                  "firstname": firstname,
+                                  "password": password,
+                                  "lastname": lastname]
+        
+        Alamofire.request("\(url)/user/register", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             
             if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
+                    if let code = json["code"] as? Int, code == 200 {
+                        // success
+                        Utils.runOnMainThread {
+                            block?(nil)
+                        }
+                    } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
                         block?(errorMessage)
-                    } else {
-                        // success
-                        block?(nil)
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when sign up")
@@ -76,38 +79,29 @@ class UserAPIService {
             return
         }
         
-        let usernameOrEmailKey = isValidEmailAddress(emailAddressString: usernameOrEmail) ? "email" : "username"
+        let headers: HTTPHeaders = [:]
+        let params: Parameters = ["email": usernameOrEmail,
+                                  "password": password]
         
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "userService",
-                                                      "operation": "update",
-                                                      "params": [:],
-                                                      "body": [usernameOrEmailKey: usernameOrEmail,
-                                                               "password": password]]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        Alamofire.request("\(url)/login", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             
             if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
+                    if let code = json["code"] as? Int, code == 200 {
+                        // success
+                        // save cookie
+                        CookieManager.shared.fetchCookiesFromHeaders(headers: response.response?.allHeaderFields, url: response.request?.url)
+                        
+                        // save user & exec block
+                        if let userJSON = json["user"] as? [String: Any] {
+                            let user = User(fromJSON: userJSON)
+                            Utils.runOnMainThread { block?(nil, user) }
+                        }
+                    } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
                         Utils.runOnMainThread { block?(errorMessage, nil) }
-                    } else {
-                        // success
-                        if let dict = json["g0"] as? [String: Any] {
-                            if let dict = dict["data"] as? [String: Any] {
-                                if let user = User(fromJSON: dict) {
-                                    Utils.runOnMainThread { block?(nil, user) }
-                                }
-                            }
-                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when sign in")
@@ -134,8 +128,7 @@ class UserAPIService {
                 returnValue = false
             }
             
-        } catch let error as NSError {
-            //print("invalid regex: \(error.localizedDescription)")
+        } catch _ {
             returnValue = false
         }
         
@@ -143,23 +136,16 @@ class UserAPIService {
     }
 
     func logOut(withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "userService",
-                                                      "operation": "update",
-                                                      "params": ["key":"logout"],
-                                                      "body": []]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        
+        let headers: HTTPHeaders = [:]
+        let params: Parameters = [:]
+        
+        Alamofire.request("\(url)/logout", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             if response.result.isSuccess {
                 Utils.runOnMainThread { block?(nil) }
             } else {
                 let errorMsg = ErrorMessage(msg: response.result.error.debugDescription)
-                //print(errorMsg.msg)
                 Utils.runOnMainThread { block?(errorMsg) }
             }
         }

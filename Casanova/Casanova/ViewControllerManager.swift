@@ -38,7 +38,7 @@ class ViewControllerManager: NSObject {
         AnswerAPIService.shared.fetchAnswer(withId: answerId, withCompletion: { (error, answer) in
             activityIndicatorVC.dismiss(animated: false, completion: {
                 if error == nil {
-                    let answerDetailVC = AnswerDetailViewController(withAnswer: answer!)
+                    let answerDetailVC = AnswerDetailViewController(withTopic: Topic(fromJson: [:])!, withAnswer: answer!)
                     if self.navigationController != nil {
                         self.navigationController.pushViewController(answerDetailVC, animated: true)
                     }

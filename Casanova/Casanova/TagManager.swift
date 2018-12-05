@@ -14,7 +14,7 @@
 //    let url = "https://tft.rocks/api/tagService?returnMeta=true"
 //    func fetchTags(withCompletion block: ((ErrorMessage?, [Tag]?) -> Void)? = nil) {
 //        // Make request
-//        AlamofireManager.shared.request(url, method: .get).responseJSON {
+//        Alamofire.request(url, method: .get).responseJSON {
 //            response in
 //            if let json = response.result.value {
 //                //print("JSON: \(json)") // serialized json response

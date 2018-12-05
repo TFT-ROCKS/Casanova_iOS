@@ -15,7 +15,7 @@ extension Array {
         if self is [Answer] {
             let answersArray = self as! [Answer]
             return answersArray.sorted { (answer0, answer1) -> Bool in
-                return answer0.likes.count > answer1.likes.count
+                return answer0.likesNum > answer1.likesNum
             }
         } else if self is [Comment] {
             let commentsArray = self as! [Comment]
@@ -45,16 +45,6 @@ extension Array {
             }
         }
         return res
-    }
-    
-    /// Check if answers array contains this topic
-    func containsTopic(_ id: Int) -> Bool {
-        for answer in self {
-            if let answer = answer as? Answer {
-                if answer.topic?.id == id { return true }
-            }
-        }
-        return false
     }
     
     /// Remove certain answer from answers array if contains

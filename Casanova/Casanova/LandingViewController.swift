@@ -44,7 +44,7 @@ class LandingViewController: UIViewController {
                     Environment.shared.currentUser = user
                     Environment.shared.prepareForCurrentUser()
                     Utils.runOnMainThread {
-                        let avator = UIImage(named: "TFTicons_avator_\((user?.id)! % 8)")
+                        let avator = UIImage(named: "TFTicons_avator_\((user?.id ?? 0) % 8)")
                         self.imageView.stopRotating()
                         self.imageView.image = avator
                         self.label.text = "\((user?.username)!)\n\n   欢迎回来！"

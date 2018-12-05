@@ -11,7 +11,7 @@ import Foundation
 class Utils {
     
     /// run block on main thread asyc
-    static func runOnMainThread(block: @escaping (Void) -> Void) {
+    static func runOnMainThread(block: @escaping () -> Void) {
         if Thread.isMainThread {
             block()
         } else {
@@ -22,22 +22,22 @@ class Utils {
     }
     
     static func doesCurrentUserLikeThisAnswer(_ answer: Answer) -> Bool {
-        let currentUser = Environment.shared.currentUser
-        for like in answer.likes {
-            if currentUser?.id == like.userId {
-                return true
-            }
-        }
+//        let currentUser = Environment.shared.currentUser
+//        for like in answer.likes {
+//            if currentUser?.id == like.userId {
+//                return true
+//            }
+//        }
         return false
     }
     
     static func likeIdFromAnswer(_ answer: Answer) -> Int? {
-        let currentUser = Environment.shared.currentUser
-        for like in answer.likes {
-            if currentUser?.id == like.userId {
-                return like.id
-            }
-        }
+//        let currentUser = Environment.shared.currentUser
+//        for like in answer.likes {
+//            if currentUser?.id == like.userId {
+//                return like.id
+//            }
+//        }
         return nil
     }
 }

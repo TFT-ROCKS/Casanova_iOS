@@ -15,9 +15,9 @@ class AnswerToWeChatTimeLineEntity: GeneralShareEntity {
     var webpageUrl: String
     
     init(topic: Topic, answer: Answer) {
-        self.title = "托福语料：\(answer.user.username!)的口语回答" + " - " + topic.title
+        self.title = "托福语料：\(answer.username)的口语回答" + " - " + topic.title
         self.desc = topic.title
-        self.image = UIImage(named: "TFTicons_avator_\(answer.user.id % 8)")!
+        self.image = UIImage(named: "TFTicons_avator_\(answer.userID % 8)")!
         self.webpageUrl = "https://tft.rocks/topic/\(topic.id)#\(answer.id)"
         
         super.init()

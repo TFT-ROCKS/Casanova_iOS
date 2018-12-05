@@ -33,7 +33,7 @@ class PostTextView: UIView {
             // comment with audio url
             CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
                 if error == nil {
-                    self.answer.comments.insert(comment!, at: 0)
+//                    self.answer.comments.insert(comment!, at: 0)
                     self.success()
                 }
                 self.whatever()
@@ -42,7 +42,7 @@ class PostTextView: UIView {
             // comment without audio url
             CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
                 if error == nil {
-                    self.answer.comments.insert(comment!, at: 0)
+//                    self.answer.comments.insert(comment!, at: 0)
                     self.success()
                 }
                 self.whatever()

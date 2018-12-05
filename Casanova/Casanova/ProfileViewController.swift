@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setButtons()
-        setTitle(title: "我的主页")
+        setTitle()
         
         Analytics.setScreenName("profile", screenClass: nil)
     }
@@ -62,20 +62,13 @@ class ProfileViewController: UIViewController {
         addTableViewConstraints()
     }
     
-    func setTitle(title: String) {
-        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
-        titleLabel.text = title
-        titleLabel.font = UIFont.pfr(size: 18)
-        titleLabel.textColor = UIColor.nonBodyTextColor
-        titleLabel.sizeToFit()
-        tabBarController?.navigationItem.titleView = titleLabel
+    func setTitle() {
+        tabBarController?.navigationItem.title = "主页"
     }
     
     func setButtons() {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItems = nil
+        tabBarController?.navigationItem.rightBarButtonItems = nil
     }
 }
 

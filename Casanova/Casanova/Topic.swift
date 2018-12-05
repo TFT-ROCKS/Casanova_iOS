@@ -9,17 +9,31 @@
 import Foundation
 
 class Topic {
+    
+    // MARK: - Keys
+    static let ID = "id"
+    static let TITLE = "title"
+    static let LEVEL = "level"
+    static let CREATED_AT = "created_at"
+    static let UPDATED_AT = "updated_at"
+    static let USER_ID = "user_id"
+    static let IS_TRENDING = "is_trending"
+    static let TASK = "task"
+    static let STATUS = "status"
+    static let CHINESE_TITLE = "chinese_title"
+    static let TAGS = "tags"
+    static let ANSWER_COUNT = "answer_count"
+    
     // MARK: - Home Page
+    var id: Int
     var answersCount: Int
     var title: String
     var chineseTitle: String?
-    var id: Int
-    var status: Int
     var level: Int
+    var status: Int
     var tags: String
     var isTrending: Int
     var answerPictureUrl: String?
-    var isDetailed: Bool
     
     init(answersCount: Int,
          title: String,
@@ -40,25 +54,23 @@ class Topic {
         self.tags = tags
         self.answerPictureUrl = answerPictureUrl
         self.isTrending = isTrending
-        self.isDetailed = false
     }
     
     convenience init?(fromJson json: [String: Any]) {
-        guard let answersCount = json["answersCount"] as? Int,
-            let title = json["topicTitle"] as? String,
-            let id = json["topicId"] as? Int,
-            let status = json["status"] as? Int,
-            let level = json["level"] as? Int,
-            let tags = json["tags"] as? String,
-            let isTrending = json["isTrending"] as? Int
+        guard
+            let title = json[Topic.TITLE] as? String,
+            let id = json[Topic.ID] as? Int
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic")
-                //print(errorMessage.msg)
                 return nil
         }
         
-        let chineseTitle = json["topicChineseTitle"] as? String
-        let answerPictureUrl = json["answerPictureUrl"] as? String
+        let answersCount = json[Topic.ANSWER_COUNT] as? Int ?? 0
+        let level = json[Topic.LEVEL] as? Int ?? 0
+        let tags = json[Topic.TAGS] as? String ?? "others"
+        let isTrending = json[Topic.IS_TRENDING] as? Int ?? 0
+        let status = json[Topic.STATUS] as? Int ?? 0
+        let chineseTitle = json[Topic.CHINESE_TITLE] as? String
+        let answerPictureUrl: String? = nil // nil for now
         
         self.init(answersCount: answersCount,
                   title: title,
@@ -77,8 +89,6 @@ class Topic {
             let level = json["level"] as? Int,
             let isTrending = json["isTrending"] as? Int
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from single answer JSON")
-                //print(errorMessage.msg)
                 return nil
         }
         
@@ -105,8 +115,6 @@ class Topic {
             let answers = json["Answers"] as? [Any],
             let tags = json["Tags"] as? [Any]
             else {
-                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic, from liked answers JSON")
-                //print(errorMessage.msg)
                 return nil
         }
         let answersCount = answers.count
@@ -129,33 +137,5 @@ class Topic {
                   tags: tagsStr,
                   answerPictureUrl: answerPictureUrl,
                   isTrending: isTrending)
-    }
-    
-    // MARK: - Detail Page
-    var answers: [Answer]!
-    
-    func fetchDetail(fromJSON json: [String: Any]) -> Bool{
-        guard let answersJSON = json["Answers"] as? [Any] else {
-            let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into topic detail")
-            //print(errorMessage.msg)
-            return false
-        }
-        answers = []
-        isDetailed = true
-        for answerJSON in answersJSON {
-            if let answerJSON = answerJSON as? [String: Any] {
-                if let answer = Answer(fromJson: answerJSON) {
-                    answers.append(answer)
-                }
-            }
-        }
-        
-        if answers.count == 0 {
-            isDetailed = false
-        } else {
-            answers = answers.sort() as! [Answer]
-        }
-        
-        return isDetailed
     }
 }

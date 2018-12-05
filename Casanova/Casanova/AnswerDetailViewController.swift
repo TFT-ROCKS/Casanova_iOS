@@ -34,7 +34,6 @@ class AnswerDetailViewController: UIViewController {
     var audioChanged: Bool = false
     
     // sub views
-    let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let postTextView: PostTextView = PostTextView(frame: .zero)
     let toolBar: AnswerDetailToolBar = AnswerDetailToolBar(frame: .zero)
@@ -77,14 +76,10 @@ class AnswerDetailViewController: UIViewController {
     init(withTopic topic: Topic, withAnswer answer: Answer) {
         self.topic = topic
         self.answer = answer
-        self.comments = answer.comments
+        self.comments = []
         self.postTextView.answer = answer
         
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    convenience init(withAnswer answer: Answer) {
-        self.init(withTopic: answer.topic!, withAnswer: answer)
     }
     
     override func viewDidLoad() {
@@ -94,11 +89,13 @@ class AnswerDetailViewController: UIViewController {
         setTitle(title: "答案详情")
         setButtons()
         preDefinePlatforms()
+        fetchComments()
         
         // Other configs
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
         
@@ -138,12 +135,10 @@ class AnswerDetailViewController: UIViewController {
         layoutTableView()
         layoutToolBar()
         layoutAudioControlBar()
-        layoutTopicView()
         layoutPostTextView()
     }
     
     func addConstraints() {
-        addTopicViewConstraints()
         addTableViewConstraints()
         addToolBarConstraints()
         addAudioControlBarConstraints()
@@ -164,6 +159,16 @@ class AnswerDetailViewController: UIViewController {
     func setButtons() {
         let shareButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: .plain, target: self, action: #selector(shareButtonClicked(_:)))
         self.navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    // Fetch comments
+    func fetchComments() {
+        CommentAPIService.shared.fetchComments(num: 1000, offset: 0, answerID: answer.id) { (error, comments) in
+            if error == nil {
+                self.comments = comments!
+                self.tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -191,11 +196,6 @@ extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
     // MARK: - AnswerDetailToolBarDelegate
     
     func questionButtonClickedOnToolBar() {
-        if toolBar.isQuestion {
-            showTopicView()
-        } else {
-            hideTopicView()
-        }
     }
     
     func likeButtonClickedOnToolBar(_ sender: UIButton) {
@@ -293,46 +293,6 @@ extension AnswerDetailViewController: AudioControlViewDelegate {
     }
 }
 
-// MARK: - TopicView
-extension AnswerDetailViewController {
-    func layoutTopicView() {
-        view.addSubview(topicView)
-        topicView.translatesAutoresizingMaskIntoConstraints = false
-        view.bringSubview(toFront: topicView)
-        topicView.topic = topic
-        configTopicView()
-    }
-    
-    func configTopicView() {
-        // Add shadow layer to topic header view
-        topicView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        topicView.layer.shadowColor = UIColor.shadowColor.cgColor
-        topicView.layer.shadowRadius = 3.0
-        topicView.layer.shadowOpacity = 1.0
-        
-        // Hide topic view
-        topicView.isHidden = true
-    }
-    
-    func addTopicViewConstraints() {
-        topicView.topAnchor.constraint(equalTo: view.topAnchor, constant: 1).isActive = true
-        topicView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        topicView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    }
-    
-    func hideTopicView() {
-        if topicView.isHidden == true { return }
-        toolBar.isQuestion = false
-        topicView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-    }
-    
-    func showTopicView() {
-        if topicView.isHidden == false { return }
-        toolBar.isQuestion = true
-        topicView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-    }
-}
-
 // MARK: - PostTextView
 extension AnswerDetailViewController: PostTextViewDelegate {
     func layoutPostTextView() {
@@ -412,7 +372,7 @@ extension AnswerDetailViewController: PostTextViewDelegate {
     }
     
     func reloadTableView() {
-        comments = answer.comments
+//        comments = answer.comments
         tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
     }
     
@@ -519,13 +479,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == 0 { // Answer section
             if indexPath.row == 0 {
                 var cell: AnswerDetailTableViewCell
-                if answer.audioURL == nil {
+                if answer.audio == nil {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
                 }
                 cell.mode = .full
-                cell.canAudioToggle = answer.usAudioURL != nil
+                cell.canAudioToggle = answer.usAudio != nil
                 cell.answer = answer
                 cell.audioToggle.addTarget(self, action: #selector(self.audioToggleValueChanged(_:)), for: .valueChanged)
                 let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -566,7 +526,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         } else { // Comments section
             let comment = comments[indexPath.row]
             var cell: CommentTableViewCell
-            if comment.user.id == Environment.shared.currentUser?.id {
+            if comment.userID == Environment.shared.currentUser?.id {
                 // current user's comment
                 cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.AnswerDetailVC.commentTableViewCellForCurrentUser, for: indexPath) as! CommentTableViewCell
                 cell.delegate = self
@@ -638,31 +598,31 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         let answerId = answer.id
         let topicId = topic.id
         let userId = Environment.shared.currentUser?.id
-        if Utils.doesCurrentUserLikeThisAnswer(answer) {
-            // un-like it
-            let likeId = Utils.likeIdFromAnswer(answer)
-            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
-                if error == nil {
-                    self.answer.likes.removeLike(likeId!)
-                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
-                    self.tableView.reloadData()
-                    self.toolBar.isLike = false
-                }
-                sender.isEnabled = true
-            })
-        } else {
-            // like it
-            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
-                if error == nil {
-                    self.answer.likes.append(like!)
-                    Environment.shared.needsUpdateUserInfoFromServer = true
-                    self.tableView.reloadData()
-                    self.toolBar.isLike = true
-                    
-                }
-                sender.isEnabled = true
-            })
-        }
+//        if Utils.doesCurrentUserLikeThisAnswer(answer) {
+//            // un-like it
+//            let likeId = Utils.likeIdFromAnswer(answer)
+//            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
+//                if error == nil {
+//                    self.answer.likes.removeLike(likeId!)
+//                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
+//                    self.tableView.reloadData()
+//                    self.toolBar.isLike = false
+//                }
+//                sender.isEnabled = true
+//            })
+//        } else {
+//            // like it
+//            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
+//                if error == nil {
+//                    self.answer.likes.append(like!)
+//                    Environment.shared.needsUpdateUserInfoFromServer = true
+//                    self.tableView.reloadData()
+//                    self.toolBar.isLike = true
+//
+//                }
+//                sender.isEnabled = true
+//            })
+//        }
     }
     
     func audioButtonTapped(_ sender: UIButton) {
@@ -696,13 +656,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             if indexPath?.row == 0 {
                 audioChanged = false
                 // answer audio
-                url = isUSAudioEnabled ? URL(string: answer.usAudioURL ?? "") : URL(string: answer.audioURL ?? "")
+                url = isUSAudioEnabled ? URL(string: answer.usAudio ?? "") : URL(string: answer.audio ?? "")
             } else if indexPath?.row == 1 {
                 // note audio
                 url = URL(string: answer.noteURL ?? "")
             }
         } else if indexPath?.section == 1 {
-            url = URL(string: comments[(indexPath?.row)!].audioUrl ?? "")
+            url = URL(string: comments[(indexPath?.row)!].audioURL ?? "")
             isComment = true
         }
         if let url = url {
@@ -820,7 +780,6 @@ extension AnswerDetailViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
             // Hide
-            hideTopicView()
             self.view.endEditing(true)
             postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
         } else {
@@ -847,17 +806,17 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
-            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
-                Utils.runOnMainThread {
-                    self.activityIndicatorView.stopAnimating()
-                }
-                if error == nil {
-                    // delete comment successfully
-                    // remove comment from this answer locally
-                    self.comments.removeComment(commentId)
-                    self.answer.comments.removeComment(commentId)
-                }
-            })
+//            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
+//                Utils.runOnMainThread {
+//                    self.activityIndicatorView.stopAnimating()
+//                }
+//                if error == nil {
+//                    // delete comment successfully
+//                    // remove comment from this answer locally
+//                    self.comments.removeComment(commentId)
+//                    self.answer.comments.removeComment(commentId)
+//                }
+//            })
             }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
         present(alertController, animated: true, completion: nil)

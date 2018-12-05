@@ -44,19 +44,15 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     
     // lazy vars
     lazy var noteTitle: String = {
-        let note = self.answer.noteTitle == nil ? "" : self.answer.noteTitle!
-        return note
+        return self.answer.note
     }()
     
     lazy var engTitle: String = {
-        let res = self.answer.title
-        return res
+        return self.answer.title
     }()
     
     lazy var chiTitle: String = {
-        if self.answer.chineseTitle == nil { return Placeholder.chineseAnswerTitlePlaceholderStr }
-        let res = self.answer.chineseTitle!
-        return res
+        return self.answer.chineseTitle
     }()
     
     override func viewDidLoad() {
@@ -328,7 +324,7 @@ extension AudioRecordViewController: AudioCommentPostViewDelegate {
     
     func reloadTableView() {
         dismiss(animated: true, completion: { _ in
-            self.delegate.reloadTableView(comments: self.answer.comments)
+//            self.delegate.reloadTableView(comments: self.answer.comments)
         })
     }
     

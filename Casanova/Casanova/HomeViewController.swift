@@ -50,7 +50,6 @@ class HomeViewController: UIViewController {
     // Subviews
     var filterView: FilterView?
     var searchBox: UITextField!
-    var titleLabel: UILabel!
     
     var isSearchMode: Bool = false
     var needsShowSearchBox: Bool {
@@ -108,7 +107,6 @@ class HomeViewController: UIViewController {
         filterListView.delegate = self
         
         // nav items
-        setTitle()
         setSearchBox()
         
         navigationController?.navigationBar.topItem?.title = " "
@@ -122,9 +120,6 @@ class HomeViewController: UIViewController {
         
         // Nav bar config
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.tintColor = UIColor.navTintColor
-        navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
-        navigationController?.navigationBar.barTintColor = UIColor.white
         
         Analytics.setScreenName("home", screenClass: nil)
     }
@@ -146,21 +141,41 @@ class HomeViewController: UIViewController {
     }
     
     func fetchTopics(from: Int) {
+        if levels.count > 0 || query.count > 0 || tags.count > 0 {
+            searchTopics()
+        } else {
+            isFetching = true
+            // Start activity indicator animation
+            activityIndicatorView.startAnimating()
+            // Fetch topics
+            TopicAPIService.shared.fetchTopics(num: 20, offset: from, id: nil, withCompletion:
+                { (error, topics) in
+                    self.isFetching = false
+                    self.activityIndicatorView.stopAnimating()
+                    if error == nil {
+                        // shuffle topics
+                        var topicsVar = topics!
+                        topicsVar.shuffle()
+                        // success
+                        if self.updateFlag {
+                            self.topics = topicsVar
+                            self.updateFlag = false
+                        } else {
+                            self.topics.append(contentsOf: topicsVar)
+                        }
+                    } else {
+                        // error found
+                    }
+            })
+        }
+    }
+    
+    func searchTopics() {
         isFetching = true
         // Start activity indicator animation
         activityIndicatorView.startAnimating()
         // Fetch topics
-        
-        // [BEGIN GOOGLE ANALYTICS]
-        if levels.count > 0 || tags.count > 0 {
-            Analytics.setScreenName("filter/\(levels.joined(separator: "_") + tags.joined(separator: "_"))", screenClass: nil)
-        }
-        if query.characters.count > 0 {
-            Analytics.setScreenName("search/\(query.components(separatedBy: CharacterSet.whitespaces).joined(separator: "_"))", screenClass: nil)
-        }
-        // [END GOOGLE ANALYTICS]
-        
-        TopicAPIService.shared.fetchTopics(levels: levels, query: query, tags: tags, start: from, withCompletion: { (error, topics) in
+        TopicAPIService.shared.fetchTopics(levels: levels, query: query, tags: tags, withCompletion: { (error, topics) in
             self.isFetching = false
             self.activityIndicatorView.stopAnimating()
             if error == nil {
@@ -250,17 +265,9 @@ extension HomeViewController: TagListViewDelegate {
 
 // MARK: - Navigation Bar Items
 extension HomeViewController {
-    func setTitle() {
-        let attributedString = AttrString.logoAttrString("TFTROCKS")
-        titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
-        titleLabel.attributedText = attributedString
-        titleLabel.sizeToFit()
-    }
-    
     func showTitle() {
-        tabBarController?.navigationItem.titleView = titleLabel
+        tabBarController?.navigationItem.titleView = nil
+        tabBarController?.navigationItem.title = "语料库"
     }
     
     func showSearchBox() {
@@ -273,8 +280,8 @@ extension HomeViewController {
         if needsShowSearchBox {
             searchButton.title = "取消"
         }
-        tabBarController?.navigationItem.leftBarButtonItem = filterButton
-        tabBarController?.navigationItem.rightBarButtonItem = searchButton
+        
+        tabBarController?.navigationItem.rightBarButtonItems = [filterButton, searchButton]
     }
 }
 
@@ -326,7 +333,7 @@ extension HomeViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
-        query = (textField.text?.replacingOccurrences(of: "\\s+", with: "_", options: .regularExpression))!
+        query = (textField.text?.replacingOccurrences(of: "\\s+", with: "+", options: .regularExpression))!
         updateFlag = true
         fetchTopics(from: 0)
         return true
@@ -427,31 +434,6 @@ extension HomeViewController: FilterViewDelegate {
                 }
             }
         })
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-extension HomeViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
-        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            // Hide
-            tabBarController?.tabBar.fadeOut(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
-            navigationController?.setNavigationBarHidden(true, animated: true)
-        } else {
-            
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
-        if velocity.y < 0 {
-            // Un-Hide
-            tabBarController?.tabBar.fadeIn(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
-            navigationController?.setNavigationBarHidden(false, animated: true)
-        } else {
-            
-        }
     }
 }
 

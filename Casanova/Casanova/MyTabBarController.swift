@@ -13,12 +13,15 @@ class MyTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.tintColor = UIColor.brandColor
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         let vc1 = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        let vc2 = storyboard?.instantiateViewController(withIdentifier: "SavedViewController") as! SavedViewController
+//        let vc2 = storyboard?.instantiateViewController(withIdentifier: "SavedViewController") as! SavedViewController
 //        let vc3 = storyboard?.instantiateViewController(withIdentifier: "ActivitiesViewController") as! ActivitiesViewController
         let vc4 = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
-        self.viewControllers = [vc1, vc2, vc4]
+        self.viewControllers = [vc1, vc4]
     }
 
     override func didReceiveMemoryWarning() {
