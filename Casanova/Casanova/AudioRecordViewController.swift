@@ -219,7 +219,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         let alertController = AlertManager.alertController(title: "TFT无法获取麦克风权限", msg: "请在隐私中打开麦克风允许", style: .alert, actionT1: "打开隐私设置", style1: .default, handler1: { value in
             let path = UIApplicationOpenSettingsURLString
             if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
-                UIApplication.shared.openURL(settingsURL)
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
             }
         }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         

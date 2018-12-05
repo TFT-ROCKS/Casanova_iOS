@@ -114,10 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     ViewControllerManager.shared.performedActions = []
                     ViewControllerManager.shared.performActions()
                 } else {
-                    UIApplication.shared.openURL(url)
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             } else {
-                UIApplication.shared.openURL(url)
+               UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
         return true
