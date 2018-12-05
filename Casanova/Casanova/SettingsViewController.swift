@@ -105,8 +105,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func configTableView() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.bgdColor
-        // Hack for table view top space in between with topic view
-        self.automaticallyAdjustsScrollViewInsets = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
