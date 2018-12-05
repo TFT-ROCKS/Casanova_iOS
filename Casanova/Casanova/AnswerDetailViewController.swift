@@ -95,7 +95,7 @@ class AnswerDetailViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
         
