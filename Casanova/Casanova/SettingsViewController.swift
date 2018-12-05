@@ -35,6 +35,7 @@ class SettingsViewController: UIViewController {
         // right nav bar button
         let saveButton = UIBarButtonItem(title: "保存", style: .done, target: self, action: #selector(self.saveSettings))
         navigationItem.rightBarButtonItem = saveButton
+        navigationItem.largeTitleDisplayMode = .never
         
         // title
         setTitle(title: "设置")

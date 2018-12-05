@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0PP-hW-uyj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0PP-hW-uyj">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,22 +15,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--收藏-->
-        <scene sceneID="C77-wy-rzi">
-            <objects>
-                <viewController storyboardIdentifier="SavedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Znc-WU-gAm" customClass="SavedViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9sl-zQ-sDh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="rgx-w4-pvC"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" tag="2" title="收藏" image="like_bar" selectedImage="like_bar_h" id="C2Q-Xd-Xta"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fMQ-pw-Pbt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-839" y="465"/>
-        </scene>
         <!--Landing View Controller-->
         <scene sceneID="IJP-Qq-qRh">
             <objects>
@@ -48,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYo-Rf-ETm">
-                                <rect key="frame" x="30" y="292" width="354" height="21.666666666666686"/>
+                                <rect key="frame" x="30" y="292" width="354" height="21.333333333333314"/>
                                 <fontDescription key="fontDescription" name="Merriweather-Regular" family="Merriweather" pointSize="17"/>
                                 <color key="textColor" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -140,14 +122,14 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neM-L4-mkx">
-                                <rect key="frame" x="40" y="594.66666666666663" width="146.66666666666666" height="2"/>
+                                <rect key="frame" x="40" y="595" width="146.66666666666666" height="2"/>
                                 <color key="backgroundColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="JBz-jP-hBK"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1t-jT-aou">
-                                <rect key="frame" x="227.66666666666663" y="594.66666666666663" width="146.33333333333337" height="2"/>
+                                <rect key="frame" x="227.66666666666663" y="595" width="146.33333333333337" height="2"/>
                                 <color key="backgroundColor" red="0.85098039215686272" green="0.88235294117647056" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Zny-1D-3UE"/>
@@ -178,7 +160,7 @@
                                 </constraints>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nop-uM-tmd">
-                                <rect key="frame" x="133" y="629" width="36" height="30"/>
+                                <rect key="frame" x="133" y="629" width="36" height="29.333333333333371"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29.399999999999999" id="c1L-zI-ftf"/>
                                     <constraint firstAttribute="width" constant="36" id="m8E-5s-QyP"/>
@@ -186,7 +168,7 @@
                                 <state key="normal" backgroundImage="wechat"/>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4n-ZM-zRp">
-                                <rect key="frame" x="245" y="629" width="36" height="30"/>
+                                <rect key="frame" x="245" y="629" width="36" height="29.333333333333371"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29.399999999999999" id="Qez-uI-Ptl"/>
                                     <constraint firstAttribute="width" constant="36" id="bS9-ba-dfc"/>
@@ -200,7 +182,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ua-wY-6OZ">
-                                <rect key="frame" x="143" y="415.33333333333331" width="30" height="28"/>
+                                <rect key="frame" x="143" y="415" width="30" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="跳过">
                                     <color key="titleColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -319,14 +301,14 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWb-mI-Q65">
-                                <rect key="frame" x="40" y="644.66666666666663" width="146.66666666666666" height="2"/>
+                                <rect key="frame" x="40" y="645" width="146.66666666666666" height="2"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.88235294119999996" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="gMc-Zg-bNg"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Zj-ep-ZKn">
-                                <rect key="frame" x="227.66666666666663" y="644.66666666666663" width="146.33333333333337" height="2"/>
+                                <rect key="frame" x="227.66666666666663" y="645" width="146.33333333333337" height="2"/>
                                 <color key="backgroundColor" red="0.85098039219999999" green="0.88235294119999996" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Dpk-dG-bbT"/>
@@ -363,7 +345,7 @@
                                 </constraints>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tj8-V5-u8M">
-                                <rect key="frame" x="133" y="679" width="36" height="30"/>
+                                <rect key="frame" x="133" y="679" width="36" height="29.333333333333371"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="QWF-Kh-mRf"/>
                                     <constraint firstAttribute="height" constant="29.399999999999999" id="mgq-6d-pUB"/>
@@ -371,7 +353,7 @@
                                 <state key="normal" backgroundImage="wechat"/>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYi-Nq-HwO">
-                                <rect key="frame" x="245" y="679" width="36" height="30"/>
+                                <rect key="frame" x="245" y="679" width="36" height="29.333333333333371"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29.399999999999999" id="9K5-u4-bf5"/>
                                     <constraint firstAttribute="width" constant="36" id="QhB-ZG-ks8"/>
@@ -419,7 +401,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-h" translatesAutoresizingMaskIntoConstraints="NO" id="v1G-n6-XQE">
-                                <rect key="frame" x="54" y="243" width="18" height="14"/>
+                                <rect key="frame" x="54" y="243.66666666666666" width="18" height="13.999999999999972"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="17U-3a-U68"/>
                                     <constraint firstAttribute="width" constant="18" id="68V-7x-72v"/>
@@ -597,7 +579,7 @@
             </objects>
             <point key="canvasLocation" x="-3532" y="-585"/>
         </scene>
-        <!--口语-->
+        <!--语料库-->
         <scene sceneID="gqL-h2-vpE">
             <objects>
                 <viewController storyboardIdentifier="HomeViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7cg-gb-rgD" customClass="HomeViewController" customModule="Casanova" customModuleProvider="target" sceneMemberID="viewController">
@@ -605,7 +587,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a5j-fi-msz" customClass="TagListView" customModule="TagListView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5j-fi-msz" customClass="TagListView" customModule="TagListView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -648,7 +630,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
                                 <rect key="frame" x="0.0" y="86" width="414" height="601"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -665,7 +647,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h6e-Rn-bPK"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="口语" image="speaking_bar" selectedImage="speaking_bar_h" id="SWt-e4-YbV"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="语料库" image="icon-bar-database" selectedImage="icon-bar-database-h" id="SWt-e4-YbV"/>
                     <connections>
                         <outlet property="filterListView" destination="a5j-fi-msz" id="O8W-Qv-maf"/>
                         <outlet property="homeTableView" destination="A0f-Tg-Vfd" id="JGR-jq-dG4"/>
@@ -696,7 +678,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="录音" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-nn-LCM">
-                                <rect key="frame" x="189.66666666666666" y="29.666666666666671" width="34.666666666666657" height="21"/>
+                                <rect key="frame" x="189.66666666666666" y="29.666666666666671" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -770,7 +752,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="7cg-gb-rgD" kind="relationship" relationship="viewControllers" id="wjm-8Z-7eZ"/>
-                        <segue destination="Znc-WU-gAm" kind="relationship" relationship="viewControllers" id="9NB-sl-MBt"/>
                         <segue destination="Ubl-d1-WkL" kind="relationship" relationship="viewControllers" id="lcb-cs-1Py"/>
                     </connections>
                 </tabBarController>
@@ -931,7 +912,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="VpR-mj-5G4"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="4" title="主页" image="profile" selectedImage="profile_bar_h" id="vJc-Ml-WDJ"/>
+                    <tabBarItem key="tabBarItem" tag="4" title="主页" image="icon-bar-profile" selectedImage="icon-bar-profile-h" id="vJc-Ml-WDJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i7V-uv-TIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -940,17 +921,15 @@
     </scenes>
     <resources>
         <image name="activity-tab" width="22" height="24"/>
-        <image name="cross" width="100" height="100"/>
+        <image name="cross" width="40" height="40"/>
         <image name="email-h" width="20" height="16"/>
-        <image name="like_bar" width="24" height="21"/>
-        <image name="like_bar_h" width="24" height="21"/>
+        <image name="icon-bar-database" width="24" height="24"/>
+        <image name="icon-bar-database-h" width="24" height="24"/>
+        <image name="icon-bar-profile" width="24" height="24"/>
+        <image name="icon-bar-profile-h" width="24" height="24"/>
         <image name="lock-h" width="18" height="20"/>
         <image name="nav_back" width="11" height="20"/>
-        <image name="profile" width="24" height="24"/>
-        <image name="profile-h" width="24" height="24"/>
-        <image name="profile_bar_h" width="24" height="24"/>
-        <image name="speaking_bar" width="19" height="24"/>
-        <image name="speaking_bar_h" width="20" height="24"/>
+        <image name="profile-h" width="24.333333969116211" height="24.333333969116211"/>
         <image name="tft" width="113" height="117"/>
         <image name="wechat" width="36" height="30"/>
         <image name="weibo" width="36" height="30"/>

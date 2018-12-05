@@ -50,7 +50,6 @@ class HomeViewController: UIViewController {
     // Subviews
     var filterView: FilterView?
     var searchBox: UITextField!
-    var titleLabel: UILabel!
     
     var isSearchMode: Bool = false
     var needsShowSearchBox: Bool {
@@ -108,7 +107,6 @@ class HomeViewController: UIViewController {
         filterListView.delegate = self
         
         // nav items
-        setTitle()
         setSearchBox()
         
         navigationController?.navigationBar.topItem?.title = " "
@@ -122,9 +120,6 @@ class HomeViewController: UIViewController {
         
         // Nav bar config
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.tintColor = UIColor.navTintColor
-        navigationController?.navigationBar.setBottomBorderColor(color: UIColor.bgdColor, height: 1)
-        navigationController?.navigationBar.barTintColor = UIColor.white
         
         Analytics.setScreenName("home", screenClass: nil)
     }
@@ -270,17 +265,9 @@ extension HomeViewController: TagListViewDelegate {
 
 // MARK: - Navigation Bar Items
 extension HomeViewController {
-    func setTitle() {
-        let attributedString = AttrString.logoAttrString("TFTROCKS")
-        titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
-        titleLabel.attributedText = attributedString
-        titleLabel.sizeToFit()
-    }
-    
     func showTitle() {
-        tabBarController?.navigationItem.titleView = titleLabel
+        tabBarController?.navigationItem.titleView = nil
+        tabBarController?.navigationItem.title = "语料库"
     }
     
     func showSearchBox() {
@@ -293,8 +280,8 @@ extension HomeViewController {
         if needsShowSearchBox {
             searchButton.title = "取消"
         }
-        tabBarController?.navigationItem.leftBarButtonItem = filterButton
-        tabBarController?.navigationItem.rightBarButtonItem = searchButton
+        
+        tabBarController?.navigationItem.rightBarButtonItems = [filterButton, searchButton]
     }
 }
 
@@ -447,31 +434,6 @@ extension HomeViewController: FilterViewDelegate {
                 }
             }
         })
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-extension HomeViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
-        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            // Hide
-            tabBarController?.tabBar.fadeOut(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
-            navigationController?.setNavigationBarHidden(true, animated: true)
-        } else {
-            
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if scrollView.tag != Tags.HomeVC.homeTableViewTag { return }
-        if velocity.y < 0 {
-            // Un-Hide
-            tabBarController?.tabBar.fadeIn(withDuration: TimeInterval(UINavigationControllerHideShowBarDuration))
-            navigationController?.setNavigationBarHidden(false, animated: true)
-        } else {
-            
-        }
     }
 }
 
