@@ -29,6 +29,7 @@ class TopicDetailViewController: UIViewController {
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
+    let answerButton: UIButton = UIButton(type: .custom)
     
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let recordHintLabel: UILabel = UILabel(frame: .zero)
@@ -121,12 +122,14 @@ class TopicDetailViewController: UIViewController {
         layoutTableView()
         layoutTopicView()
         layoutRecordViews()
+        layoutAnswerButton()
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
         addRecordConstraints()
+        addAnswerButtonConstraints()
     }
     
     // MARK: - ViewModel
@@ -193,6 +196,7 @@ class TopicDetailViewController: UIViewController {
         tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         initRecordViews()
         setTitle(title: "问题")
+        answerButton.fadeOut()
     }
     
     // MARK: - Actions
@@ -225,19 +229,42 @@ class TopicDetailViewController: UIViewController {
 // MARK: - Tool Bar
 extension TopicDetailViewController: TopicHeaderTableViewCellDelegate {
     func answerTopicButtonTapped(_ sender: UIButton) {
-        if audioPlayer != nil {
-            audioPlayer.stop()
-            audioPlayer = nil
-        }
-        if timer != nil {
-            timer.invalidate()
-            timer = nil
-        }
-        showTopicView()
-        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-        tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-        initRecordViews()
-        setTitle(title: "问题")
+        viewModelDidWannaAnswer()
+    }
+}
+
+// MARK: - Answer Button
+extension TopicDetailViewController {
+    func layoutAnswerButton() {
+        view.addSubview(answerButton)
+        answerButton.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubview(toFront: answerButton)
+        configAnswerButton()
+    }
+    
+    func configAnswerButton() {
+        // set image
+        
+        answerButton.layer.cornerRadius = 28.0
+        answerButton.layer.backgroundColor = UIColor.brandColor.cgColor
+        answerButton.layer.shadowColor = UIColor.shadowColor.cgColor
+        answerButton.layer.shadowOpacity = 1.0
+        answerButton.layer.shadowOffset = CGSize(width: 0, height: 6)
+        answerButton.layer.shadowRadius = 6.0
+        answerButton.layer.masksToBounds = false
+        
+        answerButton.addTarget(self, action: #selector(didTapAnswerButton(_:)), for: .touchUpInside)
+    }
+    
+    func addAnswerButtonConstraints() {
+        answerButton.widthAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -32.0).isActive = true
+        answerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -82.0).isActive = true
+    }
+    
+    func didTapAnswerButton(_ sender: UIButton) {
+        viewModelDidWannaAnswer()
     }
 }
 
@@ -661,6 +688,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        self.answerButton.fadeIn()
                     }
                 }
             }
@@ -757,6 +785,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        self.answerButton.fadeIn()
                     }
                 })
             }
