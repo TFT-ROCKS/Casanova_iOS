@@ -243,7 +243,7 @@ extension TopicDetailViewController {
     }
     
     func configAnswerButton() {
-        // set image
+        answerButton.setImage(UIImage.oriImage(named: "icon-voice"), for: .normal)
         
         answerButton.layer.cornerRadius = 28.0
         answerButton.layer.backgroundColor = UIColor.brandColor.cgColor

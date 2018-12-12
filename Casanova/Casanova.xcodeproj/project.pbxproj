@@ -20,6 +20,7 @@
 		802E8E441F34662200A9345E /* TopicHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 802E8E431F34662200A9345E /* TopicHeaderView.xib */; };
 		803307881F726E9C00BAE470 /* UserAnswersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803307871F726E9C00BAE470 /* UserAnswersViewController.swift */; };
 		8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8038E3C11F8ADE9A000F041F /* CryptoManager.swift */; };
+		80424C1B21C1BED600A53FE3 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80424C1A21C1BED600A53FE3 /* UIImage+Additions.swift */; };
 		804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91CC1F37C7E800CA6FBE /* FilterView.swift */; };
 		804D91CF1F37C82E00CA6FBE /* FilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804D91CE1F37C82E00CA6FBE /* FilterView.xib */; };
 		804D91D31F37D35100CA6FBE /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */; };
@@ -146,6 +147,7 @@
 		802E8E431F34662200A9345E /* TopicHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicHeaderView.xib; sourceTree = "<group>"; };
 		803307871F726E9C00BAE470 /* UserAnswersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAnswersViewController.swift; sourceTree = "<group>"; };
 		8038E3C11F8ADE9A000F041F /* CryptoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoManager.swift; sourceTree = "<group>"; };
+		80424C1A21C1BED600A53FE3 /* UIImage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Additions.swift"; sourceTree = "<group>"; };
 		804D91CC1F37C7E800CA6FBE /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		804D91CE1F37C82E00CA6FBE /* FilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterView.xib; sourceTree = "<group>"; };
 		804D91D11F37D35100CA6FBE /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				804D91D71F37EA0600CA6FBE /* Constants.swift */,
 				806179831F3E6A2300B696FB /* NavigationBar+Helper.swift */,
 				80F730B51F3C398600907F61 /* Utils.swift */,
+				80424C1A21C1BED600A53FE3 /* UIImage+Additions.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				80B313A41F1B35B4001CFDC7 /* Tag.swift in Sources */,
 				80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */,
 				80B756B31F2FA17000285FB4 /* TopicDetailViewController.swift in Sources */,
+				80424C1B21C1BED600A53FE3 /* UIImage+Additions.swift in Sources */,
 				80A11EEC1FC42757003EB4E0 /* ViewControllerManager.swift in Sources */,
 				800FEFEA1F25691400DF5531 /* LoadMoreTableViewCell.swift in Sources */,
 				800122C41F1EDBC400F185AE /* HomeViewController.swift in Sources */,

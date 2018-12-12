@@ -182,7 +182,7 @@ extension AnswerDetailViewController {
     }
     
     func configCommentButton() {
-        // set image
+        commentButton.setImage(UIImage.oriImage(named: "icon-comment"), for: .normal)
         
         commentButton.layer.cornerRadius = 28.0
         commentButton.layer.backgroundColor = UIColor.brandColor.cgColor
