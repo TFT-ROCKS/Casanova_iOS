@@ -19,6 +19,7 @@ class TopicBriefTableViewCell: UITableViewCell {
     @IBOutlet weak var answerImageView: UIImageView!
     @IBOutlet weak var chineseTitleLabel: UILabel!
     @IBOutlet weak var actualContentView: UIView!
+    @IBOutlet weak var shadowView: UIView!
     
     let difficulties: [String] = ["Beginner", "Easy", "Medium", "Hard", "Ridiculous"]
     
@@ -66,13 +67,16 @@ class TopicBriefTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         self.backgroundColor = UIColor.clear
+        self.selectionStyle = .none
 
+        shadowView.layer.cornerRadius = 8
+        shadowView.layer.shadowColor = UIColor.shadowColor.cgColor
+        shadowView.layer.shadowOpacity = 1
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        
         actualContentView.backgroundColor = UIColor.white
-        actualContentView.layer.cornerRadius = 2
-        actualContentView.layer.masksToBounds = false
-        actualContentView.layer.shadowColor = UIColor.shadowColor.cgColor
-        actualContentView.layer.shadowOpacity = 1
-        actualContentView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        actualContentView.layer.cornerRadius = 8
+        actualContentView.layer.masksToBounds = true
         
         answerImageView.contentMode = .scaleAspectFill
         answerImageView.clipsToBounds = true
