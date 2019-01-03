@@ -13,7 +13,7 @@ protocol AudioRecordViewControllerDelegate: class {
     func reloadTableView(comments: [Comment])
 }
 
-class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAudioRecorderDelegate {
+class AudioRecordViewController: UIViewController {
     
     // UI
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -24,6 +24,7 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
     @IBOutlet weak var audioRecordView: AudioRecordView!
     let postTextView: AudioCommentPostView = AudioCommentPostView(frame: .zero)
     var toggle: JTMaterialSwitch!
+    var togglePlaced = false // Used for placing toggle after didLayoutSubviews
     
     // constraints
     var bottomConstraint: NSLayoutConstraint!
@@ -75,37 +76,20 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         layoutPostTextView()
         addPostTextViewConstraints()
         postTextView.answer = answer
+        
+        // Toggle
+        createToggle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Customized toggle view
-        toggle = JTMaterialSwitch(size: JTMaterialSwitchSizeSmall, state: JTMaterialSwitchStateOff)!
-        toggle.thumbOnTintColor = UIColor.white
-        toggle.thumbOffTintColor = UIColor.white
-        toggle.trackOnTintColor = UIColor.brandColor
-        toggle.trackOffTintColor = UIColor.tftCoolGrey
-        toggle.rippleFillColor = UIColor.brandColor
-        toggle.font = UIFont.pfm(size: 8)
-        toggle.onText = "中"
-        toggle.offText = "中"
-        toggle.onTextColor = UIColor.brandColor
-        toggle.offTextColor = UIColor.tftCoolGrey
-        // Calculate center
-        let centerX = view.bounds.width - 30.0
-        let centerY = mainTitleLabel.center.y
-        toggle.center = CGPoint(x: centerX, y: centerY)
-        toggle.addTarget(self, action: #selector(toggleStateChanged), for: .valueChanged)
-        view.addSubview(toggle)
         
-        // Add Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        // Remove Notifications
         NotificationCenter.default.removeObserver(self)
         audioRecordView.disableTimer()
     }
@@ -116,9 +100,29 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         prepareRecord()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        placeToggle()
+    }
+    
+    // MARK: - Utils
+    func showEngTitle() {
+        textView.attributedText = AttrString.answerAttrString(engTitle)
+    }
+    
+    func showChiTitle() {
+        textView.attributedText = AttrString.answerAttrStringChinese(chiTitle)
+    }
+    
     func prepareRecord() {
         audioRecordView.setup(with: 60)
     }
+}
+
+// MARK: - Audio Record
+
+extension AudioRecordViewController: AudioRecordViewDelegate {
     
     // MARK: - AudioRecordViewDelegate
     
@@ -148,24 +152,6 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         }
     }
     
-    func toggleStateChanged() {
-        if toggle.isOn {
-            showChiTitle()
-        } else {
-            showEngTitle()
-        }
-    }
-    
-    // MARK: - Utils
-    func showEngTitle() {
-        textView.attributedText = AttrString.answerAttrString(engTitle)
-    }
-    
-    func showChiTitle() {
-        textView.attributedText = AttrString.answerAttrStringChinese(chiTitle)
-    }
-    
-    // MARK: - Record Utils
     func uploadAudio() {
         let audioFile = self.getDocumentsDirectory().appendingPathComponent("\(answer.id)-speaking-answer.wav")
         OSSAPIService.shared.uploadAudioFile(url: audioFile, withProgressBlock: { (bytesSent, totalByteSent, totalBytesExpectedToSend) in
@@ -260,15 +246,53 @@ class AudioRecordViewController: UIViewController, AudioRecordViewDelegate, AVAu
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-    
-    // MARK: - AVAudioRecorderDelegate
-    
+}
+
+// MARK: - AVAudioRecorderDelegate
+
+extension AudioRecordViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if !flag {
             finishRecord(success: false)
         }
     }
+}
+
+// MARK: - Custom toggle
+
+extension AudioRecordViewController {
+    func createToggle() {
+        toggle = JTMaterialSwitch(size: JTMaterialSwitchSizeSmall, state: JTMaterialSwitchStateOff)!
+        toggle.thumbOnTintColor = UIColor.white
+        toggle.thumbOffTintColor = UIColor.white
+        toggle.trackOnTintColor = UIColor.brandColor
+        toggle.trackOffTintColor = UIColor.tftCoolGrey
+        toggle.rippleFillColor = UIColor.brandColor
+        toggle.font = UIFont.pfm(size: 8)
+        toggle.onText = "中"
+        toggle.offText = "中"
+        toggle.onTextColor = UIColor.brandColor
+        toggle.offTextColor = UIColor.tftCoolGrey
+    }
     
+    func placeToggle() {
+        if togglePlaced { return }
+        // Calculate center for toggle
+        let centerX = view.bounds.width - 30.0
+        let centerY = mainTitleLabel.center.y
+        toggle.center = CGPoint(x: centerX, y: centerY)
+        toggle.addTarget(self, action: #selector(toggleStateChanged), for: .valueChanged)
+        view.addSubview(toggle)
+        togglePlaced = true
+    }
+    
+    func toggleStateChanged() {
+        if toggle.isOn {
+            showChiTitle()
+        } else {
+            showEngTitle()
+        }
+    }
 }
 
 // MARK: - AudioCommentPostViewDelegate
