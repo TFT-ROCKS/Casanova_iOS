@@ -113,6 +113,7 @@
 		80C2AA0E1F737F98001F298D /* OSSAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C2AA0D1F737F98001F298D /* OSSAPIService.swift */; };
 		80C361C71FCAE06E00D6AB53 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C61FCAE06E00D6AB53 /* AlertManager.swift */; };
 		80C361C91FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */; };
+		80D2376821E5EC0000DA54FF /* AudioPlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D2376721E5EC0000DA54FF /* AudioPlayManager.swift */; };
 		80E3390A1F1AE4FD00F539E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E339091F1AE4FD00F539E5 /* AppDelegate.swift */; };
 		80E3390C1F1AE4FD00F539E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3390B1F1AE4FD00F539E5 /* ViewController.swift */; };
 		80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80E3390D1F1AE4FD00F539E5 /* Main.storyboard */; };
@@ -243,6 +244,7 @@
 		80C2AA0F1F7381E5001F298D /* Casanova-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Casanova-Bridging-Header.h"; sourceTree = "<group>"; };
 		80C361C61FCAE06E00D6AB53 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		80C361C81FCBCC9000D6AB53 /* ActivityIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewController.swift; sourceTree = "<group>"; };
+		80D2376721E5EC0000DA54FF /* AudioPlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayManager.swift; sourceTree = "<group>"; };
 		80E339061F1AE4FD00F539E5 /* Casanova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casanova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80E339091F1AE4FD00F539E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		80E3390B1F1AE4FD00F539E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 				80C361C61FCAE06E00D6AB53 /* AlertManager.swift */,
 				80AAA3B21FA99528001251E8 /* UMSocialSwiftInterface.swift */,
 				8038E3C11F8ADE9A000F041F /* CryptoManager.swift */,
+				80D2376721E5EC0000DA54FF /* AudioPlayManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -888,6 +891,7 @@
 			files = (
 				80B756B11F2F323400285FB4 /* AnswerDetailTableViewCell.swift in Sources */,
 				806179841F3E6A2300B696FB /* NavigationBar+Helper.swift in Sources */,
+				80D2376821E5EC0000DA54FF /* AudioPlayManager.swift in Sources */,
 				80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */,
 				80949D2B21640F1E00701813 /* Dictionary+Helper.swift in Sources */,
 				80B313A31F1B35B4001CFDC7 /* Like.swift in Sources */,
