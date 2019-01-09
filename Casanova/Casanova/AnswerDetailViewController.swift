@@ -36,9 +36,9 @@ class AnswerDetailViewController: UIViewController {
     // sub views
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let postTextView: PostTextView = PostTextView(frame: .zero)
-    let toolBar: AnswerDetailToolBar = AnswerDetailToolBar(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
+    let commentButton: UIButton = UIButton(type: .custom)
     
     // bottom constraint
     var bottomConstraint: NSLayoutConstraint!
@@ -95,7 +95,7 @@ class AnswerDetailViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
         
@@ -133,16 +133,16 @@ class AnswerDetailViewController: UIViewController {
     
     func layoutSubviews() {
         layoutTableView()
-        layoutToolBar()
         layoutAudioControlBar()
         layoutPostTextView()
+        layoutCommentButton()
     }
     
     func addConstraints() {
         addTableViewConstraints()
-        addToolBarConstraints()
         addAudioControlBarConstraints()
         addPostTextViewConstraints()
+        addCommentButtonConstraints()
     }
     
     func setTitle(title: String) {
@@ -172,45 +172,80 @@ class AnswerDetailViewController: UIViewController {
     }
 }
 
-// MARK: - Tool Bar
-extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
-    func layoutToolBar() {
-        view.addSubview(toolBar)
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        view.bringSubview(toFront: toolBar)
-        configToolBar()
+// MARK: - Comment Button
+extension AnswerDetailViewController {
+    func layoutCommentButton() {
+        view.addSubview(commentButton)
+        commentButton.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubview(toFront: commentButton)
+        configCommentButton()
     }
     
-    func configToolBar() {
-        toolBar.delegate = self
-        toolBar.isLike = Utils.doesCurrentUserLikeThisAnswer(answer)
+    func configCommentButton() {
+        commentButton.setImage(UIImage.oriImage(named: "icon-comment"), for: .normal)
+        
+        commentButton.layer.cornerRadius = 28.0
+        commentButton.layer.backgroundColor = UIColor.brandColor.cgColor
+        commentButton.layer.shadowColor = UIColor.shadowColor.cgColor
+        commentButton.layer.shadowOpacity = 1.0
+        commentButton.layer.shadowOffset = CGSize(width: 0, height: 6)
+        commentButton.layer.shadowRadius = 6.0
+        commentButton.layer.masksToBounds = false
+        
+        commentButton.addTarget(self, action: #selector(didTapCommentButton(_:)), for: .touchUpInside)
     }
     
-    func addToolBarConstraints() {
-        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        toolBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
+    func addCommentButtonConstraints() {
+        commentButton.widthAnchor.constraint(equalToConstant: 56.0).isActive = true
+        commentButton.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        commentButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -32.0).isActive = true
+        commentButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -82.0).isActive = true
     }
     
-    // MARK: - AnswerDetailToolBarDelegate
-    
-    func questionButtonClickedOnToolBar() {
-    }
-    
-    func likeButtonClickedOnToolBar(_ sender: UIButton) {
-        likeButtonTapped(sender)
-    }
-    
-    func recordButtonClickedOnToolBar(_ sender: UIButton) {
+    func didTapCommentButton(_ sender: UIButton) {
         presentCommentRecordViewController()
     }
-    
-    func commentButtonClickedOnToolBar() {
-        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
-        postTextView.textView.becomeFirstResponder()
-    }
 }
+
+//// MARK: - Tool Bar
+//extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
+//    func layoutToolBar() {
+//        view.addSubview(toolBar)
+//        toolBar.translatesAutoresizingMaskIntoConstraints = false
+//        view.bringSubview(toFront: toolBar)
+//        configToolBar()
+//    }
+//
+//    func configToolBar() {
+//        toolBar.delegate = self
+//        toolBar.isLike = Utils.doesCurrentUserLikeThisAnswer(answer)
+//    }
+//
+//    func addToolBarConstraints() {
+//        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        toolBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
+//    }
+//
+//    // MARK: - AnswerDetailToolBarDelegate
+//
+//    func questionButtonClickedOnToolBar() {
+//    }
+//
+//    func likeButtonClickedOnToolBar(_ sender: UIButton) {
+//        likeButtonTapped(sender)
+//    }
+//
+//    func recordButtonClickedOnToolBar(_ sender: UIButton) {
+//        presentCommentRecordViewController()
+//    }
+//
+//    func commentButtonClickedOnToolBar() {
+//        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
+//        postTextView.textView.becomeFirstResponder()
+//    }
+//}
 
 // MARK: - Comment Audio Record View Controller
 extension AnswerDetailViewController: AudioRecordViewControllerDelegate {
@@ -243,9 +278,9 @@ extension AnswerDetailViewController: AudioControlViewDelegate {
     }
     
     func addAudioControlBarConstraints() {
-        audioControlBar.bottomAnchor.constraint(equalTo: toolBar.topAnchor).isActive = true
-        audioControlBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        audioControlBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        audioControlBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        audioControlBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        audioControlBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         audioControlBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
     
@@ -407,14 +442,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     
     func configTableView() {
         tableView.separatorStyle = .none
-        
         tableView.backgroundColor = UIColor.bgdColor
-        // Hack for table view top space in between with topic view
-        self.automaticallyAdjustsScrollViewInsets = false
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 300
@@ -438,10 +468,10 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func addTableViewConstraints() {
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 1).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -5).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
         
         activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
         activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true

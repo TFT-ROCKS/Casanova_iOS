@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Medium</string>
-        </array>
         <array key="Muli.ttf">
             <string>Muli</string>
         </array>
@@ -26,101 +23,113 @@
                 <rect key="frame" x="0.0" y="0.0" width="396" height="351.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LR3-Lh-4Qc">
-                        <rect key="frame" x="0.0" y="0.0" width="396" height="351.5"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg4-DI-yb6">
+                        <rect key="frame" x="20" y="5" width="356" height="341.5"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htz-om-g73">
-                                <rect key="frame" x="0.0" y="0.0" width="396" height="100"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LR3-Lh-4Qc">
+                                <rect key="frame" x="0.0" y="0.0" width="356" height="341.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htz-om-g73">
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="PKT-Hv-4Gn"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
+                                        <rect key="frame" x="29" y="110" width="298" height="20"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTextColor">
+                                                <color key="value" cocoaTouchSystemColor="lightTextColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
+                                                <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.90980392156862744" green="0.97254901960784312" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学生是否应该花更多的时间在教室以外的课堂上学习。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="io4-O1-zZi">
+                                        <rect key="frame" x="29" y="254.5" width="298" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-rW-mBG">
+                                        <rect key="frame" x="29" y="315.5" width="30" height="16"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="Dze-lp-ujV"/>
+                                            <constraint firstAttribute="width" constant="30" id="Eid-15-HQy"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgU-V7-nQX">
+                                        <rect key="frame" x="69" y="315.5" width="29.5" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# answers" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK1-X5-gjE">
+                                        <rect key="frame" x="108.5" y="315.5" width="54" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
+                                        <rect key="frame" x="29" y="140" width="298" height="104.5"/>
+                                        <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
+                                        <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
+                                        <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="PKT-Hv-4Gn"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
-                                <rect key="frame" x="29" y="110" width="338" height="54.5"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                        <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedTextColor">
-                                        <color key="value" cocoaTouchSystemColor="lightTextColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
-                                        <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.90980392156862744" green="0.97254901960784312" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学生是否应该花更多的时间在教室以外的课堂上学习。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="io4-O1-zZi">
-                                <rect key="frame" x="29" y="285" width="338" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-rW-mBG">
-                                <rect key="frame" x="29" y="325.5" width="30" height="16"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="Dze-lp-ujV"/>
-                                    <constraint firstAttribute="width" constant="30" id="Eid-15-HQy"/>
+                                    <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="htz-om-g73" secondAttribute="bottom" constant="10" id="0lD-eX-iuX"/>
+                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" constant="29" id="2El-oF-F3F"/>
+                                    <constraint firstAttribute="bottom" secondItem="JE0-rW-mBG" secondAttribute="bottom" constant="10" id="6iO-E0-u1G"/>
+                                    <constraint firstItem="JE0-rW-mBG" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="GYC-7Q-fhS"/>
+                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="HXk-T0-IWy"/>
+                                    <constraint firstItem="htz-om-g73" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" id="K4y-D1-cRK"/>
+                                    <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="io4-O1-zZi" secondAttribute="bottom" constant="20" id="LxS-yN-QRx"/>
+                                    <constraint firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" constant="29" id="U9y-fc-aaS"/>
+                                    <constraint firstItem="io4-O1-zZi" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="de8-AW-g7Z"/>
+                                    <constraint firstItem="htz-om-g73" firstAttribute="top" secondItem="LR3-Lh-4Qc" secondAttribute="top" id="izo-3d-dcK"/>
+                                    <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="JE0-rW-mBG" secondAttribute="trailing" constant="10" id="m7N-hH-CBq"/>
+                                    <constraint firstItem="io4-O1-zZi" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="n8u-UJ-tuy"/>
+                                    <constraint firstItem="gK1-X5-gjE" firstAttribute="leading" secondItem="XgU-V7-nQX" secondAttribute="trailing" constant="10" id="pk9-RE-eP5"/>
+                                    <constraint firstItem="inB-G3-hzE" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="rbc-MV-7rc"/>
+                                    <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="uTR-Dk-42i"/>
+                                    <constraint firstAttribute="trailing" secondItem="htz-om-g73" secondAttribute="trailing" id="uUh-Xq-rfj"/>
+                                    <constraint firstItem="io4-O1-zZi" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="10" id="upb-gD-nAr"/>
+                                    <constraint firstItem="XgU-V7-nQX" firstAttribute="centerY" secondItem="JE0-rW-mBG" secondAttribute="centerY" id="yft-Qq-1uL"/>
+                                    <constraint firstItem="gK1-X5-gjE" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="zbh-k4-oSc"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgU-V7-nQX">
-                                <rect key="frame" x="69" y="325.5" width="29.5" height="16.5"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# answers" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK1-X5-gjE">
-                                <rect key="frame" x="108.5" y="325.5" width="54" height="16.5"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
-                                <rect key="frame" x="29" y="174.5" width="338" height="100.5"/>
-                                <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
-                                <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
-                                <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="htz-om-g73" secondAttribute="bottom" constant="10" id="0lD-eX-iuX"/>
-                            <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" constant="29" id="2El-oF-F3F"/>
-                            <constraint firstAttribute="bottom" secondItem="JE0-rW-mBG" secondAttribute="bottom" constant="10" id="6iO-E0-u1G"/>
-                            <constraint firstItem="JE0-rW-mBG" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="GYC-7Q-fhS"/>
-                            <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="HXk-T0-IWy"/>
-                            <constraint firstItem="htz-om-g73" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" id="K4y-D1-cRK"/>
-                            <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="io4-O1-zZi" secondAttribute="bottom" constant="20" id="LxS-yN-QRx"/>
-                            <constraint firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" constant="29" id="U9y-fc-aaS"/>
-                            <constraint firstItem="io4-O1-zZi" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="de8-AW-g7Z"/>
-                            <constraint firstItem="htz-om-g73" firstAttribute="top" secondItem="LR3-Lh-4Qc" secondAttribute="top" id="izo-3d-dcK"/>
-                            <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="JE0-rW-mBG" secondAttribute="trailing" constant="10" id="m7N-hH-CBq"/>
-                            <constraint firstItem="io4-O1-zZi" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="n8u-UJ-tuy"/>
-                            <constraint firstItem="gK1-X5-gjE" firstAttribute="leading" secondItem="XgU-V7-nQX" secondAttribute="trailing" constant="10" id="pk9-RE-eP5"/>
-                            <constraint firstItem="inB-G3-hzE" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="rbc-MV-7rc"/>
-                            <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="uTR-Dk-42i"/>
-                            <constraint firstAttribute="trailing" secondItem="htz-om-g73" secondAttribute="trailing" id="uUh-Xq-rfj"/>
-                            <constraint firstItem="io4-O1-zZi" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="10" id="upb-gD-nAr"/>
-                            <constraint firstItem="XgU-V7-nQX" firstAttribute="centerY" secondItem="JE0-rW-mBG" secondAttribute="centerY" id="yft-Qq-1uL"/>
-                            <constraint firstItem="gK1-X5-gjE" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="zbh-k4-oSc"/>
+                            <constraint firstItem="LR3-Lh-4Qc" firstAttribute="top" secondItem="tg4-DI-yb6" secondAttribute="top" id="DZX-Jj-Ucm"/>
+                            <constraint firstAttribute="trailing" secondItem="LR3-Lh-4Qc" secondAttribute="trailing" id="NKH-Sp-E9D"/>
+                            <constraint firstAttribute="bottom" secondItem="LR3-Lh-4Qc" secondAttribute="bottom" id="hCa-R0-H32"/>
+                            <constraint firstItem="LR3-Lh-4Qc" firstAttribute="leading" secondItem="tg4-DI-yb6" secondAttribute="leading" id="hd1-LI-UqF"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="LR3-Lh-4Qc" secondAttribute="bottom" id="4YZ-b6-gNX"/>
-                    <constraint firstItem="LR3-Lh-4Qc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5Bn-jJ-EGY"/>
-                    <constraint firstItem="LR3-Lh-4Qc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Ybl-l0-DmL"/>
-                    <constraint firstAttribute="trailing" secondItem="LR3-Lh-4Qc" secondAttribute="trailing" id="bzM-87-JDu"/>
+                    <constraint firstAttribute="trailing" secondItem="tg4-DI-yb6" secondAttribute="trailing" constant="20" id="YvU-Jy-kb8"/>
+                    <constraint firstItem="tg4-DI-yb6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ZlO-KT-afF"/>
+                    <constraint firstItem="tg4-DI-yb6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="sVg-hu-e8v"/>
+                    <constraint firstAttribute="bottom" secondItem="tg4-DI-yb6" secondAttribute="bottom" constant="5" id="uij-eM-Itj"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -130,6 +139,7 @@
                 <outlet property="difficultyLabel" destination="XgU-V7-nQX" id="JE9-wQ-xZ5"/>
                 <outlet property="difficultyView" destination="JE0-rW-mBG" id="skY-Mh-tCO"/>
                 <outlet property="numOfAnswersLabel" destination="gK1-X5-gjE" id="0dp-fT-tqG"/>
+                <outlet property="shadowView" destination="tg4-DI-yb6" id="oAI-c7-BHM"/>
                 <outlet property="tagListView" destination="inB-G3-hzE" id="UKE-eU-Iab"/>
                 <outlet property="titleLabel" destination="s2L-5p-bKQ" id="v0H-wm-PZw"/>
             </connections>

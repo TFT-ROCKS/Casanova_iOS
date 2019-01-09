@@ -14,7 +14,7 @@ extension UIColor {
     }
     
     @nonobjc class var tftLightblue: UIColor {
-        return UIColor(red: 75.0 / 255.0, green: 205.0 / 255.0, blue: 237.0 / 255.0, alpha: 1.0)
+        return UIColor(rgb: 0x0fb5e4)
     }
     
     @nonobjc class var tftDuckEggBlue: UIColor {
@@ -66,4 +66,24 @@ extension UIColor {
     class var errorTextColor: UIColor { return tftPigPink }
     class var cmtBgdColor: UIColor { return tftWhite }
     class var progressBarColor: UIColor { return tftSkyBlue }
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int, a: CGFloat = 1.0) {
+        self.init(
+            red: CGFloat(red) / 255.0,
+            green: CGFloat(green) / 255.0,
+            blue: CGFloat(blue) / 255.0,
+            alpha: a
+        )
+    }
+    
+    convenience init(rgb: Int, a: CGFloat = 1.0) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF,
+            a: a
+        )
+    }
 }

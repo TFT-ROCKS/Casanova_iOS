@@ -218,8 +218,6 @@ class SavedViewController: UIViewController {
 //        tableView.separatorInset = .init(top: 0, left: 20, bottom: 0, right: 20)
 //        tableView.backgroundColor = UIColor.bgdColor
 //        tableView.tableFooterView = UIView(frame: .zero)
-//        // Hack for table view top space in between with topic view
-//        self.automaticallyAdjustsScrollViewInsets = false
 //
 //        tableView.delegate = self
 //        tableView.dataSource = self

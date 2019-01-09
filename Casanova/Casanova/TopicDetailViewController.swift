@@ -29,6 +29,7 @@ class TopicDetailViewController: UIViewController {
     let topicView: TopicHeaderView = TopicHeaderView(frame: .zero)
     let tableView: UITableView = UITableView(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
+    let answerButton: UIButton = UIButton(type: .custom)
     
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let recordHintLabel: UILabel = UILabel(frame: .zero)
@@ -78,7 +79,7 @@ class TopicDetailViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.tintColor = UIColor.navTintColor
         navigationController?.navigationBar.topItem?.title = " "
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
+        navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
         
@@ -121,12 +122,14 @@ class TopicDetailViewController: UIViewController {
         layoutTableView()
         layoutTopicView()
         layoutRecordViews()
+        layoutAnswerButton()
     }
     
     func addConstraints() {
         addTopicViewConstraints()
         addTableViewConstraints()
         addRecordConstraints()
+        addAnswerButtonConstraints()
     }
     
     // MARK: - ViewModel
@@ -193,6 +196,7 @@ class TopicDetailViewController: UIViewController {
         tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         initRecordViews()
         setTitle(title: "问题")
+        answerButton.fadeOut()
     }
     
     // MARK: - Actions
@@ -225,19 +229,42 @@ class TopicDetailViewController: UIViewController {
 // MARK: - Tool Bar
 extension TopicDetailViewController: TopicHeaderTableViewCellDelegate {
     func answerTopicButtonTapped(_ sender: UIButton) {
-        if audioPlayer != nil {
-            audioPlayer.stop()
-            audioPlayer = nil
-        }
-        if timer != nil {
-            timer.invalidate()
-            timer = nil
-        }
-        showTopicView()
-        audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-        tableView.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
-        initRecordViews()
-        setTitle(title: "问题")
+        viewModelDidWannaAnswer()
+    }
+}
+
+// MARK: - Answer Button
+extension TopicDetailViewController {
+    func layoutAnswerButton() {
+        view.addSubview(answerButton)
+        answerButton.translatesAutoresizingMaskIntoConstraints = false
+        view.bringSubview(toFront: answerButton)
+        configAnswerButton()
+    }
+    
+    func configAnswerButton() {
+        answerButton.setImage(UIImage.oriImage(named: "icon-voice"), for: .normal)
+        
+        answerButton.layer.cornerRadius = 28.0
+        answerButton.layer.backgroundColor = UIColor.brandColor.cgColor
+        answerButton.layer.shadowColor = UIColor.shadowColor.cgColor
+        answerButton.layer.shadowOpacity = 1.0
+        answerButton.layer.shadowOffset = CGSize(width: 0, height: 6)
+        answerButton.layer.shadowRadius = 6.0
+        answerButton.layer.masksToBounds = false
+        
+        answerButton.addTarget(self, action: #selector(didTapAnswerButton(_:)), for: .touchUpInside)
+    }
+    
+    func addAnswerButtonConstraints() {
+        answerButton.widthAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -32.0).isActive = true
+        answerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -82.0).isActive = true
+    }
+    
+    func didTapAnswerButton(_ sender: UIButton) {
+        viewModelDidWannaAnswer()
     }
 }
 
@@ -291,8 +318,6 @@ extension TopicDetailViewController: UITableViewDelegate, UITableViewDataSource,
     func configTableView() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.bgdColor
-        // Hack for table view top space in between with topic view
-        self.automaticallyAdjustsScrollViewInsets = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -641,7 +666,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         let alertController = AlertManager.alertController(title: "TFT无法获取麦克风权限", msg: "请在隐私中打开麦克风允许", style: .alert, actionT1: "打开隐私设置", style1: .default, handler1: { value in
             let path = UIApplicationOpenSettingsURLString
             if let settingsURL = URL(string: path), UIApplication.shared.canOpenURL(settingsURL) {
-                UIApplication.shared.openURL(settingsURL)
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
             }
         }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
@@ -663,6 +688,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        self.answerButton.fadeIn()
                     }
                 }
             }
@@ -759,6 +785,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                         self.tableView.fadeIn(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
                         self.hideTopicView()
                         self.setTitle(title: "优秀答案")
+                        self.answerButton.fadeIn()
                     }
                 })
             }
