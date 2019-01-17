@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class AudioPlayManager {
+    
+    static let shared = AudioPlayManager()
+    
+    func play(url: URL, ) -> <#return type#> {
+        <#function body#>
+    }
+}
