@@ -24,7 +24,12 @@ class AudioPlayManager: NSObject {
     var audioPlayer: AVAudioPlayer?
     var downloadTask: URLSessionDownloadTask?
     
+    // --------------------------------------------------------------------------------------------------------
+    // MARK:                                        Public Methods
+    // --------------------------------------------------------------------------------------------------------
+    
     public func prepareToPlay() -> Bool {
+        stop()
         return audioPlayer?.prepareToPlay() ?? false
     }
     
@@ -44,6 +49,7 @@ class AudioPlayManager: NSObject {
     
     public func stop() {
         audioPlayer?.stop()
+        audioPlayer = nil
     }
     
     public var isPlaying: Bool {
@@ -115,6 +121,10 @@ class AudioPlayManager: NSObject {
         }
     }
     
+    // --------------------------------------------------------------------------------------------------------
+    // MARK:                                        Private Methods
+    // --------------------------------------------------------------------------------------------------------
+    
     func play(url: URL) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -132,18 +142,14 @@ class AudioPlayManager: NSObject {
             audioPlayer.volume = 1.0
             audioPlayer.play()
             
-            self.delegate?.didStartPlaying(audioPlayer: audioPlayer, sender: sender)
+            delegate?.didStartPlaying(audioPlayer: audioPlayer, sender: sender)
         }
     }
 }
 
 extension AudioPlayManager : AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        self.delegate?.didFinishPlaying(audioPlayer: player, sender: sender)
-        
-        if let audioPlayer = self.audioPlayer {
-            audioPlayer.stop()
-            self.audioPlayer = nil
-        }
+        delegate?.didFinishPlaying(audioPlayer: player, sender: sender)
+        stop()
     }
 }
