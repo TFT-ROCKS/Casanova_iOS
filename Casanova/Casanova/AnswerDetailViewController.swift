@@ -51,6 +51,7 @@ class AnswerDetailViewController: UIViewController {
     
     // audio
     var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
     
     // button
     lazy var cmtBtn: UIButton = {

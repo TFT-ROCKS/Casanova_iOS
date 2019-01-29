@@ -62,12 +62,10 @@ class TopicDetailViewControllerViewModel {
     }
     
     func deleteAnswer(_ answer: Answer) {
-//        AnswerAPIService.shared.deleteAnswer(topicId: topic.id, answerId: answer.id, withCompletion: { error in
-//            self.topic.answers.removeAnswer(answer.id)
-//            Environment.shared.removeAnswer(answer.id)
-//            self.answersTableViewCellModels = self.topic.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
-//            self.didUpdate?(self)
-//        })
+        AnswerAPIService.shared.deleteAnswer(answerId: answer.id) { (error) in
+            self.needsUpdate = true
+            self.reloadData()
+        }
     }
     
     func addAnswer(_ answer: Answer) {

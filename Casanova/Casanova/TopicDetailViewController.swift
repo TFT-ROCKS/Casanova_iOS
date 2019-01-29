@@ -746,14 +746,14 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     self.activityIndicatorView.startAnimating()
                 }
                 // Upload answer
-                AnswerAPIService.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answer) in
+                AnswerAPIService.shared.postAnswer(topicId: self.viewModel.topic.id, userId: Environment.shared.currentUser?.id, title: "", audioUrl: url!, ref: "", withCompletion: { (error, answerId) in
                     Utils.runOnMainThread {
                         self.activityIndicatorView.stopAnimating()
                     }
                     if error == nil {
                         // success
-                        self.addAnswer(answer!)
-                        Environment.shared.needsPrepareUserInfo()
+                        self.viewModel.needsUpdate = true
+                        self.reloadData()
                         // animation
                         Utils.runOnMainThread {
                             self.animateAfterPostAnswer()
@@ -927,27 +927,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if !flag {
             finishRecording(success: false)
-        }
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-extension TopicDetailViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            // Hide
-            hideTopicView()
-        } else {
-            
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.y < 0 {
-            // Un-Hide
-            
-        } else {
-            
         }
     }
 }

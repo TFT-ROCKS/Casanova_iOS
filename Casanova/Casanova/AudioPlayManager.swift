@@ -10,8 +10,8 @@ import Foundation
 import AVFoundation
 
 protocol AudioPlayManagerDelegate: class {
-    func didStartPlaying(audioPlayer: AVAudioPlayer, sender: AnyObject?)
-    func didFinishPlaying(audioPlayer: AVAudioPlayer, sender: AnyObject?)
+    func didStartPlaying(audioPlayer: AVAudioPlayer?, sender: AnyObject?)
+    func didFinishPlaying(audioPlayer: AVAudioPlayer?, sender: AnyObject?)
 }
 
 class AudioPlayManager: NSObject {
@@ -23,14 +23,16 @@ class AudioPlayManager: NSObject {
     
     var audioPlayer: AVAudioPlayer?
     var downloadTask: URLSessionDownloadTask?
+    var timer: Timer?
     
     // --------------------------------------------------------------------------------------------------------
     // MARK:                                        Public Methods
     // --------------------------------------------------------------------------------------------------------
     
-    public func prepareToPlay() -> Bool {
-        stop()
-        return audioPlayer?.prepareToPlay() ?? false
+    public func prepareToPlay() {
+        stop() // Stop the previous play if any
+        delegate?.didFinishPlaying(audioPlayer: audioPlayer, sender: sender)
+        
     }
     
     public func play(url: URL, delegate: AudioPlayManagerDelegate?, sender: AnyObject?) {
@@ -149,7 +151,7 @@ class AudioPlayManager: NSObject {
 
 extension AudioPlayManager : AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        delegate?.didFinishPlaying(audioPlayer: player, sender: sender)
         stop()
+        delegate?.didFinishPlaying(audioPlayer: player, sender: sender)
     }
 }
