@@ -14,7 +14,7 @@ class CommentAPIService {
     
     let url = "https://tft.rocks/api2.0"
     
-    /// Fetch answers for a single topic
+    /// Fetch comments for certain answer
     /// - parameter num: num of comments
     /// - parameter offset: offset
     /// - parameter answerID: answer id
@@ -51,134 +51,66 @@ class CommentAPIService {
         }
     }
     
-    func postComment(answerId: Int?, userId: Int?, title: String, withCompletion block: ((ErrorMessage?, Comment?) -> Void)? = nil) {
+    /// Post a comment for certain answer
+    /// - parameter answerId: answer id
+    /// - parameter userId: user id
+    /// - parameter title: comment title
+    /// - parameter audioUrl: audio url
+    /// - parameter block: completion block
+    ///
+    func postComment(answerId: Int?, userId: Int?, title: String, audioUrl: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         guard let answerId = answerId else {
             let msg = "answerId == nil, when comment answer"
-            let errorMessage = ErrorMessage(msg: msg)
-            block?(errorMessage, nil)
-            return
-        }
-        
-        guard let userId = userId else {
-            let msg = "userId == nil, when comment answer"
-            let errorMessage = ErrorMessage(msg: msg)
-            block?(errorMessage, nil)
-            return
-        }
-        // TODO: need to fix the referer using topicId
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/topic/\(answerId)",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "commentService",
-                                                      "operation": "create",
-                                                      "params": ["answerId":answerId,
-                                                                 "userId":userId,
-                                                                 "title":title],
-                                                      "body": [:]]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
-            response in
-            
-            if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
-                if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
-                        // failure
-                        let errorMessage = ErrorMessage(msg: msg)
-                        Utils.runOnMainThread { block?(errorMessage, nil) }
-                    } else {
-                        // success
-                        if let json = json["g0"] as? [String: Any] {
-                            if let dict = json["data"] as? [String: Any] {
-                                if let comment = Comment(fromJSON: dict) {
-                                    Utils.runOnMainThread {
-                                        block?(nil, comment)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post comment")
-                    Utils.runOnMainThread { block?(errorMessage, nil) }
-                }
-            } else {
-                let errorMessage = ErrorMessage(msg: "json == nil, when post comment")
-                Utils.runOnMainThread { block?(errorMessage, nil) }
-            }
-        }
-    }
-    
-    func postComment(answerId: Int?, userId: Int?, title: String, audioUrl: String, withCompletion block: ((ErrorMessage?, Comment?) -> Void)? = nil) {
-        guard let answerId = answerId else {
-            let msg = "answerId == nil, when comment answer"
-            let errorMessage = ErrorMessage(msg: msg)
-            block?(errorMessage, nil)
-            return
-        }
-        
-        guard let userId = userId else {
-            let msg = "userId == nil, when comment answer"
-            let errorMessage = ErrorMessage(msg: msg)
-            block?(errorMessage, nil)
-            return
-        }
-        // TODO: need to fix the referer using topicId
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/topic/\(answerId)",
-            "X-Requested-With": "XMLHttpRequest",
-            "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "commentService",
-                                                      "operation": "create",
-                                                      "params": ["answerId":answerId,
-                                                                 "userId":userId,
-                                                                 "title":title,
-                                                                 "audioUrl":audioUrl],
-                                                      "body": [:]]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
-            response in
-            
-            if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
-                if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
-                        // failure
-                        let errorMessage = ErrorMessage(msg: msg)
-                        Utils.runOnMainThread { block?(errorMessage, nil) }
-                    } else {
-                        // success
-                        if let json = json["g0"] as? [String: Any] {
-                            if let dict = json["data"] as? [String: Any] {
-                                if let comment = Comment(fromJSON: dict) {
-                                    Utils.runOnMainThread {
-                                        block?(nil, comment)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post comment")
-                    Utils.runOnMainThread { block?(errorMessage, nil) }
-                }
-            } else {
-                let errorMessage = ErrorMessage(msg: "json == nil, when post comment")
-                Utils.runOnMainThread { block?(errorMessage, nil) }
-            }
-        }
-    }
-    
-    func deleteComment(answerId: Int?, commentId: Int?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
-        guard let answerId = answerId else {
-            let msg = "answerId == nil, when delete comment"
             let errorMessage = ErrorMessage(msg: msg)
             block?(errorMessage)
             return
         }
+        
+        guard let userId = userId else {
+            let msg = "userId == nil, when comment answer"
+            let errorMessage = ErrorMessage(msg: msg)
+            block?(errorMessage)
+            return
+        }
+        
+        let headers: HTTPHeaders = [:]
+        let params: Parameters = ["title": title,
+                                  "audio_url": audioUrl,
+                                  "answerId": answerId,
+                                  "userId": userId]
+        
+        // Create URL
+        let url = "\(self.url)/comment/insert"
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+            response in
+            
+            if let json = response.result.value {
+                if let json = json as? [String: Any] {
+                    if let code = json["code"] as? Int, code == 200 {
+                        // success
+                        Utils.runOnMainThread { block?(nil) }
+                    } else if let msg = json["message"] as? String {
+                        // failure
+                        let errorMessage = ErrorMessage(msg: msg)
+                        Utils.runOnMainThread { block?(errorMessage) }
+                    }
+                } else {
+                    let errorMessage = ErrorMessage(msg: "json cannot deserialization, when post comment")
+                    Utils.runOnMainThread { block?(errorMessage) }
+                }
+            } else {
+                let errorMessage = ErrorMessage(msg: "json == nil, when post comment")
+                Utils.runOnMainThread { block?(errorMessage) }
+            }
+        }
+    }
+    
+    /// Delete a comment from certain answer
+    /// - parameter commentId: comment id
+    /// - parameter block: completion block
+    ///
+    func deleteComment(commentId: Int?, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         
         guard let commentId = commentId else {
             let msg = "commentId == nil, when delete comment"
@@ -186,44 +118,25 @@ class CommentAPIService {
             block?(errorMessage)
             return
         }
-        // TODO: need to fix the referer using topicId
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/topic/\(answerId)",
-            "X-Requested-With": "XMLHttpRequest",
-            "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "commentService",
-                                                      "operation": "create",
-                                                      "params": ["id":commentId,
-                                                                 "action":"delete"],
-                                                      "body": [:]]],
-                                  "context": [:]]
-        Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        
+        let headers: HTTPHeaders = [:]
+        let params: Parameters = [:]
+        
+        // Create URL
+        let url = "\(self.url)/comment/delete?commentId=\(commentId)"
+        
+        Alamofire.request(url, method: .delete, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             
             if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
+                    if let code = json["code"] as? Int, code == 200 {
+                        // success
+                        Utils.runOnMainThread { block?(nil) }
+                    } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
                         Utils.runOnMainThread { block?(errorMessage) }
-                    } else {
-                        // success
-                        if let json = json["g0"] as? [String: Any] {
-                            if let dict = json["data"] as? [String: Any] {
-                                if let flag = dict["deletedComment"] as? Bool {
-                                    if flag == true {
-                                        Utils.runOnMainThread { block?(nil) }
-                                    }
-                                    else {
-                                        let msg = "delete comment failed, server error"
-                                        let errorMessage = ErrorMessage(msg: msg)
-                                        Utils.runOnMainThread { block?(errorMessage) }
-                                    }
-                                }
-                            }
-                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when delete comment")
@@ -236,4 +149,3 @@ class CommentAPIService {
         }
     }
 }
-

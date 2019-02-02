@@ -29,25 +29,26 @@ class PostTextView: UIView {
         // post comment
         postButton.isEnabled = false
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
-        if let audioUrl = audioUrl {
-            // comment with audio url
-            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
-                if error == nil {
+        
+//        if let audioUrl = audioUrl {
+//            // comment with audio url
+//            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
+//                if error == nil {
 //                    self.answer.comments.insert(comment!, at: 0)
-                    self.success()
-                }
-                self.whatever()
-            })
-        } else {
-            // comment without audio url
-            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
-                if error == nil {
+//                    self.success()
+//                }
+//                self.whatever()
+//            })
+//        } else {
+//            // comment without audio url
+//            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
+//                if error == nil {
 //                    self.answer.comments.insert(comment!, at: 0)
-                    self.success()
-                }
-                self.whatever()
-            })
-        }
+//                    self.success()
+//                }
+//                self.whatever()
+//            })
+//        }
     }
     
     func success() {
@@ -125,7 +126,6 @@ extension PostTextView: UITextViewDelegate {
             placeholderLabel.isHidden = false
         } else {
             placeholderLabel.isHidden = true
-            
         }
     }
 }
