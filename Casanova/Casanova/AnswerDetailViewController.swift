@@ -256,9 +256,8 @@ extension AnswerDetailViewController: AudioRecordViewControllerDelegate {
         present(vc, animated: true, completion: nil)
     }
     
-    func reloadTableView(comments: [Comment]) {
-        self.comments = comments
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
+    func reloadTableView() {
+        fetchComments()
     }
 }
 
@@ -406,10 +405,10 @@ extension AnswerDetailViewController: PostTextViewDelegate {
         view.endEditing(true)
     }
     
-    func reloadTableView() {
+//    func reloadTableView() {
 //        comments = answer.comments
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
-    }
+//        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
+//    }
     
     func toggleButtonTapped(_ sender: UIButton) {
         if postTextView.isExpanded {
@@ -836,17 +835,14 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
             self.activityIndicatorView.startAnimating()
-//            CommentAPIService.shared.deleteComment(answerId: self.answer.id, commentId: commentId, withCompletion: { error in
-//                Utils.runOnMainThread {
-//                    self.activityIndicatorView.stopAnimating()
-//                }
-//                if error == nil {
-//                    // delete comment successfully
-//                    // remove comment from this answer locally
-//                    self.comments.removeComment(commentId)
-//                    self.answer.comments.removeComment(commentId)
-//                }
-//            })
+            CommentAPIService.shared.deleteComment(commentId: commentId, withCompletion: { error in
+                Utils.runOnMainThread {
+                    self.activityIndicatorView.stopAnimating()
+                }
+                if error == nil {
+                    self.fetchComments()
+                }
+            })
             }, actionT2: "取消", style2: .default, handler2: nil, viewForPopover: self.view)
         
         present(alertController, animated: true, completion: nil)

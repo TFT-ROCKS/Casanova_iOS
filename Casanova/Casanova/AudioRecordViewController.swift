@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol AudioRecordViewControllerDelegate: class {
-    func reloadTableView(comments: [Comment])
+    func reloadTableView()
 }
 
 class AudioRecordViewController: UIViewController {
@@ -348,7 +348,7 @@ extension AudioRecordViewController: AudioCommentPostViewDelegate {
     
     func reloadTableView() {
         dismiss(animated: true, completion: { _ in
-//            self.delegate.reloadTableView(comments: self.answer.comments)
+            self.delegate.reloadTableView()
         })
     }
     

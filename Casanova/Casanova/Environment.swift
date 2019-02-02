@@ -31,10 +31,6 @@ class Environment {
         }
     }
     
-    func needsPrepareUserInfo() {
-        prepareForCurrentUser()
-    }
-    
     var needsUpdateUserInfoFromServer: Bool = false
     
     var likedAnswers: [Answer]? {
@@ -69,39 +65,6 @@ class Environment {
         info["password"] = decryptedPassword
         
         return info
-    }
-    
-    func prepareForCurrentUser() {
-        guard let user = currentUser else {
-            return
-        }
-        AnswerAPIService.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
-            self.answers = answers
-            self.likedAnswers = likedAnswers
-            self.postUserInfoPreparedNotification()
-        })
-    }
-    
-    func updateForCurrentUser(withCompletion block: ((ErrorMessage?) -> Swift.Void)? = nil) {
-        guard let user = currentUser else {
-            block?(ErrorMessage(msg: "User Not Found"))
-            return
-        }
-        AnswerAPIService.shared.fetchUserInfo(forUser: user, withCompletion: { (error, answers, likedAnswers) in
-            if error == nil {
-                self.answers = answers
-                self.likedAnswers = likedAnswers
-                self.postUserInfoUpdatedNotification()
-                block?(nil)
-            } else {
-                let e = ErrorMessage(msg: error.debugDescription)
-                block?(e)
-            }
-        })
-    }
-    
-    func postUserInfoPreparedNotification() {
-        NotificationCenter.default.post(name: Notifications.userInfoPreparedNotification, object: nil, userInfo: nil)
     }
     
     func postUserProfileUpdatedNotification() {

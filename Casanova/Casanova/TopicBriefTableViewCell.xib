@@ -16,27 +16,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="352" id="KGk-i7-Jjw" customClass="TopicBriefTableViewCell" customModule="Casanova" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="396" height="352"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="395" id="KGk-i7-Jjw" customClass="TopicBriefTableViewCell" customModule="Casanova" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="395"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="396" height="351.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="396" height="394.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg4-DI-yb6">
-                        <rect key="frame" x="20" y="5" width="356" height="341.5"/>
+                        <rect key="frame" x="20" y="5" width="356" height="384.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LR3-Lh-4Qc">
-                                <rect key="frame" x="0.0" y="0.0" width="356" height="341.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="356" height="384.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htz-om-g73">
-                                        <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="145"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="PKT-Hv-4Gn"/>
+                                            <constraint firstAttribute="height" constant="145" id="PKT-Hv-4Gn"/>
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
-                                        <rect key="frame" x="29" y="110" width="298" height="20"/>
+                                        <rect key="frame" x="16" y="155" width="324" height="26"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                 <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -59,13 +59,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学生是否应该花更多的时间在教室以外的课堂上学习。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="io4-O1-zZi">
-                                        <rect key="frame" x="29" y="254.5" width="298" height="41"/>
+                                        <rect key="frame" x="16" y="297.5" width="324" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE0-rW-mBG">
-                                        <rect key="frame" x="29" y="315.5" width="30" height="16"/>
+                                        <rect key="frame" x="16" y="358.5" width="30" height="16"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="Dze-lp-ujV"/>
@@ -73,19 +73,19 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgU-V7-nQX">
-                                        <rect key="frame" x="69" y="315.5" width="29.5" height="16.5"/>
+                                        <rect key="frame" x="56" y="358.5" width="29.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# answers" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gK1-X5-gjE">
-                                        <rect key="frame" x="108.5" y="315.5" width="54" height="16.5"/>
+                                        <rect key="frame" x="95.5" y="358.5" width="54" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
-                                        <rect key="frame" x="29" y="140" width="298" height="104.5"/>
+                                        <rect key="frame" x="16" y="189" width="324" height="100.5"/>
                                         <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
                                         <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
                                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
@@ -95,13 +95,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="htz-om-g73" secondAttribute="bottom" constant="10" id="0lD-eX-iuX"/>
-                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" constant="29" id="2El-oF-F3F"/>
+                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" constant="16" id="2El-oF-F3F"/>
                                     <constraint firstAttribute="bottom" secondItem="JE0-rW-mBG" secondAttribute="bottom" constant="10" id="6iO-E0-u1G"/>
                                     <constraint firstItem="JE0-rW-mBG" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="GYC-7Q-fhS"/>
-                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="HXk-T0-IWy"/>
+                                    <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="8" id="HXk-T0-IWy"/>
                                     <constraint firstItem="htz-om-g73" firstAttribute="leading" secondItem="LR3-Lh-4Qc" secondAttribute="leading" id="K4y-D1-cRK"/>
                                     <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="io4-O1-zZi" secondAttribute="bottom" constant="20" id="LxS-yN-QRx"/>
-                                    <constraint firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" constant="29" id="U9y-fc-aaS"/>
+                                    <constraint firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" constant="16" id="U9y-fc-aaS"/>
                                     <constraint firstItem="io4-O1-zZi" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="de8-AW-g7Z"/>
                                     <constraint firstItem="htz-om-g73" firstAttribute="top" secondItem="LR3-Lh-4Qc" secondAttribute="top" id="izo-3d-dcK"/>
                                     <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="JE0-rW-mBG" secondAttribute="trailing" constant="10" id="m7N-hH-CBq"/>
@@ -110,7 +110,7 @@
                                     <constraint firstItem="inB-G3-hzE" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="rbc-MV-7rc"/>
                                     <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="uTR-Dk-42i"/>
                                     <constraint firstAttribute="trailing" secondItem="htz-om-g73" secondAttribute="trailing" id="uUh-Xq-rfj"/>
-                                    <constraint firstItem="io4-O1-zZi" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="10" id="upb-gD-nAr"/>
+                                    <constraint firstItem="io4-O1-zZi" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="8" id="upb-gD-nAr"/>
                                     <constraint firstItem="XgU-V7-nQX" firstAttribute="centerY" secondItem="JE0-rW-mBG" secondAttribute="centerY" id="yft-Qq-1uL"/>
                                     <constraint firstItem="gK1-X5-gjE" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="zbh-k4-oSc"/>
                                 </constraints>
@@ -143,7 +143,7 @@
                 <outlet property="tagListView" destination="inB-G3-hzE" id="UKE-eU-Iab"/>
                 <outlet property="titleLabel" destination="s2L-5p-bKQ" id="v0H-wm-PZw"/>
             </connections>
-            <point key="canvasLocation" x="-398" y="-103"/>
+            <point key="canvasLocation" x="-398.39999999999998" y="-84.107946026986511"/>
         </tableViewCell>
     </objects>
 </document>

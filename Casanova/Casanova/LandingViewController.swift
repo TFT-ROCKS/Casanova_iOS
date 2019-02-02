@@ -42,7 +42,6 @@ class LandingViewController: UIViewController {
                     // Success
                     // Store current user
                     Environment.shared.currentUser = user
-                    Environment.shared.prepareForCurrentUser()
                     Utils.runOnMainThread {
                         let avator = UIImage(named: "TFTicons_avator_\((user?.id ?? 0) % 8)")
                         self.imageView.stopRotating()
