@@ -16,6 +16,7 @@ class AnswerDetailViewController: UIViewController {
     // class vars
     var topic: Topic!
     var answer: Answer!
+    
     var comments: [Comment]! {
         didSet {
             tableView.reloadData()
@@ -98,7 +99,6 @@ class AnswerDetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -589,7 +589,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         // like it
         LikeAPIService.shared.postLike(answerId: answerId, userId: userId) { (error, insertId) in
             if error == nil {
-                self.tableView.reloadData()
+                self.answer.likesNum += 1
+                // Update
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
             }
             sender.isEnabled = true
         }
