@@ -58,7 +58,7 @@ class CommentAPIService {
     /// - parameter audioUrl: audio url
     /// - parameter block: completion block
     ///
-    func postComment(answerId: Int?, userId: Int?, title: String, audioUrl: String, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
+    func postComment(answerId: Int?, userId: Int?, title: String, audioUrl: String? = nil, withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         guard let answerId = answerId else {
             let msg = "answerId == nil, when comment answer"
             let errorMessage = ErrorMessage(msg: msg)
@@ -74,10 +74,12 @@ class CommentAPIService {
         }
         
         let headers: HTTPHeaders = [:]
-        let params: Parameters = ["title": title,
-                                  "audio_url": audioUrl,
-                                  "answerId": answerId,
-                                  "userId": userId]
+        let params: Parameters = audioUrl == nil ? ["title": title,
+                                                    "answerId": answerId,
+                                                    "userId": userId] : ["title": title,
+                                                                         "audio_url": audioUrl!,
+                                                                         "answerId": answerId,
+                                                                         "userId": userId]
         
         // Create URL
         let url = "\(self.url)/comment/insert"

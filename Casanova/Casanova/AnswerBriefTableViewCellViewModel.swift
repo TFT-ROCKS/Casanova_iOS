@@ -66,7 +66,7 @@ class AnswerBriefTableViewCellViewModel {
     }
     
     var commentsText: String {
-        return "\(answer.commentsNum) 跟读"
+        return "\(answer.commentsNum) 评论"
     }
     
     // MARK: - Actions

@@ -201,9 +201,7 @@ class TopicDetailViewController: UIViewController {
     
     // MARK: - Actions
     fileprivate func reloadData() {
-        if self.viewModel.needsUpdate {
-            self.viewModel.reloadData()
-        }
+        self.viewModel.reloadData()
     }
     
     fileprivate func deleteAnswer(_ answer: Answer) {
@@ -752,7 +750,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     }
                     if error == nil {
                         // success
-                        self.viewModel.needsUpdate = true
                         self.reloadData()
                         // animation
                         Utils.runOnMainThread {
