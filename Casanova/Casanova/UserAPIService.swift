@@ -137,10 +137,7 @@ class UserAPIService {
 
     func logOut(withCompletion block: ((ErrorMessage?) -> Void)? = nil) {
         
-        let headers: HTTPHeaders = [:]
-        let params: Parameters = [:]
-        
-        Alamofire.request("\(url)/logout", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        Alamofire.request("\(url)/logout", method: .get).responseJSON {
             response in
             if response.result.isSuccess {
                 Utils.runOnMainThread { block?(nil) }
