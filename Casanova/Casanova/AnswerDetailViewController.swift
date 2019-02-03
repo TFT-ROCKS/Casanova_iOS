@@ -736,33 +736,17 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
 
 // MARK: - UIGestureRecognizerDelegate
 extension AnswerDetailViewController: UIGestureRecognizerDelegate {
-    
     func viewTapped(_ tgr: UITapGestureRecognizer) {
         self.view.endEditing(true)
-        if postTextView.isHidden == false {
-            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
-        }
+        postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
     }
 }
 
 // MARK: - UIScrollViewDelegate
 extension AnswerDetailViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            // Hide
-            self.view.endEditing(true)
-            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-        } else {
-            
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.y < 0 {
-            // Un-Hide
-        } else {
-            
-        }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+        postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
     }
 }
 
