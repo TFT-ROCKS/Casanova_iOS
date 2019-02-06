@@ -66,8 +66,8 @@ class TopicBriefTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = UIColor.clear
-        self.selectionStyle = .none
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
 
         shadowView.layer.cornerRadius = 8
         shadowView.layer.shadowColor = UIColor.shadowColor.cgColor

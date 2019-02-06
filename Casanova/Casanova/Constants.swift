@@ -80,7 +80,8 @@ struct ReuseIDs {
         static let commentTableViewCellForCurrentUser = "CommentTableViewCellForCurrentUser"
     }
     struct ProfileVC {
-        static let profileTableViewCell = "ProfileTableViewCell"
+        static let profileBriefTableViewCell = "ProfileBriefTableViewCell"
+        static let profileDetailTableViewCell = "ProfileDetailTableViewCell"
         static let settingsTableViewCell = "ProfileSettingsTableViewCell"
     }
 }
