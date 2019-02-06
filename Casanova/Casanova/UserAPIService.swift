@@ -150,38 +150,33 @@ class UserAPIService {
     
     func update(userId: Int, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
         
-        let headers: HTTPHeaders = ["Content-Type": "application/json",
-                                    "Accept": "*/*",
-                                    "Referer": "https://tft.rocks/profile/\(userId)",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "Connection": "keep-alive"]
-        let params: Parameters = ["requests": ["g0": ["resource": "userService",
-                                                      "operation": "update",
-                                                      "params": ["key":"editprofile"],
-                                                      "body": ["id": userId,
-                                                               "username": username,
-                                                               "firstname": firstname,
-                                                               "lastname": lastname]]],
-                                  "context": [:]]
+        let headers: HTTPHeaders = [:]
+        var password: String!
+        if let loginInfo = Environment.shared.readLoginInfoFromDevice() {
+            password = loginInfo["password"] as! String
+        }
+        let params: Parameters = ["username": username,
+                                  "firstname": firstname,
+                                  "lastname": lastname,
+                                  "password": password]
+        
+        // Create URL
+        let url = "\(self.url)/user/update?userId=\(userId)"
+        
         Alamofire.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             
             if let json = response.result.value {
-                //print("JSON: \(json)") // serialized json response
                 if let json = json as? [String: Any] {
-                    if let msg = json["message"] as? String {
+                    if let code = json["code"] as? Int, code == 200 {
+                        // success
+                        // TODO: backend return updated user info
+                        let user = User(id: userId, username: username, email: Environment.shared.currentUser!.email, userRole: Environment.shared.currentUser!.userRole, firstname: firstname, lastname: lastname)
+                        Utils.runOnMainThread { block?(nil, user) }
+                    } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)
                         Utils.runOnMainThread { block?(errorMessage, nil) }
-                    } else {
-                        // success
-                        if let dict = json["g0"] as? [String: Any] {
-                            if let dict = dict["data"] as? [String: Any] {
-                                if let user = User(fromJSON: dict) {
-                                    Utils.runOnMainThread { block?(nil, user) }
-                                }
-                            }
-                        }
                     }
                 } else {
                     let errorMessage = ErrorMessage(msg: "json cannot deserialization, when edit user profile")
