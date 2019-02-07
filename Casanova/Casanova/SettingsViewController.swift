@@ -144,9 +144,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 80))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 90))
         let label = UILabel(frame: CGRect(x: 35, y: 15, width: 60, height: 28))
-        label.font = UIFont.pfr(size: 12)
+        label.font = UIFont.pfm(size: 12)
         label.textColor = UIColor.nonBodyTextColor
         label.text = "账户信息"
         headerView.addSubview(label)

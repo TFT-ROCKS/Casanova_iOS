@@ -29,8 +29,9 @@ class ProfileSettingsTableViewCell: UITableViewCell {
         titleLabel.font = UIFont.pfr(size: 15)
         
         textField.textColor = UIColor.tftCoolGrey
-        textField.font = UIFont.sfps(size: 12)
+        textField.font = UIFont.pfr(size: 12)
         textField.borderStyle = .none
+        textField.tintColor = UIColor.tftCoolGrey
     }
     
     override func prepareForReuse() {
