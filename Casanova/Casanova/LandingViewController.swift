@@ -35,9 +35,9 @@ class LandingViewController: UIViewController {
         
         // Use local db login info to sign in
         if let loginInfo = Environment.shared.readLoginInfoFromDevice() {
-            let username = loginInfo["username"] as! String
-            let password = loginInfo["password"] as! String
-            UserAPIService.shared.signIn(usernameOrEmail: username, password: password, withCompletion: { (error, user) in
+            let userEmail = loginInfo[Environment.USER_EMAIL] as! String
+            let password = loginInfo[Environment.USER_PASSWORD] as! String
+            UserAPIService.shared.signIn(usernameOrEmail: userEmail, password: password, withCompletion: { (error, user) in
                 if error == nil {
                     // Success
                     // Store current user

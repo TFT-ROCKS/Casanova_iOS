@@ -39,7 +39,7 @@ class SignUpViewController: UIViewController {
                 // Success
                 self.signUpButton.viewWithTag(5)?.removeFromSuperview()
                 self.errorLabel.text = " "
-                self.delegate.fillEmailTextField(with: self.usernameTextField.text!)
+                self.delegate.fillEmailTextField(with: self.emailTextField.text!)
                 self.delegate.fillPasswordTextField(with: self.passwordTextField.text!)
                 self.navigationController?.popViewController(animated: true)
             }

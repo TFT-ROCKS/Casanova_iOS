@@ -151,14 +151,9 @@ class UserAPIService {
     func update(userId: Int, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
         
         let headers: HTTPHeaders = [:]
-        var password: String!
-        if let loginInfo = Environment.shared.readLoginInfoFromDevice() {
-            password = loginInfo["password"] as! String
-        }
         let params: Parameters = ["username": username,
                                   "firstname": firstname,
-                                  "lastname": lastname,
-                                  "password": password]
+                                  "lastname": lastname]
         
         // Create URL
         let url = "\(self.url)/user/update?userId=\(userId)"
@@ -170,9 +165,11 @@ class UserAPIService {
                 if let json = json as? [String: Any] {
                     if let code = json["code"] as? Int, code == 200 {
                         // success
-                        // TODO: backend return updated user info
-                        let user = User(id: userId, username: username, email: Environment.shared.currentUser!.email, userRole: Environment.shared.currentUser!.userRole, firstname: firstname, lastname: lastname)
-                        Utils.runOnMainThread { block?(nil, user) }
+                        // save user & exec block
+                        if let userJSON = json["user"] as? [String: Any] {
+                            let user = User(fromJSON: userJSON)
+                            Utils.runOnMainThread { block?(nil, user) }
+                        }
                     } else if let msg = json["message"] as? String {
                         // failure
                         let errorMessage = ErrorMessage(msg: msg)

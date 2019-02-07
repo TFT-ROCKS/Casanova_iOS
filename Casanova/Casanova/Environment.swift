@@ -11,6 +11,9 @@ import Foundation
 class Environment {
     static let shared = Environment()
     
+    static let USER_EMAIL = "user_email"
+    static let USER_PASSWORD = "user_password"
+    
     var currentUser: User? {
         didSet {
             postUserProfileUpdatedNotification()
@@ -41,28 +44,31 @@ class Environment {
     
     let userDefault = UserDefaults.standard
     
-    func saveLoginInfoToDevice(username: String, password: String) {
-        userDefault.set(username, forKey: "username")
+    func saveLoginInfoToDevice(userEmail: String, password: String) {
+        userDefault.set(userEmail, forKey: Environment.USER_EMAIL)
         let encryptedPassword = CryptoManager.shared.bytesFromEncrpyt(string: password)
-        userDefault.set(encryptedPassword, forKey: "password")
+        userDefault.set(encryptedPassword, forKey: Environment.USER_PASSWORD)
     }
     
-    func updateUserNameToDevice(username: String) {
-        userDefault.set(username, forKey: "username")
+    func updateUserEmailToDevice(userEmail: String) {
+        userDefault.set(userEmail, forKey: Environment.USER_EMAIL)
     }
     
     func resetLoginInfoOnDevice() {
-        userDefault.set(nil, forKey: "username")
-        userDefault.set(nil, forKey: "password")
+        userDefault.set(nil, forKey: Environment.USER_EMAIL)
+        userDefault.set(nil, forKey: Environment.USER_PASSWORD)
     }
     
     func readLoginInfoFromDevice() -> [String: Any]? {
         var info: [String: Any] = [:]
-        guard let username = userDefault.string(forKey: "username") else { return nil }
-        info["username"] = username
-        guard let password = userDefault.array(forKey: "password") else { return nil }
+        
+        guard let userEmail = userDefault.string(forKey: Environment.USER_EMAIL) else { return nil }
+        info[Environment.USER_EMAIL] = userEmail
+        
+        guard let password = userDefault.array(forKey: Environment.USER_PASSWORD) else { return nil }
         let decryptedPassword = CryptoManager.shared.stringFromDecrpyt(bytes: password as! [UInt8])
-        info["password"] = decryptedPassword
+        
+        info[Environment.USER_PASSWORD] = decryptedPassword
         
         return info
     }

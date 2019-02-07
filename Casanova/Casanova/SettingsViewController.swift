@@ -78,7 +78,7 @@ class SettingsViewController: UIViewController {
             Utils.runOnMainThread {
                 self.activityIndicatorView.stopAnimating()
                 if error == nil {
-                    Environment.shared.updateUserNameToDevice(username: (user?.username)!)
+                    Environment.shared.updateUserEmailToDevice(userEmail: user!.email)
                     Environment.shared.currentUser = user
                     self.tableView.reloadData()
                     self.setTitle(title: "保存成功")
