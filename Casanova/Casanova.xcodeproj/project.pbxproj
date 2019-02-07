@@ -132,6 +132,10 @@
 		80FB45871F47894C0034D525 /* Muli.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80FB45851F47894C0034D525 /* Muli.ttf */; };
 		80FB45891F4797B00034D525 /* UIFont+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB45881F4797B00034D525 /* UIFont+Addition.swift */; };
 		80FB458B1F482B890034D525 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FB458A1F482B890034D525 /* Environment.swift */; };
+		A96831EB220B1FED00CC50D8 /* ProfileDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96831E9220B1FED00CC50D8 /* ProfileDetailTableViewCell.swift */; };
+		A96831EC220B1FED00CC50D8 /* ProfileDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A96831EA220B1FED00CC50D8 /* ProfileDetailTableViewCell.xib */; };
+		A96831EF220B200700CC50D8 /* ProfileBriefTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96831ED220B200700CC50D8 /* ProfileBriefTableViewCell.swift */; };
+		A96831F0220B200700CC50D8 /* ProfileBriefTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A96831EE220B200700CC50D8 /* ProfileBriefTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -266,6 +270,10 @@
 		80FB45851F47894C0034D525 /* Muli.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Muli.ttf; sourceTree = "<group>"; };
 		80FB45881F4797B00034D525 /* UIFont+Addition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Addition.swift"; sourceTree = "<group>"; };
 		80FB458A1F482B890034D525 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		A96831E9220B1FED00CC50D8 /* ProfileDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailTableViewCell.swift; sourceTree = "<group>"; };
+		A96831EA220B1FED00CC50D8 /* ProfileDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileDetailTableViewCell.xib; sourceTree = "<group>"; };
+		A96831ED220B200700CC50D8 /* ProfileBriefTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBriefTableViewCell.swift; sourceTree = "<group>"; };
+		A96831EE220B200700CC50D8 /* ProfileBriefTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileBriefTableViewCell.xib; sourceTree = "<group>"; };
 		E9105E71B172BD5E8863D48E /* Pods-Casanova.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Casanova.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Casanova/Pods-Casanova.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -337,6 +345,7 @@
 				8056F4171FE8D24B00529CF4 /* TopicHeaderTableViewCell */,
 				800FEFE71F2567E100DF5531 /* TopicBriefTableViewCell */,
 				8055791D1F70DC9A002942A2 /* SeparatorLineTableViewCell */,
+				A96831F1220B200F00CC50D8 /* ProfileTableViewCell */,
 				80B5B3181F7E16C9004A2794 /* ProfileSettingsTableViewCell */,
 				80A14D781FBC2EEE004B9D95 /* Audio Record View */,
 				80B756AB1F2ED27C00285FB4 /* AnswerTableViewCell */,
@@ -668,6 +677,17 @@
 			name = CommentTableViewCell;
 			sourceTree = "<group>";
 		};
+		A96831F1220B200F00CC50D8 /* ProfileTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				A96831E9220B1FED00CC50D8 /* ProfileDetailTableViewCell.swift */,
+				A96831EA220B1FED00CC50D8 /* ProfileDetailTableViewCell.xib */,
+				A96831ED220B200700CC50D8 /* ProfileBriefTableViewCell.swift */,
+				A96831EE220B200700CC50D8 /* ProfileBriefTableViewCell.xib */,
+			);
+			name = ProfileTableViewCell;
+			sourceTree = "<group>";
+		};
 		D1BE348DD42B1D9037561106 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -789,6 +809,7 @@
 				808B21FD1F71967000ED5526 /* TFTicons_avator_2.png in Resources */,
 				800122C21F1E903200F185AE /* TopicBriefTableViewCell.xib in Resources */,
 				80E3390F1F1AE4FD00F539E5 /* Main.storyboard in Resources */,
+				A96831EC220B1FED00CC50D8 /* ProfileDetailTableViewCell.xib in Resources */,
 				80FB45861F47894C0034D525 /* Muli-Light.ttf in Resources */,
 				80A6C9F11F497980000CE9FB /* PostTextView.xib in Resources */,
 				80FB45831F4788E80034D525 /* Merriweather-Regular.ttf in Resources */,
@@ -797,6 +818,7 @@
 				80F58AEE1FFE0F34007F3DF9 /* SF-Pro-Text-Bold.otf in Resources */,
 				808B22001F71967000ED5526 /* TFTicons_avator_5.png in Resources */,
 				808B21FC1F71967000ED5526 /* TFTicons_avator_1.png in Resources */,
+				A96831F0220B200700CC50D8 /* ProfileBriefTableViewCell.xib in Resources */,
 				80826CF41F62466500956E03 /* AudioControlView.xib in Resources */,
 				80883EC51FEBE48C000A7A06 /* Montserrat-Regular.otf in Resources */,
 				808B22011F71967000ED5526 /* TFTicons_avator_6.png in Resources */,
@@ -903,6 +925,7 @@
 				804D91CD1F37C7E800CA6FBE /* FilterView.swift in Sources */,
 				80F730B61F3C398600907F61 /* Utils.swift in Sources */,
 				80826CF81F63C6C000956E03 /* LandingViewController.swift in Sources */,
+				A96831EB220B1FED00CC50D8 /* ProfileDetailTableViewCell.swift in Sources */,
 				8056F4151FE8D24500529CF4 /* TopicHeaderTableViewCell.swift in Sources */,
 				80C2AA0E1F737F98001F298D /* OSSAPIService.swift in Sources */,
 				804D91D81F37EA0600CA6FBE /* Constants.swift in Sources */,
@@ -954,6 +977,7 @@
 				8038E3C21F8ADE9A000F041F /* CryptoManager.swift in Sources */,
 				80826CFC1F64EAF500956E03 /* TopicDetailToolBar.swift in Sources */,
 				80B5B31A1F7E1A07004A2794 /* SettingsViewController.swift in Sources */,
+				A96831EF220B200700CC50D8 /* ProfileBriefTableViewCell.swift in Sources */,
 				8056F4251FE913C300529CF4 /* AnswerBriefTableViewCellViewModel.swift in Sources */,
 				8055791B1F70DC94002942A2 /* SeparatorLineTableViewCell.swift in Sources */,
 				805EC8871F416C8A005197DF /* SignUpViewController.swift in Sources */,

@@ -587,6 +587,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5j-fi-msz" customClass="TagListView" customModule="TagListView">
                                 <rect key="frame" x="0.0" y="64" width="414" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -630,20 +634,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A0f-Tg-Vfd">
-                                <rect key="frame" x="0.0" y="86" width="414" height="601"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="a5j-fi-msz" firstAttribute="top" secondItem="h6e-Rn-bPK" secondAttribute="top" id="4el-EN-oF5"/>
                             <constraint firstItem="h6e-Rn-bPK" firstAttribute="trailing" secondItem="A0f-Tg-Vfd" secondAttribute="trailing" id="7IL-wN-JXj"/>
                             <constraint firstItem="a5j-fi-msz" firstAttribute="leading" secondItem="h6e-Rn-bPK" secondAttribute="leading" id="7Lx-dd-x3v"/>
+                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="top" secondItem="h6e-Rn-bPK" secondAttribute="top" id="Hnd-yX-bwt"/>
                             <constraint firstItem="A0f-Tg-Vfd" firstAttribute="leading" secondItem="h6e-Rn-bPK" secondAttribute="leading" id="Mjh-r5-Cxk"/>
                             <constraint firstItem="h6e-Rn-bPK" firstAttribute="trailing" secondItem="a5j-fi-msz" secondAttribute="trailing" id="WGu-tj-Gd0"/>
                             <constraint firstItem="h6e-Rn-bPK" firstAttribute="bottom" secondItem="A0f-Tg-Vfd" secondAttribute="bottom" id="g6i-w6-iEc"/>
-                            <constraint firstItem="A0f-Tg-Vfd" firstAttribute="top" secondItem="a5j-fi-msz" secondAttribute="bottom" id="nrJ-Cd-C9Y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h6e-Rn-bPK"/>
                     </view>

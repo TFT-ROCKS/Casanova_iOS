@@ -1,18 +1,17 @@
 //
-//  ProfileSettingsTableViewCell.swift
+//  ProfileBriefTableViewCell.swift
 //  Casanova
 //
-//  Created by Xiaoyu Guo on 9/28/17.
-//  Copyright © 2017 Xiaoyu Guo. All rights reserved.
+//  Created by Michael Guo on 2/6/19.
+//  Copyright © 2019 Xiaoyu Guo. All rights reserved.
 //
 
 import UIKit
 
-class ProfileSettingsTableViewCell: UITableViewCell {
+class ProfileBriefTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,17 +24,14 @@ class ProfileSettingsTableViewCell: UITableViewCell {
         containerView.layer.shadowOpacity = 1
         containerView.layer.shadowOffset = CGSize(width: 0, height: 1)
         
-        titleLabel.textColor = UIColor.tftBlack
         titleLabel.font = UIFont.pfr(size: 15)
-        
-        textField.textColor = UIColor.tftCoolGrey
-        textField.font = UIFont.pfr(size: 12)
-        textField.borderStyle = .none
-        textField.tintColor = UIColor.tftCoolGrey
+        titleLabel.textColor = UIColor.tftBlack
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         titleLabel.text = nil
-        textField.text = nil
     }
+    
 }

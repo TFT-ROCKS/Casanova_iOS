@@ -16,6 +16,7 @@ class AnswerDetailViewController: UIViewController {
     // class vars
     var topic: Topic!
     var answer: Answer!
+    
     var comments: [Comment]! {
         didSet {
             tableView.reloadData()
@@ -98,7 +99,6 @@ class AnswerDetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
         
         view.backgroundColor = UIColor.bgdColor
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -146,11 +146,11 @@ class AnswerDetailViewController: UIViewController {
     }
     
     func setTitle(title: String) {
-        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
+        let titleLabel = UILabel(frame: CGRect(x: 95, y: 10, width: 184, height: 25))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.text = title
-        titleLabel.font = UIFont.pfr(size: 17)
+        titleLabel.font = UIFont.pfr(size: 18)
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
         self.navigationItem.titleView = titleLabel
@@ -203,49 +203,10 @@ extension AnswerDetailViewController {
     }
     
     func didTapCommentButton(_ sender: UIButton) {
-        presentCommentRecordViewController()
+        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
+        postTextView.textView.becomeFirstResponder()
     }
 }
-
-//// MARK: - Tool Bar
-//extension AnswerDetailViewController: AnswerDetailToolBarDelegate {
-//    func layoutToolBar() {
-//        view.addSubview(toolBar)
-//        toolBar.translatesAutoresizingMaskIntoConstraints = false
-//        view.bringSubview(toFront: toolBar)
-//        configToolBar()
-//    }
-//
-//    func configToolBar() {
-//        toolBar.delegate = self
-//        toolBar.isLike = Utils.doesCurrentUserLikeThisAnswer(answer)
-//    }
-//
-//    func addToolBarConstraints() {
-//        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        toolBar.heightAnchor.constraint(equalToConstant: 54).isActive = true
-//    }
-//
-//    // MARK: - AnswerDetailToolBarDelegate
-//
-//    func questionButtonClickedOnToolBar() {
-//    }
-//
-//    func likeButtonClickedOnToolBar(_ sender: UIButton) {
-//        likeButtonTapped(sender)
-//    }
-//
-//    func recordButtonClickedOnToolBar(_ sender: UIButton) {
-//        presentCommentRecordViewController()
-//    }
-//
-//    func commentButtonClickedOnToolBar() {
-//        postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
-//        postTextView.textView.becomeFirstResponder()
-//    }
-//}
 
 // MARK: - Comment Audio Record View Controller
 extension AnswerDetailViewController: AudioRecordViewControllerDelegate {
@@ -256,9 +217,9 @@ extension AnswerDetailViewController: AudioRecordViewControllerDelegate {
         present(vc, animated: true, completion: nil)
     }
     
-    func reloadTableView() {
-        fetchComments()
-    }
+//    func reloadTableView() {
+//        fetchComments()
+//    }
 }
 
 // MARK: - Audio Control Bar
@@ -351,7 +312,6 @@ extension AnswerDetailViewController: PostTextViewDelegate {
     }
     
     func cmtBtnTouchedDown(_ sender: UIButton) {
-        // record cmtBtn pos
         center = cmtBtn.center
     }
     
@@ -405,10 +365,9 @@ extension AnswerDetailViewController: PostTextViewDelegate {
         view.endEditing(true)
     }
     
-//    func reloadTableView() {
-//        comments = answer.comments
-//        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
-//    }
+    func reloadTableView() {
+        fetchComments()
+    }
     
     func toggleButtonTapped(_ sender: UIButton) {
         if postTextView.isExpanded {
@@ -625,33 +584,17 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     func likeButtonTapped(_ sender: UIButton) {
         sender.isEnabled = false
         let answerId = answer.id
-        let topicId = topic.id
         let userId = Environment.shared.currentUser?.id
-//        if Utils.doesCurrentUserLikeThisAnswer(answer) {
-//            // un-like it
-//            let likeId = Utils.likeIdFromAnswer(answer)
-//            LikeAPIService.shared.deleteLike(likeId: likeId, answerId: answerId, userId: userId, topicId: topicId, withCompletion: { error in
-//                if error == nil {
-//                    self.answer.likes.removeLike(likeId!)
-//                    Environment.shared.likedAnswers?.removeAnswer(self.answer.id)
-//                    self.tableView.reloadData()
-//                    self.toolBar.isLike = false
-//                }
-//                sender.isEnabled = true
-//            })
-//        } else {
-//            // like it
-//            LikeAPIService.shared.postLike(answerId: answerId, userId: userId, topicId: topicId, withCompletion: { (error, like) in
-//                if error == nil {
-//                    self.answer.likes.append(like!)
-//                    Environment.shared.needsUpdateUserInfoFromServer = true
-//                    self.tableView.reloadData()
-//                    self.toolBar.isLike = true
-//
-//                }
-//                sender.isEnabled = true
-//            })
-//        }
+        
+        // like it
+        LikeAPIService.shared.postLike(answerId: answerId, userId: userId) { (error, insertId) in
+            if error == nil {
+                self.answer.likesNum += 1
+                // Update
+                self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
+            sender.isEnabled = true
+        }
     }
     
     func audioButtonTapped(_ sender: UIButton) {
@@ -795,33 +738,17 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
 
 // MARK: - UIGestureRecognizerDelegate
 extension AnswerDetailViewController: UIGestureRecognizerDelegate {
-    
     func viewTapped(_ tgr: UITapGestureRecognizer) {
         self.view.endEditing(true)
-        if postTextView.isHidden == false {
-            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
-        }
+        postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
     }
 }
 
 // MARK: - UIScrollViewDelegate
 extension AnswerDetailViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView.panGestureRecognizer.translation(in: scrollView).y < 0{
-            // Hide
-            self.view.endEditing(true)
-            postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration, withCompletionBlock: nil)
-        } else {
-            
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if velocity.y < 0 {
-            // Un-Hide
-        } else {
-            
-        }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
+        postTextView.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
     }
 }
 

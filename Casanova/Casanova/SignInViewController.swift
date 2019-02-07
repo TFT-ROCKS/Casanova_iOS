@@ -33,7 +33,7 @@ class SignInViewController: UIViewController {
             if error == nil {
                 // Success
                 // Store current user
-                Environment.shared.saveLoginInfoToDevice(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
+                Environment.shared.saveLoginInfoToDevice(userEmail: self.usernameTextField.text!, password: self.passwordTextField.text!)
                 self.errorLabel.text = " "
                 // Show landing view
                 self.dismiss(animated: true, completion: nil)

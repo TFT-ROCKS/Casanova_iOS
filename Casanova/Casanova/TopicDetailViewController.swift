@@ -201,9 +201,7 @@ class TopicDetailViewController: UIViewController {
     
     // MARK: - Actions
     fileprivate func reloadData() {
-        if self.viewModel.needsUpdate {
-            self.viewModel.reloadData()
-        }
+        self.viewModel.reloadData()
     }
     
     fileprivate func deleteAnswer(_ answer: Answer) {
@@ -215,14 +213,14 @@ class TopicDetailViewController: UIViewController {
     }
     
     func setTitle(title: String) {
-        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
+        let titleLabel = UILabel(frame: CGRect(x: 95, y: 10, width: 184, height: 25))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.text = title
-        titleLabel.font = UIFont.pfr(size: 17)
+        titleLabel.font = UIFont.pfr(size: 18)
         titleLabel.textColor = UIColor.nonBodyTextColor
         titleLabel.sizeToFit()
-        self.navigationItem.titleView = titleLabel
+        navigationItem.titleView = titleLabel
     }
 }
 
@@ -752,7 +750,6 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
                     }
                     if error == nil {
                         // success
-                        self.viewModel.needsUpdate = true
                         self.reloadData()
                         // animation
                         Utils.runOnMainThread {

@@ -26,29 +26,17 @@ class PostTextView: UIView {
             placeholderLabel.text = "你啥也没说呢"
             return
         }
+        
         // post comment
         postButton.isEnabled = false
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
         
-//        if let audioUrl = audioUrl {
-//            // comment with audio url
-//            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, audioUrl: audioUrl, withCompletion: { (error, comment) in
-//                if error == nil {
-//                    self.answer.comments.insert(comment!, at: 0)
-//                    self.success()
-//                }
-//                self.whatever()
-//            })
-//        } else {
-//            // comment without audio url
-//            CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error, comment) in
-//                if error == nil {
-//                    self.answer.comments.insert(comment!, at: 0)
-//                    self.success()
-//                }
-//                self.whatever()
-//            })
-//        }
+        CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error) in
+            if error == nil {
+                self.success()
+            }
+            self.whatever()
+        })
     }
     
     func success() {
@@ -57,7 +45,7 @@ class PostTextView: UIView {
         
         // remove text
         self.textView.text = ""
-        self.placeholderLabel.text = "评论这个答案"
+        self.placeholderLabel.text = "请输入评论"
         self.placeholderLabel.isHidden = false
         self.textView.resignFirstResponder()
         self.fadeOut(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
@@ -70,6 +58,7 @@ class PostTextView: UIView {
     
     @IBOutlet weak var placeholderLabel: UILabel!
     @IBOutlet weak var toggleButton: UIButton!
+    
     @IBAction func toggleButtonTapped(_ sender: UIButton) {
         // function
         delegate.toggleButtonTapped(sender)
@@ -83,7 +72,6 @@ class PostTextView: UIView {
     }
     
     weak var answer: Answer!
-    var audioUrl: String?
     weak var delegate: PostTextViewDelegate!
     var isExpanded: Bool = false
     
@@ -108,7 +96,7 @@ class PostTextView: UIView {
         textView.textColor = UIColor.nonBodyTextColor
         textView.delegate = self
         
-        placeholderLabel.text = "评论这个答案"
+        placeholderLabel.text = "请输入评论"
         placeholderLabel.textColor = UIColor.tftCoolGrey
         placeholderLabel.font = UIFont.pfl(size: 16)
         

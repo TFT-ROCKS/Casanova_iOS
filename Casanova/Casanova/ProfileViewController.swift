@@ -13,11 +13,7 @@ import Firebase
 class ProfileViewController: UIViewController {
 
     // sub views
-    var headerView: UIView = UIView(frame: .zero)
     var tableView: UITableView = UITableView(frame: .zero, style: .grouped)
-    var avatorView: UIImageView = UIImageView(frame: .zero)
-    var usernameLabel: UILabel = UILabel(frame: .zero)
-    var emailLabel: UILabel = UILabel(frame: .zero)
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -48,17 +44,14 @@ class ProfileViewController: UIViewController {
     }
     
     func layoutSubViews() {
-        layoutHeaderView()
         layoutTableView()
     }
     
     func configSubViews() {
-        configHeaderView()
         configTableView()
     }
     
     func addSubViewConstraints() {
-        addHeaderViewConstraints()
         addTableViewConstraints()
     }
     
@@ -69,70 +62,6 @@ class ProfileViewController: UIViewController {
     func setButtons() {
         tabBarController?.navigationItem.leftBarButtonItems = nil
         tabBarController?.navigationItem.rightBarButtonItems = nil
-    }
-}
-
-// MARK: - Header View
-extension ProfileViewController {
-    func layoutHeaderView() {
-        view.addSubview(headerView)
-        view.bringSubview(toFront: headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // sub views
-        headerView.addSubview(avatorView)
-        headerView.addSubview(usernameLabel)
-        headerView.addSubview(emailLabel)
-        
-        avatorView.translatesAutoresizingMaskIntoConstraints = false
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    func configHeaderView() {
-        avatorView.layer.cornerRadius = avatorView.bounds.width / 2
-        avatorView.layer.masksToBounds = true
-        
-        usernameLabel.font = UIFont.sfps(size: 20)
-        usernameLabel.textColor = UIColor.tftFadedBlue
-        usernameLabel.textAlignment = .center
-        
-        emailLabel.font = UIFont.sfps(size: 14)
-        emailLabel.textColor = UIColor.tftCoolGrey
-        emailLabel.textAlignment = .center
-        
-        updateHeaderView()
-    }
-    
-    func updateHeaderView() {
-        let user = Environment.shared.currentUser!
-        let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
-        avatorView.image = avator
-        usernameLabel.text = user.firstname != "" ? user.firstname : user.username
-        emailLabel.text = user.email
-    }
-    
-    func addHeaderViewConstraints() {
-        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        headerView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-        headerView.bottomAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 20).isActive = true
-        
-        // sub views
-        avatorView.widthAnchor.constraint(equalToConstant: view.bounds.width*0.25).isActive = true
-        avatorView.heightAnchor.constraint(equalToConstant: view.bounds.width*0.25).isActive = true
-        avatorView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 18).isActive = true
-        avatorView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-        
-        usernameLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 50).isActive = true
-        usernameLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -50).isActive = true
-        usernameLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        usernameLabel.topAnchor.constraint(equalTo: avatorView.bottomAnchor, constant: 6).isActive = true
-        
-        emailLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 50).isActive = true
-        emailLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -50).isActive = true
-        emailLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 5).isActive = true
-        emailLabel.heightAnchor.constraint(equalToConstant: 17).isActive = true
     }
 }
 
@@ -148,23 +77,29 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorInset = .zero
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReuseIDs.ProfileVC.profileTableViewCell)
         tableView.backgroundColor = UIColor.bgdColor
+        tableView.separatorStyle = .none
+        
+        let profileBriefTableViewCell = UINib(nibName: ReuseIDs.ProfileVC.profileBriefTableViewCell, bundle: nil)
+        tableView.register(profileBriefTableViewCell, forCellReuseIdentifier: ReuseIDs.ProfileVC.profileBriefTableViewCell)
+        
+        let profileDetailTableViewCell = UINib(nibName: ReuseIDs.ProfileVC.profileDetailTableViewCell, bundle: nil)
+        tableView.register(profileDetailTableViewCell, forCellReuseIdentifier: ReuseIDs.ProfileVC.profileDetailTableViewCell)
     }
     
     func addTableViewConstraints() {
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == 1 {
             return 2
         } else {
             return 1
@@ -172,44 +107,68 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileTableViewCell, for: indexPath)
-        cell.textLabel?.textColor = UIColor.tftFadedBlue
-        cell.textLabel?.font = UIFont.pfr(size: 17)
         
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "我的回答"
-            } else if indexPath.row == 1 {
-                cell.textLabel?.text = "任务"
+                if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileDetailTableViewCell, for: indexPath) as? ProfileDetailTableViewCell {
+                    let user = Environment.shared.currentUser!
+                    let avator = UIImage(named: "TFTicons_avator_\(user.id % 8)")
+                    
+                    cell.leftImageView.image = avator
+                    cell.topTitleLabel.text = user.firstname != "" ? user.firstname : user.username
+                    cell.bottomTitleLabel.text = user.email
+                    
+                    return cell
+                }
             }
         case 1:
-            if indexPath.row == 0 {
-                cell.textLabel?.text = "设置"
+            if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileBriefTableViewCell, for: indexPath) as? ProfileBriefTableViewCell {
+                if indexPath.row == 0 {
+                    cell.titleLabel.text = "我的回答"
+                } else if indexPath.row == 1 {
+                    cell.titleLabel.text = "任务"
+                }
+                
+                return cell
             }
         case 2:
-            if indexPath.row == 0 {
-                cell.textLabel?.text = "登出"
+            if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileBriefTableViewCell, for: indexPath) as? ProfileBriefTableViewCell {
+                if indexPath.row == 0 {
+                    cell.titleLabel.text = "设置"
+                }
+                
+                return cell
+            }
+        case 3:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileBriefTableViewCell, for: indexPath) as? ProfileBriefTableViewCell {
+                if indexPath.row == 0 {
+                    cell.titleLabel.text = "登出"
+                }
+                
+                return cell
             }
         default:
             break
         }
-        return cell
+        
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         switch indexPath.section {
-        case 0:
+        case 1:
             switch indexPath.row {
             case 0:
                 // My Answers
-                presentUserAnswersVC()
+                print("TODO")
+//                presentUserAnswersVC()
             default:
                 break
             }
-        case 1:
+        case 2:
             switch indexPath.row {
             case 0:
                 // Settings
@@ -218,7 +177,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             default:
                 break
             }
-        case 2:
+        case 3:
             switch indexPath.row {
             case 0:
                 // Log out
@@ -269,6 +228,6 @@ extension ProfileViewController {
     }
     
     func handleUserProfileUpdated(_ notification: Notification) {
-        updateHeaderView()
+        self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
 }

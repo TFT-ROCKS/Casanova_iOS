@@ -229,7 +229,6 @@ class HomeViewController: UIViewController {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
-    
 }
 
 // MARK: - TagListViewDelegate

@@ -44,7 +44,6 @@ class TopicDetailViewControllerViewModel {
             self.didUpdate?(self)
         }
     }
-    var needsUpdate: Bool = true
     var binded: Bool = false
     
     // MARK: - Actions
@@ -53,7 +52,6 @@ class TopicDetailViewControllerViewModel {
         AnswerAPIService.shared.fetchAnswers(num: 1000, offset: 0, topicID: topic.id) { (error, answers) in
             if error == nil {
                 // success
-                self.needsUpdate = false
                 self.answers = answers!
                 self.answersTableViewCellModels = self.answers.map { self.viewModelFor(answer: $0, topic: self.topic) }
             }
@@ -63,7 +61,6 @@ class TopicDetailViewControllerViewModel {
     
     func deleteAnswer(_ answer: Answer) {
         AnswerAPIService.shared.deleteAnswer(answerId: answer.id) { (error) in
-            self.needsUpdate = true
             self.reloadData()
         }
     }

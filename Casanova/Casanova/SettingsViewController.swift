@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController {
     }
     
     func setTitle(title: String) {
-        let titleLabel = UILabel(frame: CGRect(x: 95, y: 11, width: 184, height: 22))
+        let titleLabel = UILabel(frame: CGRect(x: 95, y: 10, width: 184, height: 25))
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         titleLabel.text = title
@@ -74,11 +74,11 @@ class SettingsViewController: UIViewController {
     func saveSettings() {
         self.view.endEditing(true)
         activityIndicatorView.startAnimating()
-        UserAPIService.shared.update(userId: (Environment.shared.currentUser?.id)!, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
+        UserAPIService.shared.update(userId: Environment.shared.currentUser!.id, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
             Utils.runOnMainThread {
                 self.activityIndicatorView.stopAnimating()
                 if error == nil {
-                    Environment.shared.updateUserNameToDevice(username: (user?.username)!)
+                    Environment.shared.updateUserEmailToDevice(userEmail: user!.email)
                     Environment.shared.currentUser = user
                     self.tableView.reloadData()
                     self.setTitle(title: "保存成功")
@@ -88,7 +88,6 @@ class SettingsViewController: UIViewController {
             }
         })
     }
-    
 }
 
 // MARK: - TableViewDelegate, TableViewDataSource
@@ -145,39 +144,47 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 80))
-        let label = UILabel(frame: CGRect(x: 24, y: 15, width: 130, height: 20))
-        label.font = UIFont.pfr(size: 14)
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 90))
+        let label = UILabel(frame: CGRect(x: 35, y: 15, width: 60, height: 28))
+        label.font = UIFont.pfm(size: 12)
         label.textColor = UIColor.nonBodyTextColor
         label.text = "账户信息"
         headerView.addSubview(label)
+        
         return headerView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.settingsTableViewCell, for: indexPath) as! ProfileSettingsTableViewCell
-        switch indexPath.row {
-        case 0:
-            cell.titleLabel.text = "Email"
-            cell.textField.placeholder = Environment.shared.currentUser?.email
-            cell.textField.isEnabled = false
-        case 1:
-            cell.titleLabel.text = "用户名"
-            cell.textField.text = Environment.shared.currentUser?.username
-            cell.textField.tag = Tags.ProfileVC.SettingsVC.usernameTableViewCellTag
-        case 2:
-            cell.titleLabel.text = "姓"
-            cell.textField.text = Environment.shared.currentUser?.lastname
-            cell.textField.tag = Tags.ProfileVC.SettingsVC.lastnameTableViewCellTag
-        case 3:
-            cell.titleLabel.text = "名"
-            cell.textField.text = Environment.shared.currentUser?.firstname
-            cell.textField.tag = Tags.ProfileVC.SettingsVC.firstnameTableViewCellTag
-        default:
-            break
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.settingsTableViewCell, for: indexPath) as? ProfileSettingsTableViewCell {
+            
+            switch indexPath.row {
+            case 0:
+                cell.titleLabel.text = "Email"
+                cell.textField.placeholder = Environment.shared.currentUser?.email
+                cell.textField.isEnabled = false
+            case 1:
+                cell.titleLabel.text = "用户名"
+                cell.textField.text = Environment.shared.currentUser?.username
+                cell.textField.tag = Tags.ProfileVC.SettingsVC.usernameTableViewCellTag
+            case 2:
+                cell.titleLabel.text = "姓"
+                cell.textField.text = Environment.shared.currentUser?.lastname
+                cell.textField.tag = Tags.ProfileVC.SettingsVC.lastnameTableViewCellTag
+            case 3:
+                cell.titleLabel.text = "名"
+                cell.textField.text = Environment.shared.currentUser?.firstname
+                cell.textField.tag = Tags.ProfileVC.SettingsVC.firstnameTableViewCellTag
+            default:
+                break
+            }
+            
+            cell.textField.delegate = self
+            
+            return cell
         }
-        cell.textField.delegate = self
-        return cell
+        
+        return UITableViewCell()
     }
 }
 
@@ -185,7 +192,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
 extension SettingsViewController: UIGestureRecognizerDelegate {
     
     func viewTapped(_ tgr: UITapGestureRecognizer) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
