@@ -77,7 +77,7 @@ class SettingsViewController: UIViewController {
         UserAPIService.shared.update(userId: Environment.shared.currentUser!.id, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
             Utils.runOnMainThread {
                 self.activityIndicatorView.stopAnimating()
-                if error == nil {
+                if error == nil && user != nil {
                     Environment.shared.updateUserEmailToDevice(userEmail: user!.email)
                     Environment.shared.currentUser = user
                     self.tableView.reloadData()
