@@ -148,18 +148,13 @@ class UserAPIService {
         }
     }
     
-    func update(userId: Int, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
+    func update(userId: Int, email: String, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
         
         let headers: HTTPHeaders = [:]
-        var password: String!
-        if let loginInfo = Environment.shared.readLoginInfoFromDevice() {
-            password = loginInfo[Environment.USER_PASSWORD] as? String
-        }
-        let params: Parameters = ["username": username,
+        let params: Parameters = ["email": email,
+                                  "username": username,
                                   "firstname": firstname,
-                                  "lastname": lastname,
-                                  "oldpassword": password,
-                                  "password": password]
+                                  "lastname": lastname]
         
         // Create URL
         let url = "\(self.url)/user/update?userId=\(userId)"

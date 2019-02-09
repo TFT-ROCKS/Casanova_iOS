@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController {
     let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     
     // user info
+    var email: String!
     var username: String!
     var firstname: String!
     var lastname: String!
@@ -45,6 +46,7 @@ class SettingsViewController: UIViewController {
         addTableViewConstraints()
         
         // init user info
+        email = Environment.shared.currentUser?.email
         username = Environment.shared.currentUser?.username
         firstname = Environment.shared.currentUser?.firstname
         lastname = Environment.shared.currentUser?.lastname
@@ -74,7 +76,7 @@ class SettingsViewController: UIViewController {
     func saveSettings() {
         self.view.endEditing(true)
         activityIndicatorView.startAnimating()
-        UserAPIService.shared.update(userId: Environment.shared.currentUser!.id, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
+        UserAPIService.shared.update(userId: Environment.shared.currentUser!.id, email: email, username: username, firstname: firstname, lastname: lastname, withCompletion: { (error, user) in
             Utils.runOnMainThread {
                 self.activityIndicatorView.stopAnimating()
                 if error == nil && user != nil {
@@ -161,19 +163,19 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             switch indexPath.row {
             case 0:
                 cell.titleLabel.text = "Email"
-                cell.textField.placeholder = Environment.shared.currentUser?.email
+                cell.textField.text = email
                 cell.textField.isEnabled = false
             case 1:
                 cell.titleLabel.text = "用户名"
-                cell.textField.text = Environment.shared.currentUser?.username
+                cell.textField.text = username
                 cell.textField.tag = Tags.ProfileVC.SettingsVC.usernameTableViewCellTag
             case 2:
                 cell.titleLabel.text = "姓"
-                cell.textField.text = Environment.shared.currentUser?.lastname
+                cell.textField.text = lastname
                 cell.textField.tag = Tags.ProfileVC.SettingsVC.lastnameTableViewCellTag
             case 3:
                 cell.titleLabel.text = "名"
-                cell.textField.text = Environment.shared.currentUser?.firstname
+                cell.textField.text = firstname
                 cell.textField.tag = Tags.ProfileVC.SettingsVC.firstnameTableViewCellTag
             default:
                 break
