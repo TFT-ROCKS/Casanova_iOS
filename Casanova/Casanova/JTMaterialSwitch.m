@@ -346,7 +346,7 @@
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          CGRect thumbFrame = self.switchThumb.frame;
-                         thumbFrame.origin.x = thumbOnPosition+bounceOffset;
+                         thumbFrame.origin.x = self->thumbOnPosition+self->bounceOffset;
                          self.switchThumb.frame = thumbFrame;
                          if (self.isEnabled == YES) {
                              self.switchThumb.backgroundColor = self.thumbOnTintColor;
@@ -374,7 +374,7 @@
                                           animations:^{
                                               // Bounce to the position
                                               CGRect thumbFrame = self.switchThumb.frame;
-                                              thumbFrame.origin.x = thumbOnPosition;
+                                              thumbFrame.origin.x = self->thumbOnPosition;
                                               self.switchThumb.frame = thumbFrame;
                                           }
                                           completion:^(BOOL finished){
@@ -391,7 +391,7 @@
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          CGRect thumbFrame = self.switchThumb.frame;
-                         thumbFrame.origin.x = thumbOffPosition-bounceOffset;
+                         thumbFrame.origin.x = self->thumbOffPosition-self->bounceOffset;
                          self.switchThumb.frame = thumbFrame;
                          if (self.isEnabled == YES) {
                              self.switchThumb.backgroundColor = self.thumbOffTintColor;
@@ -419,7 +419,7 @@
                                           animations:^{
                                               // Bounce to the position
                                               CGRect thumbFrame = self.switchThumb.frame;
-                                              thumbFrame.origin.x = thumbOffPosition;
+                                              thumbFrame.origin.x = self->thumbOffPosition;
                                               self.switchThumb.frame = thumbFrame;
                                           }
                                           completion:^(BOOL finished){
@@ -519,8 +519,8 @@
     
     //remove layer after animation completed
     [CATransaction setCompletionBlock:^{
-        [rippleLayer removeFromSuperlayer];
-        rippleLayer = nil;
+        [self->rippleLayer removeFromSuperlayer];
+        self->rippleLayer = nil;
     }];
     
     // Scale ripple to the modelate size
