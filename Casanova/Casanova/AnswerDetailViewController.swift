@@ -703,9 +703,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             
         } catch let error as NSError {
             audioPlayer = nil
-            //print(error.localizedDescription)
+            print(error.localizedDescription)
         } catch {
-            //print("AVAudioPlayer init failed")
+            print("AVAudioPlayer init failed")
         }
         
     }
