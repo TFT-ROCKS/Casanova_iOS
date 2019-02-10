@@ -126,40 +126,4 @@ class Answer {
                   username: username,
                   userRole: userRole)
     }
-    
-//    convenience init?(fromCreateJSON json: [String: Any]) {
-//        guard let id = json["id"] as? Int,
-//            let title = json["title"] as? String,
-//            let updatedAt = json["updatedAt"] as? String,
-//            let userJSON = json["User"] as? [String: Any],
-//            let commentsJSON = json["Comments"] as? [Any]
-//            else {
-//                let errorMessage = ErrorMessage(msg: "Error found, when parsing json, into answer")
-//                //print(errorMessage.msg)
-//                return nil
-//        }
-//        // chinese title
-//        let chineseTitle = json["chineseTitle"] as? String
-//        // note title
-//        let noteTitle = json["noteTitle"] as? String
-//        // ref
-//        let ref = json["references"] as? String
-//        // audio url
-//        let audioURL = json["audioUrl"] as? String
-//        // user
-//        guard let user = User(json: userJSON) else { return nil }
-//        // comments
-//        var comments: [Comment] = []
-//        for commentJSON in commentsJSON {
-//            guard let comment = commentJSON as? [String: Any] else { return nil }
-//            if let comment = Comment(fromJSON: comment) {
-//                comments.append(comment)
-//            }
-//        }
-//        // imageURL
-//        let imageURL = json["picture_url"] as? String
-//        // init
-//        self.init(id: id, title: title, chineseTitle: chineseTitle, noteTitle: noteTitle, audioURL: audioURL, usAudioURL: nil, noteURL: nil, ref: ref, updatedAt: updatedAt, user: user, likes: [], comments: comments, topic: nil, imageURL: imageURL)
-//    }
-//
 }
