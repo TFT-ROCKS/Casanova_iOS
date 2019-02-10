@@ -8,7 +8,7 @@ target 'Casanova' do
   # Pods for Casanova
   pod 'Alamofire', '~> 4.4'
   pod 'TagListView', '1.2.0'
-  pod 'AliyunOSSiOS', '~> 2.6.2'
+  pod 'AliyunOSSiOS', '~> 2.0'
   pod 'NVActivityIndicatorView'
   pod 'Down', '0.3.4'
   pod 'Firebase/Core'
