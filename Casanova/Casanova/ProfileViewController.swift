@@ -125,9 +125,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.ProfileVC.profileBriefTableViewCell, for: indexPath) as? ProfileBriefTableViewCell {
                 if indexPath.row == 0 {
-                    cell.titleLabel.text = "我的回答"
+                    cell.titleLabel.text = "我的回答 (Coming soon...)"
                 } else if indexPath.row == 1 {
-                    cell.titleLabel.text = "任务"
+                    cell.titleLabel.text = "任务 (Coming soon...)"
                 }
                 
                 return cell
