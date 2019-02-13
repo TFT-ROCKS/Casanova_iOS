@@ -205,6 +205,20 @@ extension AnswerDetailViewController {
     func didTapCommentButton(_ sender: UIButton) {
         postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
         postTextView.textView.becomeFirstResponder()
+        
+        // Pause audio
+        if audioControlBar.isPlaying {
+            // pause -> ready to play
+            audioControlBar.isPlaying = false
+            audioControlBar.audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+            if audioPlayer != nil {
+                audioPlayer.pause()
+            }
+            if timer != nil {
+                timer.invalidate()
+            }
+        }
+        tableView.reloadData()
     }
 }
 
