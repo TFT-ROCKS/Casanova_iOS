@@ -80,7 +80,7 @@ class AnswerBriefTableViewCellViewModel {
     }
     
     func loadAnswerImage() {
-        if answer.audio != nil {
+        if answer.usAudio != nil {
             if let imageURL = URL(string: answer.pic) {
                 Manager.shared.loadImage(with: imageURL) { image in
                     self.answerImage = image.value
@@ -118,10 +118,10 @@ extension AnswerBriefTableViewCellViewModel: CellRepresentable {
     func dequeueCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         var cell: AnswerBriefTableViewCell
         
-        if answer.audio != nil && answer.title != "" {
+        if answer.usAudio != nil && answer.title != "" {
             // Answer with text and audio
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerTextAudioCell, for: indexPath) as! AnswerBriefTableViewCell
-        } else if answer.audio == nil {
+        } else if answer.usAudio == nil {
             // Answer with only text
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerOnlyTextCell, for: indexPath) as! AnswerBriefTableViewCell
         } else {

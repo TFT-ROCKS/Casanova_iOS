@@ -22,7 +22,7 @@ class Answer {
     static let ANSWER_UPDATETIME = "answer_updatetime"
     static let ANSWER_REFERENCES = "answer_references"
     static let ANSWER_STATUS = "answer_status"
-    static let ANSWER_AUDIO = "answer_audio"
+    static let ANSWER_UKAUDIO = "answer_audio"
     static let ANSWER_PIC = "answer_pic"
     static let ANSWER_NOTE = "answer_note"
     static let ANSWER_CHINESETITLE = "answer_chinesetitle"
@@ -36,7 +36,7 @@ class Answer {
     var updateTime: String
     var references: String
     var status: Int
-    var audio: String?
+    var ukAudio: String?
     var pic: String
     var note: String
     var noteURL: String?
@@ -54,7 +54,7 @@ class Answer {
          updateTime: String,
          references: String,
          status: Int,
-         audio: String?,
+         ukAudio: String?,
          pic: String,
          note: String,
          noteURL: String?,
@@ -72,7 +72,7 @@ class Answer {
         self.updateTime = updateTime
         self.references = references
         self.status = status
-        self.audio = audio
+        self.ukAudio = ukAudio
         self.pic = pic
         self.note = note
         self.noteURL = noteURL
@@ -97,7 +97,7 @@ class Answer {
         let updateTime = json[Answer.ANSWER_UPDATETIME] as? String ?? ""
         let references = json[Answer.ANSWER_REFERENCES] as? String ?? ""
         let status = json[Answer.ANSWER_STATUS] as? Int ?? 0
-        let audio = json[Answer.ANSWER_AUDIO] as? String
+        let ukAudio = json[Answer.ANSWER_UKAUDIO] as? String
         let pic = json[Answer.ANSWER_PIC] as? String ?? ""
         let note = json[Answer.ANSWER_NOTE] as? String ?? ""
         let noteURL = json[Answer.ANSWER_NOTE_URL] as? String
@@ -114,7 +114,7 @@ class Answer {
                   updateTime: updateTime,
                   references: references,
                   status: status,
-                  audio: audio,
+                  ukAudio: ukAudio,
                   pic: pic,
                   note: note,
                   noteURL: noteURL,

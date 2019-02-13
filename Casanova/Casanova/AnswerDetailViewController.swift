@@ -31,7 +31,7 @@ class AnswerDetailViewController: UIViewController {
     var isDownloading: Bool = false
     
     // U.S and U.K english flag
-    var isUSAudioEnabled: Bool = false
+    var isUKAudioEnabled: Bool = false
     var audioChanged: Bool = false
     
     // sub views
@@ -467,13 +467,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == 0 { // Answer section
             if indexPath.row == 0 {
                 var cell: AnswerDetailTableViewCell
-                if answer.audio == nil {
+                if answer.usAudio == nil {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
                 }
                 cell.mode = .full
-                cell.canAudioToggle = answer.usAudio != nil
+                cell.canAudioToggle = answer.ukAudio != nil
                 cell.answer = answer
                 cell.audioToggle.addTarget(self, action: #selector(self.audioToggleValueChanged(_:)), for: .valueChanged)
                 let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -569,11 +569,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func audioToggleValueChanged(_ sender: JTMaterialSwitch) {
-        if sender.isOn {
-            isUSAudioEnabled = true
-        } else {
-            isUSAudioEnabled = false
-        }
+        isUKAudioEnabled = sender.isOn
         audioChanged = true
         if audioControlBar.isPlaying {
             audioButtonTappedOnBar()
@@ -628,7 +624,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             if indexPath?.row == 0 {
                 audioChanged = false
                 // answer audio
-                url = isUSAudioEnabled ? URL(string: answer.usAudio ?? "") : URL(string: answer.audio ?? "")
+                url = isUKAudioEnabled ? URL(string: answer.ukAudio ?? "") : URL(string: answer.usAudio ?? "")
             } else if indexPath?.row == 1 {
                 // note audio
                 url = URL(string: answer.noteURL ?? "")
