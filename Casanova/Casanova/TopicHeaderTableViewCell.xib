@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Medium</string>
-        </array>
         <array key="Muli.ttf">
             <string>Muli</string>
-        </array>
-        <array key="PingFang.ttc">
-            <string>PingFangSC-Medium</string>
         </array>
     </customFonts>
     <objects>
@@ -31,14 +24,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2L-5p-bKQ">
-                        <rect key="frame" x="30" y="48" width="336" height="100.5"/>
+                        <rect key="frame" x="30" y="48.5" width="336" height="100.5"/>
                         <string key="text">Do you agree or disagree the statement that we should let children use the computers or other electronic devices as early as they can?</string>
                         <fontDescription key="fontDescription" name="Muli" family="Muli" pointSize="17"/>
                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inB-G3-hzE" customClass="TagListView" customModule="TagListView">
-                        <rect key="frame" x="30" y="10" width="336" height="28"/>
+                        <rect key="frame" x="30" y="10" width="336" height="28.5"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                 <color key="value" red="0.29411764705882354" green="0.80392156862745101" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -80,25 +73,14 @@
                             <constraint firstAttribute="width" constant="30" id="Eid-15-HQy"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnf-RI-mDU">
-                        <rect key="frame" x="270" y="215.5" width="96" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="ubq-Xv-gEI"/>
-                            <constraint firstAttribute="width" constant="96" id="vwL-u1-4Mn"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="PingFangSC-Medium" family="PingFang SC" pointSize="14"/>
-                        <state key="normal" title="我要回答"/>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中文翻译，中文翻译，中文翻译，中文翻译，中文翻译，中文翻译，中文翻译" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3y-Ur-u6L">
-                        <rect key="frame" x="30" y="160.5" width="336" height="41"/>
+                        <rect key="frame" x="30" y="161" width="336" height="41"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="fnf-RI-mDU" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="2Nt-HV-zj7"/>
-                    <constraint firstItem="fnf-RI-mDU" firstAttribute="centerY" secondItem="gK1-X5-gjE" secondAttribute="centerY" id="2bs-NS-AYc"/>
                     <constraint firstItem="s2L-5p-bKQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="4DS-yc-XfJ"/>
                     <constraint firstItem="s2L-5p-bKQ" firstAttribute="top" secondItem="inB-G3-hzE" secondAttribute="bottom" constant="10" id="5Wr-7B-sam"/>
                     <constraint firstItem="gK1-X5-gjE" firstAttribute="bottom" secondItem="XgU-V7-nQX" secondAttribute="bottom" id="DV6-1G-6aR"/>
@@ -108,18 +90,17 @@
                     <constraint firstItem="k3y-Ur-u6L" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="Pct-pa-UMi"/>
                     <constraint firstItem="k3y-Ur-u6L" firstAttribute="top" secondItem="s2L-5p-bKQ" secondAttribute="bottom" constant="12" id="V7g-bK-VIk"/>
                     <constraint firstItem="XgU-V7-nQX" firstAttribute="leading" secondItem="JE0-rW-mBG" secondAttribute="trailing" constant="10" id="Wpw-Wg-mr5"/>
+                    <constraint firstItem="JE0-rW-mBG" firstAttribute="top" secondItem="k3y-Ur-u6L" secondAttribute="bottom" constant="20" id="XJZ-bn-iEv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="JE0-rW-mBG" secondAttribute="bottom" constant="10" id="cW5-Gk-4hI"/>
                     <constraint firstItem="inB-G3-hzE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ghv-fg-IXD"/>
                     <constraint firstItem="JE0-rW-mBG" firstAttribute="centerY" secondItem="XgU-V7-nQX" secondAttribute="centerY" id="puR-Sj-DPa"/>
                     <constraint firstItem="inB-G3-hzE" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="r2g-jn-yyS"/>
                     <constraint firstItem="gK1-X5-gjE" firstAttribute="leading" secondItem="XgU-V7-nQX" secondAttribute="trailing" constant="10" id="rAa-HZ-G5t"/>
-                    <constraint firstItem="fnf-RI-mDU" firstAttribute="top" secondItem="k3y-Ur-u6L" secondAttribute="bottom" constant="14" id="t0T-bx-lMc"/>
                     <constraint firstItem="JE0-rW-mBG" firstAttribute="leading" secondItem="s2L-5p-bKQ" secondAttribute="leading" id="wZj-fe-GHF"/>
                     <constraint firstItem="k3y-Ur-u6L" firstAttribute="trailing" secondItem="s2L-5p-bKQ" secondAttribute="trailing" id="zLg-8J-NwT"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="answerButton" destination="fnf-RI-mDU" id="iCL-9v-mSR"/>
                 <outlet property="chineseTitleLabel" destination="k3y-Ur-u6L" id="AZ7-kE-BDs"/>
                 <outlet property="difficultyLabel" destination="XgU-V7-nQX" id="JE9-wQ-xZ5"/>
                 <outlet property="difficultyView" destination="JE0-rW-mBG" id="skY-Mh-tCO"/>

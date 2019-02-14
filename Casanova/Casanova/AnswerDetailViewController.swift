@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import NVActivityIndicatorView
 import Firebase
 
 class AnswerDetailViewController: UIViewController {
@@ -38,7 +37,6 @@ class AnswerDetailViewController: UIViewController {
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let postTextView: PostTextView = PostTextView(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
-    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let commentButton: UIButton = UIButton(type: .custom)
     
     // bottom constraint
@@ -405,9 +403,7 @@ extension AnswerDetailViewController: PostTextViewDelegate {
 extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
-        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
@@ -444,11 +440,6 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
-        
-        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
-        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
-        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -771,11 +762,7 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     // Delete answer alert sheet
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
-            self.activityIndicatorView.startAnimating()
             CommentAPIService.shared.deleteComment(commentId: commentId, withCompletion: { error in
-                Utils.runOnMainThread {
-                    self.activityIndicatorView.stopAnimating()
-                }
                 if error == nil {
                     self.fetchComments()
                 }

@@ -13,11 +13,34 @@ class TopicDetailViewControllerViewModel {
     // TODO: Make topic public for now, private once MVVM architecture migration is done
     let topic: Topic
     private var answers: [Answer]
+    var showTopicOnly: Bool
+    
+    // MARK: - Table view
+    var numOfSections: Int {
+        get {
+            if self.showTopicOnly {
+                return 1
+            } else {
+                return self.answersTableViewCellModels != nil ? self.answersTableViewCellModels.count + 1 : 1
+            }
+        }
+    }
+    
+    var numOfRows: Int {
+        get {
+            if self.showTopicOnly {
+                return 1
+            } else {
+                return 1
+            }
+        }
+    }
     
     // MARK: - Lifecycle
     init(topic: Topic) {
         self.topic = topic
         self.answers = []
+        self.showTopicOnly = true
     }
     
     // MARK: - Events
@@ -33,9 +56,6 @@ class TopicDetailViewControllerViewModel {
     let cellViewModelsTypes: [CellRepresentable.Type] = [TopicHeaderTableViewCellViewModel.self, AnswerBriefTableViewCellViewModel.self]
     lazy var topicHeaderTableViewCellViewModel: TopicHeaderTableViewCellViewModel = {
         let vm = TopicHeaderTableViewCellViewModel(topic: self.topic)
-        vm.didWannaAnswer = { [unowned self] _ in
-            self.didWannaAnswer?()
-        }
         return vm
     }()
     var answersTableViewCellModels: [CellRepresentable]!

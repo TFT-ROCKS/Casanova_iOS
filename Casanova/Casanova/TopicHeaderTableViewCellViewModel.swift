@@ -27,7 +27,6 @@ class TopicHeaderTableViewCellViewModel {
     var didError: ((Error) -> Void)?
     var didUpdate: ((TopicHeaderTableViewCellViewModel) -> Void)?
     var didSelect: ((Topic) -> Void)?
-    var didWannaAnswer: (() -> Void)?
     
     // MARK: - Properties
     var answersCountText: String {
@@ -57,10 +56,6 @@ class TopicHeaderTableViewCellViewModel {
             else { return true }
         
         return uniqueId == restrictedTo
-    }
-    
-    @objc func wannaAnswer() {
-        self.didWannaAnswer?()
     }
 }
 

@@ -9,10 +9,6 @@
 import UIKit
 import TagListView
 
-protocol TopicHeaderTableViewCellDelegate {
-    func answerTopicButtonTapped(_ sender: UIButton)
-}
-
 class TopicHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var chineseTitleLabel: UILabel!
@@ -20,7 +16,6 @@ class TopicHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var difficultyView: UIView!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var numOfAnswersLabel: UILabel!
-    @IBOutlet weak var answerButton: UIButton!
     
     func bind(viewModel: TopicHeaderTableViewCellViewModel) {
         guard viewModel.allowedAccess(self) else { return }
@@ -29,9 +24,6 @@ class TopicHeaderTableViewCell: UITableViewCell {
         
         // bind
         viewModel.didUpdate = self.updateUI
-        
-        // actions
-        answerButton.addTarget(viewModel, action: #selector(viewModel.wannaAnswer), for: .touchUpInside)
     }
     
     func updateUI(with viewModel: TopicHeaderTableViewCellViewModel) {
@@ -73,21 +65,11 @@ class TopicHeaderTableViewCell: UITableViewCell {
         chineseTitleLabel.textColor = UIColor.bodyTextColor
         difficultyLabel.font = UIFont.pfr(size: 12)
         numOfAnswersLabel.font = UIFont.pfr(size: 12)
-        answerButton.setTitleColor(UIColor.white, for: .normal)
-        answerButton.backgroundColor = UIColor.brandColor
-        answerButton.layer.cornerRadius = 3
-        answerButton.layer.masksToBounds = true
         
         contentView.backgroundColor = UIColor.white
         contentView.layer.shadowColor = UIColor.shadowColor.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 1)
         contentView.layer.shadowOpacity = 1
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }
