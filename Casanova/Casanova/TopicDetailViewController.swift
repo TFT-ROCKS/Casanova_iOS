@@ -27,8 +27,15 @@ class TopicDetailViewController: UIViewController {
     // sub views
     let tableView: UITableView = UITableView(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
-    let answerButton: UIButton = UIButton(type: .custom)
+    let answerButton: UIButton = UIButton(type: .custom) // floating button
     
+    // sub views - prepare to answer
+    let answerButton1: UIButton = UIButton(type: .custom)
+    let answerLabel1: UILabel = UILabel(frame: .zero)
+    let answerLabel2: UILabel = UILabel(frame: .zero)
+    let skipAnswerButton: UIButton = UIButton(type: .custom)
+    
+    // sub views - answer (record)
     let recordHintLabel: UILabel = UILabel(frame: .zero)
     let recordButton: UIButton = UIButton(frame: .zero)
     let speakingImgView: UIImageView = UIImageView(frame: .zero)
@@ -36,11 +43,13 @@ class TopicDetailViewController: UIViewController {
     let clockIcon: UIImageView = UIImageView(frame: .zero)
     let timeLabel: UILabel = UILabel(frame: .zero)
     
+    // sub views - answer (play & ready to post)
     let audioBarButton: UIButton = UIButton(frame: .zero)
     let audioTimeLabel: UILabel = UILabel(frame: .zero)
     let postButton: UIButton = UIButton(frame: .zero)
     let progressView: UIProgressView = UIProgressView(frame: .zero)
     
+    // sub views - answer (posted)
     let rewardImageView: UIImageView = UIImageView(frame: .zero)
     let rewardLabel: UILabel = UILabel(frame: .zero)
     
@@ -124,6 +133,7 @@ class TopicDetailViewController: UIViewController {
     func addConstraints() {
         addTableViewConstraints()
         addRecordConstraints()
+        addPrepareToAnswerViewsConstraints()
         addAnswerButtonConstraints()
     }
     
@@ -186,8 +196,12 @@ class TopicDetailViewController: UIViewController {
         showTopicOnly(true)
         audioControlBar.fadeOut(withDuration: Duration.TopicDetailVC.View.fadeInOrOutDuration)
         initRecordViews()
+        hidePrepareToAnswerViews()
         setTitle(title: "问题")
         answerButton.fadeOut()
+        
+        // Click the record button
+        didTapRecordButton(recordButton)
     }
     
     // MARK: - Actions
@@ -216,7 +230,8 @@ class TopicDetailViewController: UIViewController {
     
     func showTopicOnly(_ flag: Bool) {
         if flag {
-            initRecordViews()
+            initPrepareToAnswerViews()
+            hideRecordViews()
             answerButton.isHidden = true
         }
         viewModel.showTopicOnly = flag
@@ -343,12 +358,18 @@ extension TopicDetailViewController {
 extension TopicDetailViewController: AVAudioRecorderDelegate {
     
     func registerButtons() {
-        recordButton.addTarget(self, action: #selector(self.recordButtonClicked(_:)), for: .touchUpInside)
-        skipButton.addTarget(self, action: #selector(self.skipButtonClicked(_:)), for: .touchUpInside)
-        postButton.addTarget(self, action: #selector(self.postButtonClicked(_:)), for: .touchUpInside)
+        answerButton1.addTarget(self, action: #selector(didTapAnswerButton(_:)), for: .touchUpInside)
+        skipAnswerButton.addTarget(self, action: #selector(didTapSkipAnswerButton(_:)), for: .touchUpInside)
+        recordButton.addTarget(self, action: #selector(didTapRecordButton(_:)), for: .touchUpInside)
+        skipButton.addTarget(self, action: #selector(didTapSkipButton(_:)), for: .touchUpInside)
+        postButton.addTarget(self, action: #selector(didTapPostButton(_:)), for: .touchUpInside)
     }
     
     func layoutRecordViews() {
+        view.addSubview(answerButton1)
+        view.addSubview(answerLabel1)
+        view.addSubview(answerLabel2)
+        view.addSubview(skipAnswerButton)
         view.addSubview(recordHintLabel)
         view.addSubview(recordButton)
         view.addSubview(skipButton)
@@ -360,6 +381,10 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.addSubview(rewardLabel)
         view.addSubview(rewardImageView)
         
+        view.bringSubview(toFront: answerButton1)
+        view.bringSubview(toFront: answerLabel1)
+        view.bringSubview(toFront: answerLabel2)
+        view.bringSubview(toFront: skipAnswerButton)
         view.bringSubview(toFront: recordHintLabel)
         view.bringSubview(toFront: recordButton)
         view.bringSubview(toFront: skipButton)
@@ -372,8 +397,54 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         view.bringSubview(toFront: rewardImageView)
         
         configRecordViews()
-        hideRecordViews()
+        configPrepareToAnswerViews()
         registerButtons()
+    }
+    
+    func configPrepareToAnswerViews() {
+        answerButton1.setImage(UIImage.oriImage(named: "icon-voice"), for: .normal)
+        answerButton1.layer.cornerRadius = 28.0
+        answerButton1.layer.backgroundColor = UIColor.brandColor.cgColor
+        answerButton1.layer.shadowColor = UIColor.shadowColor.cgColor
+        answerButton1.layer.shadowOpacity = 1.0
+        answerButton1.layer.shadowOffset = CGSize(width: 0, height: 6)
+        answerButton1.layer.shadowRadius = 6.0
+        answerButton1.layer.masksToBounds = false
+        answerButton1.translatesAutoresizingMaskIntoConstraints = false
+        
+        answerLabel1.font = UIFont.pfr(size: 14)
+        answerLabel1.textColor = UIColor.tftCoolGrey
+        answerLabel1.text = "自己试着先说一下，会有老师讲评哦"
+        answerLabel1.textAlignment = .center
+        answerLabel1.translatesAutoresizingMaskIntoConstraints = false
+        
+        answerLabel2.font = UIFont.pfr(size: 14)
+        answerLabel2.textColor = UIColor.tftCoolGrey
+        answerLabel2.text = "懒孩子才会直接"
+        answerLabel2.textAlignment = .center
+        answerLabel2.translatesAutoresizingMaskIntoConstraints = false
+        
+        skipAnswerButton.titleLabel?.font = UIFont.pfr(size: 14)
+        skipAnswerButton.setTitleColor(UIColor.brandColor, for: .normal)
+        skipAnswerButton.setTitle("看答案", for: .normal)
+        skipAnswerButton.contentHorizontalAlignment = .center
+        skipAnswerButton.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func addPrepareToAnswerViewsConstraints() {
+        answerButton1.widthAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton1.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
+        answerButton1.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        answerButton1.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -10.0).isActive = true
+        
+        answerLabel1.topAnchor.constraint(equalTo: answerButton1.bottomAnchor, constant: 29.0).isActive = true
+        answerLabel1.centerXAnchor.constraint(equalTo: answerButton1.centerXAnchor).isActive = true
+        
+        answerLabel2.topAnchor.constraint(equalTo: answerLabel1.bottomAnchor, constant: 8.0).isActive = true
+        answerLabel2.centerXAnchor.constraint(equalTo: answerLabel1.centerXAnchor, constant: -20).isActive = true
+        
+        skipAnswerButton.leftAnchor.constraint(equalTo: answerLabel2.rightAnchor, constant: 1.0).isActive = true
+        skipAnswerButton.centerYAnchor.constraint(equalTo: answerLabel2.centerYAnchor).isActive = true
     }
     
     func configRecordViews() {
@@ -536,6 +607,24 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         rewardLabel.bottomAnchor.constraint(equalTo: audioBarButton.topAnchor, constant: -100).isActive = true
     }
     
+    func initPrepareToAnswerViews() {
+        answerButton1.isHidden = false
+        answerLabel1.isHidden = false
+        answerLabel2.isHidden = false
+        skipAnswerButton.isHidden = false
+        answerButton1.fadeIn()
+        answerLabel1.fadeIn()
+        answerLabel2.fadeIn()
+        skipAnswerButton.fadeIn()
+    }
+    
+    func hidePrepareToAnswerViews() {
+        answerButton1.isHidden = true
+        answerLabel1.isHidden = true
+        answerLabel2.isHidden = true
+        skipAnswerButton.isHidden = true
+    }
+    
     func initRecordViews() {
         recordHintLabel.isHidden = false
         recordButton.isHidden = false
@@ -587,7 +676,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         }
     }
     
-    func recordButtonClicked(_ sender: UIButton) {
+    func didTapRecordButton(_ sender: UIButton) {
         if audioRecorder == nil {
             do {
                 try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
@@ -621,7 +710,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    func skipButtonClicked(_ sender: UIButton) {
+    func didTapSkipButton(_ sender: UIButton) {
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
             try audioSession.setActive(false)
@@ -642,7 +731,12 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         }
     }
     
-    func playButtonClicked() {
+    func didTapSkipAnswerButton(_ sender: UIButton) {
+        didTapSkipButton(sender)
+        hidePrepareToAnswerViews()
+    }
+    
+    func didTapPlayButton() {
         // reset player
         if timer != nil {
             timer.invalidate()
@@ -654,7 +748,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         audioPlayer.currentTime = 0
     }
     
-    func deleteButtonClicked() {
+    func didTapDeleteButton() {
         // reset player
         audioPlayer.stop()
         audioPlayer = nil
@@ -668,7 +762,7 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         })
     }
     
-    func postButtonClicked(_ sender: UIButton) {
+    func didTapPostButton(_ sender: UIButton) {
         if audioPlayer != nil {
             audioPlayer.stop()
         }
@@ -735,10 +829,10 @@ extension TopicDetailViewController: AVAudioRecorderDelegate {
         let point = sender.location(in: audioBarButton)
         if leftPart.contains(point) {
             // play audio
-            playButtonClicked()
+            didTapPlayButton()
         } else {
             // delete audio
-            deleteButtonClicked()
+            didTapDeleteButton()
         }
     }
     
