@@ -86,7 +86,7 @@ class AnswerAPIService {
                                   "userid": userId,
                                   "references": ref,
                                   "audio_url": audioUrl,
-                                  "status": 0]
+                                  "status": 1]
         
         // Create URL
         let url = "\(self.url)/answer/post"

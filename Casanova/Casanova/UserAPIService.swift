@@ -148,10 +148,11 @@ class UserAPIService {
         }
     }
     
-    func update(userId: Int, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
+    func update(userId: Int, email: String, username: String, firstname: String, lastname: String, withCompletion block: ((ErrorMessage?, User?) -> Void)? = nil) {
         
         let headers: HTTPHeaders = [:]
-        let params: Parameters = ["username": username,
+        let params: Parameters = ["email": email,
+                                  "username": username,
                                   "firstname": firstname,
                                   "lastname": lastname]
         

@@ -47,13 +47,11 @@ class OSSAPIService {
         let putTask = client.putObject(put)
         putTask.continue({ task in
             if task.error == nil {
-                let urlStr = "http://tftsandbox.oss-cn-shanghai.aliyuncs.com/\(put.objectKey!)"
+                let urlStr = "http://tftsandbox.oss-cn-shanghai.aliyuncs.com/\(put.objectKey)"
                 cBlock(nil, urlStr, uuid)
-                //print("upload object success!")
             } else {
                 let errMsg = ErrorMessage(msg: task.error.debugDescription)
                 cBlock(errMsg, nil, nil)
-                //print("upload object failed, error: \(String(describing: task.error))")
             }
             return nil
         })

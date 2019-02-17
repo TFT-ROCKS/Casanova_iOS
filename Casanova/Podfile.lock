@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.7.3)
-  - AliyunOSSiOS (2.6.5)
+  - AliyunOSSiOS (2.10.7)
   - Down (0.3.4)
   - Firebase/Core (5.6.0):
     - Firebase/CoreOnly
@@ -69,7 +69,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
-  - AliyunOSSiOS (~> 2.6.2)
+  - AliyunOSSiOS (~> 2.0)
   - Down (= 0.3.4)
   - Firebase/Core
   - IDZSwiftCommonCrypto (~> 0.9.1)
@@ -112,7 +112,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  AliyunOSSiOS: 6d7f1f6aae0176095d147a88d60b23bbef93e0b7
+  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
   Down: 3f35b61e51a603df3e9e7e0289b15752e72f82e6
   Firebase: 75ea9e232eefa158c1049028030b8f661a2ccb62
   FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
@@ -128,6 +128,6 @@ SPEC CHECKSUMS:
   TagListView: 999e1df50c0f6b9ca927fae705c86a7e3b6ee9ba
   UMengUShare: 370d180101e13ee0227ae657ab119ba97243d2b3
 
-PODFILE CHECKSUM: 673b9c0876dc9dab5ac5c2a96898ee37d9706dce
+PODFILE CHECKSUM: 327e84e8fcce68dbe558a96dfe30d590184c4fbe
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

@@ -127,7 +127,7 @@ typedef enum {
  *  Initializes a JTMaterialSwitch with a initial switch size, style and state.
  *
  *  @param size A JTMaterialSwitchSize enum as this view's size(big, normal, small)
- *  @param state A JTMaterialSwitchStyle enum as this view's initial style
+ *  @param style A JTMaterialSwitchStyle enum as this view's initial style
  *  @param state A JTMaterialSwitchState enum as this view's initial switch pos(ON/OFF)
  *
  *  @return A JTFadingInfoView with size, style and initial position

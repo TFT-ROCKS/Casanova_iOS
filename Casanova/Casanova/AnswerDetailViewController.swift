@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import NVActivityIndicatorView
 import Firebase
 
 class AnswerDetailViewController: UIViewController {
@@ -31,14 +30,13 @@ class AnswerDetailViewController: UIViewController {
     var isDownloading: Bool = false
     
     // U.S and U.K english flag
-    var isUSAudioEnabled: Bool = false
+    var isUKAudioEnabled: Bool = false
     var audioChanged: Bool = false
     
     // sub views
     let tableView: UITableView = UITableView(frame: .zero, style: .grouped)
     let postTextView: PostTextView = PostTextView(frame: .zero)
     let audioControlBar: AudioControlView = AudioControlView(frame: .zero)
-    let activityIndicatorView: NVActivityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .pacman, color: .brandColor)
     let commentButton: UIButton = UIButton(type: .custom)
     
     // bottom constraint
@@ -205,6 +203,20 @@ extension AnswerDetailViewController {
     func didTapCommentButton(_ sender: UIButton) {
         postTextView.fadeIn(withDuration: Duration.AnswerDetailVC.fadeInOrOutDuration)
         postTextView.textView.becomeFirstResponder()
+        
+        // Pause audio
+        if audioControlBar.isPlaying {
+            // pause -> ready to play
+            audioControlBar.isPlaying = false
+            audioControlBar.audioButton.setImage(#imageLiteral(resourceName: "play_btn-h"), for: .normal)
+            if audioPlayer != nil {
+                audioPlayer.pause()
+            }
+            if timer != nil {
+                timer.invalidate()
+            }
+        }
+        tableView.reloadData()
     }
 }
 
@@ -391,9 +403,7 @@ extension AnswerDetailViewController: PostTextViewDelegate {
 extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate {
     func layoutTableView() {
         view.addSubview(tableView)
-        view.addSubview(activityIndicatorView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         configTableView()
         registerCustomCell()
     }
@@ -430,11 +440,6 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
-        
-        activityIndicatorView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15).isActive = true
-        activityIndicatorView.heightAnchor.constraint(equalTo: activityIndicatorView.widthAnchor).isActive = true
-        activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicatorView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -467,13 +472,13 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
         if indexPath.section == 0 { // Answer section
             if indexPath.row == 0 {
                 var cell: AnswerDetailTableViewCell
-                if answer.audio == nil {
+                if answer.usAudio == nil {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerWithoutAudioCell, for: indexPath) as! AnswerDetailTableViewCell
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: ReuseIDs.TopicDetailVC.View.answerDefaultCell, for: indexPath) as! AnswerDetailTableViewCell
                 }
                 cell.mode = .full
-                cell.canAudioToggle = answer.usAudio != nil
+                cell.canAudioToggle = answer.ukAudio != nil
                 cell.answer = answer
                 cell.audioToggle.addTarget(self, action: #selector(self.audioToggleValueChanged(_:)), for: .valueChanged)
                 let img = Utils.doesCurrentUserLikeThisAnswer(answer) ? #imageLiteral(resourceName: "like_btn-fill") : #imageLiteral(resourceName: "like_btn")
@@ -569,11 +574,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func audioToggleValueChanged(_ sender: JTMaterialSwitch) {
-        if sender.isOn {
-            isUSAudioEnabled = true
-        } else {
-            isUSAudioEnabled = false
-        }
+        isUKAudioEnabled = sender.isOn
         audioChanged = true
         if audioControlBar.isPlaying {
             audioButtonTappedOnBar()
@@ -628,7 +629,7 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             if indexPath?.row == 0 {
                 audioChanged = false
                 // answer audio
-                url = isUSAudioEnabled ? URL(string: answer.usAudio ?? "") : URL(string: answer.audio ?? "")
+                url = isUKAudioEnabled ? URL(string: answer.ukAudio ?? "") : URL(string: answer.usAudio ?? "")
             } else if indexPath?.row == 1 {
                 // note audio
                 url = URL(string: answer.noteURL ?? "")
@@ -703,9 +704,9 @@ extension AnswerDetailViewController: UITableViewDelegate, UITableViewDataSource
             
         } catch let error as NSError {
             audioPlayer = nil
-            //print(error.localizedDescription)
+            print(error.localizedDescription)
         } catch {
-            //print("AVAudioPlayer init failed")
+            print("AVAudioPlayer init failed")
         }
         
     }
@@ -761,11 +762,7 @@ extension AnswerDetailViewController: CommentTableViewCellDelegate {
     // Delete answer alert sheet
     func presentDeleteCommentAlertSheet(commentId: Int) {
         let alertController = AlertManager.alertController(title: "", msg: "删除评论", style: .actionSheet, actionT1: "删除", style1: .destructive, handler1: { [unowned self] _ in
-            self.activityIndicatorView.startAnimating()
             CommentAPIService.shared.deleteComment(commentId: commentId, withCompletion: { error in
-                Utils.runOnMainThread {
-                    self.activityIndicatorView.stopAnimating()
-                }
                 if error == nil {
                     self.fetchComments()
                 }

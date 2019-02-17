@@ -7,7 +7,7 @@
 本文档主要介绍OSS iOS SDK的安装和使用。本文档假设您已经开通了阿里云OSS 服务，并创建了Access Key ID 和Access Key Secret。文中的ID 指的是Access Key ID，KEY 指的是Access Key Secret。如果您还没有开通或者还不了解OSS，请登录[OSS产品主页](http://www.aliyun.com/product/oss)获取更多的帮助。
 
 ## 环境要求：
-- iOS系统版本：iOS 7.0以上
+- iOS系统版本：iOS 8.0以上
 - 必须注册有Aliyun.com用户账户，并开通OSS服务。
 
 ## 安装
@@ -32,6 +32,8 @@ $ sh ./buildFramework.sh
 $ cd Products && ls
 ```
 
+注意：buildFramework.sh脚本生成的framework是支持i386,x86_64,armv7,arm64架构的版本，所以当您需要archive product时，需要直接使用工程文件生成只支持真机的framework版本。
+
 在Xcode中，直接把framework拖入您对应的Target下即可，在弹出框勾选`Copy items if needed`。
 
 ### Pod依赖
@@ -39,7 +41,7 @@ $ cd Products && ls
 如果工程是通过pod管理依赖，那么在Podfile中加入以下依赖即可，不需要再导入framework：
 
 ```
-pod 'AliyunOSSiOS', '~> 2.6.2'
+pod 'AliyunOSSiOS'
 ```
 
 CocoaPods是一个非常优秀的依赖管理工具，推荐参考官方文档: [CocoaPods安装和使用教程](http://code4app.com/article/cocoapods-install-usage)。
@@ -49,7 +51,7 @@ CocoaPods是一个非常优秀的依赖管理工具，推荐参考官方文档: 
 ### 工程中引入头文件
 
 ```objc
-#import <AliyunOSSiOS/OSSService.h>
+#import <AliyunOSSiOS/AliyunOSSiOS.h>
 ```
 
 注意，引入Framework后，需要在工程`Build Settings`的`Other Linker Flags`中加入`-ObjC`。如果工程此前已经设置过`-force_load`选项，那么，需要加入`-force_load <framework path>/AliyunOSSiOS`。
@@ -61,6 +63,7 @@ OSS移动端SDK为了解决无线网络下域名解析容易遭到劫持的问�
 ```
 libresolv.tbd
 SystemConfiguration.framework
+CoreTelephony.framework
 ```
 
 ### 关于苹果ATS政策
@@ -195,6 +198,16 @@ SDK提供进阶的上传、下载功能、断点续传，以及文件管理、Bu
 ## API文档
 
 [点击查看](http://aliyun.github.io/aliyun-oss-ios-sdk/)
+
+## 常见问题
+
+1.工程编译出来的iOS库怎么没有支持armv7s的架构？
+
+​	Xcode9中默认支持的架构是armv7/arm64,由于arm是向下兼容的，armv7的库在需要支持armv7s的app中也是适用的，如果仍然需要针对armv7s进行优化，那么需要如下图进行设置
+
+![list1](https://github.com/aliyun/aliyun-oss-ios-sdk/blob/master/Images/list1.png)
+
+
 
 ## License
 

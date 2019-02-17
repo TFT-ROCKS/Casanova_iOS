@@ -27,10 +27,11 @@ class PostTextView: UIView {
             return
         }
         
-        // post comment
+        // UI update
         postButton.isEnabled = false
         postButton.setAttributedTitle(AttrString.titleAttrString("发布中", textColor: UIColor.brandColor), for: .normal)
         
+        // Post comment
         CommentAPIService.shared.postComment(answerId: answer.id, userId: Environment.shared.currentUser?.id, title: textView.text, withCompletion: { (error) in
             if error == nil {
                 self.success()

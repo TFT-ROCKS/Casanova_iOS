@@ -102,9 +102,7 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         answerTimeLabel.topAnchor.constraint(equalTo: answererNameLabel.bottomAnchor, constant: 5).isActive = true
         
         // likeCountLabel constraints
-//        likeCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         likeCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
-//        likeCountLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24).isActive = true
         likeCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // likeButton constraints
@@ -114,7 +112,6 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         likeButton.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
         
         // commentCount constraints
-//        commentCountLabel.widthAnchor.constraint(equalToConstant: 24).isActive = true
         commentCountLabel.heightAnchor.constraint(equalToConstant: 19).isActive = true
         commentCountLabel.trailingAnchor.constraint(equalTo: likeButton.leadingAnchor, constant: -8).isActive = true
         commentCountLabel.centerYAnchor.constraint(equalTo: answererButton.centerYAnchor).isActive = true
@@ -188,20 +185,14 @@ class AnswerDetailTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         audioToggle.trackOffTintColor = UIColor.tftCoolGrey
         audioToggle.rippleFillColor = UIColor.brandColor
         audioToggle.font = UIFont.pfm(size: 8)
-        audioToggle.onText = "美"
-        audioToggle.offText = "美"
+        audioToggle.onText = "英"
+        audioToggle.offText = "英"
         audioToggle.onTextColor = UIColor.brandColor
         audioToggle.offTextColor = UIColor.tftCoolGrey
         audioToggle.center = CGPoint(x: 180, y: 32)
         contentView.addSubview(audioToggle)
         
         contentView.backgroundColor = UIColor.white
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
     func updateUI() {

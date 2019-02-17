@@ -32,7 +32,7 @@ class User {
          userRole: String,
          firstname: String,
          lastname: String) {
-    
+        
         self.id = id
         self.username = username
         self.email = email
@@ -58,21 +58,5 @@ class User {
                   userRole: userRole,
                   firstname: firstname,
                   lastname: lastname)
-    }
-    
-    // MARK: - Init for Topic Detail Use
-    init(id: Int,
-         username: String,
-         userRole: String) {
-        self.id = id
-        self.username = username
-        self.userRole = userRole
-    }
-    
-    convenience init?(json: [String: Any]) {
-        let id = json[User.ID] as! Int
-        let username = json[User.USERNAME] as! String
-        let userRole = json[User.USER_ROLE] as? String ?? "none"
-        self.init(id: id, username: username, userRole: userRole)
     }
 }
